@@ -1,0 +1,408 @@
+﻿
+@model  AmyzFactory.Models.CategoryViewModel
+
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+ }
+
+  <!-- Begin Page Content -->
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modelBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+  <!-- Add & Delete Main Category -->
+<section class="head-page" style="margin-top:20px;">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs--12">
+                <header>
+                    <h2><i class="fas fa-list-alt">&nbsp;&nbsp; You Can Add Main & Sub Category </i></h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+
+
+<section class="container">
+
+    @{
+        Html.RenderAction("_Departments", "Categories");
+        Html.RenderAction("_Categories", "Categories");
+    }
+  
+</section>
+<!--End Add & Delete Main Category -->
+<!-- Add & Delete Sub Category -->
+<section class="head-page">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs--12">
+                <header style="margin-top:24px;">
+                    <h2><i class="fas fa-list-alt">&nbsp;&nbsp; Can Edit / Delete Main & Sub Category</i></h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+<section class="container">
+    <article id="cate-add">
+        <caption>You Can Edit / Delete Main & Sub Category</caption>
+        <div id="accordion">  
+            
+        </div>
+    </article>
+</section>
+<!-- End Sub Category -->
+<!-- Add & Delete Technical -->
+<section class="head-page">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs--12">
+                <header style="margin-top:24px;">
+                    <h2><i class="fas fa-list-alt">&nbsp;&nbsp; Add Technical </i></h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+@{ 
+    Html.RenderAction("_Technicals", "Categories");
+}
+
+
+
+ <script>
+
+ 
+     var getCategories = function (ActionName, ControllerName, TblBodyID, EditActionName, DeleteActionName,VisibilityActionName) {
+
+         var URL = "/" + ControllerName + "/" + ActionName;
+
+         $.ajax({
+             url: URL,
+             type: "Get",
+             dataType: "json",
+             success: function (data) {
+                 $.each(data, function (i, category) {
+
+                     var editURL = "/Admin/" + ControllerName + "/" + EditActionName + "?id=" + category.Id;
+                     var DeleteURL = "/Admin/" + ControllerName + "/" + DeleteActionName + "?id=" + category.Id;
+                     var visibilityDepartmentURL = "/Admin/" + ControllerName + "/" + VisibilityActionName;
+                     if (ActionName === "MainDepartments") {
+
+                         var dropDownListItemID = 'item' + category.Id;
+                         // first update drop down list
+                         updateDropDownList(category, dropDownListItemID);
+                         // end updated drop down list
+
+                         drawNewDepartment(category,visibilityDepartmentURL, DeleteURL, dropDownListItemID)
+                       
+
+                     } else {
+                         
+                         $(TblBodyID).append(drawTechnical(category));
+
+                     }
+
+                 
+                     
+                 })
+             }
+         });
+
+
+     }
+
+
+
+     var drawNewDepartment = function (category, visibilityDepartmentURL ,deleteDepartmentURL,DropDownItemID) {
+
+         var subCategoryCollapseID = 'subCollapse' + category.Id;
+         var containerID = 'container' + category.Id;
+         var visibilityBtnID = 'depBtn' + category.Id;
+
+         // this to pass parameters to the action 
+         var visibilityUrl = visibilityDepartmentURL + '?id=' + category.Id;
+
+
+         var html = '<div class="card" id="' + containerID + '">';
+         // header (Main Department)
+         html += '<div class="card-header">' + '<div class="row">' + '<h5 class="col">';
+         html += '<button class="btn btn-link" data-toggle="collapse" data-target="#' + subCategoryCollapseID + '" aria-expanded="true" aria-controls="' + subCategoryCollapseID + '">'
+         html += '<i class="fa fa-sort-down"></i>' + category.Name + '</button></h5><h5 class="col"></h5><h5 class="col"></h5>'
+         html += '<h5 class="col">'
+         if (category.visibility) {
+             html += '<button style="margin-right: 4px;" type="button" id="' + visibilityBtnID + '" onClick="changeVisibility(\'' + visibilityUrl + '\',\'' + visibilityBtnID + '\')" class="btn btn-warning">Hide</button>'
+         } else {
+             html += '<button style="margin-right: 4px;" type="button" id="' + visibilityBtnID + '" onClick="changeVisibility(\'' + visibilityUrl + '\',\'' + visibilityBtnID + '\')" class="btn btn-primary">Show</button>'
+         }
+         html += '<button type="button" onClick="deleteDepartment(\'' + deleteDepartmentURL + '\',\'' + containerID + '\',\'' + DropDownItemID + '\')" class="btn btn-danger"> Delete </button>'
+         html += '</h5></div></div>'
+
+         // body (Sub Categories)
+
+
+         html += '<div id="' + subCategoryCollapseID + '" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">'
+         html += '<div class="card-body"><div class="table-responsive"><table class="table table-bordred table-hover">'
+         html += '<thead><tr><th style="width: 70%">Name</th><th style="width: 30%">Actions</th></tr></thead>'
+         html += '<tbody id="tbody'+category.Id+'">' // this id for when add new sub category
+
+         if (category.SubCategoriesList != null) {
+             $.each(category.SubCategoriesList, function (i, subCategory) {
+                 html = drawSubCategory(subCategory, html);
+             })
+         }
+
+       
+
+         html += '</tbody></table></div></div></div>'
+         $('#accordion').append(html);
+
+     }
+
+     var drawSubCategory = function (subCategory, html) {
+         var trID = 'subTr' + subCategory.Id;
+         var editBtnId = 'edit' + subCategory.Id;
+
+         var visibilityBtnID = 'subBtn' + subCategory.Id;
+         var visibilityUrl = "/Admin/" + 'Categories/' + 'EditCategoryVisibility' + '?id=' + subCategory.Id;
+
+
+         html += '<tr id="' + trID + '">'
+         html += '<td style="color:#1cc88a;">' + subCategory.Name + '</td>'
+         if (subCategory.visibility) {
+             html += '<td><button style="margin-right: 4px;" type="button"  id="' + visibilityBtnID + '" onClick="changeVisibility(\'' + visibilityUrl + '\',\'' + visibilityBtnID + '\')" class="btn btn-warning">Hide</button>'
+         } else {
+             html += '<td><button style="margin-right: 4px;" type="button"  id="' + visibilityBtnID + '" onClick="changeVisibility(\'' + visibilityUrl + '\',\'' + visibilityBtnID + '\')" class="btn btn-primary">Show</button>'
+         }
+         html += '<button id="' + editBtnId+'" style="margin-right: 4px;" type="button" class="btn btn-info " onclick="editCategory(\'' + 'EditCategory' + '\',\'' + subCategory.Id + '\',\'' +'#'+editBtnId+ '\')">Edit</button>'
+         html += '<button type="button" class="btn btn-danger " onclick="deleteSubCategory(\'' + trID + '\',\'' + "DeleteCategory" + '\',\'' + subCategory.Id + '\')"  >Delete</button></td>'
+         html += '</tr>'
+
+         return html
+     }
+
+     var drawTechnical = function (category) {
+         var trID = 'technicalTr' + category.Id;
+         var editBtnID = 'editTech' + category.Id;
+         var html = '';
+         html += '<tr id="' + trID + '">'
+         html += '<td style="color:#1cc88a;">' + category.Name + '</td>'
+         html += '<td><button id="' + editBtnID + '" style="margin-right: 4px;" type="button" class="btn btn-info" onclick="editCategory(\'' + 'EditTechnical' + '\',\'' + category.Id + '\',\'' + '#' + editBtnID + '\')">Edit</button>'
+         html += '<button type="button" class="btn btn-danger" onclick="deleteSubCategory(\'' + trID + '\',\'' + "DeleteTechnical" + '\',\'' + category.Id + '\')">Delete</button></td>'
+         html += '</tr>'
+         return html;
+     }
+
+    $(document).ready(function () {
+
+        // GetDeparmtnets
+        getCategories("MainDepartments", "Categories", "#TblMainCategoriesBody", "EditDepartment", "DeleteDepartment", "EditDepartmentVisibility");
+        // Get Technicals
+        getCategories("Technicals", "Categories", "#tbTechBody", "EditTechnical", "DeleteTechnical", "EditTechnicalVisibility");
+ 
+
+    })
+
+    
+
+ 
+ 
+    var addCategory = function (FormID, ActionName, ControllerName, TblBodyID, EditActionName, DeleteActionName,  btnID) {
+
+        // validation 
+        // access data from form 
+        debugger;
+
+        if (!$(FormID).valid()) {
+            return false;
+        }
+
+       
+
+        disableBtn(btnID)
+      
+        debugger;
+
+        var categoryData = $(FormID).serialize();
+        var URL = "/" + ControllerName + "/" + ActionName;
+
+
+
+
+        $.ajax({
+            url: URL,
+            type: "Post",
+            data: categoryData,
+            dataType: "json",
+            success: function (data) {
+
+                enableBtn(btnID, "Add");
+
+
+                if (data.Result.IsSuccess) {
+                    $('input').val("");
+                    successDialog(data.Result.Message);
+
+                    var editURL = "/Admin/" + ControllerName + "/" + EditActionName + "?id=" + data.Id;
+                    var DeleteURL = "/Admin/" + ControllerName + "/" + DeleteActionName + "?id=" + data.Id;
+
+                    if (ActionName === "CreateDepartment") {
+
+                        var dropDownListItemID = 'item' + data.Id;
+                        var visibilityDepartmentURL = "/Admin/" + ControllerName + "/EditDepartmentVisibility";
+                        updateDropDownList(data, dropDownListItemID)
+                        drawNewDepartment(data, visibilityDepartmentURL, DeleteURL, dropDownListItemID);
+
+                    } else if (ActionName === "CreateTechnical") {
+
+                        $(TblBodyID).append(drawTechnical(data))
+
+                    } else {
+                        $('#tbody' + data.DepartmentID).append(drawSubCategory(data, ''))
+                    }
+                } else {
+                    failedDialog(data.Result.Message);
+                }
+               
+ 
+            }
+        });
+
+
+    }
+ 
+
+
+
+    var updateDropDownList = function (data, dropDownListItemID) {
+        var newOption = $('<option id="' + dropDownListItemID + '" value="' + data.Id + '">' + data.Name + '</option>');
+
+        $('#MainCategoriesDropdown').append(newOption);
+
+       // $('#btnSubCategory').prop("disabled", false)
+    }
+
+
+
+     
+    var editCategory = function (ActionName,CategoryId,btnID) {
+
+        disableBtn(btnID);
+
+        var url = '/Categories/' + ActionName + '?id=' + CategoryId;
+
+        $("#modelBody").load(url, function () {
+
+            enableBtn(btnID, "Edit");
+            $("#myModal").modal("show");
+        })
+    }
+
+    var deleteDepartment = function (URL,ContainerID,DropDownItemID) {
+
+        $.ajax({
+            url: URL,
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+               
+                if (data.IsSuccess) {
+                    successDialog(data.Message);
+                    $('#' + ContainerID).remove();
+                    $('#' + DropDownItemID).remove();
+                     
+                } else {
+                    failedDialog(data.Message);
+                }
+
+            }
+
+        });
+
+    }
+
+    var deleteSubCategory = function (rowID,ActionName, categoryID) {
+
+        var URL = "/Admin/Categories/" + ActionName + "?id=" + categoryID;
+
+         $.ajax({
+            url: URL,
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+
+                if (data.IsSuccess) {
+                    successDialog(data.Message);
+                    $('#' + rowID).remove();
+                } else {
+                    failedDialog(data.Message);
+                }
+
+            }
+
+        });
+
+    }
+
+    var changeVisibility = function (URL, BtnID) {
+ 
+        $.ajax({
+            url: URL,
+            type: "Post",
+            dataType: "json",
+            success: function (visibility) {
+
+                if (visibility) {
+                    $('#' + BtnID).removeClass('"btn btn-primary').addClass('btn btn-warning');
+                    $('#' + BtnID).html("Hide");
+                } else {
+                    $('#' + BtnID).removeClass('"btn btn-warning').addClass('btn btn-primary');
+                    $('#' + BtnID).html("Show");
+                }
+
+            }
+
+        });
+    }
+
+
+    function enableBtn(btnId, message) {
+        $(btnId).html(message);
+        $(btnId).prop('disabled', false);
+    }
+
+    function disableBtn(btnId) {
+        $(btnId).html("wait..");
+        $(btnId).prop('disabled', true);
+    }
+
+</script>
+<!--End Add & Delete  Technical  -->

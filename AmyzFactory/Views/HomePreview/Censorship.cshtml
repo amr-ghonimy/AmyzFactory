@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Censorship";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    AmyzFactory.Models.InformationViewModel footerModel = ViewBag.FooterModel;
+}
+
+@model AmyzFactory.Models.InformationViewModel
+
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text -md-left">
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
+
+        <script>
+            $('#hero').css("background", "url(../Images/CensirshipHeader/@Model.FilePath)");
+        </script>
+
+        <h1 class="display-1">@Model.Title</h1>
+        <h2>@Model.Value</h2>
+        <p class="mb-0">@Model.Content</p>
+    </div>
+</section>
+<!-- end Hero Section-->
+<main id="main">
+
+    <!-- About Section-->
+    <section id="quality-box" class="quality-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-7">
+                    <img src="@footerModel.FilePath" class="img-fluid" alt="جودة المنتج">
+                </div>
+                <div class="col-xl-6 col-lg-5 pt-5 pt-lg-0" id="box-quality-icon">
+
+                    @using (StringReader reader = new StringReader(footerModel.Content))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            <div class="icon-box">
+                                <i class="fa fa-circle"></i>
+                                <p>@line </p>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+

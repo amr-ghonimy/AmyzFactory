@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+}
+ 
+
+<section class="head-page-edit-home">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header style="margin-top: 25px;">
+                    <h2><i class="fa fa-list-alt"></i>&nbsp;&nbsp;Add / Edit Products Price </h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+ 
+
+<section class="container">
+    <form>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="TblPrices">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody ></tbody>
+            </table>
+        </div>
+        <button class="btn btn-success" onclick="uploadAllRecords()" type="button" name="submit">Update Prices</button>
+
+    </form>
+
+</section>
+
+
+
+
+ 
+
+<script>
+
+    $(document).ready(function () {
+
+        bindDataTable('TblPrices', 'AllPrices', 'Prices')
+
+    })
+
+    var oTable;
+  
+    var bindDataTable = function (tableID, Action, Controller) {
+
+        if ($.fn.DataTable.isDataTable("#" + tableID)) {
+            oTable.draw();
+        }
+        else {
+            var Url = '/Admin/' + Controller + '/' + Action;
+            oTable = $("#" + tableID).DataTable({
+
+                "bServerSide": true,
+                "sAjaxSource": Url,
+                "fnServerData": function (sSource, aoData, fnCallback) {
+
+                    $.ajax({
+
+                        type: "Get",
+                        data: aoData,
+                        url: sSource,
+                        success: fnCallback
+                    })
+
+                },
+                "aoColumns": [
+                    { "mData": "Name" },
+                   
+                      {
+                          "mData": "Price",
+                          "render": function (Price, type, full, meta) {
+                              return '<input class="prices" data-value="'+full.Id+'" type="text" value="'+Price+'">'
+                          }
+                      }
+                ]
+
+
+
+            });
+        }
+
+    }
+
+
+
+    var uploadAllRecords = function () {
+        var products = $('.prices');
+        list = new Array();
+        products.each(function () {
+            var ProductPriceModel = {};
+            let id= $(this).attr('data-value');
+            let prc = $(this).val();
+            ProductPriceModel.Id = id;
+            ProductPriceModel.Price = prc;
+
+            list.push(ProductPriceModel);
+        })
+
+
+
+        debugger;
+
+        var jsonData = JSON.stringify(list);
+
+        $.ajax({
+            async:true,
+            type: "POST",
+            url: "/Prices/UpdatePrices",
+            data: jsonData,
+            success: function (data) {
+                if (data.IsSuccess) {
+                    successDialogEdit(data.Message);
+                } else {
+                    failedDialog(data.Message);
+                }
+            },
+            dataType: "json",
+            contentType:'application/json; charset=utf=8',
+            traditional: true
+        });
+     }
+ 
+
+</script>

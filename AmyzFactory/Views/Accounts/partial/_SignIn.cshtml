@@ -1,0 +1,33 @@
+﻿@model AmyzFactory.Models.UserViemModel
+
+@{
+    string url = ViewBag.ReturnUrl;
+ }
+<div id="login">
+    <h4>تسجيل الدخول</h4>
+
+    <form id="frmSignIn"> 
+
+        @Html.HiddenFor(m=>m.ReturnUrl, url)
+ 
+
+        <div class="field-wrap">
+            @Html.LabelFor(m => m.UserName, new { @class = "lbll" })
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-user", @type = "text", @autocomplete = "off", @placeholder = "اسم المستخدم" })
+            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "error_txt" })
+
+        </div>
+
+        <div class="field-wrap">
+            @Html.LabelFor(m => m.Password, new { @class = "lbll" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-user", @type = "password", @autocomplete = "off", @placeholder = "كلمة السر" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error_txt" })
+        </div>
+
+
+        <button id="signInBtn" type="button" class="button button-block">تسجيل الدخول</button>
+
+    </form>
+
+</div>
+

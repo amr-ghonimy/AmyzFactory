@@ -1,0 +1,42 @@
+﻿@model AmyzFactory.Models.InformationViewModel
+
+
+<form id="FrmAccount">
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover">
+            <caption>You can Add / Delete Social Media Account</caption>
+            <thead>
+                <tr>
+                    <!-- Add & Delet Social Media -->
+                    <th>
+                        <label for="urlSocialInput">URL :</label>
+                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "URL", @type = "url" })
+                         @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
+
+
+
+
+
+
+                    </th>
+                    <th>
+                        <label for="urlSocialInput">Select Social Type :</label>
+                        @Html.DropDownListFor(m => m.Title, new List<SelectListItem>
+                                  {
+                                        new SelectListItem { Text = "Facebook", Value = "facebook",Selected=true},
+                                        new SelectListItem { Text = "Twitter", Value = "twitter"},
+                                        new SelectListItem { Text = "Google Plus", Value = "google plus"},
+                                        new SelectListItem { Text = "Instgram", Value = "instgram"}
+
+                                  }, new { @class = "form-control" })
+                    </th>
+                    <th><button id="BtnAddAccount" onclick="addAddress('#FrmAccount', 'CreateAccount', 'HomePage', 'AccountTblContainer', 'DeleteAccount', '#BtnAddAccount')" type="button" class="btn btn-success btn-block">Add</button></th>
+                </tr> <!--End Add & Delet Social Media -->
+            </thead>
+            <tbody id="AccountTblContainer"></tbody>
+        </table>
+    </div>
+
+</form>

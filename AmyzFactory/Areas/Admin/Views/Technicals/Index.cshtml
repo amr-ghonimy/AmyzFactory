@@ -1,0 +1,225 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    SelectList techs = ViewBag.TechsSelectList;
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+}
+
+ @model AmyzFactory.Models.TechnicalTextViewModel
+
+ 
+
+<section class="container">
+    <article id="cate-add">
+        <form id="frmTechnical">
+             
+            <div>
+                <label><strong>Technical Sections</strong></label>
+                @Html.DropDownListFor(m => m.TechID, techs, new { @class = "form-control", @id = "MainCategoriesDropdown" })
+            </div>
+                <div>
+                   <label><strong>Title</strong></label>
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "Title" })
+                </div>
+            <div>
+               <label><strong>Description</strong></label>
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Description",@cols="1",@rows="7" })
+            </div>
+            <div style="margin-top:10px">
+                <button class="btn btn-success" onclick="addTechTexts('#frmTechnical', 'UpdateTechTexts', 'Technicals', 'EditTechTexts', 'DeleteTechTexts')" type="button" name="submit">Add</button>
+            </div>
+        </form>
+    </article>
+</section>
+
+
+
+<section class="container">
+    <article id="cate-add">
+        <caption>Add Tichnical Title & Description</caption>
+        <div id="accordion">
+
+        </div>
+    </article>
+</section>
+
+<script>
+
+
+
+    $(document).ready(function () {
+
+        // Get Technicals
+        getTechnicals("GetTechnicals", "Technicals", "#tbTechBody", "EditTechnical", "DeleteTechnical", "EditTechnicalVisibility");
+
+    })
+
+
+
+    var getTechnicals = function (ActionName, ControllerName, TblBodyID, EditActionName, DeleteActionName, VisibilityActionName) {
+
+        var URL = "/" + ControllerName + "/" + ActionName;
+
+        $.ajax({
+            url: URL,
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (i, category) {
+
+                    var editURL = "/Admin/" + ControllerName + "/" + EditActionName + "?id=" + category.Id;
+                    var DeleteURL = "/Admin/" + ControllerName + "/" + DeleteActionName + "?id=" + category.Id;
+
+
+                    var dropDownListItemID = 'item' + category.Id;
+
+
+
+                    drawNewTechnical(category, DeleteURL, dropDownListItemID)
+
+
+
+
+                })
+            }
+        });
+
+
+    }
+
+
+    var updateTechTexts = function (id) {
+        debugger;
+        $.ajax(
+          {
+              type: "POST", //HTTP POST Method
+              url: "/Technicals/UpdateTechTexts", // Controller/View 
+              data: { //Passing data
+                  Id: id,
+                  Title: $('#title'+id).val(),
+                  Description: $('#desc' + id).val(),
+              },
+              success: function (data) {
+                  if (data.Result.IsSuccess) {
+                      successDialogEdit(data.Result.Message);
+                  } else {
+                      failedDialog(data.Result.Message);
+                  }
+              }
+
+          });
+    }
+
+
+
+    var addTechTexts = function (FormID, ActionName, ControllerName, EditActionName, DeleteActionName) {
+
+        var categoryData = $(FormID).serialize();
+        var URL = "/" + ControllerName + "/" + ActionName;
+
+        $.ajax({
+            url: URL,
+            type: "Post",
+            data: categoryData,
+            dataType: "json",
+            success: function (data) {
+                if (data.Result.IsSuccess) {
+                    debugger;
+                    successDialog(data.Result.Message);
+                    var html = drawTechnicalTitle_Desc(data, '');
+                    var containerId = 'tbody' + data.TechID;
+
+                    $('#' + containerId).append(html);
+                     
+
+                 
+                } else {
+                    failedDialog(data.Result.Message);
+                }
+            }
+        });
+
+
+    }
+
+
+
+
+    var drawNewTechnical = function (category, deleteDepartmentURL, DropDownItemID) {
+
+        var subCategoryCollapseID = 'subCollapse' + category.Id;
+        var containerID = 'container' + category.Id;
+
+        var html = '<div class="card" id="' + containerID + '">';
+        // header (Main Department)
+        html += '<div class="card-header">' + '<div class="row">' + '<h5 class="col">';
+        html += '<button class="btn btn-link" data-toggle="collapse" data-target="#' + subCategoryCollapseID + '" aria-expanded="true" aria-controls="' + subCategoryCollapseID + '">'
+        html += '<i class="fa fa-sort-down"></i>' + category.Name + '</button></h5><h5 class="col"></h5><h5 class="col"></h5>'
+        html += '</div></div>'
+
+        // body (Sub Categories)
+
+        var tblBodyId = "tbody" + category.Id;
+
+        html += '<div id="' + subCategoryCollapseID + '" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">'
+        html += '<div class="card-body"><div class="table-responsive"><table class="table table-bordred table-hover">'
+        html += '<thead><tr><th>Name</th><th>Description</th><th>Update</th> <th>Delete</th></th></tr></thead>'
+        html += '<tbody id="' + tblBodyId + '">' // this id for when add new sub category
+
+
+        $.each(category.TechTextsList, function (i, subCategory) {
+            html = drawTechnicalTitle_Desc(subCategory, html);
+        })
+
+        html += '</tbody></table></div></div></div>'
+        $('#accordion').append(html);
+
+    }
+
+
+
+
+    var drawTechnicalTitle_Desc = function (tech, html) {
+        var title = tech.Title;
+        var description = tech.Description;
+
+        var trID = 'subTr' + tech.Id;
+        var titleTxtId = 'title' + tech.Id;
+        var descTxtId = 'desc' + tech.Id;
+        html += '<tr id="' + trID + '">'
+
+        html += '<th><input class = "form-control" type="text" value="' + tech.Title + '" id="' + titleTxtId + '" name="lname"></th>'
+        html += '<th><input class = "form-control" type="text" value="' + tech.Description + '"  id="' + descTxtId + '" name="lname"></th>'
+        html += '<td><button type="button" class="btn btn-primary btn-block"  onclick="updateTechTexts(' + tech.Id+ ')">Update</button></td>'
+        html += '<td><button type="button" class="btn btn-danger btn-block"  onclick="deleteTechTexts(\'' + tech.Id + '\',\'' + trID  + '\')">Delete</button></td>'
+
+
+        html += '</tr>'
+
+        return html
+    }
+
+
+    var deleteTechTexts = function (techId, rowId) {
+
+        var URL = "/Admin/Technicals/Delete?id=" + techId;
+
+        $.ajax({
+            url: URL,
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+
+                if (data.IsSuccess) {
+                    successDialog(data.Message);
+                    $('#' + rowId).remove();
+                } else {
+                    failedDialog(data.Message);
+                }
+
+            }
+        })
+    }
+
+
+</script>

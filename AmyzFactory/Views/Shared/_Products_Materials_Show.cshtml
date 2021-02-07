@@ -1,0 +1,91 @@
+﻿
+@model IEnumerable<AmyzFactory.Models.ProductViewModel>
+ 
+<script src="~/Content/js/add_to_cart.js"></script>
+ 
+@if (Model.Count() > 0)
+{
+    <section class="container" dir="rtl">
+         <div class="row clearfix" id="product-row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="card product_item">
+                        <div class="body">
+                            <div class="cp_img">
+                                <img src="~/Content/img/chick-5.jpg" alt="Product" class="img-fluid">
+                                <div class="hover">
+                                     <button onclick="showProductDetailsDialog(this)" itemid="@item.Id" itemname="@item.Name" itemprice="@item.Price" itemdefenition="@item.Defenition" itemdescription="@item.Descriprion" itemimage="@item.ImageURL" class="btn btn-success btn-sm waves-effect"><i class="fa fa-plus"></i></button>
+                                     <button onclick="addToCart(this)"  class="btn btn-success btn-sm waves-effect" itemid="@item.Id"><i class="fa fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="product_details">
+                                 <h5><a href="ec-product-detail.html">@item.Name</a></h5>
+                                <ul class="product_price list-unstyled">
+
+                                    @if (item.Price > 0)
+                                    {
+                                        <li class="new_price"><span>جنية</span> @item.Price </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="new_price">لم يتم تحديد السعر</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </section>
+}
+else
+{
+    <div class="empty-img center">
+        <img src="~/Content/img/empty_box.jpg">
+        <h4  alt="Paris">لا يوجد عناصر حاليا</h4>
+    </div>
+}
+
+
+
+<script>
+
+
+    function showProductDetailsDialog(item) {
+
+        var URL = '/Product/ShowItemDetails';
+
+
+        var model = {
+            Id: $(item).attr("itemid"),
+            Name:$(item).attr("itemname"),
+            Defenition: $(item).attr("itemdefenition"),
+            Descriprion: $(item).attr("itemdescription"),
+            Price: $(item).attr("itemprice"),
+            ImageURL:$(item).attr("itemimage")
+        }
+ 
+        $.ajax({
+            url: URL,
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({model: model}),
+            type: "POST",
+            success:function(data){
+                
+            },
+            error: function(){
+               
+            }
+        });
+
+    }
+
+
+
+
+</script>

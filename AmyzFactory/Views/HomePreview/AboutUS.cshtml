@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "AboutUS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var imagePath = ViewBag.ImagePath;
+    }
+
+@model AmyzFactory.Models.InformationViewModel
+
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text -md-left">
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
+
+        <script>
+            $('#hero').css("background", "url(../Images/About/@Model.FilePath)");
+        </script>
+
+        <h1 class="display-1">@Model.Title</h1>
+        <h2>@Model.Value</h2>
+        <p class="mb-0">@Model.Content</p>
+    </div>
+</section>
+<!-- end Hero Section-->
+<main id="main">
+
+    <!-- About Section-->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-7">
+                    <img src="~/Content/img/Meeting-3.jpg" class="img-fluid" alt="مجلس الادارة">
+                </div>
+                <div class="col-xl-6 col-lg-5 pt-5 pt-lg-0">
+                    <h3>رؤية مجلس الادارة</h3>
+                    <p>  أن تكون شركة أميز من رواد صناعة اعلاف الدواجن و المواشي في مصر</p>
+                    <div class="icon-box">
+                        <i class="fa fa-sticky-note"></i>
+                        <h4>ونقدم لعملائنا قيمة مضافة</h4>
+                        <p>ممثلة في تحقيق افضل معادل تحويل وكذلك مدة تسمين</p>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa fa-cube"></i>
+                        <h4>سياستنا</h4>
+                        <p> نلتزم فى شركةأميز للأعلاف بأن نقدم لعملائنا من المربين و القائمين على تنمية الثروة الحيوانية والداجنة أعلاف صحية ذات مستويات جودة وسلامة عالية وصديقة للبيئة</p>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa fa-cube"></i>
+                        <h4>هدفنا</h4>
+                        <p>أن نضع شركتنا في مصاف شركات الصف الأول العاملة في مجال تصنيع علف الدواجن وأن نحقق لعملائنا اعلي عائد ممكن</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</main>

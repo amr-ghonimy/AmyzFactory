@@ -1,0 +1,25 @@
+﻿
+@model AmyzFactory.Models.CategoryViewModel
+
+<article>
+    <div class="table-responsive">
+        <form name="frm1" id="frmDepartments">
+
+            <table class="table table-bordered table-hover">
+                <caption>You Can Add Main Category</caption>
+                <thead>
+                    <tr>
+                        <th>
+                            Main Category:
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control",@name = "depName", @placeholder = "name" })
+                            @Html.ValidationMessageFor(x => x.Name, null, new { @class = "text-danger" })
+                        </th>
+                        <th>
+                            <button id="addMaincategoryBtn" class="btn btn-success btn-block" onclick="addCategory('#frmDepartments', 'CreateDepartment', 'Categories', '', 'EditDepartment', 'DeleteDepartment', '#categoryName','#addMaincategoryBtn')" type="button">Add</button>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </form>
+    </div>
+</article>

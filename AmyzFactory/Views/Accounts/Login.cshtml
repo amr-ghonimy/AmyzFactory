@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "";
+}
+
+
+
+<html>
+
+<head>
+     
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="icon" href="~/Content/img/favicon.png"> <!-- Logo Title-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link rel="stylesheet" href="~/Content/css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap_rtl.css"> <!-- Bootstrap File Ar-->
+    <link rel="stylesheet" href="~/Content/css/bootstrap-table_rtl.css"> <!-- Bootstrap Table Ar-->
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/css/stylelogin.css" type="text/css"> <!-- Css Style -->
+    <script src="~/Content/js/modernizr.js"></script> <!-- Modernizr -->
+
+    <script src="~/Content/js/jquery-2.1.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/Areas/Admin/Content/js/dialogs.js"></script>
+</head>
+<body>
+
+
+
+    <div class="form">
+
+        <ul class="tab-group">
+            <li class="tab "><a href="#signup">مستخدم جديد</a></li>
+            <li class="tab active"><a href="#login">تسجيل الدخول</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+
+            @{
+                Html.RenderPartial("~/Views/Accounts/partial/_SignIn.cshtml");
+                Html.RenderPartial("~/Views/Accounts/partial/_SignUp.cshtml");
+            }
+
+        
+
+        </div><!-- tab-content -->
+
+    </div> <!-- /form -->
+
+ 
+</body>
+</html>
+
+
+<script>
+
+    $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+
+        var $this = $(this),
+            label = $this.prev('label');
+
+        if (e.type === 'keyup') {
+            if ($this.val() === '') {
+                label.removeClass('active highlight');
+            } else {
+                label.addClass('active highlight');
+            }
+        } else if (e.type === 'blur') {
+            if ($this.val() === '') {
+                label.removeClass('active highlight');
+            } else {
+                label.removeClass('highlight');
+            }
+        } else if (e.type === 'focus') {
+
+            if ($this.val() === '') {
+                label.removeClass('highlight');
+            }
+            else if ($this.val() !== '') {
+                label.addClass('highlight');
+            }
+        }
+
+    });
+
+    $('.tab a').on('click', function (e) {
+
+        e.preventDefault();
+
+        $(this).parent().addClass('active');
+        $(this).parent().siblings().removeClass('active');
+
+        target = $(this).attr('href');
+
+        $('.tab-content > div').not(target).hide();
+
+        $(target).fadeIn(600);
+
+    });
+
+    $('#signInBtn').click(function () {
+
+        if (!$('#frmSignIn').valid()) {
+            return false;
+        }
+        
+        disableBtn('#signInBtn');
+        debugger;
+
+        var URL = "/Accounts/Login";
+
+        var formData = $('#frmSignIn').serialize();
+
+
+        $.ajax({
+            url: URL,
+            type: "Post",
+            data: formData,
+            dataType: 'json',
+            success: function (data) {
+
+                enableBtn('#signInBtn', 'تسجيل الدخول');
+
+                if (data.IsSuccess) {
+                    window.location.href = data.Message;
+
+                } else {
+                    failedDialog(data.Message);
+                }
+
+            }
+        });
+
+
+
+    })
+
+    $('#signUpBtn').click(function () {
+
+        if (!$('#frmSignUp').valid()) {
+            return false;
+        }
+
+
+        disableBtn('#signUpBtn');
+
+        var URL = "/Accounts/Register";
+
+        var formData = $('#frmSignUp').serialize();
+
+
+        $.ajax({
+            url: URL,
+            type: "Post",
+            data: formData,
+            dataType: 'json',
+            success: function (data) {
+
+                enableBtn('#signUpBtn', 'التسجيل');
+
+                if (data.IsSuccess) {
+                    clearFields();
+                    successDialog(data.Message);
+                    window.location.href = "/HomePreview/Index"  
+
+                } else {
+                    failedDialog(data.Message);
+                }
+
+            }
+        });
+
+    })
+
+
+    function clearFields() {
+        $('input').val('');
+    }
+
+    function enableBtn(btnId, message) {
+        $(btnId).html(message);
+        $(btnId).prop('disabled', false);
+    }
+
+    function disableBtn(btnId) {
+        $(btnId).html("wait..");
+        $(btnId).prop('disabled', true);
+    }
+</script>
+
+<style>
+    .error_txt{
+        font-size:12px;
+        color:lightsalmon;
+    }
+
+    .lbll{
+        font-size:14px;
+        font-weight:bold;
+    }
+</style>

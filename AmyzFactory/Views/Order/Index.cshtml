@@ -1,0 +1,268 @@
+﻿
+@model List<AmyzFactory.Models.ProductViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    float shippingCost = 30.5f;
+    int counter = 0;
+ }
+
+ 
+
+@if (Model != null && Model.Count() > 0)
+{
+    <section id="sectionContainer">
+        <div class="container text-center text-md-left" id="Pagetitle">
+            <div class="container mb-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <h2 class="cartheader" style="margin-top:12px;">طلباتك</h2>
+                            <h7>برجاء مراجعة الفاتورة قبل تأكيد الطلب</h7>
+
+                            <table id="tbl" class="table carttbl table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">الاجمالى</th>
+                                        <th scope="col">السعر</th>
+                                        <th scope="col">الكمية</th>
+                                        <th scope="col">اسم الصنف</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i=0;i<Model.Count();i++ )
+                                    {
+
+                                        var item = Model[i];
+
+                                        var rowId = "tr" + item.Id;
+                                        var totalId = "total" + item.Id;
+                                        var qtyId = "qty" + item.Id;
+                                        var priceId = "price" + counter;
+                                        var qty = "price" + counter;
+
+                                       
+
+                                        
+                                        <tr id="@rowId">
+                                            <td><button onclick="deleteRow(@item.Id)" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                                            <td>
+                                                <h7 id="@totalId">@item.Total.ToString("#,##0.00")</h7>
+                                            </td>
+
+                                            <td>
+                                                <h7>@item.Price.ToString("#,##0.00")</h7>
+                                            </td>
+
+                                            <td>
+                                                <input type="number" total-id="@totalId" item-position="@i" item-price="@item.Price" min="1" max="15" value="@item.Quantity" />
+                                            </td>
+
+                                            <td>
+                                                @item.Name
+                                            </td>
+
+
+
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td id="shippingValue" shipping-cost="@shippingCost">@shippingCost</td>
+                                        <td>مصاريف الشحن</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td id="invoicePrice"><strong>amr</strong></td>
+                                        <td><strong>اجمالى الفاتورة</strong></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col mb-2 actions">
+                        <div class="row">
+                            <div class="col-sm-12  col-md-3">
+
+                            </div>
+                            <div class="col-sm-12  col-md-3">
+                                <button class="btn btn-lg btn-block btn-warning text-uppercase">الذهاب للتسوق</button>
+                            </div>
+                            <div class="col-sm-12 col-md-3 text-right">
+                                <button onclick="continueOrder()" class="btn btn-lg btn-block btn-success text-uppercase">متابعة عملية الشراء</button>
+                            </div>
+                            <div class="col-sm-12  col-md-3">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="empty-img center">
+        <img src="~/Content/img/empty_box.jpg" alt="Paris" class="center">
+        <h4 class="center" alt="Paris">لا يوجد عناصر في سلة المشتريات</h4>
+    </div>
+   
+}
+
+<div class="empty-img center" id="emptyContainer">
+    <img src="~/Content/img/empty_box.jpg" alt="Paris" class="center">
+    <h4 class="center" alt="Paris">لا يوجد عناصر في سلة المشتريات</h4>
+</div>
+
+
+<script src="~/Areas/Admin/Content/js/jquery-2.1.1.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Areas/Admin/Content/js/dialogs.js"></script>
+
+<script>
+
+    $(function () {
+        $(document).ajaxError(function (e, xhr) {
+            if (xhr.status == 403) {
+                var response = $.parseJSON(xhr.responseText);
+                window.location = response.LogOnUrl;
+            }
+        });
+    });
+
+    var list = @Html.Raw(Json.Encode(Model));
+   
+    $(document).ready(function () {
+        $('#emptyContainer').hide();
+
+        if(list!==null){
+            updateInvoice();
+        }
+    });
+
+    $('#tbl').on('change', 'input', function () {
+        var totalID = $(this).attr("total-id")
+        var qty = $(this).val();
+        var price = $(this).attr("item-price")
+        var itemPosition = $(this).attr("item-position")
+
+        var totalValue = qty * price;
+        list[itemPosition].Total = totalValue;
+        list[itemPosition].Quantity=qty;
+        $("#" + totalID).text(totalValue.toFixed(2).toString());
+        updateInvoice();
+    });
+
+    function updateInvoice() {
+        debugger;
+        var total = 0.0;
+        var shippingCost=$('#shippingValue').attr("shipping-cost");
+        
+        list.forEach(function (item) {
+            total=total+item.Total;
+        });
+
+        total= parseFloat(total)+parseFloat(shippingCost);
+        total=parseFloat(total).toFixed(2);
+        $('#invoicePrice').text(total);
+    }
+
+    function deleteRow(itemID) {
+
+        var URL = "/Order/Delete?itemID=" + itemID;
+        var rawID = "tr" + itemID;
+
+        $.ajax({
+            url: URL,
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+                if (data.IsSuccess) {
+                    $('#counterText').text(data.Message);
+                  
+                   // delete list[itemPosition];
+                //    list.splice(itemPosition-1,1);
+
+                    for (var i = 0; i < list.length; i++) {
+                        var obj = list[i];
+                        if(obj.Id===itemID){
+                            list.splice(i, 1);
+                        }
+                      
+                    }
+
+
+                    $('#' + rawID).remove();
+
+                    debugger;
+                    if(list.length ===0){
+                        $('#sectionContainer').remove();
+                        $('#emptyContainer').show();
+                    }else {
+                        updateInvoice();
+                    }
+
+                }
+            }
+        });
+
+ 
+    }
+
+
+    function continueOrder() {
+
+
+        var finalList = new Array();
+
+
+        $.each(list, function (index, element) {
+            debugger;
+
+            var ProductViewModel = {};
+            if (element != null) {
+                ProductViewModel.Id = element.Id;
+                ProductViewModel.Price = element.Price;
+                ProductViewModel.Quantity = element.Quantity;
+                ProductViewModel.Total = element.Total;
+                finalList.push(ProductViewModel);
+            }
+        });
+
+
+         
+
+
+        var dataJson = JSON.stringify(finalList);
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/Order/ContinueOrder",
+            data: dataJson,
+            success: function (response) {
+                window.location.href =response ;
+            },
+            dataType: "json",
+            contentType: 'application/json; charset=utf=8',
+            traditional: true
+        });
+
+    }
+
+   
+</script>

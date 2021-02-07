@@ -1,0 +1,90 @@
+﻿@model IEnumerable<AmyzFactory.Models.OrderDetailsViewModel>
+@{
+    ViewBag.Title = "OrderDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+
+    var userID = ViewBag.userID;
+}
+
+<section class="head-page">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs--12">
+                <header style="margin-top:24px;">
+                    <h2><i class="fas fa-list-alt">&nbsp;&nbsp; Client Information:</i></h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+ @{
+     Html.RenderAction("_UserInfo", "Orders");
+  }
+
+
+<section class="head-page">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs--12">
+                <header style="margin-top:24px;">
+                    <h2><i class="fas fa-list-alt">&nbsp;&nbsp; Order Details:</i></h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+<div class="table-responsive" style="margin-top:15px;">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                @if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        var imgUrl = "../Images/Products/" + item.ItemImg;
+                        <tr>
+                            <td><img src="@imgUrl" /></td>
+                            <td>@item.ItemName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Price</td>
+                            <td>@item.Total</td>
+                        </tr>
+
+                    }
+                }
+        </tbody>
+    </table>
+</div>
+
+
+
+<style>
+    .prefix{
+          font-weight: bold;
+          font-size:16px;
+    }
+    .shop-tracking-status{
+        margin-top:15px;
+    }
+    .label-success{
+        color:red;
+          font-weight: normal;
+          font-size:14px;
+    }
+</style>
+
+ 
+
+
+  

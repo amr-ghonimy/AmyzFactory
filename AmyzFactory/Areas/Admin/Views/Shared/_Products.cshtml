@@ -1,0 +1,245 @@
+﻿
+
+@model AmyzFactory.Models.ProductViewModel
+
+
+<div class="form-group">
+    <p><strong>Select product image:</strong></p>
+    <input id="productImageInput" type="file" name="image" accept="image/*" onchange="viewImageFile('#productImageInput', '#productDescription', '#productTargetImg', '#imgProductPreview',250,250)">
+</div>
+ 
+
+<div id="imgProductPreview" class="thumbnail" style="display:none">
+    <img class="img-responsive" id="productTargetImg" width="120" height="120" />
+    <div class="caption">
+        <a onclick="clearPreview()"> Clear </a>
+        <span id="productDescription"></span>
+    </div>
+    <hr />
+</div>
+
+<div class="form-group">
+    <label for="proName" class="col-sm-2 control-label"><strong>Product Name</strong></label>
+    <div class="col-sm-10">
+        @Html.TextAreaFor(m => m.Name, new { @class = "form-control", @placeholder = "Name", @id = "name" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+
+    </div>
+</div><!-- /.Form-Group -->
+
+<div class="form-group">
+    <label for="proName" class="col-sm-2 control-label"><strong>Defenition</strong> </label>
+    <div class="col-sm-10">
+        @Html.TextAreaFor(m => m.Defenition, new { @class = "form-control", @placeholder = "Defenition", @id = "definition", @cols = "1", @rows = "5" })
+        @Html.ValidationMessageFor(m => m.Defenition,"", new { @class = "text-danger" })
+     </div>
+</div><!-- /.Form-Group -->
+
+<div class="form-group">
+    <label for="proName" class="col-sm-2 control-label"><strong>Content</strong> </label>
+    <div class="col-sm-10">
+        @Html.TextAreaFor(m => m.Descriprion, new { @class = "form-control", @placeholder = "Content", @id = "description", @cols = "1", @rows = "7" })
+        @Html.ValidationMessageFor(m => m.Descriprion, "", new { @class = "text-danger" })
+     </div>
+</div><!-- /.Form-Group -->
+
+
+<div class="form-group">
+    <label for="proName" class="col-sm-2 control-label"><strong>Quantity</strong> </label>
+    <div class="col-sm-2">
+        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "Quantity", @id = "quantity" })
+        @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger" })
+    </div>
+</div><!-- /.Form-Group -->
+
+<div class="form-group">
+    <label for="proName" class="col-sm-2 control-label"><strong>Price</strong> </label>
+    <div class="col-sm-4">
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "The price is per piece", @id = "price"})
+        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+    </div>
+</div><!-- /.Form-Group -->
+
+
+<div class="form-group">
+    <label for="proName" class="col-sm-4 control-label" ><strong>Is visibile in site?</strong></label>
+    @Html.DropDownListFor(model => model.isVisible, new List<SelectListItem>(){
+                                new SelectListItem { Value = "true", Text = "Yes" },
+                                 new SelectListItem { Value = "false", Text = "No" }},
+                                 new { @class = "col-sm-2 form-control", @id = "visibility" })
+</div><!-- /.Form-Group -->
+
+
+
+<script>
+
+
+
+
+    var oTable;
+
+
+    var bindDataTable = function (tableID,Action,Controller) {
+        debugger;
+        if ($.fn.DataTable.isDataTable("#" + tableID)) {
+             oTable.draw();
+        }
+        else {
+
+            var Url = '/Admin/' + Controller + '/' + Action;
+            oTable = $("#" + tableID).DataTable({
+
+                "bServerSide": true,
+                "sAjaxSource": Url,
+                "fnServerData": function (sSource, aoData, fnCallback) {
+
+                    $.ajax({
+
+                        type: "Get",
+                        data: aoData,
+                        url: sSource,
+                        success: fnCallback
+                    })
+
+                },
+                "aoColumns": [
+                    { "mData": "Name" },
+                     { "mData": "CategoryName" },
+                    { "mData": "Price" },
+                   { "mData": "Quantity" },
+                    { "mData": "isVisible" },
+                      {
+                          "mData": "Id",
+                          "render": function (Id, type, full, meta) {
+                              return '<a class="btn btn-success" href="#" style="margin-right: 4px;"  onclick="editProduct(' + Id + ')"><i class="fa fa-pencil-alt"></i></a>' +
+                                  '<a class="btn btn-danger" href="#" style="margin-right: 4px;"  onclick="deleteProduct(\'' + Id + '\',\'' + Action + '\',\'' + Controller + '\',\'' + tableID + '\')"><i class="fa fa-trash-alt"></i></a>' +
+                                  '<a class="btn btn-info"  href="#" onclick="editProduct(\'' + Id + '\',\'' + Action + '\',\'' + Controller + '\')"><i class="fa fa-info"></i></a>'
+                          }
+                      }
+                ]
+
+
+
+            });
+        }
+       
+    }
+
+
+     
+
+   
+
+
+
+    // add new Product
+
+    var addProduct = function (tblId, actionName, controllerName, categoryID, frmID, btnID) {
+
+        // validation 
+   
+        if (!$(frmID).valid()) {
+            return false;
+        }
+
+
+        disableBtn(btnID);
+
+        var formData = new FormData();
+        var file = $('#productImageInput').get(0).files;
+
+        if (categoryID !== null) {
+            formData.append("CategoryID", categoryID);
+        }
+
+        formData.append("Name", $('#name').val());
+        formData.append("Defenition", $('#definition').val());
+        formData.append("Descriprion", $('#description').val());
+        formData.append("isVisible", $('#visibility').val());
+        formData.append("Quantity", $('#quantity').val());
+        formData.append("Price", $('#price').val());
+        formData.append("ImageFile", file[0]);
+        
+        
+
+        // for image upload
+
+        var URL = "/" + controllerName + "/" + actionName;
+
+        $.ajax({
+            url: URL,
+            type: "Post",
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+
+                enableBtn(btnID, "Upload");
+
+                if (data.ResponseResult.IsSuccess) {
+                    clearfields();
+                    successDialog(data.ResponseResult.Message);
+                    bindDataTable(tblId, actionName, controllerName);
+                } else {
+                    failedDialog(data.ResponseResult.Message);
+                }
+
+            }
+        });
+
+    }
+
+
+    var editProduct = function (id) {
+        var url = "/Admin/Products/EditProduct?id=" + id;
+
+        $("#modelBody").load(url, function () {
+            $("#productModal").modal("show");
+        })
+
+    }
+
+    var deleteProduct = function (id,RefreshProductsAction,Controller,tblID) {
+        var URL = "/Admin/Products/Delete?id=" + id;
+
+        $.ajax({
+            url: URL,
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+
+                if (data.IsSuccess) {
+                    successDialog(data.Message);
+                    bindDataTable(tblID, RefreshProductsAction, Controller);
+
+                } else {
+                    failedDialog(data.Message);
+                }
+            }
+
+        });
+
+    }
+
+
+    function clearfields() {
+        $('#name').val('');
+        $('#definition').val('');
+        $('#description').val('');
+        $('#quantity').val('');
+        $('#price').val('');
+    }
+
+    function enableBtn(btnId, message) {
+        $(btnId).html(message);
+        $(btnId).prop('disabled', false);
+    }
+
+    function disableBtn(btnId) {
+        $(btnId).html("Please wait...");
+        $(btnId).prop('disabled', true);
+    }
+
+
+</script>

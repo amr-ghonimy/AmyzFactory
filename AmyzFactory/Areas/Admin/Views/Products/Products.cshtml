@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+
+    AmyzFactory.Models.CategoryViewModel catModel = ViewBag.CatModel;
+
+}
+
+@model AmyzFactory.Models.ProductViewModel
+
+
+<!-- Modal -->
+<div id="productModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modelBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<section class="head-page-add-pro">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h2><i class="fab fa-product-hunt"></i>&nbsp;&nbsp;Add Product</h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="container">
+    <article id="pro-add">
+             <div class="col-xs-12">
+                     <form id="productFrm">
+                        @if (catModel != null && catModel.mainDepartmentsDropDown != null && catModel.mainDepartmentsDropDown.Count() > 0)
+                        {
+
+                            <div class="form-group">
+                                <label for="selSpecies" class="col-sm-2 control-label"><strong>Select Category</strong></label>
+                                <div class="col-sm-5">
+                                    @Html.DropDownListFor(m => m.CategoryId, catModel.mainDepartmentsDropDown, new { @class = "form-control", @id = "categoryIDDropDown" })
+                                </div>
+                            </div><!-- /.Form-Group -->
+
+                        }
+                        else
+                        {
+                            <div class="alert alert-danger">
+                                <strong>Danger!</strong> You cant add insert products currently because no categories found.
+                            </div>
+                        }
+
+                        @Html.Partial("_Products")
+                        <center>
+                            @if (catModel != null && catModel.mainDepartmentsDropDown != null && catModel.mainDepartmentsDropDown.Count() > 0)
+                            {
+                                <button type="button" id="btnAddProduct" name='submit' class="btn btn-success" onclick="addProduct('tblProducts', 'Create', 'Products', $('#categoryIDDropDown').val(), '#productFrm', '#btnAddProduct')">Upload</button>
+                            }
+                            else
+                            {
+                                <button type="button" id="btnAddProduct" disabled name='submit' class="btn btn-danger" onclick="addProduct('tblProducts', 'Create', 'Products', $('#categoryIDDropDown').val(), '#productFrm', '#btnAddProduct')">Upload</button>
+                            }
+
+                        </center>
+                       
+                    </form>
+             </div><!-- /.Col -->
+     </article><!-- /#Pro-Add -->
+</section><!-- /.Container -->
+
+
+
+
+
+
+
+
+
+
+
+<section class="head-page-edit-pro">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h2><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Product</h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="container">
+    <article class="search-result">
+        <section class="search-pro"></section>
+
+
+
+        <section class="search-res">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="tblProducts">
+                    <caption>Search Result</caption>
+                    <thead>
+                        <tr>
+                            <td>Product name</td>
+                            <td>Category name</td>
+                            <td>Price</td>
+                            <td>Quantity</td>
+                            <td>Is Visible</td>
+                            <td>Actions</td>
+
+                        </tr>
+                    </thead>
+                    <tbody ></tbody>
+                </table>
+            </div>
+
+           
+
+        </section>
+    </article>
+</section>
+
+<script>
+ $(document).ready(function () {
+
+     //   getProducts("tblProducts", "AllProducts");
+        bindDataTable("tblProducts", "AllProducts", "Products");
+    });
+</script>
+
+
+
+

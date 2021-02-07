@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "PeoductQuality";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+      
+}
+
+@model AmyzFactory.Models.InformationViewModel
+
+<section id="quality" class="d-flex flex-column jutify-content-center align-items-center">
+    <div class="container text-center text-md-left">
+        <h1>@Model.Title</h1>
+        <p class="mb-0">  @Model.Value</p>
+    </div>
+</section>
+<!-- About Section-->
+<section id="quality-box" class="quality-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-lg-7">
+                <img src="@Model.FilePath" class="img-fluid" alt="جودة المنتج">
+            </div>
+            <div class="col-xl-6 col-lg-5 pt-5 pt-lg-0" id="box-quality-icon">
+
+              @using (StringReader reader = new StringReader(Model.Content))
+              {
+                  string line;
+                  while ((line = reader.ReadLine()) != null)
+                  {
+                    <div class="icon-box">
+                        <i class="fa fa-circle"></i>
+                        <p>@line </p>
+                    </div>
+                  }
+              }
+               
+            </div>
+        </div>
+    </div>
+</section>
+

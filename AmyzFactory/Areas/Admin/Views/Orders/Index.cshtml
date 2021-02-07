@@ -1,0 +1,109 @@
+﻿
+@model IEnumerable<AmyzFactory.Models.OrderViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<section class="container">
+    <article class="search-result">
+        <section class="search-pro"></section>
+
+        <section class="search-res">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="tblOrders">
+                    <caption>Search Result</caption>
+                    <thead>
+                        <tr>
+                            <td>Order number</td>
+                            <td>Order Date</td>
+                            <td>Items Count</td>
+                            <td>Shipping Cost</td>
+                            <td>Total Price</td>
+                            <td>Actions</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </section>
+    </article>
+</section>
+
+
+
+
+<script>
+ $(document).ready(function () {
+
+     //   getProducts("tblProducts", "AllProducts");
+     fillOrdersTable("tblOrders", "AllOrders", "Orders");
+ });
+
+
+
+
+
+ var fillOrdersTable = function (tableID, Action, Controller) {
+     debugger;
+     if ($.fn.DataTable.isDataTable("#" + tableID)) {
+         oTable.draw();
+     }
+     else {
+
+         var Url = '/Admin/' + Controller + '/' + Action;
+         oTable = $("#" + tableID).DataTable({
+
+             "bServerSide": true,
+             "sAjaxSource": Url,
+             "fnServerData": function (sSource, aoData, fnCallback) {
+
+                 $.ajax({
+
+                     type: "Get",
+                     data: aoData,
+                     url: sSource,
+                     success: fnCallback
+                 })
+
+
+
+             },
+             "aoColumns": [
+                 { "mData": "OrderNumber" },
+                  { "mData": "OrderDate" },
+                 { "mData": "ItemsCount" },
+                { "mData": "ShippingCost" },
+                 { "mData": "OrderTotalPrice" },
+                   {
+                       
+                       "mData": "OrderID",
+                       "render": function (orderID, type, full, meta) {
+                           debugger;
+                           return '<a class="btn btn-danger" style="margin-right: 4px;" href ="#" onclick="deleteProduct(\'' + orderID + '\',\'' + Action + '\',\'' + Controller + '\',\'' + tableID + '\')"><i class="fa fa-trash-alt"></i></a>' +
+                               '<a class="btn btn-info" href ="/Admin/Orders/OrderDetails?orderID=' + orderID + '&userID='+full.UserID+'"><i class="fa fa-info"></i></a>'
+                       }
+                   }
+             ]
+
+
+
+         });
+     }
+
+ }
+
+ 
+
+ 
+</script>
+
+
+
+
+
+

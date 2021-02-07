@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+}
+
+@model AmyzFactory.Models.InformationViewModel
+
+
+<section class="head-page-add-pro">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h2><i class="fab fa-product-hunt"></i>&nbsp;&nbsp;Add Quality</h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+
+<section class="container">
+    <article id="slider-edit">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <caption>You can Add / Delete Photo Information </caption>
+                <thead>
+                    <tr>
+                        <form >
+                            <th class="form-group">
+                                <label for="imageInput">PC Image :</label>
+                                <input id="infoImageInput" type="file" name="image" onchange="viewImageFile('#infoImageInput', '#infoDescription', '#infotargetImg', '#imgInfoPreview',0,0)">
+                            </th>
+
+                            <th><label>Actions</label></th>
+
+                            <div>
+                                <div id="imgInfoPreview" class="thumbnail" style="display:none">
+                                    <img class="img-responsive" id="infotargetImg" width="120" height="80" />
+                                    <div class="caption">
+                                        <a href="#" onclick="clearPreview()"> Clear </a>
+                                        <span id="infoDescription"></span>
+                                    </div>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#infoImageInput', 'UploadQualityImage', 'Qualities', 'TblInfoBody', '#infoDescription', '#imgInfoPreview', 'DeleteQualityImage')" data-dismiss="modal">Upload</button>
+                                    <hr />
+                                </div>
+                            </div>
+                        </form>
+                    </tr>
+
+                </thead>
+                <tbody id="TblInfoBody"></tbody>
+            </table>
+            <form id="frmQualities">
+                <div class="container">
+                    <label for="imgNameInput">Header Name:</label>
+                    @Html.TextBoxFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", placeholder = "Header Name", @type = "text" })
+
+                    <label for="imgNameInput">Information</label>
+                    @Html.TextAreaFor(m => m.Value, new { @id = "qualityTitle", @class = "form-control", placeholder = "Information", @type = "text" })
+                    <label for="imgNameInput">Description</label>
+                    @Html.TextAreaFor(m => m.Content, new { @id = "description", @class = "form-control", @rows = "6", placeholder = "Description", @type = "text" })
+                    <hr />
+                    <button class="btn btn-success" onclick="updateQuality()" type="button" name="submit">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </article>
+</section> <!-- End Add & Delet photo Information -->
+
+
+
+
+
+<script src="~/Areas/Admin/Content/js/images.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        getImages("getQualityImages", "Qualities", "TblInfoBody", "DeleteQualityImage");
+     })
+
+
+
+
+
+    $(document).ready(function () {
+
+
+        $.ajax({
+            url: "/Qualities/QualityTexts",
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+                $('#headerTitle').attr("value", data.Title);
+                $('#qualityTitle').val(data.Value);
+                $('#description').val(data.Content);
+             }
+        });
+
+    })
+    var updateQuality = function () {
+
+        var formData = $("#frmQualities").serialize();
+
+        $.ajax({
+            url: "/Qualities/CreateUpdateQuality",
+            type: "Post",
+            data: formData,
+            dataType: "json",
+            success: function (data) {
+                if (data.Result.IsSuccess) {
+                    successDialog(data.Result.Message);
+                } else {
+                    failedDialog(data.Result.Message);
+                }
+            }
+        });
+
+    }
+
+</script>

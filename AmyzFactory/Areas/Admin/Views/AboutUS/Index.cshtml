@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+}
+
+@model AmyzFactory.Models.InformationViewModel
+
+<section class="head-page-add-pro">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h2><i class="fab fa-product-hunt"></i>&nbsp;&nbsp;Add / Edit About</h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+<section class="container">
+    <article id="slider-edit">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <caption>Add / Edit About</caption>
+                <thead>
+                    <tr>
+                        <form >
+                            <th class="form-group">
+                                <label for="imageInput">About Img : </label>
+                                <input class="form-control" id="aboutImageInput" type="file" name="image" onchange="viewImageFile('#aboutImageInput', '#aboutDescription', '#aboutTargetImg', '#imgAboutPreview',0,0)">
+                            </th>
+
+                            <div>
+                                <div id="imgAboutPreview" class="thumbnail" style="display:none">
+                                    <img class="img-responsive" id="aboutTargetImg" width="120" height="80" />
+                                    <div class="caption">
+                                        <a href="#" onclick="clearPreview()"> Clear </a>
+                                        <span id="aboutDescription"></span>
+                                    </div> 
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#aboutImageInput', 'UploadAboutUsImage', 'AboutUS', 'TblAboutImages', '#aboutDescription', '#imgAboutPreview', 'DeleteAboutImage')" data-dismiss="modal">Upload</button>
+                                    <hr />
+                                </div>
+                            </div>
+                        </form>
+                    </tr>
+                </thead>
+                <tbody id="TblAboutImages">
+                    
+                </tbody>
+            </table>
+            <form id="frmAboutUs">
+                <div class="form-group">
+                    <label for="titleInput"> Title:</label>
+                    @Html.TextBoxFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", placeholder = "Header Name", @type = "text" })
+                </div>
+
+                <div class="form-group">
+                    <label for="titleInput"> P :</label>
+                    @Html.TextAreaFor(m => m.Value, new { @id = "p1", @class = "form-control", placeholder = "Header Name" , @rows = "4", @type = "text" })
+                </div>
+
+                <div class="form-group">
+                    <label for="titleInput"> P :</label>
+                    @Html.TextAreaFor(m => m.Content, new { @id = "p2", @class = "form-control", @rows = "6", placeholder = "Header Name", @type = "text" })
+                </div>
+                <hr />
+                <input class="btn btn-success" onclick="updateAboutUS('frmAboutUs', 'CreateUpdateAbout')" type="button" value="Update" />
+            </form>
+        </div>
+    </article>
+
+    <div class="kik"></div>
+</section>
+
+<section class="head-page-add-pro">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h2>
+                        <i class="fab fa-product-hunt"></i>&nbsp;&nbsp;Add / Edit Our responsibility
+                    </h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="container">
+
+
+
+    <article id="slider-edit">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <caption>Add / Edit About</caption>
+                <thead>
+                    <tr>
+                        <form>
+                            <th class="form-group">
+                                <label for="imageInput">About Img : </label>
+                                <input class="form-control" id="responsibilityImageInput" type="file" name="image" onchange="viewImageFile('#responsibilityImageInput', '#responsibilityDescription', '#responsibilityTargetImg', '#imgResponsibilityPreview', 0, 0)">
+                            </th>
+
+                            <div>
+                                <div id="imgResponsibilityPreview" class="thumbnail" style="display:none">
+                                    <img class="img-responsive" id="responsibilityTargetImg" width="120" height="80" />
+                                    <div class="caption">
+                                        <a href="#" onclick="clearPreview()"> Clear </a>
+                                        <span id="responsibilityDescription"></span>
+                                    </div>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#responsibilityImageInput', 'UploadResponsiobilityImage', 'AboutUS', 'TblResponsImages', '#responsibilityDescription', '#imgResponsibilityPreview', 'DeleteResponsiobilityImage')" data-dismiss="modal">Upload</button>
+                                    <hr />
+                                </div>
+                            </div>
+                        </form>
+                    </tr>
+                </thead>
+                <tbody id="TblResponsImages"></tbody>
+            </table>
+            <form id="frmResponsib">
+                <div class="form-group">
+                    <label for="titleInput"> Title:</label>
+                    @Html.TextBoxFor(m => m.Title, new { @id = "headerTitleRes", @class = "form-control", placeholder = "Header Name", @type = "text" })
+                </div>
+
+                <div class="form-group">
+                    <label for="titleInput"> P :</label>
+                    @Html.TextAreaFor(m => m.Value, new { @id = "p1Res", @class = "form-control", placeholder = "Header Name", @rows = "4", @type = "text" })
+                </div>
+
+                <div class="form-group">
+                    <label for="titleInput"> P :</label>
+                    @Html.TextAreaFor(m => m.Content, new { @id = "p2Res", @class = "form-control", @rows = "6", placeholder = "Header Name", @type = "text" })
+                </div>
+                <hr />
+                <input class="btn btn-success" onclick="updateAboutUS('frmResponsib', 'CreateUpdateResponsipility')" type="button" value="Update" />
+            </form>
+        </div>
+    </article>
+
+
+</section>
+
+    <script src="~/Areas/Admin/Content/js/images.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            getImages("getAboutImages", "AboutUS", "TblAboutImages", "DeleteAboutImage");
+            getImages("getResponsibilityImages", "AboutUS", "TblResponsImages", "DeleteResponsiobilityImage");
+
+        })
+
+
+
+
+
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "/AboutUS/ResponsibiltyTexts",
+                type: "Get",
+                dataType: "json",
+                success: function (data) {
+                    $('#headerTitleRes').attr("value", data.Title);
+                    $('#p1Res').val(data.Value);
+                    $('#p2Res').val(data.Content);
+                }
+            });
+
+            $.ajax({
+                url: "/AboutUS/AboutUsTexts",
+                type: "Get",
+                dataType: "json",
+                success: function (data) {
+                    $('#headerTitle').attr("value", data.Title);
+                    $('#p1').val(data.Value);
+                    $('#p2').val(data.Content);
+                }
+            });
+
+        })
+        var updateAboutUS = function (FrmID,ActionName) {
+
+            var formData = $("#" + FrmID).serialize();
+            var URL = '/AboutUS/' + ActionName;
+            $.ajax({
+                url: URL,
+                type: "Post",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.Result.IsSuccess) {
+                        successDialog(data.Result.Message);
+                    } else {
+                        failedDialog(data.Result.Message);
+                    }
+                }
+            });
+
+        }
+
+    </script>

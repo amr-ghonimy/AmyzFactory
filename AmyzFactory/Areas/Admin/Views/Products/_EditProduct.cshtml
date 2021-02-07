@@ -1,0 +1,122 @@
+﻿@model AmyzFactory.Models.ProductViewModel
+
+@{ 
+    SelectList catModel = ViewBag.Categories;
+}
+
+
+
+
+
+
+@if (Model != null)
+{
+    <form id="FrmEditing">
+       
+        @Html.HiddenFor(model => model.Id)
+        @if (Model.CategoryId != null)
+        {
+           <div class="form-group">
+               <label for="selSpecies" class="col-sm-8 control-label"><strong>Select Sections</strong></label>
+               <div class="col-sm-10">
+                 
+                       @Html.DropDownListFor(m => m.CategoryId, catModel, new { @class = "form-control" })
+                   
+               </div>
+              
+           </div><!-- /.Form-Group -->
+        }else
+        {
+            Model.CategoryId = 0;
+        }
+        <div class="form-group">
+            <label for="proName" class="col-sm-2 control-label"><strong>Name</strong></label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(m => m.Name, new { @class = "form-control", @placeholder = "Name" })
+            </div>
+        </div><!-- /.Form-Group -->
+
+        <div class="form-group">
+            <label for="proName" class="col-sm-2 control-label"><strong>Defenition</strong></label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(m => m.Defenition, new { @class = "form-control", @placeholder = "Defenition" })
+            </div>
+        </div><!-- /.Form-Group -->
+        <div class="form-group">
+            <label for="proName" class="col-sm-2 control-label"><strong>Description</strong></label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(m => m.Descriprion, new { @class = "form-control", @placeholder = "Description", @cols = "1", @rows = "5" })
+            </div>
+        </div><!-- /.Form-Group -->
+
+
+        <div class="form-group">
+            <label for="proName" class="col-sm-2 control-label"><strong>Quantity</strong> </label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "Quantity", @id = "quantity" })
+                @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div><!-- /.Form-Group -->
+
+        <div class="form-group">
+            <label for="proName" class="col-sm-2 control-label"><strong>Price</strong> </label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "The price is per piece", @id = "price" })
+            </div>
+        </div><!-- /.Form-Group -->
+
+
+        <div class="form-group">
+            <label for="proName" class="col-sm-4 control-label">Is Visible in site?</label>
+            @Html.DropDownListFor(model => model.isVisible, new List<SelectListItem>(){
+                        new SelectListItem { Value = "true", Text = "Yes" },
+                         new SelectListItem { Value = "false", Text = "No" }},
+                         new { @class = "form-control" })
+        </div><!-- /.Form-Group -->
+
+
+        <center>
+            <button id="BtnEditData" type="button" name='submit' class="btn btn-success">Edit</button>
+        </center>
+
+   
+     </form>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#BtnEditData").click(function () {
+            var formData = $("#FrmEditing").serialize();
+            debugger;
+
+            var categoryId=@Model.CategoryId;
+
+            $.ajax({
+                type: "Post",
+                url: "/Products/EditProduct",
+                data: formData,
+                success: function (data) {
+        
+                    if (data.IsSuccess) {
+                        successDialogEdit(data.Message)
+                    } else {
+                        failedDialog(data.Message)
+                    }
+
+
+                    $("#productModal").modal("hide");
+                    
+                    if(categoryId>0){
+                        bindDataTable("tblProducts", "AllProducts", "Products");
+                    }else {
+                        bindDataTable("tblMaterials", "AllMaterials", "Products");
+                    }
+                }
+
+
+            })
+        })
+    })
+</script>

@@ -1,0 +1,195 @@
+/**
+ ===== <!-- Login Page -->
+ **/
+ *, *:before, *:after {
+    box-sizing: border-box;
+  }
+  
+  html {
+    overflow-y: scroll;
+  }
+  
+  body {
+    background: #c1bdba;
+   font-family: 'tahoma' !important;
+
+  }
+ .form{
+    box-sizing: border-box;
+  }
+ .form a {
+   text-decoration: none;
+   color: #0cda90 ;
+   -webkit-transition: .5s ease;
+   transition: .5s ease;
+ }
+ .form a:hover {
+   color: #0cda90 ;
+ }
+ .form {
+   background: rgba(19, 35, 47, 0.9);
+   padding: 40px;
+   max-width: 600px;
+   margin: 40px auto;
+   border-radius: 4px;
+   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+ }
+ .tab-group {
+   list-style: none;
+   padding: 0;
+   margin: 0 0 40px 0;
+ }
+ .tab-group::after {
+   content: "";
+   display: table;
+   clear: both;
+ }
+ .tab-group li a {
+   display: block;
+   text-decoration: none;
+   padding: 15px;
+   background: rgba(160, 179, 176, 0.25);
+   color: #a0b3b0;
+   font-size: 20px;
+   float: right;
+   width: 50%;
+   text-align: center;
+   cursor: pointer;
+   -webkit-transition: .5s ease;
+   transform: .5s ease;
+ }
+ .tab-group li a:hover {
+   background: #0cda90 ;
+   color: #ffffff;
+ }
+ .tab-group .active a {
+   background: #0cda90 ;
+   color: #ffffff;
+ }
+ .tab-content > div:last-child {
+   display: none;
+ }
+ .form h1 {
+   text-align: center;
+   color: #ffffff;
+   margin: 0 0 40px;
+   font-size: 25px;
+ }
+ .form label {
+   position: absolute;
+   -webkit-transform: translate(6px);
+           transform: translate(6px);
+   right: 15px;
+   color: rgba(255, 255, 255, 0.5);
+   -webkit-transition: all 0.25s ease;
+   transition: all 0.25s ease;
+   -webkit-backface-visibility: hidden;
+   pointer-events: none;
+   font-size: 18px;
+ }
+ .form label .req {
+   margin: 2px;
+   color: #0cda90 ;
+ }
+ .form label.active {
+   -webkit-transform: translateY(50px);
+           transform: translateY(40px);
+   left: 2px;
+   font-size: 14px;
+ }
+ .form label.active .req {
+   opacity: 0;
+ }
+ .form label.highlight {
+   color: #ffffff;
+ }
+ .form input, textarea {
+   font-size: 18px;
+   display: block;
+   width: 100%;
+   height: 100%;
+   padding: 5px 10px;
+   background: none;
+   background-image: none;
+   border:1px solid #a0b3b0;
+   color: #ffffff;
+   border-radius: 0;
+   -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+   transition: border-color .25s ease, box-shadow .25s ease;
+ }
+ .form input:focus, textarea:focus {
+   outline: 0;
+   border-color: #0cda90 ;
+ }
+ .form textarea {
+   border: 2px solid #a0b3b0;
+   resize: vertical;
+ }
+ .field-wrap {
+   position: relative;
+   margin-bottom: 40px;
+ }
+ .top-row::after {
+   content: "";
+   display: table;
+   clear: both;
+ }
+ .top-row > div {
+   float: left;
+   width: 48%;
+   margin-right: 4%;
+ }
+ .top-row > div:last-child {
+   margin: 0;
+ }
+ .form .button {
+   border: 0;
+   outline: none;
+   border-radius: 0;
+   padding: 10px 0;
+   font-size: 25px;
+   font-weight: 400;
+   text-transform: uppercase;
+   background: #0cda90 ;
+   color: #ffffff;
+   -webkit-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+   -webkit-appearance: none; 
+ }
+ .form .button:hover , button:focus{
+   background: #3aa18c  ;
+ }
+ .form .button-block {
+   display: block;
+   width: 100%;
+ }
+ .forgot {
+   margin-top: -20px;
+   text-align: right;
+ }
+
+input[type=submit] {
+background: white;
+margin: 0 auto;
+outline: 0;
+color: gray;
+border: 0;
+padding: 12px 24px;
+border-radius: 4px;
+transition: all ease-in-out 0.1s;
+position: relative;
+display: inline-block;
+text-align: center;
+}
+input[type=text],input[type=email], textarea{
+width: 100%;
+
+border-radius: 4px;
+box-sizing: border-box;
+resize: vertical;
+text-align: right;
+}
+  
+/***********
+*********<!-- End Login  -->
+***********/

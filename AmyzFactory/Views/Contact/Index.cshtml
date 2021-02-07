@@ -1,0 +1,97 @@
+﻿@model AmyzFactory.Models.QuestionairViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ <div class="container form-con">
+    <h3> الاستفسارات العامة</h3>
+     <form id="frmQuest">
+
+         @Html.LabelFor(m => m.FirstNAme, new { @class = "req" })
+         @Html.TextBoxFor(m => m.FirstNAme, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @style = "direction: rtl;", @placeholder = "الاسم الأول",@id="fName" })
+         @Html.ValidationMessageFor(m => m.FirstNAme, null, new { @class = "text-danger" })
+
+         <br>
+         @Html.LabelFor(m => m.LastNAme, new { @class = "req" })
+         @Html.TextBoxFor(m => m.LastNAme, new { @class = "form-control form-control-user", @type = "text", @style = "direction: rtl;", autocomplete = "off", @placeholder = "اسم العائلة", @id = "lName" })
+         @Html.ValidationMessageFor(m => m.LastNAme, null, new { @class = "text-danger" })
+         <br>
+         @Html.LabelFor(m => m.Email, new { @class = "req" })
+         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @style = "direction: rtl;", autocomplete = "off", @value = "", @placeholder = "البريد الالكتروني", @id = "emailAddress" })
+         @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+         <br>
+         @Html.LabelFor(m => m.Question, new { @class = "req" })
+         @Html.TextAreaFor(m => m.Question, new { @class = "form-control", @style = "direction: rtl;", @type = "text", @cols = "30", @rows = "10", autocomplete = "off", @value = "", @placeholder = "الاستفسار", @id = "questionText" })
+         @Html.ValidationMessageFor(m => m.Question, null, new { @class = "text-danger" })
+         <br>
+         <div class="center">
+             <button class="form-control" id="btnSend" type="button">ارســال</button>
+         </div>
+     </form>
+
+</div>
+
+ 
+
+<script>
+
+
+
+    $(document).ready(function () {
+        $("#btnSend").click(function(){
+        
+            debugger;
+            if (!$('#frmQuest').valid()) {
+                return false;
+            }
+
+            disableBtn('#btnSend');
+
+            var formData = $('#frmQuest').serialize();
+
+ 
+            $.ajax({
+                url: "/Contact/CreateQuest",
+                type: "Post",
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+
+                    enableBtn('#btnSend', 'ارســال');
+ 
+                    if (data.IsSuccess) {
+                        clearFields();
+                         successDialog(data.Message);
+                        bindDataTable(tblId, actionName, controllerName);
+                    } else {
+                        failedDialog(data.Message);
+                    }
+
+                }
+            });
+
+        
+        });
+    })
+
+
+    var clearFields = function () {
+        $('#fName').val('');
+        $('#lName').val('');
+        $('#emailAddress').val('');
+        $('#questionText').val('');
+    }
+    
+    function enableBtn(btnId, message) {
+        $(btnId).html(message);
+        $(btnId).prop('disabled', false);
+    }
+
+    function disableBtn(btnId) {
+        $(btnId).html("wait..");
+        $(btnId).prop('disabled', true);
+    }
+   
+</script>
+

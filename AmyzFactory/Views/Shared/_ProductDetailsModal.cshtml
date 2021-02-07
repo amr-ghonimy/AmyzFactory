@@ -1,0 +1,57 @@
+﻿
+@model AmyzFactory.Models.ProductViewModel
+
+<div class="modal fade product_view" id="product_view">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="header">
+                <button type="button" class="close" aria-label="Close" data-remove="3000">
+                    <span aria-hidden="true" data-remove="3000">&times;</span>
+                </button>
+                <h3 class="modal-title">@Model.Name</h3>
+                <hr>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 product_img">
+                        <img src="~/Content/img/chick-5.jpg" alt="علف" class="img-responsive" width="100%">
+                    </div>
+                    <div class="col-md-6 product_content">
+                        <h4>السعر: <span>@Model.Price</span></h4>
+                        <p >dasdasdas</p>
+                        <div class="producat_detals">
+                            <div class="pro_ingred">
+                                <h3>:المكونات</h3>
+                                <p >@Model.Defenition</p>
+                            </div>
+                            <div class="pro_cont">
+                                <h5>-:المحتوي من المركبات  الغذائية</h5>
+                                <ul>
+                                    <li><i class="fa fa-circle"></i>
+                                    <li> %21 &nbsp;  بروتين خام لا يقل عن</li>
+                                    <li><i class="fa fa-circle"></i>
+                                    <li>%2.3 &nbsp; دهن خام لا يقل عن</li>
+                                    <li><i class="fa fa-circle"></i>
+                                    <li>%15 &nbsp; ألياف خام لا تزيد عن</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="space-ten"></div>
+                        <div class="btn-ground">
+                            <a href="#" type="button" class="btn btn-success"><img src="~/Content/img/market.png" alt="shopping" width="50px"> اضافة الى العربة</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#product_view").modal("show");
+    })
+
+</script>

@@ -1,0 +1,11 @@
+﻿@model IEnumerable<AmyzFactory.Models.InformationViewModel>
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="mb-1"><p><a class="text-small reset-anchor" href="#">@item.Value</a>:@item.Title</p></div>
+    }
+}
+

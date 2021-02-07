@@ -1,0 +1,29 @@
+﻿
+@model AmyzFactory.Models.CategoryViewModel
+
+
+<section class="container">
+    <article>
+        <div class="table-responsive">
+            <form name="frm3" id="frmtechnical">
+                <table class="table table-bordered table-hover">
+                    <caption>You Can Add / Delete Technical </caption>
+                    <thead>
+                        <tr>
+
+                            <th style="width: 80%">
+                                Name:
+                                @Html.TextBoxFor(z => z.Name, new { @class = "form-control", @name = "techName", @placeholder = "name" })
+                                @Html.ValidationMessageFor(z => z.Name, null, new { @class = "text-danger" })
+                            </th>
+
+                            <th style="width: 20%"><button id="addTechnicalBtn" onclick="addCategory('#frmtechnical', 'CreateTechnical', 'Categories', '#tbTechBody', 'EditCategory', 'DeleteCategory', '#techName', '#addTechnicalBtn')" class="btn btn-success btn-block" type="button">Add</button></th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbTechBody"></tbody>
+                </table>
+            </form>
+        </div>
+    </article>
+</section> 

@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/Admin/Views/Shared/_LoginAdminLayout.cshtml";
+}
+ 
+@model AmyzFactory.Models.AdminViewModel
+<div class="container">
+
+
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <img src="~/Areas/Admin/Content/img/logo.jpg" id="bg-loginn-image">
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Login As Admin</h1>
+                                </div>
+
+                                @using (Html.BeginForm())
+                                {
+
+                                    @Html.AntiForgeryToken()
+
+                                    @Html.HiddenFor(m=>m.ReturnUrl)
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(m=>m.UserName, new {@class="text-info" })
+                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-user" , @placeholder= "User name" })
+                                        @Html.ValidationMessageFor(m => m.UserName,"", new { @class = "text-danger"})
+
+
+
+
+                                     </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Password, new { @class = "text-info" })
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-user", @placeholder = "Enter Email Address..." })
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                    <button type="submit"  class="btn btn-primary btn-user btn-block">
+                                        Login
+                                    </button>
+
+
+                                    if (Model != null && Model.result != null && !Model.result.IsSuccess)
+                                    {
+                                        <div class="alert alert-danger">@Model.result.Message</div>
+                                    }
+
+                                }
+
+
+                              
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

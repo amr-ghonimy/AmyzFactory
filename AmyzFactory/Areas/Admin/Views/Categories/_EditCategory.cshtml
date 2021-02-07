@@ -1,0 +1,57 @@
+﻿@model AmyzFactory.Models.CategoryViewModel
+@if (Model != null)
+{
+    <form id="FrmEditing">
+       
+        @Html.HiddenFor(m => m.Id)
+
+        <div>
+            <label for="urlSocialInput">Department Name :</label>
+
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Name", @type = "text" })
+
+            <label for="urlSocialInput">Departments Section:</label>
+
+            @Html.DropDownListFor(m => m.DepartmentID,Model.mainDepartmentsDropDown,new {@class= "form-control" })
+
+            <center style="margin-top:10px;">
+                <button id="BtnEditData" type="button" class="btn btn-warning">Update</button>
+            </center>
+        
+            
+        </div>
+   
+     </form>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#BtnEditData").click(function () {
+            var formData = $("#FrmEditing").serialize();
+
+
+            $.ajax({
+                type: "Post",
+                url: "/Categories/EditCategory",
+                data: formData,
+                success: function (data) {
+                
+                 
+
+                    if (data.Result.IsSuccess) {
+                        successDialogEdit(data.Result.Message);
+                        window.location.href = "/Admin/Categories/Index";
+                    } else {
+                        failedDialog(data.Result.Message);
+                    }
+                    $("#myModal").modal("hide");
+
+                }
+
+
+            })
+        })
+    })
+</script>

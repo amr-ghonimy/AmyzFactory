@@ -1,0 +1,85 @@
+﻿
+@model AmyzFactory.Models.OrderViewModel
+
+@{
+    ViewBag.Title = "ContinueOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var products = ViewBag.OrderDetails;
+}
+
+<div class="container form-con">
+    <h2>معلومات تفصيلية</h2>
+    <form id="frmConfirmOrder">
+
+        @Html.LabelFor(m => m.Addreess, new { @class = "req" })
+        @Html.TextAreaFor(m => m.Addreess, new { @class = "form-control", @style = "direction: rtl;", @type = "text", @cols = "30", @rows = "5", autocomplete = "off", @value = "", @placeholder = "عنوانك تفصيلياً", @id = "questionText" })
+        @Html.ValidationMessageFor(m => m.Addreess, null, new { @class = "text-danger" })
+        <br>
+        @Html.LabelFor(m => m.Notes, new { @class = "req" })
+        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @style = "direction: rtl;", @type = "text", @cols = "30", @rows = "10", autocomplete = "off", @value = "", @placeholder = "ملاحظاتك", @id = "questionText" })
+        <br>
+
+        <div class="row">
+            <div class="col-sm-12  col-md-3">
+
+            </div>
+            <div class="col-sm-12  col-md-3">
+                <button class="form-control btn-danger" id="btnSend" type="button">تراجع</button>
+            </div>
+            <div class="col-sm-12 col-md-3 text-right">
+                <button class="form-control btn-success" onclick="confirmOrder()" id="btnSend" type="button">تأكيد عملية الشراء</button>
+            </div>
+            <div class="col-sm-12  col-md-3">
+
+            </div>
+        </div>
+ 
+ 
+    </form>
+
+</div>
+
+
+<script>
+    function confirmOrder() {
+
+
+        if (!$('#frmConfirmOrder').valid()) {
+            return false;
+        }
+
+
+        var orderHeaderData = $('#frmConfirmOrder').serialize();
+
+
+
+
+        
+
+
+        function goToIndex() {
+            window.location.href = '/HomePreview/Index/';
+        }
+
+
+ 
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/Order/ConfirmOrder",
+            data: orderHeaderData,
+            success: function (response) {
+                if (response.IsSuccess) {
+                    successDialogEdit(response.Message);
+                    setTimeout(goToIndex, 3000);
+
+                } else {
+                    failedDialog(response.Message);
+                }
+            },
+            dataType: "json"
+        });
+
+    }
+
+</script>

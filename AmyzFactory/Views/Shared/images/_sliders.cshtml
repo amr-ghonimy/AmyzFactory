@@ -1,0 +1,42 @@
+﻿
+@model IEnumerable<AmyzFactory.Models.InformationViewModel>
+
+@{ 
+    int sliderCounter = 0;
+
+    string[] slidersIds = { "carousel-one", "carousel-two", "carousel-one" };
+}
+<section>
+    <div id="slider" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+
+            <div class="overlay"></div>
+
+            @foreach (var item in Model)
+                        {
+                            //   string imgPath = "/Images/Sliders/" + item.Title;
+                           
+                            string imgPath = item.FilePath;
+
+                            if (sliderCounter == 0)
+                            {
+                    <div class="carousel-item active @slidersIds[sliderCounter]" style="background-image: url('@imgPath')">
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item @slidersIds[sliderCounter]" style="background-image: url('@imgPath') ">
+                    </div>
+                }
+
+                sliderCounter += 1;
+            }
+ 
+        </div>
+        <ol class="carousel-indicators">
+            <li data-target="#slider" data-slide-to="0" class="active"></li>
+            <li data-target="#slider" data-slide-to="1"></li>
+            <li data-target="#slider" data-slide-to="2"></li>
+        </ol>
+    </div>
+</section>

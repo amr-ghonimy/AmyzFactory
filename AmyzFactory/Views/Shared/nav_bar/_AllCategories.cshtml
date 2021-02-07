@@ -1,0 +1,25 @@
+﻿@model IEnumerable<AmyzFactory.Models.CategoryViewModel>
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="col-lg-6 col-md-3">
+            <h5>@item.Name</h5>
+            <ul class="list-unstyled mb-3">
+                @if (item.SubCategoriesList != null && item.SubCategoriesList.Count() > 0)
+                {
+                    foreach (var subItem in item.SubCategoriesList)
+                    {
+                        var url = "/Product/ShowProducts?categoryId="+subItem.Id;
+
+                        <li class="nav-item"><a href="@url" class="nav-link">@subItem.Name</a></li>
+                    }
+                }
+            </ul>
+        </div>
+
+    }
+}
+

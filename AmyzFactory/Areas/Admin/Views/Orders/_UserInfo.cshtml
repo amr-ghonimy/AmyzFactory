@@ -1,0 +1,148 @@
+﻿
+
+@model AmyzFeed.Repository.Data.ApplicationUser
+
+
+@{ 
+    int numberOfOrders = ViewBag.NumberOfOrders;
+}
+
+<style>
+body
+{
+    font-family: 'Lato', 'sans-serif';
+    }
+.profile 
+{
+    min-height: 355px;
+    display: inline-block;
+    }
+figcaption.ratings
+{
+    margin-top:20px;
+    }
+figcaption.ratings a
+{
+    color:#f1c40f;
+    font-size:11px;
+    }
+figcaption.ratings a:hover
+{
+    color:#f39c12;
+    text-decoration:none;
+    }
+.divider 
+{
+    border-top:1px solid rgba(0,0,0,0.1);
+    }
+.emphasis 
+{
+    border-top: 4px solid transparent;
+    }
+.emphasis:hover 
+{
+    border-top: 4px solid #1abc9c;
+    }
+.emphasis h2
+{
+    margin-bottom:0;
+    }
+span.tags 
+{
+    background: #1abc9c;
+    border-radius: 2px;
+    color: #f5f5f5;
+    font-weight: bold;
+    padding: 2px 4px;
+    }
+.dropdown-menu 
+{
+    background-color: #34495e;    
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    width: 250px;
+    margin-left: -125px;
+    left: 50%;
+    }
+.dropdown-menu .divider 
+{
+    background:none;    
+    }
+.dropdown-menu>li>a
+{
+    color:#f5f5f5;
+    }
+.dropup .dropdown-menu 
+{
+    margin-bottom:10px;
+    }
+.dropup .dropdown-menu:before 
+{
+    content: "";
+    border-top: 10px solid #34495e;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -10px;
+    z-index: 10;
+    }
+
+.hd{
+    color:#4e73df;
+    font-size:16px;
+}
+</style>
+
+
+<div class="container" style="margin-top:12px;">
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+            <div class="well profile">
+                <div class="col-sm-12">
+                    <div class="col-xs-12 col-sm-8">
+                        <p><strong class="hd">Name: </strong> @Model.UserName </p>
+                        <p><strong class="hd">Email: </strong> @Model.Email </p>
+                        <p><strong class="hd">Phone number: </strong> @Model.PhoneNumber </p>
+                        <p><strong class="hd">Address: </strong> @Model.Address </p>
+                        <p><strong class="hd">Governorate: </strong> @Model.Governorate </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 emphasis">
+                        <h2><strong> @numberOfOrders </strong></h2>
+                        <p><small>All Orders</small></p>
+                        <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> All Orders </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 emphasis">
+                        <h2><strong>245</strong></h2>
+                        <p><small>Following</small></p>
+                        <button class="btn btn-danger btn-block"><span class="fa fa-user"></span> Block </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 emphasis">
+                        <h2><strong>43</strong></h2>
+                        <p><small>Snippets</small></p>
+                        <div class="btn-group dropup btn-block">
+                            <button type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Options </button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu text-left" role="menu">
+                                <li><a href="#"><span class="fa fa-envelope pull-right"></span> Send an email </a></li>
+                                <li><a href="#"><span class="fa fa-list pull-right"></span> Add or remove from a list  </a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><span class="fa fa-warning pull-right"></span>Report this user for spam</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" class="btn disabled" role="button"> Unfollow </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

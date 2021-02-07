@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+}
+@model AmyzFactory.Models.ProductViewModel
+
+
+<!-- Modal -->
+<div id="productModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modelBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<section class="head-page-add-pro">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h2><i class="fab fa-product-hunt"></i>&nbsp;&nbsp;Add Materials</h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+<section class="container">
+    <article id="pro-add">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="upload-pro-form">
+                    <form class="form-horizontal" id="frmMaterial">
+                      
+                        @Html.Partial("_Products")
+
+                        <center>                                                                                                  
+                            <button type="button" id="btnAddMaterial" name='button' class="btn btn-success" onclick="addProduct('tblMaterials', 'Create', 'Products', null, '#frmMaterial', '#btnAddMaterial')">Upload</button>
+                        </center>
+
+                    </form>
+                </div><!-- /.Upload-Pro-Form -->
+            </div><!-- /.Col -->
+        </div><!-- /.Row -->
+    </article><!-- /#Pro-Add -->
+    <div id="quality-space"></div>
+</section><!-- /.Container -->
+
+
+
+
+<section class="head-page-edit-pro">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h2><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Material</h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="container">
+    <article class="search-result">
+        <section class="search-pro"></section>
+
+        <section class="search-res">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="tblMaterials">
+                    <caption>Search Result</caption>
+                    <thead>
+                        <tr>
+                            <td>Material name</td>
+                            <td>Category name</td>
+                            <td>Price</td>
+                            <td>Quantity</td>
+                            <td>Is Visible</td>
+                            <td>Actions</td>
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </article>
+</section>
+
+
+
+<script>
+ $(document).ready(function () {
+     bindDataTable("tblMaterials", "AllMaterials", "Products");
+    });
+</script>

@@ -1,0 +1,19 @@
+﻿
+
+@model AmyzFactory.Models.InformationViewModel
+
+<form id="frmInfo">
+    <div class="container">
+        <label for="imgNameInput">Header Name:</label>
+        @Html.TextBoxFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", placeholder = "Header Name", @type = "text" })
+        @Html.ValidationMessageFor(m => m.Title, "")
+
+
+        <label for="imgNameInput">Information</label>
+        @Html.TextAreaFor(m => m.Content, new { @id = "infoTitle", @class = "form-control", placeholder = "Information", @type = "text", @cols = "1", @rows = "7" })
+        @Html.ValidationMessageFor(m => m.Content, "")
+
+        <hr />
+        <button id="btnUpdateFrm" class="btn btn-success" onclick="updateInfoTexts('#btnUpdateFrm')" type="button" name="submit">Update</button>
+    </div>
+</form>

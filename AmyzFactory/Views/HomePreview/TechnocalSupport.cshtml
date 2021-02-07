@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "TechnocalSupport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string name = ViewBag.Name;
+}
+
+@model IEnumerable<AmyzFactory.Models.TechnicalTextViewModel>
+
+<section>
+    <div class="container text-center text-md-left" id="Pagetitle">
+        <div class="container mb-4">
+
+        </div>
+    </div>
+</section>
+            <section class="container" id="con-tic">
+                <div class="space"></div>
+                <div id="accordion">
+                    <div class="card">
+                         
+                            <h4 class="header-text">
+                              @name
+                            </h4>
+                            <div class="card-body">
+                                <ul>
+                                    @if (Model.Count() > 0)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <i class="fa fa-circle"></i>
+                                            <li>@item.Title</li>
+                                            <p>
+                                                @item.Description
+                                            </p>
+                                        }
+                                    }
+                                </ul>
+ 
+
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="space"></div>
+            </section>

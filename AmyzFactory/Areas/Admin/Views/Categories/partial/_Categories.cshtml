@@ -1,0 +1,29 @@
+﻿@model AmyzFactory.Models.CategoryViewModel
+
+
+<article>
+    <div class="table-responsive">
+        <form name="frm2" id="frmSubCategory">
+            <table class="table table-bordered table-hover">
+                <caption>You Can Sub Category</caption>
+                <thead>
+                    <tr>
+                        <th>
+                            Sub Category:
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @name = "subCategoryName", @placeholder = "name" })
+                            @Html.ValidationMessageFor(x => x.Name, null, new { @class = "text-danger" })
+                        </th>
+                        <th>
+                            Select Department:
+                            @Html.DropDownListFor(m => m.DepartmentID, Model.mainDepartmentsDropDown, new { @class = "form-control", @id = "MainCategoriesDropdown" })
+                        </th>
+                        <th>
+                            <button id="addSubCategoryBtn" class="btn btn-success btn-block" onclick="addCategory('#frmSubCategory', 'CreateCategory', 'Categories', '', 'EditCategory', 'DeleteCategory', '#subCategoryName', '#addSubCategoryBtn')" type="button">Add</button>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </form>
+
+    </div>
+</article>

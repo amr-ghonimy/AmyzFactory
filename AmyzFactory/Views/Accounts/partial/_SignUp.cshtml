@@ -1,0 +1,73 @@
+﻿@model AmyzFactory.Models.UserViemModel
+
+
+<div id="signup">
+    <h4>سجل بياناتك</h4>
+
+    <form id="frmSignUp">
+       
+            @Html.AntiForgeryToken()
+
+            <div class="top-row">
+                <div class="field-wrap">
+                    @Html.LabelFor(m => m.LastName, new { @class = "lbll" })
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @placeholder = "اسم العائلة" })
+                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "error_txt" })
+                </div>
+
+                <div class="field-wrap">
+                    @Html.LabelFor(m => m.FirstName, new { @class = "lbll" })
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control form-control-user", @type = "text", @autocomplete = "off", @placeholder = "الاسم الأول" })
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "error_txt" })
+                </div>
+
+            </div>
+            <div class="field-wrap">
+                @Html.LabelFor(m => m.Email, new { @class = "lbll" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @autocomplete = "off", @value = "", @placeholder = "البريد الالكترونى" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error_txt" })
+            </div>
+            <div class="top-row">
+                <div class="field-wrap">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "lbll" })
+                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control form-control-user", @type = "password", @autocomplete = "off", @placeholder = "تأكيد كلمة السر" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "error_txt" })
+                </div>
+
+                <div class="field-wrap">
+                    @Html.LabelFor(m => m.Password, new { @class = "lbll" })
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control form-control-user", @type = "password", @autocomplete = "off", @placeholder = "كلمة السر" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error_txt" })
+                </div>
+
+            </div>
+            <div class="field-wrap">
+                @Html.LabelFor(m => m.PhoneNumber, new { @class = "lbll" })
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @placeholder = "الهاتف" })
+                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "error_txt" })
+            </div>
+            <div class="field-wrap">
+                @Html.LabelFor(m => m.Address, new { @class = "lbll" })
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @placeholder = "العنوان بالتفصيل" })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "error_txt" })
+            </div>
+
+            <div class="field-wrap">
+                @Html.LabelFor(m => m.PersonalId, new { @class = "lbll" })
+                @Html.TextBoxFor(m => m.PersonalId, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @placeholder = "رقم البطاقة" })
+                @Html.ValidationMessageFor(m => m.PersonalId, "", new { @class = "error_txt" })
+            </div>
+
+
+
+      
+
+ 
+        <button type="button" id="signUpBtn" class="button button-block">التسجيل</button>
+
+
+    </form>
+
+
+
+</div>

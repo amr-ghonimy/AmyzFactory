@@ -1,0 +1,62 @@
+﻿
+ 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+ 
+  <!-- slid-->
+@{
+    Html.RenderAction("_GetSliderimages", "HomePreview");
+}
+<!-- End Slid-->
+
+
+<!-- Card -->
+<div class="boxesWrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <a href="programmes.html">
+                    <div class="whiteBox text-center">
+                        <i class="fa fa-list-ul"></i>
+                        <h4>برامج الاغذية</h4>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="../HomePreview/Censorship">
+                    <div class="whiteBox text-center">
+                        <i class="fa fa-clipboard"></i>
+                        <h4> الرقابة و الجودة</h4>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="../Product/ProductsPrices">
+                    <div class="whiteBox text-center">
+                        <i class="fa fa-tags"></i>
+                        <h4> أسعار المنتجات</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Card -->
+<!-- Background about factory  -->
+@{
+    Html.RenderAction("_GetInfoimage", "HomePreview");
+}
+<!-- End Background about factory  -->
+<!-- CATEGORIES SECTION-->
+
+  @{
+      Html.RenderAction("_GetCategories", "HomePreview");
+  }
+
+<!-- End Categroies Section  -->
+
+
+ 
