@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BaseDepartment.cs" />
     <Compile Include="CategoryDomainModel.cs" />
+    <Compile Include="PriceDomainModel.cs" />
     <Compile Include="QuestionaireDomainModel.cs" />
     <Compile Include="OrderDetailsDomainModel.cs" />
     <Compile Include="OrderDomainModel.cs" />

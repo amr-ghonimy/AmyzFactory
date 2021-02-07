@@ -33,8 +33,91 @@ namespace FeedApi.Controllers.User
             return result;
         }
 
-        
+        public IEnumerable<ImagesViewModel> GetInfoImages()
+        {
+            List<ImageDomainModel> images = this.business.getImages(Constans.infoImageFolderPath, Constans.infoImageResponse);
+            var result = this.mapper.Map<List<ImagesViewModel>>(images);
 
+            return result;
+        }
+
+
+        public IEnumerable<ImagesViewModel> GetResponsibilityImages()
+        {
+            List<ImageDomainModel> images = this.business.getImages(Constans.responsibiltyImageFolderPath, Constans.responsibiltyImageResponse);
+            var result = this.mapper.Map<List<ImagesViewModel>>(images);
+
+            return result;
+        }
+
+        public IEnumerable<ImagesViewModel> GetAboutUsImages()
+        {
+            List<ImageDomainModel> images = this.business.getImages(Constans.aboutImageFolderPath, Constans.aboutImageResponse);
+            var result = this.mapper.Map<List<ImagesViewModel>>(images);
+
+            return result;
+        }
+
+
+        [HttpDelete]
+        public IHttpActionResult DeleteSlider(string imageName)
+        {
+            string imagePath = Constans.sliderImageFolderPath + imageName;
+
+            ResultDomainModel result = this.business.deleteImage(imagePath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+          
+        }
+
+
+        [HttpDelete]
+        public IHttpActionResult DeleteAboutUs(string imageName)
+        {
+            string imagePath = Constans.aboutImageFolderPath + imageName;
+
+            ResultDomainModel result = this.business.deleteImage(imagePath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+
+        }
+
+
+        [HttpDelete]
+        public IHttpActionResult DeleteResponsiobilityImage(string imageName)
+        {
+            string imagePath = Constans.responsibiltyImageFolderPath + imageName;
+
+            ResultDomainModel result = this.business.deleteImage(imagePath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+
+        }
+
+        
 
     }
 }

@@ -14,7 +14,7 @@ namespace AmyzFactory.Controllers
         {
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("HomePreview/GetSliders").Result;
-            List<InformationViewModel> imagesVmList = response.Content.ReadAsAsync<List<InformationViewModel>>().Result;
+            List<TextsViewModel> imagesVmList = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
 
 
             return PartialView("~/Views/Shared/images/_sliders.cshtml", imagesVmList);
@@ -24,7 +24,7 @@ namespace AmyzFactory.Controllers
         {
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("HomePreview/GetProductQuality").Result;
-            InformationViewModel qualityVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel qualityVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
           
             return View(qualityVm);
@@ -34,7 +34,7 @@ namespace AmyzFactory.Controllers
         public PartialViewResult _GetInfoimage()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("HomePreview/GetInfoimage").Result;
-            InformationViewModel modelVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return PartialView("~/Views/Shared/images/_info.cshtml", modelVm);
         }
@@ -55,7 +55,7 @@ namespace AmyzFactory.Controllers
         public ActionResult AboutUS()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("HomePreview/GetAboutUS").Result;
-            InformationViewModel aboutUsVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel aboutUsVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
            
             return View(aboutUsVm);
         }
@@ -71,27 +71,27 @@ namespace AmyzFactory.Controllers
              return View(techsVm);
         }
 
-        private InformationViewModel getCensorshipHeader()
+        private TextsViewModel getCensorshipHeader()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("HomePreview/GetCensorshipHeader").Result;
-            InformationViewModel headerVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel headerVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return headerVm;
         }
 
 
-        private InformationViewModel getCensorshipFooter()
+        private TextsViewModel getCensorshipFooter()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("HomePreview/GetCensorshipFooter").Result;
-            InformationViewModel footerVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel footerVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return footerVm;
         }
 
         public ActionResult Censorship()
         {
-            InformationViewModel headerModel = this.getCensorshipHeader();
-            InformationViewModel footerModel = this.getCensorshipFooter();
+            TextsViewModel headerModel = this.getCensorshipHeader();
+            TextsViewModel footerModel = this.getCensorshipFooter();
             ViewBag.FooterModel = footerModel;
 
             return View(headerModel);

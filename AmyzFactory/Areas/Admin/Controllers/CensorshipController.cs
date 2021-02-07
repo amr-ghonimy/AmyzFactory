@@ -26,7 +26,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Censorship/GetHeaderTexts").Result;
-            InformationViewModel modelVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(modelVm, JsonRequestBehavior.AllowGet);
         }
@@ -34,7 +34,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult FooterTexts()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Censorship/GetFooterTexts").Result;
-            InformationViewModel modelVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(modelVm, JsonRequestBehavior.AllowGet);
         }
@@ -43,7 +43,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult getHeaderImages()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Censorship/GetHeaderImages").Result;
-            List<InformationViewModel> imagesVm = response.Content.ReadAsAsync<List<InformationViewModel>>().Result;
+            List<TextsViewModel> imagesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
 
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
@@ -51,28 +51,28 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult getFooterImages()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Censorship/GetFooterImages").Result;
-            List<InformationViewModel> imagesVm = response.Content.ReadAsAsync<List<InformationViewModel>>().Result;
+            List<TextsViewModel> imagesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
 
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
 
 
-        public JsonResult CreateUpdateHeaderText(InformationViewModel model)
+        public JsonResult CreateUpdateHeaderText(TextsViewModel model)
         {
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Censorship/CreateUpdateHeaderText", model).Result;
 
-            model = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
 
-        public JsonResult CreateUpdateFooterText(InformationViewModel model)
+        public JsonResult CreateUpdateFooterText(TextsViewModel model)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Censorship/CreateUpdateFooterText", model).Result;
 
-            model = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -99,21 +99,21 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
 
 
-        public JsonResult UploadCensorshipFooterImage(InformationViewModel image)
+        public JsonResult UploadCensorshipFooterImage(TextsViewModel image)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Censorship/UploadCensorshipFooterImage", image).Result;
 
-            InformationViewModel imageVm  = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel imageVm  = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(imageVm, JsonRequestBehavior.AllowGet);
         }
 
 
-        public JsonResult UploadCensorshipHeaderImage(InformationViewModel image)
+        public JsonResult UploadCensorshipHeaderImage(TextsViewModel image)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Censorship/UploadCensorshipHeaderImage", image).Result;
 
-            InformationViewModel imageVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel imageVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(imageVm, JsonRequestBehavior.AllowGet);
         }

@@ -26,7 +26,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult QualityTexts()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Qualities/GetQualityTexts").Result;
-            InformationViewModel modelVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
  
             return Json(modelVm, JsonRequestBehavior.AllowGet);
         }
@@ -41,11 +41,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         }
 
-        public JsonResult UploadQualityImage(InformationViewModel image)
+        public JsonResult UploadQualityImage(TextsViewModel image)
         {
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/UploadQualityImage", image).Result;
-            InformationViewModel imageVm = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            TextsViewModel imageVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(imageVm, JsonRequestBehavior.AllowGet);
         }
@@ -53,15 +53,15 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult getQualityImages()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Qualities/GetQualityImages").Result;
-            List<InformationViewModel> imagesVm = response.Content.ReadAsAsync<List<InformationViewModel>>().Result;
+            List<TextsViewModel> imagesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
 
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CreateUpdateQuality(InformationViewModel model)
+        public JsonResult CreateUpdateQuality(TextsViewModel model)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Qualities/CreateUpdateQuality", model).Result;
-            model = response.Content.ReadAsAsync<InformationViewModel>().Result;
+            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }

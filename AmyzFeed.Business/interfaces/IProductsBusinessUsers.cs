@@ -1,6 +1,7 @@
 ﻿using AmyzFactory.Models;
+using AmyzFeed.Domain;
 using AmyzFeed.Repository;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Web;
 
 
@@ -19,8 +20,8 @@ namespace AmyzFeed.Business.interfaces
         
         List<ProductDomainModel> getMaterials();
 
-         List<ProductDomainModel> getProductsPrices( );
-        List<ProductDomainModel> getMaterialsPrices();
+         List<PriceDomainModel> getProductsPrices( );
+        List<PriceDomainModel> getMaterialsPrices();
  
 
     }

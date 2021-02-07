@@ -104,8 +104,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    <Reference Include="Microsoft.Owin, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -260,7 +260,6 @@
     <Compile Include="Models\InformationViewModel.cs" />
     <Compile Include="Models\OrderDetailsViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
-    <Compile Include="Models\PriceViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\QuestionairViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
@@ -272,6 +271,7 @@
     <Compile Include="Model\DepartmentBase.cs" />
     <Compile Include="Model\DepartmentsViewModel.cs" />
     <Compile Include="Model\ImagesViewModel.cs" />
+    <Compile Include="Model\PricesViewModel.cs" />
     <Compile Include="Model\ProductsViewModel.cs" />
     <Compile Include="Model\TextsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

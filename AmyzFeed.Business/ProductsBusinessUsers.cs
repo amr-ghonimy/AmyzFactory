@@ -1,5 +1,6 @@
 ﻿using AmyzFactory.Models;
 using AmyzFeed.Business.interfaces;
+using AmyzFeed.Domain;
 using AmyzFeed.Repository;
 using AmyzFeed.Repository.Data;
 using AmyzFeed.Repository.Infrastructure.Contract;
@@ -146,26 +147,27 @@ namespace AmyzFeed.Business
             return materialsDm;
         }
 
-        public List<ProductDomainModel> getProductsPrices()
+        public List<PriceDomainModel> getProductsPrices()
         {
             return this.productRepository.GetAll(z => z.Visibility == true && z.Price>0 && z.CategoryID != null)
-                                    .Select(x => new ProductDomainModel
+                                    .Select(x => new PriceDomainModel
                                     {
                                         Id = x.ID,
                                         Name = x.Name,
-                                        Price = float.Parse(x.Price.ToString())
+                                        CategoryID=x.CategoryID.Value,
+                                        Price =x.Price.Value
                                     }).ToList();
         }
 
-        public List<ProductDomainModel> getMaterialsPrices()
+        public List<PriceDomainModel> getMaterialsPrices()
         {
             return this.productRepository.GetAll(z => z.Visibility == true && z.Price > 0 && z.CategoryID == null)
-                                          .Select(x => new ProductDomainModel
-                                             {
+                                          .Select(x => new PriceDomainModel
+                                          {
                                                  Id = x.ID,
                                                  Name = x.Name,
-                                                 Price = float.Parse(x.Price.ToString())
-                                             }).ToList();
+                                                 Price = x.Price.Value
+                                          }).ToList();
         }
     }
 }

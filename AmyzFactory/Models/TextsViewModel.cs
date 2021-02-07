@@ -1,38 +1,47 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Web;
 
 namespace AmyzFactory.Models
 {
-    public class InformationViewModel
+    public class TextsViewModel
     {
         // this for technical texts only
-        public int DepartmentID { get; set; }
+        // public int DepartmentID { get; set; }
 
+
+            // like api
+
+        public int Id { get; set; }
 
         [Required(ErrorMessage ="This field is required")]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
-        public string Value { get; set; }
+        public string SubTitle { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
 
-        public string Content { get; set; }
+        public string Description { get; set; }
+
+        public string ImageUrl { get; set; }
+
+
+        // end 
+
+
+
+
+
+
         public string FilePath { get; set; }
 
+        [JsonIgnore]
         public ResultViewModel Result { get; set; }
         [JsonIgnore]
         public HttpPostedFileWrapper ImageFile { get; set; }
 
         public byte[] PicData { get; set; }
-
-        // For Delete
-        public int Id{ get; set; }
-
 
 
     }

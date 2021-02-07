@@ -12,7 +12,7 @@ namespace AmyzFactory.Models
         public string Description { get; set; }
         public string ImageUrl { get; set; }
 
-        public ResultDomainModel Result { get; set; }
+     //   public ResultDomainModel Result { get; set; }
 
         public HttpPostedFileWrapper ImageFile { get; set; }
 

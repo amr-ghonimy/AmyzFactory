@@ -1,10 +1,10 @@
 ﻿using AmyzFactory.Models;
 using AmyzFeed.Business.interfaces;
+using AmyzFeed.Domain;
 using AutoMapper;
 using FeedApi.Model;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace FeedApi.Controllers.User
@@ -42,28 +42,28 @@ namespace FeedApi.Controllers.User
         }
 
         
-        public List<ProductsViewModel> GetProductsPrices()
+        public IEnumerable<PricesViewModel> GetProductsPrices()
         {
  
-            List<ProductDomainModel> productsDm = this.productsBusiness.getProductsPrices();
+            List<PriceDomainModel> productsDm = this.productsBusiness.getProductsPrices();
 
-            var productsList = this.mapper.Map<List<ProductsViewModel>>(productsDm);
+            var productsList = this.mapper.Map<List<PricesViewModel>>(productsDm);
 
             return productsList;
         }
 
       
-        public List<ProductsViewModel> GetMaterialsPrices()
+        public IEnumerable<PricesViewModel> GetMaterialsPrices()
         {
  
-            List<ProductDomainModel> materialsDm = this.productsBusiness.getMaterialsPrices();
+            List<PriceDomainModel> materialsDm = this.productsBusiness.getMaterialsPrices();
 
-           var materialsList = this.mapper.Map<List<ProductsViewModel>>(materialsDm);
+           var materialsList = this.mapper.Map<List<PricesViewModel>>(materialsDm);
 
             return materialsList;
         }
 
-        public HttpResponseMessage GetProductById(int id)
+        public IHttpActionResult GetProductById(int id)
         {
             try
             {
@@ -72,15 +72,15 @@ namespace FeedApi.Controllers.User
 
                 if (result == null)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "المنتج عير متاح حاليا");
+                    return Content(HttpStatusCode.NotFound, "المنتج عير متاح حاليا");
                 }
 
 
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+                return Ok(result);
             }
             catch (System.Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message.ToString());
+                return Content(HttpStatusCode.NotFound, ex.Message.ToString());
             }
 
         }

@@ -245,6 +245,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalVariables.cs" />
+    <Compile Include="Models\ImagesViewModel.cs" />
     <Compile Include="Models\OrderDetailsViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\QuestionairViewModel.cs" />
@@ -252,7 +253,7 @@
     <Compile Include="Models\CategoryShowModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\DataTableParams.cs" />
-    <Compile Include="Models\InformationViewModel.cs" />
+    <Compile Include="Models\TextsViewModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\PriceViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />

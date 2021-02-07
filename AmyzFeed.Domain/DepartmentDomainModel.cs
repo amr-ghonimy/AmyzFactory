@@ -7,6 +7,8 @@ namespace AmyzFactory.Models
 {
     public class DepartmentDomainModel:BaseDepartment
     {
+        public string ImageUrl { get; set; }
+
         public List<CategoryDomainModel> SubCategoriesList { get; set; }
     }
 }

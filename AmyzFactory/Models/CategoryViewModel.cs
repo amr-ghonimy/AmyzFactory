@@ -25,7 +25,7 @@ namespace AmyzFactory.Models
         public SelectList mainDepartmentsDropDown { get; set; }
 
         public List<CategoryViewModel> SubCategoriesList { get; set; }
-        public List<InformationViewModel> TechnicalsTitle_Description { get; set; }
+        public List<TextsViewModel> TechnicalsTitle_Description { get; set; }
 
     }
 }

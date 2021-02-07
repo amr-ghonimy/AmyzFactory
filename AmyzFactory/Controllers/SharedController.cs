@@ -38,7 +38,7 @@ namespace AmyzFactory.Controllers
         public PartialViewResult _AllEmails()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Shared/GetAllEmails").Result;
-            List<InformationViewModel> emailsVm = response.Content.ReadAsAsync<List<InformationViewModel>>().Result;
+            List<TextsViewModel> emailsVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
 
 
           
@@ -48,7 +48,7 @@ namespace AmyzFactory.Controllers
         public PartialViewResult _AllPhones()
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Shared/GetAllPhones").Result;
-            List<InformationViewModel> phonesVm = response.Content.ReadAsAsync<List<InformationViewModel>>().Result;
+            List<TextsViewModel> phonesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
 
             return PartialView("~/Views/Shared/nav_bar/_AllPhones.cshtml", phonesVm);
         }

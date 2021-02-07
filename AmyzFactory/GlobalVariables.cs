@@ -9,10 +9,11 @@ namespace AmyzFactory
     public static class GlobalVariables
     {
         public static HttpClient WebApiClient = new HttpClient();
+        public static string url = "http://localhost:57756/api/";
 
        static GlobalVariables()
         {
-            WebApiClient.BaseAddress = new Uri("http://localhost:57756/api/") ;
+            WebApiClient.BaseAddress = new Uri(url) ;
             WebApiClient.DefaultRequestHeaders.Clear();
             WebApiClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }

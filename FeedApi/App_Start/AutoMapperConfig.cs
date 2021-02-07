@@ -15,20 +15,6 @@ namespace FeedApi
         {
             var config = new MapperConfiguration(cfg =>
               {
-                  cfg.CreateMap<TextsDomainModel, InformationViewModel>()
-                               .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
-                               .ForMember(dst => dst.Title, src => src.MapFrom(e => e.Title))
-                               .ForMember(dst => dst.Result, src => src.MapFrom(e => e.Result))
-                               .ForMember(dst => dst.FilePath, src => src.MapFrom(e => e.ImageUrl))
-                               .ForMember(dst => dst.Content, src => src.MapFrom(e => e.Description))
-                               .ForMember(dst => dst.ImageFile, src => src.MapFrom(e => e.ImageFile))
-                               .ForMember(dst => dst.Value, src => src.MapFrom(e => e.SubTitle))
-                                .ForMember(dst => dst.PicData, src => src.MapFrom(e => e.PicData))
-                              .ReverseMap();
-
-             
-
-
 
                   cfg.CreateMap<TechnicalSupportDomainModel, TechnicalSupportViewModel>()
                               .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
@@ -113,6 +99,7 @@ namespace FeedApi
                   cfg.CreateMap<DepartmentDomainModel, DepartmentsViewModel>()
                            .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
                            .ForMember(dst => dst.Name, src => src.MapFrom(e => e.Name))
+                           .ForMember(dst => dst.ImageUrl, src => src.MapFrom(e => e.ImageUrl))
                            .ForMember(dst => dst.Categories, src => src.MapFrom(e => e.SubCategoriesList))
                            .ReverseMap();
 
@@ -146,8 +133,16 @@ namespace FeedApi
                        .ForMember(dst => dst.Title, src => src.MapFrom(e => e.Title))
                        .ReverseMap();
 
+                  cfg.CreateMap<PriceDomainModel, PricesViewModel>()
+                     .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
+                     .ForMember(dst => dst.Name, src => src.MapFrom(e => e.Name))
+                     .ForMember(dst => dst.CategoryID, src => src.MapFrom(e => e.CategoryID))
+                     .ForMember(dst => dst.Price, src => src.MapFrom(e => e.Price))
+                     .ReverseMap();
+
               });
 
+            
 
             Mapper = config.CreateMapper();
         }

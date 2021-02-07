@@ -69,6 +69,20 @@ namespace FeedApi.Controllers.User
             TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
             return vm;
         }
+        public TextsViewModel GetResponsibiltyTexts()
+        {
+            TextsDomainModel dm = this.addressBusiness.getTexts(Constans.responsibiltyFilePath);
+
+            List<ImageDomainModel> images = this.imagesBusiness.getImages(Constans.responsibiltyImageFolderPath, Constans.responsibiltyImageResponse);
+
+            if (images != null && images.Count > 0)
+            {
+                dm.ImageUrl = images[0].ImageUrl;
+            }
+
+            TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
+            return vm;
+        }
 
 
         public IEnumerable<ContactViewModel> GetEmails()
@@ -102,6 +116,9 @@ namespace FeedApi.Controllers.User
             {
                 TextsDomainModel dm = this.mapper.Map<TextsDomainModel>(model);
                 ResultDomainModel result = this.addressBusiness.createOrUpdateFile(dm,Constans.aboutFilePath);
+
+                result.Data = model;
+
                 return Ok(result);
             }
             catch (System.Exception ex)
@@ -110,6 +127,32 @@ namespace FeedApi.Controllers.User
                     new ResultDomainModel(false, ex.Message));
             }
         }
+
+        [HttpPost]
+        public IHttpActionResult CreateResponsibilities(TextsViewModel model)
+        {
+            if (model == null)
+            {
+                return Content(HttpStatusCode.BadRequest,
+                    new ResultDomainModel(false, "No data came!"));
+            }
+
+            try
+            {
+                TextsDomainModel dm = this.mapper.Map<TextsDomainModel>(model);
+                ResultDomainModel result = this.addressBusiness.createOrUpdateFile(dm, Constans.responsibiltyFilePath);
+
+                result.Data = model;
+
+                return Ok(result);
+            }
+            catch (System.Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest,
+                    new ResultDomainModel(false, ex.Message));
+            }
+        }
+
 
         [HttpPost]
         public IHttpActionResult CreateQuality(TextsViewModel model)
@@ -124,6 +167,9 @@ namespace FeedApi.Controllers.User
             {
                 TextsDomainModel dm = this.mapper.Map<TextsDomainModel>(model);
                 ResultDomainModel result = this.addressBusiness.createOrUpdateFile(dm, Constans.qualityFilePath);
+                result.Data = model;
+
+            
                 return Ok(result);
             }
             catch (System.Exception ex)
@@ -146,6 +192,8 @@ namespace FeedApi.Controllers.User
             {
                 TextsDomainModel dm = this.mapper.Map<TextsDomainModel>(model);
                 ResultDomainModel result = this.addressBusiness.createOrUpdateFile(dm, Constans.infoFilePath);
+                result.Data = model;
+
                 return Ok(result);
             }
             catch (System.Exception ex)
@@ -169,6 +217,8 @@ namespace FeedApi.Controllers.User
             {
                 ContactDomainModel dm = this.mapper.Map<ContactDomainModel>(model);
                 ResultDomainModel result = this.addressBusiness.createContact(dm, Constans.phonesFilePath, 5);
+                result.Data = model;
+
                 return Ok(result);
             }
             catch (System.Exception ex)
@@ -191,6 +241,8 @@ namespace FeedApi.Controllers.User
             {
                 ContactDomainModel dm = this.mapper.Map<ContactDomainModel>(model);
                 ResultDomainModel result = this.addressBusiness.createContact(dm, Constans.emailFilePath, 4);
+                result.Data = model;
+
                 return Ok(result);
             }
             catch (System.Exception ex)

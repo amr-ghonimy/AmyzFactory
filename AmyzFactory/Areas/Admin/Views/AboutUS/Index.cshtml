@@ -4,7 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
 }
 
-@model AmyzFactory.Models.InformationViewModel
+@model AmyzFactory.Models.TextsViewModel
 
 <section class="head-page-add-pro">
     <article class="container">
@@ -56,12 +56,12 @@
 
                 <div class="form-group">
                     <label for="titleInput"> P :</label>
-                    @Html.TextAreaFor(m => m.Value, new { @id = "p1", @class = "form-control", placeholder = "Header Name" , @rows = "4", @type = "text" })
+                    @Html.TextAreaFor(m => m.SubTitle, new { @id = "p1", @class = "form-control", placeholder = "Header Name" , @rows = "4", @type = "text" })
                 </div>
 
                 <div class="form-group">
                     <label for="titleInput"> P :</label>
-                    @Html.TextAreaFor(m => m.Content, new { @id = "p2", @class = "form-control", @rows = "6", placeholder = "Header Name", @type = "text" })
+                    @Html.TextAreaFor(m => m.Description, new { @id = "p2", @class = "form-control", @rows = "6", placeholder = "Header Name", @type = "text" })
                 </div>
                 <hr />
                 <input class="btn btn-success" onclick="updateAboutUS('frmAboutUs', 'CreateUpdateAbout')" type="button" value="Update" />
@@ -126,12 +126,12 @@
 
                 <div class="form-group">
                     <label for="titleInput"> P :</label>
-                    @Html.TextAreaFor(m => m.Value, new { @id = "p1Res", @class = "form-control", placeholder = "Header Name", @rows = "4", @type = "text" })
+                    @Html.TextAreaFor(m => m.SubTitle, new { @id = "p1Res", @class = "form-control", placeholder = "Header Name", @rows = "4", @type = "text" })
                 </div>
 
                 <div class="form-group">
                     <label for="titleInput"> P :</label>
-                    @Html.TextAreaFor(m => m.Content, new { @id = "p2Res", @class = "form-control", @rows = "6", placeholder = "Header Name", @type = "text" })
+                    @Html.TextAreaFor(m => m.Description, new { @id = "p2Res", @class = "form-control", @rows = "6", placeholder = "Header Name", @type = "text" })
                 </div>
                 <hr />
                 <input class="btn btn-success" onclick="updateAboutUS('frmResponsib', 'CreateUpdateResponsipility')" type="button" value="Update" />
@@ -153,7 +153,7 @@
         })
 
 
-
+       
 
 
         $(document).ready(function () {
@@ -164,8 +164,8 @@
                 dataType: "json",
                 success: function (data) {
                     $('#headerTitleRes').attr("value", data.Title);
-                    $('#p1Res').val(data.Value);
-                    $('#p2Res').val(data.Content);
+                    $('#p1Res').val(data.SubTitle);
+                    $('#p2Res').val(data.Description);
                 }
             });
 
@@ -174,9 +174,13 @@
                 type: "Get",
                 dataType: "json",
                 success: function (data) {
+
+            
                     $('#headerTitle').attr("value", data.Title);
-                    $('#p1').val(data.Value);
-                    $('#p2').val(data.Content);
+                    $('#p1').val(data.SubTitle);
+                    $('#p2').val(data.Description);
+
+
                 }
             });
 
@@ -191,10 +195,10 @@
                 data: formData,
                 dataType: "json",
                 success: function (data) {
-                    if (data.Result.IsSuccess) {
-                        successDialog(data.Result.Message);
+                    if (data.IsSuccess) {
+                        successDialog(data.Message);
                     } else {
-                        failedDialog(data.Result.Message);
+                        failedDialog(data.Message);
                     }
                 }
             });

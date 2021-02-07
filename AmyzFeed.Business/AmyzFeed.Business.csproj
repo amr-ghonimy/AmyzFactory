@@ -72,6 +72,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AmyzFactory\AmyzFactory.csproj">
+      <Project>{D042DD3B-407B-49E0-9FB2-EF462DA3062A}</Project>
+      <Name>AmyzFactory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AmyzFeed.Domain\AmyzFeed.Domain.csproj">
       <Project>{a780c495-a26c-4c19-88e0-ab1eef1fa97d}</Project>
       <Name>AmyzFeed.Domain</Name>

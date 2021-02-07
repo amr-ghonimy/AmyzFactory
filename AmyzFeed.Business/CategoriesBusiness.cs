@@ -313,7 +313,7 @@ namespace AmyzFeed.Business
              
               List<DepartmentDomainModel> list= deptRepository.GetAll(x => x.IsDeleted == false).Select(x => new DepartmentDomainModel()
               {
-                  Name = x.Name,Id = x.ID,visibility=x.Visibility
+                  Name = x.Name,Id = x.ID,visibility=x.Visibility,ImageUrl=x.Image
               }).ToList();
 
 
