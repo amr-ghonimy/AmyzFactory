@@ -174,8 +174,8 @@
          html += '<thead><tr><th style="width: 70%">Name</th><th style="width: 30%">Actions</th></tr></thead>'
          html += '<tbody id="tbody'+category.Id+'">' // this id for when add new sub category
 
-         if (category.SubCategoriesList != null) {
-             $.each(category.SubCategoriesList, function (i, subCategory) {
+         if (category.Categories != null) {
+             $.each(category.Categories, function (i, subCategory) {
                  html = drawSubCategory(subCategory, html);
              })
          }

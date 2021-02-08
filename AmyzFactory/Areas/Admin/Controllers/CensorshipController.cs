@@ -25,7 +25,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult HeaderTexts()
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Censorship/GetHeaderTexts").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetCensorshipHeaderTexts").Result;
             TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(modelVm, JsonRequestBehavior.AllowGet);
@@ -33,7 +33,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult FooterTexts()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Censorship/GetFooterTexts").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetCensorshipFooterTexts").Result;
             TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
             return Json(modelVm, JsonRequestBehavior.AllowGet);
@@ -42,16 +42,16 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult getHeaderImages()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Censorship/GetHeaderImages").Result;
-            List<TextsViewModel> imagesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetCensorshipHeaderImages").Result;
+            List<ImagesViewModel> imagesVm = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
 
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult getFooterImages()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Censorship/GetFooterImages").Result;
-            List<TextsViewModel> imagesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetCensorshiFooterImages").Result;
+            List<ImagesViewModel> imagesVm = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
 
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
@@ -59,20 +59,24 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult CreateUpdateHeaderText(TextsViewModel model)
         {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateUpdateCensorshipHeaderText", model).Result;
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Censorship/CreateUpdateHeaderText", model).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
-
+            model.Result = result;
+            model.Id = result.modelID;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
 
         public JsonResult CreateUpdateFooterText(TextsViewModel model)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Censorship/CreateUpdateFooterText", model).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateUpdateCensorshipFooterText", model).Result;
 
-            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            model.Result = result;
+            model.Id = result.modelID;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -80,7 +84,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult DeleteHeaderImage(string imageName)
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Censorship/DeleteHeaderImage", imageName).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Censorship/DeleteCensorshipHeaderImages?imageName="+ imageName).Result;
 
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
@@ -90,7 +94,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult DeleteFooterImage(string imageName)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Censorship/DeleteFooterImage", imageName).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Censorship/DeleteCensorshipFooterImages?imageName=" + imageName).Result;
 
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 

@@ -3,6 +3,7 @@ using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
 using AutoMapper;
 using FeedApi.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -28,14 +29,22 @@ namespace FeedApi.Controllers.User
 
 
 
-        public IEnumerable<DepartmentsViewModel> GetDepartments()
+        public List<DepartmentsViewModel> GetDepartments()
         {
             List<DepartmentDomainModel> list = this.catBusiness.getDepartments();
 
             var result = this.mapper.Map<List<DepartmentsViewModel>>(list);
 
             return result;
+        }
 
+        public List<CategoriesViewModel> GetCategories()
+        {
+            List<CategoryDomainModel> list = this.catBusiness.getCategories();
+
+            var result = this.mapper.Map<List<CategoriesViewModel>>(list);
+
+            return result;
         }
 
         public IEnumerable<CategoriesViewModel> GetCategoriesByDeptID(int id)
@@ -59,6 +68,102 @@ namespace FeedApi.Controllers.User
             
             return Ok(new ResultDomainModel(true, "category exist", Data: vm));
         }
+
+        public IEnumerable<DepartmentsViewModel> GetTechnicals()
+        {
+            List<DepartmentDomainModel> dm = this.catBusiness.getTechniclas();
+
+            var result = this.mapper.Map<List<DepartmentsViewModel>>(dm);
+
+            return result;
+        }
+
+        
+        [HttpDelete]
+        public IHttpActionResult DeleteDepartment(int id)
+        {
+
+            if (id == 0)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "you enter not valid id=" + id, modelID: id));
+            }
+
+            try
+            {
+                bool isSuccess = this.catBusiness.deleteDepartment(id);
+                if (isSuccess)
+                {
+                    return Ok(new ResultDomainModel(true, "Department deleted successfully!",id));
+                }else
+                {
+                    return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "you enter not valid id=" + id, modelID: id));
+
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, e.Message, modelID: id));
+            }
+            
+        }
+        [HttpDelete]
+        public IHttpActionResult DeleteCategory(int id)
+        {
+
+            if (id == 0)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "you enter not valid id=" + id, modelID: id));
+            }
+
+            try
+            {
+                bool isSuccess = this.catBusiness.deleteCategory(id);
+                if (isSuccess)
+                {
+                    return Ok(new ResultDomainModel(true, "Category deleted successfully!", id));
+                }
+                else
+                {
+                    return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "you enter not valid id=" + id, modelID: id));
+
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, e.Message, modelID: id));
+            }
+
+        }
+        [HttpDelete]
+        public IHttpActionResult DeleteTechnical(int id)
+        {
+
+            if (id == 0)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "you enter not valid id=" + id, modelID: id));
+            }
+
+            try
+            {
+                bool isSuccess = this.catBusiness.deleteTechnical(id);
+                if (isSuccess)
+                {
+                    return Ok(new ResultDomainModel(true, "Technical deleted successfully!", id));
+                }
+                else
+                {
+                    return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "you enter not valid id=" + id, modelID: id));
+
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, e.Message, modelID: id));
+            }
+
+        }
+
+
 
         [HttpPost]
         public IHttpActionResult CreateDepartment([FromBody]DepartmentsViewModel model)
@@ -113,6 +218,35 @@ namespace FeedApi.Controllers.User
             try
             {
                 ResultDomainModel result = this.catBusiness.createCategory(dm);
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest,
+                   new ResultDomainModel(false, ex.Message)
+                   );
+            }
+
+        }
+
+        [HttpPost]
+        public IHttpActionResult CreateTechnical(DepartmentsViewModel model)
+        {
+            if (model == null)
+            {
+                return Content(HttpStatusCode.BadRequest,
+                     new ResultDomainModel(false, "you send Technical with null value!")
+                     );
+            }
+
+        
+            DepartmentDomainModel dm = this.mapper.Map<DepartmentDomainModel>(model);
+
+            try
+            {
+                ResultDomainModel result = this.catBusiness.createTechnecalSupport(dm);
 
                 return Ok(result);
 

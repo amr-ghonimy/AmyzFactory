@@ -245,6 +245,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalVariables.cs" />
+    <Compile Include="Models\ContactViewModel.cs" />
     <Compile Include="Models\ImagesViewModel.cs" />
     <Compile Include="Models\OrderDetailsViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />

@@ -18,13 +18,13 @@ namespace AmyzFactory.Models
 
         public Nullable<int> DepartmentID { get; set; }
 
-        public Boolean visibility { get; set; }
-        public DateTime creation_date { get; set; }
-        public DateTime updated_date { get; set; }
+        public Boolean Visibility { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
 
         public SelectList mainDepartmentsDropDown { get; set; }
 
-        public List<CategoryViewModel> SubCategoriesList { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
         public List<TextsViewModel> TechnicalsTitle_Description { get; set; }
 
     }

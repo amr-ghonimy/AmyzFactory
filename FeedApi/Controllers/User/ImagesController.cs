@@ -57,6 +57,22 @@ namespace FeedApi.Controllers.User
 
             return result;
         }
+        public IEnumerable<ImagesViewModel> GetCensorshipHeaderImages()
+        {
+            List<ImageDomainModel> images = this.business.getImages(Constans.censirshipHeaderImageFolderPath, Constans.censirshipHeaderImageResponse);
+            var result = this.mapper.Map<List<ImagesViewModel>>(images);
+
+            return result;
+        }
+
+        public IEnumerable<ImagesViewModel> GetCensorshiFooterImages()
+        {
+            List<ImageDomainModel> images = this.business.getImages(Constans.censirshipFooterImageFolderPath, Constans.censirshipFooterImageResponse);
+            var result = this.mapper.Map<List<ImagesViewModel>>(images);
+
+            return result;
+        }
+
 
 
         [HttpDelete]
@@ -75,6 +91,25 @@ namespace FeedApi.Controllers.User
             }
 
           
+        }
+
+        [HttpDelete]
+        public IHttpActionResult DeleteInfoImage(string imageName)
+        {
+            string imagePath = Constans.infoImageFolderPath + imageName;
+
+            ResultDomainModel result = this.business.deleteImage(imagePath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+
         }
 
 
@@ -117,7 +152,25 @@ namespace FeedApi.Controllers.User
 
         }
 
-        
+
+        [HttpDelete]
+
+        public IEnumerable<ImagesViewModel> DeleteCensorshipHeaderImages(string imageName)
+        {
+            List<ImageDomainModel> images = this.business.getImages(Constans.censirshipHeaderImageFolderPath, Constans.censirshipHeaderImageResponse);
+            var result = this.mapper.Map<List<ImagesViewModel>>(images);
+
+            return result;
+        }
+        [HttpDelete]
+
+        public IEnumerable<ImagesViewModel> DeleteCensorshipFooterImages(string imageName)
+        {
+            List<ImageDomainModel> images = this.business.getImages(Constans.censirshipFooterImageFolderPath, Constans.censirshipFooterImageResponse);
+            var result = this.mapper.Map<List<ImagesViewModel>>(images);
+
+            return result;
+        }
 
     }
 }

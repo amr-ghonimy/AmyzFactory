@@ -1,5 +1,5 @@
 ﻿
-@model AmyzFactory.Models.InformationViewModel
+@model AmyzFactory.Models.TextsViewModel
 
 <form id="FrmPhone">
 
@@ -21,8 +21,8 @@
                     </th>
                     <th>
                         <label for="phoneInput">Phone Number:</label>
-                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "Phone Number", @type = "tel" })
-                        @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
+                        @Html.TextBoxFor(m => m.SubTitle, new { @class = "form-control", placeholder = "Phone Number", @type = "tel" })
+                        @Html.ValidationMessageFor(m => m.SubTitle, null, new { @class = "text-danger" })
                      </th>
                     <th>
                         <button id="btnAddPhone" onclick="addAddress('#FrmPhone', 'CreatePhone', 'HomePage', 'PhoneTblContainer', 'DeletePhone', 'btnAddPhone')" class="btn btn-warning btn-block" type="button">Add</button>

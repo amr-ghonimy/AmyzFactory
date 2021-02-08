@@ -13,8 +13,6 @@ namespace AmyzFactory.Areas.Admin.Controllers
     public class CategoriesController : Controller
     {
       
-     
-
         public PartialViewResult _Categories()
         {
 
@@ -40,7 +38,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<CategoryViewModel> getDepartments()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Categories/GetDepartments").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetDepartments").Result;
             List<CategoryViewModel> departments = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
  
             return departments;
@@ -48,7 +46,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<CategoryViewModel> getCategories()
         {
-            HttpResponseMessage response =  GlobalVariables.WebApiClient.GetAsync("Categories/GetSubCategories").Result;
+            HttpResponseMessage response =  GlobalVariables.WebApiClient.GetAsync("Departments/GetCategories").Result;
             List<CategoryViewModel> categories = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
             return categories;
@@ -57,7 +55,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<CategoryViewModel> getTechnecals()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Categories/GetTechnicals").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetTechnicals").Result;
             List<CategoryViewModel> categories = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
             return categories;
@@ -85,7 +83,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
             var dep = new CategoryViewModel()
             {
-                SubCategoriesList = subCategories,
+                Categories = subCategories,
                 mainDepartmentsDropDown = new SelectList(new List<CategoryViewModel>(), "Id", "Name")
             };
 
@@ -111,8 +109,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult CreateDepartment(CategoryViewModel categoryModel)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/CreateDepartment",categoryModel).Result;
-            categoryModel = response.Content.ReadAsAsync<CategoryViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Departments/CreateDepartment", categoryModel).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            categoryModel.Id = result.modelID;
+            categoryModel.Result = result;
 
             return Json(categoryModel, JsonRequestBehavior.AllowGet);
         }
@@ -121,8 +122,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult CreateCategory(CategoryViewModel categoryModel)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/CreateCategory", categoryModel).Result;
-            categoryModel = response.Content.ReadAsAsync<CategoryViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Departments/CreateCategory", categoryModel).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            categoryModel.Id = result.modelID;
+            categoryModel.Result = result;
 
             return Json(categoryModel, JsonRequestBehavior.AllowGet);
         }
@@ -131,8 +135,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult CreateTechnical(CategoryViewModel categoryModel)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/CreateTechnical", categoryModel).Result;
-            categoryModel = response.Content.ReadAsAsync<CategoryViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Departments/CreateTechnical", categoryModel).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            categoryModel.Id = result.modelID;
+            categoryModel.Result = result;
 
             return Json(categoryModel, JsonRequestBehavior.AllowGet);
         }
@@ -168,11 +175,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult DeleteDepartment(int id)
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/DeleteDepartment", id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Departments/DeleteDepartment?id="+id).Result;
 
-            bool isDeleted = response.Content.ReadAsAsync<bool>().Result;
+            ResultViewModel isDeleted = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            var result= this.deleteResponse(isDeleted, "MainDepartments"
+            var result= this.deleteResponse(isDeleted.IsSuccess, "MainDepartments"
                 , "Categories", "#TblMainCategoriesBody", "EditDepartment", "DeleteDepartment"
                 );
 
@@ -181,11 +188,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult DeleteCategory(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/DeleteCategory", id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Departments/DeleteCategory?id=" + id).Result;
 
-            bool isDeleted = response.Content.ReadAsAsync<bool>().Result;
+            ResultViewModel isDeleted = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            var result = this.deleteResponse(isDeleted, "SubCategories"
+            var result = this.deleteResponse(isDeleted.IsSuccess, "SubCategories"
                 , "Categories", "#TblSubCategoriesBody", "EditCategory", "DeleteCategory"
                 );
 
@@ -194,11 +201,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult DeleteTechnical(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/DeleteTechnical", id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Departments/DeleteTechnical?id=" + id).Result;
 
-            bool isDeleted = response.Content.ReadAsAsync<bool>().Result;
+            ResultViewModel isDeleted = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            var result = this.deleteResponse(isDeleted, "Technicals"
+            var result = this.deleteResponse(isDeleted.IsSuccess, "Technicals"
                 , "Categories", "#TbltechniclasBody", "EditTechnical", "DeleteTechnical"
                 );
             return Json(result, JsonRequestBehavior.AllowGet);

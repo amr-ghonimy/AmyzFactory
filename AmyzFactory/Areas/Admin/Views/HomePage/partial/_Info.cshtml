@@ -1,6 +1,6 @@
 ﻿
 
-@model AmyzFactory.Models.InformationViewModel
+@model AmyzFactory.Models.TextsViewModel
 
 <form id="frmInfo">
     <div class="container">
@@ -10,8 +10,8 @@
 
 
         <label for="imgNameInput">Information</label>
-        @Html.TextAreaFor(m => m.Content, new { @id = "infoTitle", @class = "form-control", placeholder = "Information", @type = "text", @cols = "1", @rows = "7" })
-        @Html.ValidationMessageFor(m => m.Content, "")
+        @Html.TextAreaFor(m => m.Description, new { @id = "infoTitle", @class = "form-control", placeholder = "Information", @type = "text", @cols = "1", @rows = "7" })
+        @Html.ValidationMessageFor(m => m.Description, "")
 
         <hr />
         <button id="btnUpdateFrm" class="btn btn-success" onclick="updateInfoTexts('#btnUpdateFrm')" type="button" name="submit">Update</button>

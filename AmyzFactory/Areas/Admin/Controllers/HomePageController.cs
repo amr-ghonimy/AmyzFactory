@@ -27,25 +27,25 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult GetSliders()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Home/GetSliders").Result;
-            var imagesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetSliders").Result;
+            var imagesVm = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
       
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
 
 
         [HttpGet]
-        public JsonResult GetInfo()
+        public JsonResult GetInfoImage()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Home/GetInfo").Result;
-            var imagesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetInfoImages").Result;
+            var imagesVm = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult DeleteSlider(string imageName)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/DeleteSlider", imageName).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Images/DeleteSlider?imageName="+ imageName).Result;
 
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
@@ -53,9 +53,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteInfo(string imageName)
+        public JsonResult DeleteInfoImage(string imageName)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/DeleteInfo", imageName).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Images/DeleteInfoImage?imageName="+ imageName).Result;
 
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
@@ -103,9 +103,13 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/UploadInfoImage", image).Result;
 
-            TextsViewModel newImageVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            return Json(newImageVm, JsonRequestBehavior.AllowGet);
+            image.Id = result.modelID;
+            image.Result = result;
+
+
+            return Json(image, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -115,7 +119,10 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/CreatePhone", phoneVm).Result;
 
-            phoneVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
+            var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            phoneVm.Id = result.modelID;
+            phoneVm.Result = result;
 
             return Json(phoneVm, JsonRequestBehavior.AllowGet);
           
@@ -125,9 +132,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult GetPhones()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Home/GetPhones").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetPhones").Result;
 
-            var list = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            var list = response.Content.ReadAsAsync<List<ContactViewModel>>().Result;
 
 
             return Json(list, JsonRequestBehavior.AllowGet);
@@ -137,9 +144,12 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult CreateUpdateInfo(TextsViewModel model)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/CreateUpdateInfo",model).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateFactoryInfo", model).Result;
 
-            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
+            var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            model.Id = result.modelID;
+            model.Result = result;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -149,9 +159,12 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateEmail(TextsViewModel model)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/CreateEmail", model).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateEmail", model).Result;
 
-            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
+            var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            model.Id = result.modelID;
+            model.Result = result;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -161,7 +174,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult GetEmails()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Home/GetEmails").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetEmails").Result;
 
             var listVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
 
@@ -174,7 +187,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult GetSiteInfo()
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Home/GetSiteInfo").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetSiteInfo").Result;
 
             var model = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
@@ -187,9 +200,12 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateAccount(TextsViewModel model)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/CreateAccount",model).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateAccount", model).Result;
 
-            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
+            var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            model.Id = result.modelID;
+            model.Result = result;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -197,7 +213,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult GetAccounts()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Home/GetAccounts").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetAccounts").Result;
 
             List<TextsViewModel> listVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
 
@@ -207,7 +223,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult DeleteEmail(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/DeleteEmail",id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Information/DeleteEmail?id="+id).Result;
 
             ResultViewModel resultVm  = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
@@ -216,7 +232,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         
         public JsonResult DeletePhone(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/DeletePhone", id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Information/DeletePhone?id=" + id).Result;
 
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
@@ -225,7 +241,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult DeleteAccount(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/DeleteAccount", id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Information/DeleteAccount?id=" + id).Result;
 
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
             
