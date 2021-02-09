@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 
 using System.Web.Mvc;
- 
+
 using AmyzFactory.Models;
- 
+
 using AmyzFactory.App_Start;
 using System.Net.Http;
+using Microsoft.ApplicationInsights.Extensibility.Implementation;
+using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -15,22 +17,19 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
     public class ProductsController : Controller
     {
-      
-
-
 
         private List<CategoryViewModel> getCategories()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Products/GetCategories").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetCategories").Result;
 
             var list = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
             return list;
         }
 
-        private List<ProductViewModel> getAllProducts(int pageNo,int displayLength)
+        private List<ProductViewModel> getAllProducts(int pageNo, int displayLength)
         {
-            string url = "Products/GetAllProducts?pageNo=" + pageNo + "&displayLength=" + displayLength;
+            string url = "Product/GetAllProducts?pageNo=" + pageNo + "&displayLength=" + displayLength;
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
 
@@ -40,7 +39,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<ProductViewModel> searchInProducts(string word, int pageNo, int displayLength)
         {
-            string url = "Products/SearchInProducts?word=" + word + "&pageNo=" + pageNo + "&displayLength=" + displayLength;
+            string url = "Product/SearchInProducts?word=" + word + "&pageNo=" + pageNo + "&displayLength=" + displayLength;
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
 
@@ -49,7 +48,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
         private List<ProductViewModel> getAllMaterials(int pageNo, int displayLength)
         {
-            string url = "Products/GetAllMaterials?pageNo=" + pageNo + "&displayLength=" + displayLength;
+            string url = "Product/GetAllMaterials?pageNo=" + pageNo + "&displayLength=" + displayLength;
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
 
@@ -58,7 +57,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
         private List<ProductViewModel> searchInMaterials(string word, int pageNo, int displayLength)
         {
-            string url = "Products/SearchInMaterials?word=" + word + "&pageNo="+ pageNo + "&displayLength=" + displayLength;
+            string url = "Product/SearchInMaterials?word=" + word + "&pageNo="+ pageNo + "&displayLength=" + displayLength;
 
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
@@ -109,7 +108,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
                 productsList = this.searchInProducts(param.sSearch, pageNo, param.iDisplayLength);
 
 
-                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Products/GetSearchedProductCount?searchWord="+ param.sSearch).Result;
+                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetSearchedProductCount?searchWord="+ param.sSearch).Result;
                 totalCount = response.Content.ReadAsAsync<int>().Result;
 
             }
@@ -118,7 +117,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
                 productsList = this.getAllProducts(pageNo, param.iDisplayLength);
               
 
-                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Products/GetAllProductsCount").Result;
+                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetAllProductsCount").Result;
                 totalCount = response.Content.ReadAsAsync<int>().Result;
             }
 
@@ -183,8 +182,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult Delete(int id)
         {
-
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Products/Delete",id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Product/DeleteProduct?id="+ id).Result;
             ResultViewModel resultModelVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
             return Json(resultModelVm, JsonRequestBehavior.AllowGet);
@@ -196,9 +194,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
             // start upload image
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Products/Create", model).Result;
-            model = response.Content.ReadAsAsync<ProductViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Product/Create", model).Result;
+            var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
+            model.Id = result.modelID;
+            model.ResponseResult = result;
             
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -207,13 +207,22 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult EditProduct(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Products/GetProductByID?id=" + id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetProductByID?id=" + id).Result;
 
-            ProductViewModel prodVm = response.Content.ReadAsAsync<ProductViewModel>().Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
             ViewBag.Categories = new SelectList(this.getCategories(), "Id", "Name");
 
-            return PartialView("~/Areas/Admin/Views/Products/_EditProduct.cshtml", prodVm);
+            ProductViewModel products = null;
+
+            if (result.Data != null)
+            {
+                string jsonString = result.Data.ToString();
+
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                products = js.Deserialize<ProductViewModel>(jsonString);
+            }
+            return PartialView("~/Areas/Admin/Views/Products/_EditProduct.cshtml", products);
         }
 
 
@@ -221,7 +230,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public ActionResult EditProduct(ProductViewModel product)
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Products/EditProduct", product).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PutAsJsonAsync("Product/EditProduct", product).Result;
             ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
             return Json(result, JsonRequestBehavior.AllowGet);

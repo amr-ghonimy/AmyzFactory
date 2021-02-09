@@ -249,6 +249,7 @@
     <Compile Include="Controllers\User\InformationController.cs" />
     <Compile Include="Controllers\User\OrderController.cs" />
     <Compile Include="Controllers\User\ProductController.cs" />
+    <Compile Include="Controllers\User\TechnicalSupportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -263,8 +264,6 @@
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\QuestionairViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
-    <Compile Include="Models\TechnicalSupportViewModel.cs" />
-    <Compile Include="Models\TechnicalTextViewModel.cs" />
     <Compile Include="Models\UsersViewModel.cs" />
     <Compile Include="Model\CategoriesViewModel.cs" />
     <Compile Include="Model\ContactViewModel.cs" />
@@ -273,6 +272,8 @@
     <Compile Include="Model\ImagesViewModel.cs" />
     <Compile Include="Model\PricesViewModel.cs" />
     <Compile Include="Model\ProductsViewModel.cs" />
+    <Compile Include="Model\TechnicalSupportViewModel.cs" />
+    <Compile Include="Model\TechnicalTextViewModel.cs" />
     <Compile Include="Model\TextsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -299,7 +300,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>

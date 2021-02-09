@@ -1,11 +1,7 @@
 ﻿using AmyzFactory.App_Start;
 using AmyzFactory.Models;
- 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Mvc;
 
 namespace AmyzFactory.Areas.Admin.Controllers
@@ -25,7 +21,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult QualityTexts()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Qualities/GetQualityTexts").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetQualities").Result;
             TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
  
             return Json(modelVm, JsonRequestBehavior.AllowGet);
@@ -34,7 +30,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult DeleteQualityImage(string imageName)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/DeleteQualityImage",imageName).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Images/DeleteQualityImage?imageName=" + imageName).Result;
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);
@@ -52,16 +48,19 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult getQualityImages()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Qualities/GetQualityImages").Result;
-            List<TextsViewModel> imagesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetQualityImages").Result;
+            List<ImagesViewModel> imagesVm = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
 
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult CreateUpdateQuality(TextsViewModel model)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Qualities/CreateUpdateQuality", model).Result;
-            model = response.Content.ReadAsAsync<TextsViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateQuality", model).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            model.Id = result.modelID;
+            model.Result = result;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }

@@ -15,9 +15,9 @@ namespace AmyzFactory.Models
         [Required(ErrorMessage = "This field is required")]
         public string Name { get; set; }
         [Required(ErrorMessage = "This field is required")]
-        public string Defenition { get; set; }
+        public string Definition { get; set; }
         [Required(ErrorMessage = "This field is required")]
-        public string Descriprion { get; set; }
+        public string Description { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
         public float Price{ get; set; }

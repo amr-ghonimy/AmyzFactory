@@ -56,10 +56,8 @@
     <Compile Include="interfaces\IQuestionaireBusiness.cs" />
     <Compile Include="interfaces\IOrdersBusiness.cs" />
     <Compile Include="interfaces\IOrderUsersBusiness.cs" />
-    <Compile Include="interfaces\IProductsBusinessUsers.cs" />
     <Compile Include="OrderBusiness.cs" />
     <Compile Include="OrderUserBusiness.cs" />
-    <Compile Include="ProductsBusinessUsers.cs" />
     <Compile Include="QuestionaireBusiness.cs" />
     <Compile Include="TechnicalBusiness.cs" />
     <Compile Include="ImagesBusiness.cs" />

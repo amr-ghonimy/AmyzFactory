@@ -18,7 +18,7 @@ namespace FeedApi.Controllers.User
         private readonly ICategoriesBusiness catBusiness;
 
 
-        public DepartmentsController(ICategoriesBusiness _catbusiness, IAddressesBusiness _addBusiness, IProductsBusinessUsers _productsBusiness)
+        public DepartmentsController(ICategoriesBusiness _catbusiness)
         {
             this.catBusiness = _catbusiness;
             this.mapper = AutoMapperConfig.Mapper;

@@ -21,7 +21,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         private SelectList getTecnicalsDropDown()
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Categories/GetTechnicals").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetTechnicals").Result;
              var techsVm = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
            
@@ -40,7 +40,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult Delete(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Technicals/Delete", id).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("TechnicalSupport/Delete?id="+ id).Result;
             ResultViewModel resultVm= response.Content.ReadAsAsync<ResultViewModel>().Result;
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);
@@ -49,10 +49,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult UpdateTechTexts(TechnicalTextViewModel text)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Technicals/UpdateTechTexts", text).Result;
-            text = response.Content.ReadAsAsync<TechnicalTextViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("TechnicalSupport/UpdateTechTexts", text).Result;
+            var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-
+            text.Result = result;
+     
             return Json(text, JsonRequestBehavior.AllowGet);
         }
 
@@ -60,7 +61,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult GetTechnicals()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Technicals/GetTechnicalsTexts").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("TechnicalSupport/GetTechnicalSupports").Result;
             List<TechnicalSupportViewModel> techsVm = response.Content.ReadAsAsync<List<TechnicalSupportViewModel>>().Result;
 
             return Json(techsVm, JsonRequestBehavior.AllowGet);

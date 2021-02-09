@@ -1,11 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
 }
-
-
-
 
 <!-- Edit Dialog -->
 <section class="head-page-edit-home">
@@ -146,10 +142,7 @@
 
         @{
             Html.RenderPartial("~/Areas/Admin/Views/HomePage/partial/_Phones.cshtml");
-
         }
-
-        
 
         @{
             Html.RenderPartial("~/Areas/Admin/Views/HomePage/partial/_Email.cshtml");
@@ -193,9 +186,6 @@
         getImages("GetInfoImage", "HomePage", "TblInfoBody", "DeleteInfoImage");
     })
 
-
-
-    
 
 
     // Ed from Images Functions

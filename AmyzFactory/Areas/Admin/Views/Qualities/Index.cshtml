@@ -4,7 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
 }
 
-@model AmyzFactory.Models.InformationViewModel
+@model AmyzFactory.Models.TextsViewModel
 
 
 <section class="head-page-add-pro">
@@ -55,12 +55,12 @@
             <form id="frmQualities">
                 <div class="container">
                     <label for="imgNameInput">Header Name:</label>
-                    @Html.TextBoxFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", placeholder = "Header Name", @type = "text" })
+                    @Html.TextBoxFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", placeholder = "Title", @type = "text" })
 
                     <label for="imgNameInput">Information</label>
-                    @Html.TextAreaFor(m => m.Value, new { @id = "qualityTitle", @class = "form-control", placeholder = "Information", @type = "text" })
+                    @Html.TextAreaFor(m => m.SubTitle, new { @id = "qualityTitle", @class = "form-control", placeholder = "Sub Title", @type = "text" })
                     <label for="imgNameInput">Description</label>
-                    @Html.TextAreaFor(m => m.Content, new { @id = "description", @class = "form-control", @rows = "6", placeholder = "Description", @type = "text" })
+                    @Html.TextAreaFor(m => m.Description, new { @id = "description", @class = "form-control", @rows = "6", placeholder = "Description", @type = "text" })
                     <hr />
                     <button class="btn btn-success" onclick="updateQuality()" type="button" name="submit">Update</button>
                 </div>
@@ -95,8 +95,8 @@
             dataType: "json",
             success: function (data) {
                 $('#headerTitle').attr("value", data.Title);
-                $('#qualityTitle').val(data.Value);
-                $('#description').val(data.Content);
+                $('#qualityTitle').val(data.SubTitle);
+                $('#description').val(data.Description);
              }
         });
 

@@ -1,5 +1,6 @@
 ﻿using AmyzFactory.Models;
 using AmyzFeed.Business.interfaces;
+using AmyzFeed.Domain;
 using AmyzFeed.Repository;
 using AmyzFeed.Repository.Data;
 using AmyzFeed.Repository.Infrastructure.Contract;
@@ -70,8 +71,8 @@ namespace AmyzFeed.Business
                 {
                     Name = product.Name,
                     CreationDate = DateTime.Now,
-                    Definition = product.Defenition,
-                    Description = product.Descriprion,
+                    Definition = product.Definition,
+                    Description = product.Description,
                     Quantity = product.Quantity,
                     Price = float.Parse(product.Price.ToString()),
                     Visibility = product.isVisible,
@@ -153,8 +154,8 @@ namespace AmyzFeed.Business
             try
             {
                 oldProduct.Name = newProduct.Name;
-                oldProduct.Definition= newProduct.Defenition;
-                oldProduct.Description = newProduct.Descriprion;
+                oldProduct.Definition= newProduct.Definition;
+                oldProduct.Description = newProduct.Description;
                 oldProduct.UpdatedDate = DateTime.Now;
                 oldProduct.Visibility = newProduct.isVisible;
                 oldProduct.Quantity = newProduct.Quantity;
@@ -182,8 +183,8 @@ namespace AmyzFeed.Business
                 Id = x.ID,
                 CategoryName = x.Category?.Name,
                 Name = x.Name,
-                Defenition = x.Definition,
-                Descriprion = x.Description,
+                Definition = x.Definition,
+                Description = x.Description,
                 CategoryId = x.CategoryID,
                 ImageURL = x.Image,
                 isVisible = x.Visibility,
@@ -203,8 +204,8 @@ namespace AmyzFeed.Business
                 CategoryName = product.Category?.Name,
                 Name = product.Name,
                 CategoryId = product.CategoryID,
-                Defenition = product.Definition,
-                Descriprion = product.Description,
+                Definition = product.Definition,
+                Description = product.Description,
                 ImageURL = product.Image,
                 isVisible = product.Visibility,
                 Price = Double.Parse( product.Price?.ToString()),
@@ -226,8 +227,8 @@ namespace AmyzFeed.Business
                 Id = x.ID,
                 CategoryName = x.Category?.Name,
                 Name = x.Name,
-                Defenition = x.Definition,
-                Descriprion = x.Description,
+                Definition = x.Definition,
+                Description = x.Description,
                 CategoryId = x.CategoryID,
                 ImageURL = x.Image,
                 isVisible = x.Visibility,
@@ -256,8 +257,8 @@ namespace AmyzFeed.Business
                     {
                         Id = x.ID,
                         Name = x.Name,
-                        Defenition = x.Definition,
-                        Descriprion = x.Description,
+                        Definition = x.Definition,
+                        Description = x.Description,
                         ImageURL = x.Image,
                         isVisible = x.Visibility,
                         Price = float.Parse(x.Price?.ToString()),
@@ -275,8 +276,8 @@ namespace AmyzFeed.Business
                          {
                              Id = x.ID,
                               Name = x.Name,
-                             Defenition = x.Definition,
-                             Descriprion = x.Description,
+                             Definition = x.Definition,
+                             Description = x.Description,
                               ImageURL = x.Image,
                              isVisible = x.Visibility,
                              Price = float.Parse(x.Price?.ToString()),
@@ -336,6 +337,48 @@ namespace AmyzFeed.Business
             }
             return initResultModel(false, "There is proplem in products are empty!");
 
+        }
+
+        public List<ProductDomainModel> getProductsByCategoryID(int id)
+        {
+            List<ProductDomainModel> products = this.productRepository.GetAll(x => x.CategoryID == id)
+                .Select(x => new ProductDomainModel()
+                {
+                    Id = x.ID,
+                    Name = x.Name,
+                    Definition = x.Definition,
+                    Description = x.Description,
+                    ImageURL = x.Image,
+                    isVisible = x.Visibility,
+                    Price = float.Parse(x.Price?.ToString()),
+                    Quantity = x.Quantity.Value
+                }).ToList();
+
+
+            return products;
+        }
+
+        public List<PriceDomainModel> getProductsPrices()
+        {
+            return this.productRepository.GetAll(z => z.Visibility == true && z.Price > 0 && z.CategoryID != null)
+                                    .Select(x => new PriceDomainModel
+                                    {
+                                        Id = x.ID,
+                                        Name = x.Name,
+                                        CategoryID = x.CategoryID.Value,
+                                        Price = x.Price.Value
+                                    }).ToList();
+        }
+
+        public List<PriceDomainModel> getMaterialsPrices()
+        {
+            return this.productRepository.GetAll(z => z.Visibility == true && z.Price > 0 && z.CategoryID == null)
+                                          .Select(x => new PriceDomainModel
+                                          {
+                                              Id = x.ID,
+                                              Name = x.Name,
+                                              Price = x.Price.Value
+                                          }).ToList();
         }
 
     }

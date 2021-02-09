@@ -40,7 +40,13 @@ namespace FeedApi.Controllers.User
 
             return result;
         }
+        public IEnumerable<ImagesViewModel> GetQualityImages()
+        {
+            List<ImageDomainModel> images = this.business.getImages(Constans.qualityImageFolderPath, Constans.qualityImageResponse);
+            var result = this.mapper.Map<List<ImagesViewModel>>(images);
 
+            return result;
+        }
 
         public IEnumerable<ImagesViewModel> GetResponsibilityImages()
         {
@@ -111,7 +117,24 @@ namespace FeedApi.Controllers.User
 
 
         }
+        [HttpDelete]
+        public IHttpActionResult DeleteQualityImage(string imageName)
+        {
+            string imagePath = Constans.qualityImageFolderPath + imageName;
 
+            ResultDomainModel result = this.business.deleteImage(imagePath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+
+        }
 
         [HttpDelete]
         public IHttpActionResult DeleteAboutUs(string imageName)

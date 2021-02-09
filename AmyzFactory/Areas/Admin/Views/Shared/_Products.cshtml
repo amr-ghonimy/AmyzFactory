@@ -30,16 +30,16 @@
 <div class="form-group">
     <label for="proName" class="col-sm-2 control-label"><strong>Defenition</strong> </label>
     <div class="col-sm-10">
-        @Html.TextAreaFor(m => m.Defenition, new { @class = "form-control", @placeholder = "Defenition", @id = "definition", @cols = "1", @rows = "5" })
-        @Html.ValidationMessageFor(m => m.Defenition,"", new { @class = "text-danger" })
+        @Html.TextAreaFor(m => m.Definition, new { @class = "form-control", @placeholder = "Defenition", @id = "definition", @cols = "1", @rows = "5" })
+        @Html.ValidationMessageFor(m => m.Definition,"", new { @class = "text-danger" })
      </div>
 </div><!-- /.Form-Group -->
 
 <div class="form-group">
     <label for="proName" class="col-sm-2 control-label"><strong>Content</strong> </label>
     <div class="col-sm-10">
-        @Html.TextAreaFor(m => m.Descriprion, new { @class = "form-control", @placeholder = "Content", @id = "description", @cols = "1", @rows = "7" })
-        @Html.ValidationMessageFor(m => m.Descriprion, "", new { @class = "text-danger" })
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Content", @id = "description", @cols = "1", @rows = "7" })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
      </div>
 </div><!-- /.Form-Group -->
 
@@ -153,8 +153,8 @@
         }
 
         formData.append("Name", $('#name').val());
-        formData.append("Defenition", $('#definition').val());
-        formData.append("Descriprion", $('#description').val());
+        formData.append("Definition", $('#definition').val());
+        formData.append("Description", $('#description').val());
         formData.append("isVisible", $('#visibility').val());
         formData.append("Quantity", $('#quantity').val());
         formData.append("Price", $('#price').val());

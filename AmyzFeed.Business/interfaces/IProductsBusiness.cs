@@ -1,6 +1,7 @@
 ﻿using AmyzFactory.Models;
+using AmyzFeed.Domain;
 using AmyzFeed.Repository;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Web;
 
 
@@ -10,6 +11,7 @@ namespace AmyzFeed.Business.interfaces
     {
         ResultDomainModel createProduct(ProductDomainModel product, HttpPostedFileWrapper productImage, string serverPathToUploadImage);
         ResultDomainModel deleteProduct(int productID);
+
 
         List<ProductDomainModel> getAllProducts(int pageNo, int displayLength);
         List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength);
@@ -22,6 +24,7 @@ namespace AmyzFeed.Business.interfaces
         // for admin panel table
         List<ProductDomainModel> getAllMaterials(int pageNo, int displayLength);
         List<ProductDomainModel> SearchInAllMaterials(string searchWord, int pageNo, int displayLength);
+        List<ProductDomainModel> getProductsByCategoryID(int id);
 
         int getAllMaterialsCount();
         int getSearchedMaterialsCount(string searchWord);
@@ -31,5 +34,8 @@ namespace AmyzFeed.Business.interfaces
   
         ResultDomainModel updatePrices(List<ProductDomainModel> list);
 
+         List<PriceDomainModel> getProductsPrices();
+
+        List<PriceDomainModel> getMaterialsPrices();
     }
 }

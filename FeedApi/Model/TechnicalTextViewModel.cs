@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace FeedApi.Models
+namespace FeedApi.Model
 {
     public class TechnicalTextViewModel
     {
         public int Id { get; set; }
         public int TechID { get; set; }
-        public string Title{ get; set; }
-        public string Description{ get; set; }
-        public ResultViewModel Result{ get; set; }
-
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }

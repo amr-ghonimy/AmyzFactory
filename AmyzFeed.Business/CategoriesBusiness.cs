@@ -334,7 +334,7 @@ namespace AmyzFeed.Business
 
         public List<DepartmentDomainModel> getTechniclas()
         {
-            return techRepository.GetAll(x => x.IsDeleted == false).Select(x => new DepartmentDomainModel()
+            return techRepository.GetAll(x => x.IsDeleted == true).Select(x => new DepartmentDomainModel()
             {
                 Name = x.Name,Id = x.ID}).ToList();
         }

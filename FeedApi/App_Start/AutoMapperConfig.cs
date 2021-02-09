@@ -16,11 +16,7 @@ namespace FeedApi
             var config = new MapperConfiguration(cfg =>
               {
 
-                  cfg.CreateMap<TechnicalSupportDomainModel, TechnicalSupportViewModel>()
-                              .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
-                              .ForMember(dst => dst.Name, src => src.MapFrom(e => e.Name))
-                              .ForMember(dst => dst.TechTextsList, src => src.MapFrom(e => e.TechTextsList))
-                              .ReverseMap();
+               
 
                   cfg.CreateMap<QuestionairViewModel, QuestionaireDomainModel > ()
                             .ForMember(dst => dst.UserName, src => src.MapFrom(e => e.FirstNAme +" "+ e.LastNAme))
@@ -29,13 +25,7 @@ namespace FeedApi
                             .ReverseMap();
 
 
-                  cfg.CreateMap<TechnicalTextDomainModel, TechnicalTextViewModel>()
-                            .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
-                            .ForMember(dst => dst.Title, src => src.MapFrom(e => e.Title))
-                            .ForMember(dst => dst.Description, src => src.MapFrom(e => e.Description))
-                            .ForMember(dst => dst.TechID, src => src.MapFrom(e => e.TechID))
-                            .ReverseMap();
-
+              
                   cfg.CreateMap<DepartmentDomainModel, CategoryViewModel>()
                                   .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
                                   .ForMember(dst => dst.Name, src => src.MapFrom(e => e.Name))
@@ -58,8 +48,8 @@ namespace FeedApi
                                 .ForMember(dst => dst.isVisible, src => src.MapFrom(e => e.isVisible))
                                 .ForMember(dst => dst.Quantity, src => src.MapFrom(e => e.Quantity))
                                 .ForMember(dst => dst.Price, src => src.MapFrom(e => e.Price))
-                                .ForMember(dst => dst.Defenition, src => src.MapFrom(e => e.Defenition))
-                                .ForMember(dst => dst.Descriprion, src => src.MapFrom(e => e.Descriprion))
+                                .ForMember(dst => dst.Defenition, src => src.MapFrom(e => e.Definition))
+                                .ForMember(dst => dst.Descriprion, src => src.MapFrom(e => e.Description))
                                 .ForMember(dst => dst.CategoryId, src => src.MapFrom(e => e.CategoryId))
                                 .ForMember(dst => dst.ImageFile, src => src.MapFrom(e => e.ImageFile))
                                 .ReverseMap();
@@ -106,8 +96,12 @@ namespace FeedApi
                   cfg.CreateMap<ProductDomainModel, ProductsViewModel>()
                           .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
                           .ForMember(dst => dst.Name, src => src.MapFrom(e => e.Name))
+                          .ForMember(dst => dst.Definition, src => src.MapFrom(e => e.Definition))
+                          .ForMember(dst => dst.Description, src => src.MapFrom(e => e.Description))
                           .ForMember(dst => dst.ImageUrl, src => src.MapFrom(e => e.ImageURL))
                            .ForMember(dst => dst.Price, src => src.MapFrom(e => e.Price))
+                           .ForMember(dst => dst.CategoryName, src => src.MapFrom(e => e.CategoryName))
+                           .ForMember(dst => dst.isVisible, src => src.MapFrom(e => e.isVisible))
                             .ForMember(dst => dst.Quantity, src => src.MapFrom(e => e.Quantity))
                             .ForMember(dst => dst.CategoryID, src => src.MapFrom(e => e.CategoryId))
                              .ReverseMap();
@@ -139,6 +133,20 @@ namespace FeedApi
                      .ForMember(dst => dst.CategoryID, src => src.MapFrom(e => e.CategoryID))
                      .ForMember(dst => dst.Price, src => src.MapFrom(e => e.Price))
                      .ReverseMap();
+
+                  cfg.CreateMap<TechnicalTextDomainModel, TechnicalTextViewModel>()
+                        .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
+                        .ForMember(dst => dst.Title, src => src.MapFrom(e => e.Title))
+                        .ForMember(dst => dst.Description, src => src.MapFrom(e => e.Description))
+                        .ForMember(dst => dst.TechID, src => src.MapFrom(e => e.TechID))
+                        .ReverseMap();
+
+                  cfg.CreateMap<TechnicalSupportDomainModel, TechnicalSupportViewModel>()
+                      .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
+                       .ForMember(dst => dst.Name, src => src.MapFrom(e => e.Name))
+                       .ForMember(dst => dst.TechTextsList, src => src.MapFrom(e => e.TechTextsList))
+                      .ReverseMap();
+
 
               });
 
