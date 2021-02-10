@@ -1,4 +1,4 @@
-﻿@model AmyzFactory.Models.TextsViewModel
+﻿@model AmyzFactory.Models.ContactViewModel
 
 
 <div class="table-responsive">
@@ -18,8 +18,8 @@
                     </th>
                     <th>
                         <label for="emailInput">E-mail :</label>
-                        @Html.TextBoxFor(m => m.SubTitle, new { @class = "form-control", placeholder = "E-mail", @type = "email" })
-                        @Html.ValidationMessageFor(m => m.SubTitle, null, new { @class = "text-danger" })
+                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "E-mail", @type = "email" })
+                        @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
                     </th>
                     <th>
                         <button id="btnAddEmail" onclick="addAddress('#FrmEmail', 'CreateEmail', 'HomePage', 'EmailTblContainer', 'DeleteEmail', '#btnAddEmail')" class="btn btn-warning btn-block" type="button">Add</button>

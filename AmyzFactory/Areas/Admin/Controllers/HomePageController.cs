@@ -115,9 +115,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public ActionResult CreatePhone(TextsViewModel phoneVm)
+        public ActionResult CreatePhone(ContactViewModel phoneVm)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/CreatePhone", phoneVm).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreatePhone", phoneVm).Result;
 
             var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
@@ -157,7 +157,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         
 
         [HttpPost]
-        public ActionResult CreateEmail(TextsViewModel model)
+        public ActionResult CreateEmail(ContactViewModel model)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateEmail", model).Result;
 
@@ -198,7 +198,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateAccount(TextsViewModel model)
+        public ActionResult CreateAccount(ContactViewModel model)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateAccount", model).Result;
 

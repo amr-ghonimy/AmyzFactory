@@ -35,6 +35,14 @@ namespace FeedApi.Controllers.User
             return techsVm;
         }
 
+        public List<TechnicalTextViewModel> GetTechnicalTextByTechID(int id)
+        {
+           List<TechnicalTextDomainModel> techsDm= this.techBusiness.findTextxByTechID(id, Constans.technicalFilePath);
+
+            return this.mapper.Map<List<TechnicalTextViewModel>>(techsDm);
+        }
+        
+
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

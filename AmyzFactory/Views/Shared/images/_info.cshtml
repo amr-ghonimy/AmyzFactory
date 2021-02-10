@@ -1,4 +1,4 @@
-﻿@model AmyzFactory.Models.InformationViewModel
+﻿@model AmyzFactory.Models.TextsViewModel
 
 
 
@@ -6,10 +6,10 @@
 <section class="section">
     <div class="overlay"></div>
 
-    <div class="overlay-2" style="background-image: url('@Model.FilePath')" id="InfoBody">
+    <div class="overlay-2" style="background-image: url('@Model.ImageUrl')" id="InfoBody">
         <h1>@Model.Title</h1>
-        <h3>@Model.Value</h3>
-        <p>@Model.Content</p>
+        <h3>@Model.SubTitle</h3>
+        <p>@Model.Description</p>
         <a href="HomePreview/AboutUS">
             <button class="button-underSlid">أقرأ المزيد</button>
         </a>

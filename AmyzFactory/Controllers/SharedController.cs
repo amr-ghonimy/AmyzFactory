@@ -1,5 +1,4 @@
 ﻿using AmyzFactory.Models;
-
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Mvc;
@@ -19,7 +18,7 @@ namespace AmyzFactory.Controllers
         // GET: Shared
         public PartialViewResult _AllDepartmentsNavBar()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Shared/GetAllDepartmentsNavBar").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetDepartments").Result;
             List<CategoryViewModel> departmentsVm = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
             return PartialView("~/Views/Shared/nav_bar/_AllCategories.cshtml", departmentsVm);
@@ -28,7 +27,7 @@ namespace AmyzFactory.Controllers
 
         public PartialViewResult _AllTechnicalsNavBar()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Shared/GetAllTechnicalsNavBar").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetTechnicals").Result;
             List<CategoryViewModel> technicalsVm = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
             return PartialView("~/Views/Shared/nav_bar/_AllTechnicals.cshtml", technicalsVm);
@@ -37,8 +36,8 @@ namespace AmyzFactory.Controllers
 
         public PartialViewResult _AllEmails()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Shared/GetAllEmails").Result;
-            List<TextsViewModel> emailsVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetEmails").Result;
+            List<ContactViewModel> emailsVm = response.Content.ReadAsAsync<List<ContactViewModel>>().Result;
 
 
           
@@ -47,8 +46,8 @@ namespace AmyzFactory.Controllers
 
         public PartialViewResult _AllPhones()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Shared/GetAllPhones").Result;
-            List<TextsViewModel> phonesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetPhones").Result;
+            List<ContactViewModel> phonesVm = response.Content.ReadAsAsync<List<ContactViewModel>>().Result;
 
             return PartialView("~/Views/Shared/nav_bar/_AllPhones.cshtml", phonesVm);
         }

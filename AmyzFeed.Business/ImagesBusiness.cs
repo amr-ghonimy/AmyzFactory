@@ -60,7 +60,7 @@ namespace AmyzFeed.Business
                     {
                         Id = idCounter,
                         Title = item,
-                        ImageUrl =  responsePath + item
+                        ImageUrl = Constans.ServerFile + responsePath + item
                     });
                     idCounter++;
                 }

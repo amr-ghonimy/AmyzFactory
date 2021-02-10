@@ -47,6 +47,15 @@ namespace FeedApi.Controllers.User
 
             return result;
         }
+        public IEnumerable<ProductsViewModel> GetAllMaterials()
+        {
+            List<ProductDomainModel> productsDm = this.productsBusiness.getAllMaterials();
+
+            var result = mapper.Map<List<ProductsViewModel>>(productsDm);
+
+            return result;
+        }
+
 
         public IEnumerable<ProductsViewModel> SearchInProducts(string word, int pageNo, int displayLength)
         {

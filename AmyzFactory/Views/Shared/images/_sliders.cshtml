@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<AmyzFactory.Models.InformationViewModel>
+@model IEnumerable<AmyzFactory.Models.ImagesViewModel>
 
 @{ 
     int sliderCounter = 0;
@@ -16,7 +16,7 @@
                         {
                             //   string imgPath = "/Images/Sliders/" + item.Title;
                            
-                            string imgPath = item.FilePath;
+                            string imgPath = item.ImageUrl;
 
                             if (sliderCounter == 0)
                             {

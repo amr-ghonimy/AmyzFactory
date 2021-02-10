@@ -1,22 +1,29 @@
 ﻿@model IEnumerable<AmyzFactory.Models.CategoryViewModel>
- 
+
 @{ 
     int itemCounter = 1;
+    string logoPath = "http://192.168.10.180:45461/Images/AmyzFeed/logo.jpg";
 }
 
  
 <style>
 .img {
-  height: 150px;
+  height: 250px;
   width: 100%;
+   border-radius: 10%;
 }
 
 .item {
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+   padding-top:10px;
+    border-radius: 10%;
+  padding-bottom:10px;
 }
 .item-card {
   transition: 0.5s;
+    border-radius: 10%;
+  margin:5px;
   cursor: pointer;
 }
 .item-card-title {
@@ -91,7 +98,8 @@
 <div class="container mt-2">
 
     <div class="row" style="direction:rtl;">
-
+        
+       
         @if (Model != null && Model.Count() > 0)
         {
             foreach (var item in Model)
@@ -100,14 +108,15 @@
 
                 <div class="col-md-4 col-sm-6 item mx-auto">
                     <div id="cartcust" class="card item-card card-block">
-                        <h6 class="card-title text-right"><a style="color: #f19304; background-color: transparent;" href="@url" class="nav-link"><i class="material-icons">عرض المنتجات</i></a></h6>
-                        <img class="img" src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" alt="Photo of sunset">
-                        <h5 class="cen mt-3 mb-3">@item.Name</h5>
-                    </div>
+                        <a class="category-item" href="@url">
+                            <img class="img" src="@item.ImageUrl" alt="Photo of sunset">
+                            <strong class="category-item-title">  @item.Name</strong>
+                        </a>
+                     </div>
                 </div>
+
             }
         }
-
      
     </div>
 

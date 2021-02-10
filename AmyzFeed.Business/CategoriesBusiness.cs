@@ -1,4 +1,5 @@
 ﻿using AmyzFactory.Models;
+using AmyzFeed.Business.helpers;
 using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
 using AmyzFeed.Repository;
@@ -310,11 +311,14 @@ namespace AmyzFeed.Business
 
         public List<DepartmentDomainModel> getDepartments()
         {
-             
-              List<DepartmentDomainModel> list= deptRepository.GetAll(x => x.IsDeleted == false).Select(x => new DepartmentDomainModel()
-              {
-                  Name = x.Name,Id = x.ID,visibility=x.Visibility,ImageUrl=x.Image
-              }).ToList();
+
+            List<DepartmentDomainModel> list = deptRepository.GetAll(x => x.IsDeleted == false).Select(x => new DepartmentDomainModel()
+            {
+                Name = x.Name,
+                Id = x.ID,
+                visibility = x.Visibility,
+                ImageUrl = x.Image!=null ? Constans.ServerFile + x.Image : Constans.LogoPath  
+            }).ToList();
 
 
             foreach (var item in list)

@@ -1,5 +1,4 @@
 ﻿using AmyzFactory.Models;
- 
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -15,7 +14,7 @@ namespace AmyzFactory.Controllers
 
         public ActionResult ShowProducts(int categoryId)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/ShowProducts?categoryId=" + categoryId).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetProductsByCategoryID?id=" + categoryId).Result;
             List<ProductViewModel> productsVm = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
 
             return View(productsVm);
@@ -25,7 +24,7 @@ namespace AmyzFactory.Controllers
 
         public ActionResult ShowMaterials()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/ShowMaterials").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetAllMaterials").Result;
             List<ProductViewModel> materialsVm = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
 
             return View(materialsVm);

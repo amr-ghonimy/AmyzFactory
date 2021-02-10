@@ -8,9 +8,9 @@
         <div class="col-lg-6 col-md-3">
             <h5>@item.Name</h5>
             <ul class="list-unstyled mb-3">
-                @if (item.SubCategoriesList != null && item.SubCategoriesList.Count() > 0)
+                @if (item.Categories != null && item.Categories.Count() > 0)
                 {
-                    foreach (var subItem in item.SubCategoriesList)
+                    foreach (var subItem in item.Categories)
                     {
                         var url = "/Product/ShowProducts?categoryId="+subItem.Id;
 

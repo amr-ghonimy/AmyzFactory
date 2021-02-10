@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AddressesBusiness.cs" />
     <Compile Include="CategoriesBusiness.cs" />
+    <Compile Include="helpers\Constans.cs" />
     <Compile Include="helpers\MemoryPostedFile.cs" />
     <Compile Include="interfaces\IQuestionaireBusiness.cs" />
     <Compile Include="interfaces\IOrdersBusiness.cs" />

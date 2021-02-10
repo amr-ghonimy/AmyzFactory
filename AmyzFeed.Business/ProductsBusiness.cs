@@ -1,4 +1,5 @@
 ﻿using AmyzFactory.Models;
+using AmyzFeed.Business.helpers;
 using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
 using AmyzFeed.Repository;
@@ -186,7 +187,7 @@ namespace AmyzFeed.Business
                 Definition = x.Definition,
                 Description = x.Description,
                 CategoryId = x.CategoryID,
-                ImageURL = x.Image,
+                ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
                 isVisible = x.Visibility,
                 Price = float.Parse(x.Price?.ToString()),
                 Quantity = x.Quantity.Value
@@ -206,7 +207,7 @@ namespace AmyzFeed.Business
                 CategoryId = product.CategoryID,
                 Definition = product.Definition,
                 Description = product.Description,
-                ImageURL = product.Image,
+                ImageURL = product.Image != null ? Constans.ServerFile + product.Image : Constans.LogoPath,
                 isVisible = product.Visibility,
                 Price = Double.Parse( product.Price?.ToString()),
                 Quantity=product.Quantity.Value
@@ -230,7 +231,7 @@ namespace AmyzFeed.Business
                 Definition = x.Definition,
                 Description = x.Description,
                 CategoryId = x.CategoryID,
-                ImageURL = x.Image,
+                ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
                 isVisible = x.Visibility,
                 Price = float.Parse(x.Price?.ToString()),
                 Quantity = x.Quantity.Value
@@ -259,7 +260,7 @@ namespace AmyzFeed.Business
                         Name = x.Name,
                         Definition = x.Definition,
                         Description = x.Description,
-                        ImageURL = x.Image,
+                        ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
                         isVisible = x.Visibility,
                         Price = float.Parse(x.Price?.ToString()),
                         Quantity = x.Quantity.Value
@@ -278,7 +279,7 @@ namespace AmyzFeed.Business
                               Name = x.Name,
                              Definition = x.Definition,
                              Description = x.Description,
-                              ImageURL = x.Image,
+                              ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
                              isVisible = x.Visibility,
                              Price = float.Parse(x.Price?.ToString()),
                              Quantity = x.Quantity.Value
@@ -348,7 +349,7 @@ namespace AmyzFeed.Business
                     Name = x.Name,
                     Definition = x.Definition,
                     Description = x.Description,
-                    ImageURL = x.Image,
+                    ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
                     isVisible = x.Visibility,
                     Price = float.Parse(x.Price?.ToString()),
                     Quantity = x.Quantity.Value
@@ -381,5 +382,19 @@ namespace AmyzFeed.Business
                                           }).ToList();
         }
 
+        public List<ProductDomainModel> getAllMaterials()
+        {
+            return this.productRepository.GetAll(x=>x.CategoryID==null)
+                .Select(x=> new ProductDomainModel {
+                    Id = x.ID,
+                    Name = x.Name,
+                    Definition = x.Definition,
+                    Description = x.Description,
+                    ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
+                    isVisible = x.Visibility,
+                    Price = float.Parse(x.Price?.ToString()),
+                    Quantity = x.Quantity.Value
+                }).ToList();
+        }
     }
 }

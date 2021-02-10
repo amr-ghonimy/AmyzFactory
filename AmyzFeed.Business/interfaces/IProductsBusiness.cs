@@ -23,6 +23,8 @@ namespace AmyzFeed.Business.interfaces
  
         // for admin panel table
         List<ProductDomainModel> getAllMaterials(int pageNo, int displayLength);
+        List<ProductDomainModel> getAllMaterials();
+
         List<ProductDomainModel> SearchInAllMaterials(string searchWord, int pageNo, int displayLength);
         List<ProductDomainModel> getProductsByCategoryID(int id);
 

@@ -1,45 +1,72 @@
 ﻿
 @model IEnumerable<AmyzFactory.Models.ProductViewModel>
  
+@{ 
+    List<AmyzFactory.Models.CategoryViewModel> categories = ViewBag.Categories;
+}
 <script src="~/Content/js/add_to_cart.js"></script>
  
 @if (Model.Count() > 0)
 {
     <section class="container" dir="rtl">
-         <div class="row clearfix" id="product-row">
+ 
+        <div id="navbar-example">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item active">
+                    <a class="nav-link active" data-toggle="tab" href="#pane-0-1" role="tab">علف ماشية حلاب</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#pane-0-2" role="tab">علف ماشية تسمين</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#pane-0-3" role="tab">علف عجول رضيعه</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#pane-0-4" role="tab">علف أغنام</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#pane-0-5" role="tab"> علف جمال</a>
+                </li>
+            </ul>
 
-            @foreach (var item in Model)
-            {
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card product_item">
-                        <div class="body">
-                            <div class="cp_img">
-                                <img src="~/Content/img/chick-5.jpg" alt="Product" class="img-fluid">
-                                <div class="hover">
-                                     <button onclick="showProductDetailsDialog(this)" itemid="@item.Id" itemname="@item.Name" itemprice="@item.Price" itemdefenition="@item.Defenition" itemdescription="@item.Descriprion" itemimage="@item.ImageURL" class="btn btn-success btn-sm waves-effect"><i class="fa fa-plus"></i></button>
-                                     <button onclick="addToCart(this)"  class="btn btn-success btn-sm waves-effect" itemid="@item.Id"><i class="fa fa-shopping-cart"></i></button>
+
+            <div class="row clearfix" id="product-row">
+
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="card product_item">
+                            <div class="body">
+                                <div class="cp_img">
+                                    <img src="~/Content/img/chick-5.jpg" alt="Product" class="img-fluid">
+                                    <div class="hover">
+                                        <button onclick="showProductDetailsDialog(this)" itemid="@item.Id" itemname="@item.Name" itemprice="@item.Price" itemdefenition="@item.Definition" itemdescription="@item.Description" itemimage="@item.ImageURL" class="btn btn-success btn-sm waves-effect"><i class="fa fa-plus"></i></button>
+                                        <button onclick="addToCart(this)" class="btn btn-success btn-sm waves-effect" itemid="@item.Id"><i class="fa fa-shopping-cart"></i></button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="product_details">
-                                 <h5><a href="ec-product-detail.html">@item.Name</a></h5>
-                                <ul class="product_price list-unstyled">
+                                <div class="product_details">
+                                    <h5><a href="ec-product-detail.html">@item.Name</a></h5>
+                                    <ul class="product_price list-unstyled">
 
-                                    @if (item.Price > 0)
-                                    {
-                                        <li class="new_price"><span>جنية</span> @item.Price </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="new_price">لم يتم تحديد السعر</li>
-                                    }
-                                </ul>
+                                        @if (item.Price > 0)
+                                        {
+                                            <li class="new_price"><span>جنية</span> @item.Price </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="new_price">لم يتم تحديد السعر</li>
+                                        }
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-            }
+                }
 
+            </div>
         </div>
     </section>
 }

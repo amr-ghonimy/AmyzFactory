@@ -1,4 +1,4 @@
-﻿@model AmyzFactory.Models.TextsViewModel
+﻿@model AmyzFactory.Models.ContactViewModel
 
 
 <form id="FrmAccount">
@@ -12,8 +12,8 @@
                     <!-- Add & Delet Social Media -->
                     <th>
                         <label for="urlSocialInput">URL :</label>
-                        @Html.TextBoxFor(m => m.SubTitle, new { @class = "form-control", placeholder = "URL", @type = "url" })
-                         @Html.ValidationMessageFor(m => m.SubTitle, null, new { @class = "text-danger" })
+                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "URL", @type = "url" })
+                         @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
 
 
 

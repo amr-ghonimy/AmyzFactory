@@ -13,6 +13,7 @@ namespace AmyzFactory.Models
 
         [Required(ErrorMessage = "This field is required")]
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
 
         public ResultViewModel Result { get; set; }
 
