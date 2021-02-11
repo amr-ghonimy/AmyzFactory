@@ -1,479 +1,320 @@
-﻿ 
+﻿
 @using Microsoft.AspNet.Identity
 
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<!-- Basic -->
 
-<html lang="en" class="no-js">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="icon" href="~/Content/img/favicon.png"> <!-- Logo Title-->
-    <link rel="stylesheet" href="~/Content/css/reset.css"> <!-- CSS reset -->
-    <link rel="stylesheet" href="~/Content/css/bootstrap_rtl.css"> <!-- Bootstrap File Ar-->
-    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
-    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css"> <!-- Css Style -->
-    <script src="~/Content/js/modernizr.js"></script> <!-- Modernizr -->
-   
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Amyz - Home</title> <!-- Title Name -->
+    <!-- Site Metas -->
+    <title>اميز للأسمدة والعلف</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="~/Content/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/Content/img/apple-touch-icon.png">
 
-    <style>
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        #userName {
-            color: #0cda90;
-            font-size: 14px;
-            font-weight: bold;
-           
-        }
-        #welcome{
-            color: #ffffff;
-            font-weight: normal;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            padding: 12px 16px;
-            z-index: 4;
-        }
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <!-- Responsive CSS -->               
+    <link rel="stylesheet" href="~/Content/css/responsive.css">
+    <!-- Custom CSS -->                   
+    <link rel="stylesheet" href="~/Content/css/custom.css">
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-
- 
-
-
-
-
-
-
-
-           
-
-
-        .modal.left .modal-dialog {
-	position: fixed;
-	margin: auto;
-	height: 300px;
-	width: 300px;
-	right:0;
-	border: 0;
-	-webkit-transform: translate3d(0%, 0, 0);
-	-ms-transform: translate3d(0%, 0, 0);
-	-o-transform: translate3d(0%, 0, 0);
-	transform: translate3d(0%, 0, 0);
-}
-
-.modal.left .modal-content {
-	width: 300px;
-}
-
-.modal.left .modal-body {
-	padding: 80px 80px 15px;
-}
-
-.modal.left.fade .modal-dialog {
-	bottom: -300px;
-	right:-300px;
-	-webkit-transition: transform 0.3s linear, opacity 0.3s linear, bottom 0.3s ease-out;
-	-moz-transition: transform 0.3s linear, opacity 0.3s linear, bottom 0.3s ease-out;
-	-o-transition: transform 0.3s linear, opacity 0.3s linear, bottom 0.3s ease-out;
-	transition: transform 0.3s linear, opacity 0.3s linear, bottom 0.3s ease-out;
-}
-
-.modal.left.fade.show .modal-dialog {
-	transform: translate(-300px, -300px);
-}
-
-.modal-header {
-	border-bottom-color: #eeeeee;
-	background-color: #fafafa;
-}
-
-.draw:focus {
-    box-shadow: inherit;
-}
-
-.draw {
-  background: none;
-  border: 0;
-  box-sizing: border-box;
-  color: #f45e61;
-  font-size: inherit;
-  font-weight: 700;
-  position: relative;
-  vertical-align: middle;
-}
-.draw::before, .draw::after {
-  box-sizing: inherit;
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.draw {
-  transition: color 0.25s;
-}
-.draw::before, .draw::after {
-  border: 2px solid transparent;
-  box-shadow: #f45e61 0px 3px 14px;
-  width: 0;
-  height: 0;
-}
-.draw::before {
-  top: 0;
-  left: 0;
-    transition: box-shadow 0.25s ease-out, width 0.25s ease-out, height 0.25s ease-out 0.25s;
-
-}
-.draw::after {
-  bottom: 0;
-  right: 0;
-    transition: box-shadow 0.25s ease-out, border-color .25s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
-
-}
-
-
-.drawhover::before, .drawhover::after {
-  width: 100%;
-  height: 100%;
-}
-.drawhover::before {
-  border-top-color: #60daaa;
-  border-right-color: #60daaa;
-  box-shadow: #60daaa 0px 3px 14px;
-
-}
-.drawhover::after {
-  border-bottom-color: #60daaa;
-  border-left-color: #60daaa;
-    box-shadow: #60daaa 0px 3px 14px;
-
-
-}
-
-    </style>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
-
-
- 
-
 <body>
-    <!--Header-->
-    <div class="All">
-        <!-- Top bar-->
-        <div class="top-bar">
-            <div class="container">
-                <div class="row d-flex align-items-center">
-                    <div class="col-md-6 d-md-block d-none">
-                        <div class="d-flex  justify-content-hidden">
-                            <ul class="list-inline contact-info d-block">
-                                @using (Html.BeginForm("Logout", "Accounts", FormMethod.Post, new { id = "logoutFrm" }))
-                                {
-                                    if (User.IsInRole("Users"))
-                                    {
+    <!-- Start Main Top -->
+    <div class="main-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-                                        @Html.AntiForgeryToken()
-
-                                        <div class="dropdown">
-                                            <li class="list-inline-item btnlogin"><a href="#" id="userName">@User.Identity.Name <span id="welcome">مرحباً</span><img src="~/Content/img/user.png" alt="login" width="50px"></a><span>|</span></li>
-
-                                            <div class="dropdown-content">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal">
-                                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-
-                                                    <span style="color:#000">طلباتى</span>
-
-                                                </a>
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                                    <span style="color:#ff0000">تسجيل الخروج</span>
-                                                </a>
-
-                                            </div>
-                                        </div>
-
-
-
-
-
-
-
-                                    }
-                                    else
-                                    {
-                                        <li class="list-inline-item btnlogin"><a href="/Accounts/Login"> تسجيل دخول <img src="~/Content/img/user.png" alt="login" width="50px"></a><span>|</span></li>
-                                    }
-                                    if (Session["cartCounter"] == null)
-                                    {
-                                        <li class="list-inline-item btnmarket"><a href="/Order/Index"><img src="~/Content/img/market.png" alt="shoppinng" width="45px"><span id="counterText">0</span></a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="list-inline-item btnmarket"><a href="/Order/Index"><img src="~/Content/img/market.png" alt="shoppinng" width="45px"><span id="counterText">@Session["cartCounter"]</span></a></li>
-                                    }
-                                }
-                            </ul>
-                        </div>
+                    <div class="right-phone-box">
+                        <p>اتصل بنا :- <a href="#"> 01024595552</a></p>
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="d-flex justify-content-md-end justify-content-between">
-                            <ul class="list-inline contact-info d-block d-md-none">
-                                <li class="list-inline-item"><a href="#"><img src="~/Content/img/user.png" alt="login" class="top-bar-i" width="48px"></a><span>|</span></li>
-                                <li class="list-inline-item"><a href="#"><img src="~/Content/img/market.png" alt="shopping" class="top-bar-i" width="40px"><span class="count">0</span></a></li>
-                            </ul>
-                            <ul class="social-custom list-inline">
-                                <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Top bar end-->
-        <!-- Navbar Start-->
-        <header class="nav-holder make-sticky">
-            <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
-                <!-- Logo -->
-                <div class="container">
-                    <a class="navbar-brand home"><img src="~/Content/img/logo2.jpg" alt="Universal logo" class="d-none d-md-inline-block" id="img-logo"><span class="sr-only">Universal - go to homepage</span></a>
-                    <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
-                    <div id="navigation" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav ml-auto" id="nav-bar-right">
-
-                            <li class="nav-item  active">
-                                @Html.ActionLink("الرئيسية", "Index", "HomePreview", null, new { @class = "nav-link" })
-                            </li>
-
-                            <li class="nav-item dropdown menu-large">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">منتجات<b class="caret"></b></a>
-                                <ul class="dropdown-menu megamenu">
-                                    <li>
-                                        <div class="row" style="direction:rtl;">
-                                            @{
-                                             Html.RenderAction("_AllDepartmentsNavBar", "Shared");
-                                            }
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown menu-large">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">دعم فني <b class="caret"></b></a>
-                                <ul class="dropdown-menu megamenu">
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-lg-6"></div>
-                                            <div class="col-lg-6 col-md-6">
-                                                <ul class="list-unstyled mb-3">
-                                                    @{
-                                                    Html.RenderAction("_AllTechnicalsNavBar", "Shared");
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========== FULL WIDTH MEGAMENU ==================-->
-
-                            <li class="nav-item ">
-                                @Html.ActionLink("الخامات", "ShowMaterials", "Product", null, new { @class = "nav-link" })
-                            </li>
-                            <li class="nav-item ">
-                                @Html.ActionLink("جودة المنتج", "Censorship", "HomePreview", null, new { @class = "nav-link" })
-                            </li>
-
-                            <!-- ========== FULL WIDTH MEGAMENU END ==================-->
-
-                            <li class="nav-item dropdown menu-large">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">الأسعار <b class="caret"></b></a>
-                                <ul class="dropdown-menu megamenu">
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-lg-6"></div>
-                                            <div class="col-lg-6 col-md-6">
-                                                <ul class="list-unstyled mb-3">
-                                                    @Html.ActionLink("المنتجات", "ProductsPrices", "Product", null, new { @class = "nav-link" })
-                                                    @Html.ActionLink("الخامات", "MaterialsPrices", "Product", null, new { @class = "nav-link" })
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item ">
-                                @Html.ActionLink("من نحن", "AboutUS", "HomePreview", null, new { @class = "nav-link" })
-                            </li>
-                            <li class="nav-item ">
-                                @Html.ActionLink("اتصل بنا", "Index", "Contact", null, new { @class = "nav-link" })
-                            </li>
-
-                            <!-- ========== Contact dropdown end ==================-->
+                    <div class="our-link">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-user s_color"></i> حسابى</a></li>
+                            <li><a href="#"><i class="fas fa-location-arrow"></i> موقعنا</a></li>
+                            <li><a href="#"><i class="fas fa-headset"></i> تواصل معنا</a></li>
                         </ul>
                     </div>
                 </div>
-            </div>
-        </header>
-        <!-- End NavBar -->
-    </div>
-
-    <!-- Account Modal-->
-
-  
-    <div class="modal left fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content meet">
-                <div class="modal-body">
-                    <div class="nav flex-sm-column flex-row">
-                        <a class="nav-item nav-link active" href="#">Home</a>
-                        <a href="#" class="nav-item nav-link">Link</a>
-                        <a href="#" class="nav-item nav-link">Link</a>
-                        <a href="#" class="nav-item nav-link">Link</a>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="login-box">
+                        <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In">
+                            <option>تسجيل عضو جديد</option>
+                            <option>تسجيل الدخول</option>
+                        </select>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="text-slid-box">
+                        <div id="offer-box" class="carouselTicker">
+                            <ul class="offer-box">
+                                <li>
+                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT80
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- End Main Top -->
+    <!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="~/Content/img/logo.jpg" class="logo" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu" style="direction:rtl;">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a class="nav-link" href="index.html">الرئيسية</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">من نحن</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">منتاجاتنا</a></li>
 
-
-
-
-    <!-- Logout Modal-->
- 
-
-
-    <div tabindex="-1" style="direction:rtl;" id="logoutModal" class="modal bs-example-modal-sm" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content" style="direction:rtl;">
-                <div class="modal-header"><h4>تسجيل الخروج <i class="fa fa-lock"></i></h4></div>
-                <div class="modal-body">هل انت متأكد من تسجيل الخروج <i class="fa fa-question-circle"></i> </div>
-                <div class="modal-footer"><a class="btn btn-danger btn-block" href="javascript:document.getElementById('logoutFrm').submit()">تأكيد</a></div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- End Account Modal-->
-
-
-   
-    <script src="~/Content/js/jquery-2.1.1.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-    @Scripts.Render("~/bundles/alert_script")
-    @Scripts.Render("~/bundles/images_script")
-
-    @RenderBody()
-
-    
-
-
-    <!--<hr class="hr-section"> -->
-
-    <hr class="hr-section">
-    
-    <!--Footer -->
-
-
-    <footer class="map-bg">
-        <div class="container py-5 border-bottom">
-            <div class="row">
-                <div class="col-lg" id="logo-footer"><img class="mb-3" src="~/Content/img/logo2.jpg" alt="" width="70"></div>
-                <div class="col-lg con-footer" id="addres-footer">
-                    <div class="col-dot">
-                        <span class="dot"><i class="fa fa-location-arrow"></i></span>
-                    </div>
-                    <h4 class="center">العنوان</h4>
-                    <ul class="list-unstyled text-muted mb-0">
-                        <li class="mb-1"><a class="text-small center">المنطقة الصناعية – بمدينة السلام  القاهره العنوان البريدي: 501 سوق العبور</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">الأسعار</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="shop.html">المنتجات</a></li>
+                                <li><a href="shop-detail.html">الخامات</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="gallery.html">الدعم الفنى</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.html">تواصل معنا</a></li>
                     </ul>
                 </div>
-                <div class="col-lg con-footer">
-                    <div class="col-dot">
-                        <span class="dot"><i class="fa fa-envelope"></i></span>
-                    </div>
-                    <h4 class="center">البريد الالكتروني</h4>
-                    <div id="emails-list" class="list-unstyled text-muted mb-0 center">
-                        @{
-                            Html.RenderAction("_AllEmails", "Shared");
-                        }
-                    </div>
-                </div>
-                <div class="col-lg con-footer">
-                    <div class="col-dot">
-                        <span class="dot"><i class="fa fa-phone"></i></span>
-                    </div>
-                    <h4 class="center">الهاتف</h4>
-                    <ul class="list-unstyled text-muted mb-0 center">
-                        @{
-                            Html.RenderAction("_AllPhones", "Shared");
-                        }
+                <!-- /.navbar-collapse -->
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge">3</span>
+                                <p>عربتى</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
+                <!-- End Atribute Navigation -->
+            </div>
+            <!-- Start Side Menu -->
+            <div class="side">
+                <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+                <li class="cart-box">
+                    <ul class="cart-list">
+                        <li>
+                            <a href="#" class="photo"><img src="~/Content/img/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
+                            <h6><a href="#">Delica omtantur </a></h6>
+                            <p>1x - <span class="price">$80.00</span></p>
+                        </li>
+                        <li>
+                            <a href="#" class="photo"><img src="~/Content/img/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
+                            <h6><a href="#">Omnes ocurreret</a></h6>
+                            <p>1x - <span class="price">$60.00</span></p>
+                        </li>
+                        <li>
+                            <a href="#" class="photo"><img src="~/Content/img/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
+                            <h6><a href="#">Agam facilisis</a></h6>
+                            <p>1x - <span class="price">$40.00</span></p>
+                        </li>
+                        <li class="total">
+                            <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+                            <span class="float-right"><strong>Total</strong>: $180.00</span>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+            <!-- End Side Menu -->
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    <!-- End Main Top -->
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
             </div>
         </div>
-        <div class="container py-4">
-            <div class="row text-center">
-                <div class="col-lg-6 p-lg-0" id="copyRight">
-                    <div class="text-muted text-small mb-0">  .جميع الحقوق محفوظة تصميم و تطوير أميز© 2020</div>
+    </div>
+    <!-- End Top Search -->
+
+    <body>
+
+
+
+      
+        <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+
+
+
+        @RenderBody()
+
+
+
+
+        <!--<hr class="hr-section"> -->
+
+        <hr class="hr-section">
+
+        <footer>
+            <div class="footer-main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 col-sm-12 footer-container">
+                            <div class="footer-top-box">
+                                <h3 class="footer-title">أوقات العمل</h3>
+                                <ul class="list-time">
+                                    <li class="footer-text">Monday - Friday: 08.00am to 05.00pm</li>
+                                    <li>Saturday: 10.00am to 08.00pm</li>
+                                    <li>Sunday: <span>Closed</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12 footer-container">
+                            <div style="text-align:center;">
+                                <img src="~/Content/img/logo.jpg" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12 footer-container">
+                            <div class="footer-top-box">
+                                <h3 class="footer-title">مواقع التواصل الاجتماعى</h3>
+                                <p>اليكم جميع مواقعنا على مواقع التواصل الاجتماعى .</p>
+                                <ul>
+                                    <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 col-sm-12 footer-container">
+                            <div class="footer-widget">
+                                <h4 class="footer-title">معلومات عن المصنع</h4>
+                                <p>تم التأسيس عام 2015 </p>
+                                <p>نتيجة تطور الشركة المتحدة للكيماويات والمستحضرات الطبية فى مجال إنتاج الأدوية البيطرية وثقة السوق المصرى بمنتجاتها، اتجهت الشركة الى إنشاء مصنع لإنتاج الأعلاف والمركزات عام 2015 بطاقة إنتاجية 50 ألف طن سنويا. ونتيجة لرغبة الدولة فى توفير اللحوم الحمراء والبيضاء بأقل الأسعار وحيث أن العلف يمثل ( 60 : 70 % ) من تكلفة مشروعات الإنتاج الحيواني قامت الشركة بإنشاء مصنع جديد لإنتاج الأعلاف والمركزات بطاقة إنتاجية 600 ألف طن سنويا لتصبح الطاقة الإنتاجية لمصانع الأعلاف بالشركة حوالى 650 الف طن سنويا.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12 footer-container">
+                            <div class="footer-link">
+                                <h4 class="footer-title">معلومات اضافية</h4>
+                                <ul>
+                                    <li><a href="#">من نحن</a></li>
+                                    <li><a href="#">الدعم الفنى</a></li>
+                                    <li><a href="#">خريطة المصنع</a></li>
+                                    <li><a href="#">الشروط</a></li>
+                                    <li><a href="#">سياستنا الخاصة</a></li>
+                                    <li><a href="#">معلومات التوصيل</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12 footer-container">
+                            <div class="footer-link-contact">
+                                <h4 class="footer-title">الوصول الينا</h4>
+                                <ul>
+                                    <li>
+                                        <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
+                                    </li>
+                                    <li>
+                                        <p>Phone: <a href="tel:+1-888705770">+1-888 705 770</a><i class="fas fa-phone-square"></i></p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </footer>
+        <!-- End Footer  -->
+        <!-- Start copyright  -->
+        <div class="footer-copyright">
+            <p class="footer-company">جميع الحقوق محفوظة لشركة أميز &copy; 2021
         </div>
-    </footer>
+        <!-- End copyright  -->
 
-    <!-- End footer  -->
-    <!-- Scroll Top Button -->
-  
-
-    <!-- End Scroll Top Button -->
-
- 
+        <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
 
-   
-    <script src="~/Content/js/popper.min.js"></script>
-    <script src="~/Content/js/bootstrap.min.js"></script>
-    <script src="~/Content/js/velocity.min.js"></script>
-    <script src="~/Content/js/main.js"></script> <!-- JS -->
-
-
-</body>
-</html> 
-
-
-<script>
-    $(document).ready(function () {
-        /*
- 
-        $('a[href$="#Modal"]').click(function () {
-
-            $('#exampleModal').modal('show');
-        })
-    
-           */
-    })
-
-</script>
+      
+        <!-- ALL JS FILES -->
+        <script src="~/Content/js/popper.min.js"></script>
+        <script src="~/Content/js/bootstrap.min.js"></script>
+        <!-- ALL PLUGINS -->
+        <script src="~/Content/js/jquery.superslides.min.js"></script>
+        <script src="~/Content/js/bootstrap-select.js"></script>
+        <script src="~/Content/js/inewsticker.js"></script>
+        <script src="~/Content/js/bootsnav.js."></script>
+        <script src="~/Content/js/images-loded.min.js"></script>
+        <script src="~/Content/js/isotope.min.js"></script>
+        <script src="~/Content/js/owl.carousel.min.js"></script>
+        <script src="~/Content/js/baguetteBox.min.js"></script>
+        <script src="~/Content/js/form-validator.min.js"></script>
+        <script src="~/Content/js/contact-form-script.js"></script>
+        <script src="~/Content/js/custom.js"></script>
 
 
 
+        
+
+    </body>
+
+</html>

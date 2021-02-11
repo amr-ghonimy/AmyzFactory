@@ -4,35 +4,75 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
- <div class="container form-con">
-    <h3> الاستفسارات العامة</h3>
-     <form id="frmQuest">
 
-         @Html.LabelFor(m => m.FirstNAme, new { @class = "req" })
-         @Html.TextBoxFor(m => m.FirstNAme, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @style = "direction: rtl;", @placeholder = "الاسم الأول",@id="fName" })
-         @Html.ValidationMessageFor(m => m.FirstNAme, null, new { @class = "text-danger" })
 
-         <br>
-         @Html.LabelFor(m => m.LastNAme, new { @class = "req" })
-         @Html.TextBoxFor(m => m.LastNAme, new { @class = "form-control form-control-user", @type = "text", @style = "direction: rtl;", autocomplete = "off", @placeholder = "اسم العائلة", @id = "lName" })
-         @Html.ValidationMessageFor(m => m.LastNAme, null, new { @class = "text-danger" })
-         <br>
-         @Html.LabelFor(m => m.Email, new { @class = "req" })
-         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @style = "direction: rtl;", autocomplete = "off", @value = "", @placeholder = "البريد الالكتروني", @id = "emailAddress" })
-         @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
-         <br>
-         @Html.LabelFor(m => m.Question, new { @class = "req" })
-         @Html.TextAreaFor(m => m.Question, new { @class = "form-control", @style = "direction: rtl;", @type = "text", @cols = "30", @rows = "10", autocomplete = "off", @value = "", @placeholder = "الاستفسار", @id = "questionText" })
-         @Html.ValidationMessageFor(m => m.Question, null, new { @class = "text-danger" })
-         <br>
-         <div class="center">
-             <button class="form-control" id="btnSend" type="button">ارســال</button>
-         </div>
-     </form>
-
+<!-- End All Title Box -->
+<!-- Start Contact Us  -->
+<div class="contact-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12">
+                <div class="contact-form-right">
+                    <h2>التواصل معنا</h2>
+                    <p> ارسل الينا رسالة وسيتم الرد فى أقرب وقت</p>
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required data-error="Please enter your name">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Your Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="message" placeholder="Your Message" rows="4" data-error="Write your message" required></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="submit-button text-center">
+                                    <button class="btn hvr-hover" id="submit" type="submit">Send Message</button>
+                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="contact-info-left">
+                    <h2>معلومات اضافية</h2>
+                    <p>اعرض لنا مشكلتك أو استفسارك عبر رسالة نصية وسيتم الرد والتواصل معك فى أقرب وقت ممكن على بريدك الالكترونى </p>
+                    <ul>
+                        <li>
+                            <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 9000 <br>Preston Street Wichita,<br> KS 87213 </p>
+                        </li>
+                        <li>
+                            <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
+                        </li>
+                        <li>
+                            <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- End Cart -->
 
- 
+
 
 <script>
 
