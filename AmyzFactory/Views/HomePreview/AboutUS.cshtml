@@ -5,53 +5,74 @@
     var imagePath = ViewBag.ImagePath;
     }
 
-@model AmyzFactory.Models.InformationViewModel
 
-<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
-    <div class="container text-center text -md-left">
-        <script src="~/Scripts/jquery-1.10.2.js"></script>
+ <!-- Start Contact Us  -->
+<div class="contact-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12">
+                <div class="contact-form-right">
+                    <h2>التواصل معنا</h2>
+                    <p> ارسل الينا رسالة وسيتم الرد فى أقرب وقت</p>
 
-        <script>
-            $('#hero').css("background", "url(../Images/About/@Model.FilePath)");
-        </script>
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required data-error="Please enter your name">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Your Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="message" placeholder="Your Message" rows="4" data-error="Write your message" required></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="submit-button text-center">
+                                    <button class="btn hvr-hover" id="submit" type="submit">Send Message</button>
+                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
 
-        <h1 class="display-1">@Model.Title</h1>
-        <h2>@Model.Value</h2>
-        <p class="mb-0">@Model.Content</p>
-    </div>
-</section>
-<!-- end Hero Section-->
-<main id="main">
 
-    <!-- About Section-->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-7">
-                    <img src="~/Content/img/Meeting-3.jpg" class="img-fluid" alt="مجلس الادارة">
+
                 </div>
-                <div class="col-xl-6 col-lg-5 pt-5 pt-lg-0">
-                    <h3>رؤية مجلس الادارة</h3>
-                    <p>  أن تكون شركة أميز من رواد صناعة اعلاف الدواجن و المواشي في مصر</p>
-                    <div class="icon-box">
-                        <i class="fa fa-sticky-note"></i>
-                        <h4>ونقدم لعملائنا قيمة مضافة</h4>
-                        <p>ممثلة في تحقيق افضل معادل تحويل وكذلك مدة تسمين</p>
-                    </div>
-                    <div class="icon-box">
-                        <i class="fa fa-cube"></i>
-                        <h4>سياستنا</h4>
-                        <p> نلتزم فى شركةأميز للأعلاف بأن نقدم لعملائنا من المربين و القائمين على تنمية الثروة الحيوانية والداجنة أعلاف صحية ذات مستويات جودة وسلامة عالية وصديقة للبيئة</p>
-                    </div>
-                    <div class="icon-box">
-                        <i class="fa fa-cube"></i>
-                        <h4>هدفنا</h4>
-                        <p>أن نضع شركتنا في مصاف شركات الصف الأول العاملة في مجال تصنيع علف الدواجن وأن نحقق لعملائنا اعلي عائد ممكن</p>
-                    </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="contact-info-left">
+                    <h2>معلومات اضافية</h2>
+                    <p>اعرض لنا مشكلتك أو استفسارك عبر رسالة نصية وسيتم الرد والتواصل معك فى أقرب وقت ممكن على بريدك الالكترونى </p>
+                    <ul>
+                        <li>
+                            <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 9000 <br>Preston Street Wichita,<br> KS 87213 </p>
+                        </li>
+                        <li>
+                            <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
+                        </li>
+                        <li>
+                            <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-
-    </section>
-
-</main>
+    </div>
+</div>
+<!-- End Cart -->
+ 

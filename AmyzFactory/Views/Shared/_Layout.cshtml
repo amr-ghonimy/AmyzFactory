@@ -31,10 +31,7 @@
     <!-- Custom CSS -->                   
     <link rel="stylesheet" href="~/Content/css/custom.css">
 
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+   
 
 </head>
 
@@ -63,36 +60,7 @@
                             <option>تسجيل الدخول</option>
                         </select>
                     </div>
-                    <div class="text-slid-box">
-                        <div id="offer-box" class="carouselTicker">
-                            <ul class="offer-box">
-                                <li>
-                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT80
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -114,19 +82,31 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu" style="direction:rtl;">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">الرئيسية</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">من نحن</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">منتاجاتنا</a></li>
+                        <li class="nav-item active">
+                       @Html.ActionLink("الرئيسية", "Index", "HomePreview", null,new { @class = "nav-link" })  
+                        <li class="nav-item">
+                            @Html.ActionLink("من نحن", "AboutUS", "HomePreview", null, new { @class = "nav-link" })
+                        </li>
+
+                        <li class="nav-item">
+                            @Html.ActionLink("منتاجاتنا", "Index", "HomePreview", null, new { @class = "nav-link" })
+                        </li>
 
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">الأسعار</a>
                             <ul class="dropdown-menu">
-                                <li><a href="shop.html">المنتجات</a></li>
-                                <li><a href="shop-detail.html">الخامات</a></li>
+                                <li>
+                                    @Html.ActionLink("المنتجات", "Index", "HomePreview", null, new { @class = "nav-link" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("الخامات", "Index", "HomePreview", null, new { @class = "nav-link" })
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="gallery.html">الدعم الفنى</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">تواصل معنا</a></li>
+                        <li class="nav-item">
+                            @Html.ActionLink("تواصل معنا", "Index", "HomePreview", null, new { @class = "nav-link" })
+                        </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -138,7 +118,7 @@
                             <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
                                 <span class="badge">3</span>
-                                <p>عربتى</p>
+                                <p>العربة</p>
                             </a>
                         </li>
                     </ul>
@@ -194,7 +174,6 @@
 
 
       
-        <script src="~/Content/js/jquery-3.2.1.min.js"></script>
 
 
 
@@ -293,6 +272,7 @@
 
         <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
       
         <!-- ALL JS FILES -->
@@ -302,7 +282,7 @@
         <script src="~/Content/js/jquery.superslides.min.js"></script>
         <script src="~/Content/js/bootstrap-select.js"></script>
         <script src="~/Content/js/inewsticker.js"></script>
-        <script src="~/Content/js/bootsnav.js."></script>
+        <script src="~/Content/js/bootsnav.js"></script>
         <script src="~/Content/js/images-loded.min.js"></script>
         <script src="~/Content/js/isotope.min.js"></script>
         <script src="~/Content/js/owl.carousel.min.js"></script>
@@ -310,10 +290,7 @@
         <script src="~/Content/js/form-validator.min.js"></script>
         <script src="~/Content/js/contact-form-script.js"></script>
         <script src="~/Content/js/custom.js"></script>
-
-
-
-        
+         
 
     </body>
 
