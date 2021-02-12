@@ -38,7 +38,7 @@ namespace AmyzFactory.Controllers
 
             return PartialView("~/Views/Shared/images/_info.cshtml", modelVm);
         }
-        public PartialViewResult _GetCategories()
+        public PartialViewResult _GetDepartments()
         { 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetDepartments").Result;
             List<CategoryViewModel> categsVm = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;

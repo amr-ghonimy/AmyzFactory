@@ -1,124 +1,77 @@
 ﻿@model IEnumerable<AmyzFactory.Models.CategoryViewModel>
 
-@{ 
-    int itemCounter = 1;
-    string logoPath = "http://192.168.10.180:45461/Images/AmyzFeed/logo.jpg";
-}
-
  
-<style>
-.img {
-  height: 200px;
-  width: 100%;
-   border-radius: 10%;
-}
 
-.item {
-  padding-left: 30px;
-  padding-right: 30px;
-   padding-top:10px;
-    border-radius: 10%;
-  padding-bottom:10px;
-}
-.item-card {
-  transition: 0.5s;
-    border-radius: 10%;
-  margin:5px;
-  cursor: pointer;
-}
-.item-card-title {
-  font-size: 15px;
-  transition: 1s;
-  cursor: pointer;
-}
-.item-card-title i {
-  font-size: 15px;
-  transition: 1s;
-  cursor: pointer;
-  color: #0cda90;
-}
-.card-title i:hover {
-  transform: scale(1.25) rotate(100deg);
-  color: #0cda90;
-}
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
-}
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="special-menu text-center">
+                <div class="button-group filter-button-group">
+                    @{
+                        int counter = 0;
 
+                        foreach (var item in Model)
+                        {
+                            if (counter == 0)
+                            {
+                                <button class="active" data-filter="@item.Id">@item.Name</button>
+                                counter++;
+                            }
+                            else
+                            {
+                                <button  data-filter="@item.Id">@item.Name</button>
+                            }
 
+                        }
 
-.card::before,
-.card::after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform: scale3d(0, 0, 1);
-  transition: transform 0.3s ease-out 0s;
-  background: rgba(255, 255, 255, 0.1);
-  content: "";
-  pointer-events: none;
-}
-.card::before {
-  transform-origin: left top;
-}
-.card::after {
-  transform-origin: right bottom;
-}
-.card:hover::before,
-.card:hover::after,
-.card:focus::before,
-.card:focus::after {
-  transform: scale3d(1, 1, 1);
-}
-.cen {
-  text-align: center;
-   color: #28a745;
-   font-size: 16px;
-     font-weight: bold;
-}
-
-#cartcust{
-        background:#F4F7ED;
-}
- 
-</style>
-
-<section class="container">
-    <header class="text-center">
-         <h2 class="h5 text-uppercase mb-4">أقسام أميز للأعلاف</h2>
-    </header>
-
-</section>
-
-  
-
-<div class="container mt-2">
-
-    <div class="row" style="direction:rtl;">
-        
-       
-        @if (Model != null && Model.Count() > 0)
-        {
-            foreach (var item in Model)
-            {
-                var url = "/Product/ShowProducts?categoryId=" + item.Id;
-
-                <div class="col-md-4 col-sm-6 item mx-auto">
-                    <div id="cartcust" class="card item-card card-block">
-                        <a class="category-item" href="@url">
-                            <img class="img" src="@item.ImageUrl" alt="Photo of sunset">
-                            <strong class="category-item-title">  @item.Name</strong>
-                        </a>
-                     </div>
+                    }
                 </div>
-
-            }
-        }
-     
+            </div>
+        </div>
     </div>
 
-</div>
+
+    <div class="row special-list">
+
+                       @foreach (var department in Model)
+                        {
+
+                            if (department.Categories != null && department.Categories.Count > 0)
+                            {
+                                foreach (var category in department.Categories)
+                                {
+                    <div class="col-lg-3 col-md-6 special-grid @category.DepartmentID">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <p class="sale">@category.Name</p>
+                                </div>
+                                <img src="~/Content/img/about-img.jpg" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <ul>
+                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="عرض التفاصيل"><i class="fas fa-eye"></i></a></li>
+                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="اضافة الى المفضلة"><i class="far fa-heart"></i></a></li>
+                                    </ul>
+                                    <a class="cart" href="#">عرض المنتجات</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                                }
+                            }
+
+
+
+
+
+                        }
+
+                        </div>
+                        }
+
+
+
 

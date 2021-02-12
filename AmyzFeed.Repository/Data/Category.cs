@@ -14,6 +14,7 @@ namespace AmyzFeed.Repository.Data
         public int ID { get; set; }
         [Required]
         public int DepartmentID { get; set; }
+        public string Image { get; set; }
 
         [Required]
         [MaxLength(100)]
