@@ -12,11 +12,11 @@ namespace AmyzFactory.Controllers
 
         private List<ProductViewModel> cardItemsList;
 
-        public ActionResult ShowProducts(int categoryId)
+        public ActionResult ShowProducts(int categoryId,string categoryName)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetProductsByCategoryID?id=" + categoryId).Result;
             List<ProductViewModel> productsVm = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
-
+            ViewBag.CategoryName = categoryName;
             return View(productsVm);
         }
 
@@ -28,6 +28,23 @@ namespace AmyzFactory.Controllers
             List<ProductViewModel> materialsVm = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
 
             return View(materialsVm);
+        }
+
+
+        public ActionResult ShowProductsWithCategories()
+        {
+            // first get all categories
+            HttpResponseMessage categoriesResponse = GlobalVariables.WebApiClient.GetAsync("Departments/GetCategories").Result;
+            List<CategoryViewModel> categoriesVm = categoriesResponse.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
+
+            // get All Products 
+
+            HttpResponseMessage productsResponse = GlobalVariables.WebApiClient.GetAsync("Product/GetAllProducts").Result;
+            List<ProductViewModel> productsVm = productsResponse.Content.ReadAsAsync<List<ProductViewModel>>().Result;
+
+            ViewBag.Categories = categoriesVm;
+
+            return View(productsVm);
         }
 
 

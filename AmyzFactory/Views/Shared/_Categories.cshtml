@@ -9,20 +9,11 @@
             <div class="special-menu text-center">
                 <div class="button-group filter-button-group">
                     @{
-                        int counter = 0;
+                        <button class="active" data-filter="*">الكل</button>
 
                         foreach (var item in Model)
                         {
-                            if (counter == 0)
-                            {
-                                <button class="active" data-filter="@item.Id">@item.Name</button>
-                                counter++;
-                            }
-                            else
-                            {
-                                <button  data-filter="@item.Id">@item.Name</button>
-                            }
-
+                                <button  data-filter=".@item.Id">@item.Name</button>  
                         }
 
                     }
@@ -35,17 +26,17 @@
     <div class="row special-list">
 
                        @foreach (var department in Model)
-                        {
+                       {
 
-                            if (department.Categories != null && department.Categories.Count > 0)
-                            {
-                                foreach (var category in department.Categories)
-                                {
+                           if (department.Categories != null && department.Categories.Count > 0)
+                           {
+                               foreach (var category in department.Categories)
+                               {
                     <div class="col-lg-3 col-md-6 special-grid @category.DepartmentID">
                         <div class="products-single fix">
                             <div class="box-img-hover">
                                 <div class="type-lb">
-                                    <p class="sale">@category.Name</p>
+                                    <p class="new">@category.Name</p>
                                 </div>
                                 <img src="~/Content/img/about-img.jpg" class="img-fluid" alt="Image">
                                 <div class="mask-icon">
@@ -53,23 +44,27 @@
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="عرض التفاصيل"><i class="fas fa-eye"></i></a></li>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="اضافة الى المفضلة"><i class="far fa-heart"></i></a></li>
                                     </ul>
-                                    <a class="cart" href="#">عرض المنتجات</a>
+
+                                    @Html.ActionLink("عرض المنتجات", "ShowProducts", "Product",new { categoryId=category.Id,categoryName=category.Name},new { @class="cart"})
+                                    
                                 </div>
                             </div>
                             
                         </div>
                     </div>
 
-                                }
-                            }
+                               }
+                           }
 
 
 
 
 
-                        }
+                       }
 
                         </div>
+
+
                         }
 
 

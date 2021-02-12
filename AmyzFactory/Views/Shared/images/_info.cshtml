@@ -1,19 +1,27 @@
 ﻿@model AmyzFactory.Models.TextsViewModel
 
+ 
 
+<div class="about-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="banner-frame">
+                    <img class="img-fluid" src="@Model.ImageUrl" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="noo-sh-title-top footer-title">@Model.Title</h2>
+                <p class="footer-text">
+                   @Model.SubTitle
+                </p>
+                <p class="footer-text">
+                @Model.Description
+                </p>
+                    <a class="btn hvr-hover" href="#">المزيد</a>
+            </div>
+        </div>
 
-<div class="overlay"></div>
-<section class="section">
-    <div class="overlay"></div>
-
-    <div class="overlay-2" style="background-image: url('@Model.ImageUrl')" id="InfoBody">
-        <h1>@Model.Title</h1>
-        <h3>@Model.SubTitle</h3>
-        <p>@Model.Description</p>
-        <a href="HomePreview/AboutUS">
-            <button class="button-underSlid">أقرأ المزيد</button>
-        </a>
     </div>
-
-</section>
+</div>
 

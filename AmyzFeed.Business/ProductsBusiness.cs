@@ -396,5 +396,22 @@ namespace AmyzFeed.Business
                     Quantity = x.Quantity.Value
                 }).ToList();
         }
+
+        public List<ProductDomainModel> getAllProducts()
+        {
+            return this.productRepository.GetAll()
+                           .Select(x => new ProductDomainModel
+                           {
+                               Id = x.ID,
+                               Name = x.Name,
+                               CategoryId=x.CategoryID,
+                               Definition = x.Definition,
+                               Description = x.Description,
+                               ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
+                               isVisible = x.Visibility,
+                               Price = float.Parse(x.Price?.ToString()),
+                               Quantity = x.Quantity.Value
+                           }).ToList();
+        }
     }
 }

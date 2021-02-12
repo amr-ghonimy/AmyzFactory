@@ -40,27 +40,9 @@
 </div>
 <!-- End Categories -->
  <!-- Start About Page  -->
-<div class="about-box-main">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="banner-frame">
-                    <img class="img-fluid"  src="~/Content/img/about-img.jpg" alt="" />
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <h2 class="noo-sh-title-top footer-title">We are <span>Freshshop</span></h2>
-                <p class="footer-text">
-                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                           Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.
-                </p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <a class="btn hvr-hover" href="#">Read More</a>
-            </div>
-        </div>
-        
-    </div>
-</div>
+@{
+    Html.RenderAction("_GetInfo", "HomePreview");
+}
 <!-- End About Page -->
 <!-- Start Products  -->
 <div class="products-box">
@@ -75,26 +57,45 @@
         </div>
         @{
             Html.RenderAction("_GetDepartments", "HomePreview");
-
         }
 
     </div>
 </div>
 <!-- End Products  -->
 <!-- Start Blog  -->
+ 
 <div class="latest-blog">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="title-all text-center">
-                    <h1>أقسامنا</h1>
-                    <p>الأقسام المتوفرة حاليا فى المصنع</p>
+                    <h1>المقالات</h1>
+                    <p>مقالات علمية</p>
                 </div>
             </div>
         </div>
         <div class="row">
-             
+            <div class="col-md-6 col-lg-4 col-xl-4">
+                <div class="blog-box">
+                    <div class="blog-img">
+                        <img class="img-fluid" src="~/Content/img/blog-img.jpg" alt="" />
+                    </div>
+                    <div class="blog-content">
+                        <div class="title-blog">
+                            <h3>Fusce in augue non nisi fringilla</h3>
+                            <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
+                        </div>
+                        <ul class="option-blog">
+                            <li><a href="#"><i class="far fa-heart"></i></a></li>
+                            <li><a href="#"><i class="fas fa-eye"></i></a></li>
+                            <li><a href="#"><i class="far fa-comments"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
 <!-- End Blog  -->

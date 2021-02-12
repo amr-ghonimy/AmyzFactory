@@ -423,6 +423,7 @@
     <Content Include="Views\Accounts\partial\_SignIn.cshtml" />
     <Content Include="Views\Accounts\partial\_SignUp.cshtml" />
     <Content Include="Views\Order\ContinueOrder.cshtml" />
+    <Content Include="Views\Product\ShowProductsWithCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\css\" />

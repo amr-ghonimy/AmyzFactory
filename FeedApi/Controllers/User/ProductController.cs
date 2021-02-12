@@ -39,6 +39,12 @@ namespace FeedApi.Controllers.User
             return this.mapper.Map<List<ProductsViewModel>>(productsList);
         }
 
+        public IEnumerable<ProductsViewModel> GetAllProducts()
+        {
+            List<ProductDomainModel> productsList = this.productsBusiness.getAllProducts();
+
+            return this.mapper.Map<List<ProductsViewModel>>(productsList);
+        }
         public IEnumerable<ProductsViewModel> GetAllMaterials(int pageNo, int displayLength)
         {
             List<ProductDomainModel> productsDm = this.productsBusiness.getAllMaterials(pageNo, displayLength);
