@@ -30,6 +30,12 @@ namespace AmyzFactory.Controllers
             return View(qualityVm);
         }
 
+        public ActionResult Information()
+        {
+
+
+            return View();
+        }
        
         public PartialViewResult _GetInfo()
         {
@@ -51,13 +57,50 @@ namespace AmyzFactory.Controllers
         {
             return View();
         }
-        
+
+
+        public ActionResult Articles()
+        { 
+            return View(getAllArticles());
+        }
+
+        private List<TextsViewModel> getAllArticles()
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Articles/GetArticles").Result;
+            List<TextsViewModel> artickesVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            return artickesVm;
+        }
+
+        public PartialViewResult _GetArticles()
+        {
+            return PartialView("~/Views/Shared/_Articles.cshtml", getAllArticles());
+        }
+
+
+        private List<ContactViewModel> getEmails()
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetEmails").Result;
+            List<ContactViewModel> emailsVm = response.Content.ReadAsAsync<List<ContactViewModel>>().Result;
+
+
+
+            return emailsVm;
+        }
+
+        private List<ContactViewModel> getPhones()
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetPhones").Result;
+            List<ContactViewModel> phonesVm = response.Content.ReadAsAsync<List<ContactViewModel>>().Result;
+
+            return phonesVm;
+        }
+
         public ActionResult AboutUS()
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetAboutUs").Result;
-            TextsViewModel aboutUsVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
-           
-            return View(aboutUsVm);
+            ViewBag.Emails = this.getEmails();
+            ViewBag.Phones = this.getPhones();
+
+            return View();
         }
         
         public ActionResult TechnocalSupport(int technicalID,string techName)

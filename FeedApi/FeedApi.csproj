@@ -244,6 +244,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="BrowserJsonFormatter.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\User\ArticlesController.cs" />
     <Compile Include="Controllers\User\DepartmentsController.cs" />
     <Compile Include="Controllers\User\ImagesController.cs" />
     <Compile Include="Controllers\User\InformationController.cs" />

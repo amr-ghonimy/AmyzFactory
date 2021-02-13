@@ -1,0 +1,92 @@
+﻿
+@model AmyzFactory.Models.TextsViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+<section class="head-page-add-pro">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h2><i class="fab fa-product-hunt"></i>&nbsp;&nbsp;Add New Article</h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+<section class="container">
+    <article id="slider-edit">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <caption>Add / Edit Article</caption>
+                <thead>
+                    <tr>
+                        <form>
+                            <th class="form-group">
+                                <label for="imageInput">Article Img : </label>
+                                <input class="form-control" id="articleImageInput" type="file" name="image" onchange="viewImageFile('#articleImageInput', '#articleDescription', '#articleTargetImg', '#imgArticlePreview', 0, 0)">
+                            </th>
+
+                            <div>
+                                <div id="imgArticlePreview" class="thumbnail" style="display:none">
+                                    <img class="img-responsive" id="articleTargetImg" width="120" height="80" />
+                                    <div class="caption">
+                                        <a href="#" onclick="clearPreview()"> Clear </a>
+                                        <span id="articleDescription"></span>
+                                    </div>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#articleImageInput', 'UploadArticleImage', 'Articles', 'TblArticleImages', '#articleDescription', '#imgArticlePreview', 'DeleteArticleImage')" data-dismiss="modal">Upload</button>
+                                    <hr />
+                                </div>
+                            </div>
+                        </form>
+                    </tr>
+                </thead>
+                <tbody id="TblArticleImages"></tbody>
+            </table>
+            <form id="frmArticle">
+                <div class="form-group">
+                    <label for="titleInput"> Title:</label>
+                    @Html.TextBoxFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", placeholder = "Title here", @type = "text" })
+                </div>
+
+                <div class="form-group">
+                    <label for="titleInput"> Content:</label>
+                    @Html.TextAreaFor(m => m.Description, new { @id = "p2", @class = "form-control", @rows = "14", placeholder = "Content here", @type = "text" })
+                </div>
+
+                <hr />
+                <input class="btn btn-success" onclick="updateArticle('frmArticle', 'CreateArticle')" type="button" value="Upload" />
+            </form>
+        </div>
+    </article>
+
+    <div class="kik"></div>
+</section>
+
+
+
+<script>
+    var updateArticle = function (FrmID, ActionName) {
+
+        var formData = $("#" + FrmID).serialize();
+        var URL = '/Articles/' + ActionName;
+        $.ajax({
+            url: URL,
+            type: "Post",
+            data: formData,
+            dataType: "json",
+            success: function (data) {
+                if (data.IsSuccess) {
+                    successDialog(data.Message);
+                } else {
+                    failedDialog(data.Message);
+                }
+            }
+        });
+
+    }
+</script>

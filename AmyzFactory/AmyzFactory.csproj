@@ -226,6 +226,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AboutUSController.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ArticlesController.cs" />
     <Compile Include="Areas\Admin\Controllers\CensorshipController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomePageController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
@@ -240,7 +241,6 @@
     <Compile Include="Controllers\HomePreviewController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -363,6 +363,7 @@
     <Content Include="Areas\Admin\Views\HomePage\partial\_Email.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\OrderDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\_UserInfo.cshtml" />
+    <Content Include="Areas\Admin\Views\Articles\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -413,10 +414,6 @@
     <Content Include="Views\Order\Index2.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Shared\_ProductDetailsModal.cshtml" />
-    <Content Include="Views\Shared\nav_bar\_AllPhones.cshtml" />
-    <Content Include="Views\Shared\nav_bar\_AllEmails.cshtml" />
-    <Content Include="Views\Shared\nav_bar\_AllCategories.cshtml" />
-    <Content Include="Views\Shared\nav_bar\_AllTechnicals.cshtml" />
     <Content Include="Views\Shared\images\_sliders.cshtml" />
     <Content Include="Views\Shared\images\_info.cshtml" />
     <Content Include="Views\Shared\_Categories.cshtml" />
@@ -424,6 +421,8 @@
     <Content Include="Views\Accounts\partial\_SignUp.cshtml" />
     <Content Include="Views\Order\ContinueOrder.cshtml" />
     <Content Include="Views\Product\ShowProductsWithCategories.cshtml" />
+    <Content Include="Views\Shared\_Articles.cshtml" />
+    <Content Include="Views\HomePreview\Articles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\css\" />

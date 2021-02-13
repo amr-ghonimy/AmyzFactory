@@ -57,13 +57,7 @@ namespace AmyzFactory.Controllers
         }
 
 
-        public ActionResult MaterialsPrices()
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetMaterialsPrices").Result;
-            List<ProductViewModel> materialsList = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
-
-            return View(materialsList);
-        }
+    
 
 
         public JsonResult AddToCart(int itemId)

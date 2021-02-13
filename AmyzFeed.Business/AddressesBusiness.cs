@@ -129,6 +129,7 @@ namespace AmyzFeed.Business
 
             try
             {
+
                 File.WriteAllText(filePath, convertedJson);
                 return initResultModel(true, "Process Success!!");
 
@@ -141,6 +142,46 @@ namespace AmyzFeed.Business
             }
         }
 
-       
+     
+        public ResultDomainModel createArticle(TextsDomainModel model, string filePath)
+        {
+            var list = new List<TextsDomainModel>();
+
+            string textJson = File.ReadAllText(filePath);
+
+            if (textJson.Length > 0)
+            {
+                list = JsonConvert.DeserializeObject<List<TextsDomainModel>>(textJson);
+                model.Id = list.Last().Id + 1;
+            }
+
+            list.Add(model);
+            var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
+            try
+            {
+                File.WriteAllText(filePath, convertedJson);
+                return initResultModel(true, "Insertion Success!!");
+            }
+            catch (Exception)
+            {
+
+                return initResultModel(false, "Insertion Failed");
+            }
+        }
+
+        public List<TextsDomainModel> getArticles(string filePath)
+        {
+
+            List<TextsDomainModel> list = new List<TextsDomainModel>();
+
+            string textJson = File.ReadAllText(filePath);
+
+            if (textJson.Length > 0)
+            {
+                list = JsonConvert.DeserializeObject<List<TextsDomainModel>>(textJson);
+            }
+
+            return list;
+        }
     }
 }

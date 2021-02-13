@@ -23,6 +23,8 @@ namespace AmyzFeed.FeedApi.Helpers
         public static string censirshipHeaderFilePath;
         public static string censirshipFooterFilePath;
 
+        public static string articleFilePath;
+
 
         // images
         public static string sliderImageFolderPath;

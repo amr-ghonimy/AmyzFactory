@@ -56,8 +56,8 @@ namespace FeedApi
 
         private void setPathes()
         {
- 
-           
+
+
             Constans.emailFilePath = Server.MapPath(@"Files\emails.txt");
             Constans.phonesFilePath = Server.MapPath(@"Files\phones.txt");
             Constans.accountsFilePath = Server.MapPath(@"Files\accounts.txt");
@@ -69,6 +69,7 @@ namespace FeedApi
             Constans.responsibiltyFilePath = Server.MapPath(@"Files\responsibilty.txt");
             Constans.censirshipHeaderFilePath = Server.MapPath(@"Files\cenHeader.txt");
             Constans.censirshipFooterFilePath = Server.MapPath(@"Files\cenFooter.txt");
+            Constans.articleFilePath = Server.MapPath(@"Files\articles.txt");
 
             Constans.sliderImageFolderPath = Server.MapPath(Constans.sliderImageResponse);
             Constans.qualityImageFolderPath = Server.MapPath(Constans.qualityImageResponse);

@@ -361,7 +361,7 @@ namespace AmyzFeed.Business
 
         public List<PriceDomainModel> getProductsPrices()
         {
-            return this.productRepository.GetAll(z => z.Visibility == true && z.Price > 0 && z.CategoryID != null)
+            return this.productRepository.GetAll(z => z.Visibility == true && z.Price > 0)
                                     .Select(x => new PriceDomainModel
                                     {
                                         Id = x.ID,

@@ -11,6 +11,8 @@ namespace AmyzFeed.Business.interfaces
 
         List<ContactDomainModel> getContacts(string filePath);
         TextsDomainModel getTexts(string filePath);
+        List<TextsDomainModel> getArticles(string filePath);
+
 
 
         ResultDomainModel createContact(ContactDomainModel model, string filePath, int maxNumber);
@@ -18,5 +20,9 @@ namespace AmyzFeed.Business.interfaces
         ResultDomainModel deleteContact(int elementIndexInList, string filePath);
       
         ResultDomainModel createOrUpdateFile(TextsDomainModel model, string filePath);
+
+        ResultDomainModel createArticle(TextsDomainModel model, string filePath);
+
+
     }
 }

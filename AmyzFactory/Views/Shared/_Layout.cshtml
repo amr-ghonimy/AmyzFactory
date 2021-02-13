@@ -76,7 +76,7 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="~/Content/img/logo.jpg" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="~/HomePreview/Index"><img src="~/Content/img/logo.jpg" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -92,20 +92,17 @@
                             @Html.ActionLink("منتاجاتنا", "ShowProductsWithCategories", "Product", null, new { @class = "nav-link" })
                         </li>
 
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">الأسعار</a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    @Html.ActionLink("المنتجات", "Index", "HomePreview", null, new { @class = "nav-link" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("الخامات", "Index", "HomePreview", null, new { @class = "nav-link" })
-                                </li>
-                            </ul>
+                      
+                        <li class="nav-item">
+                            @Html.ActionLink("الأسعار", "ProductsPrices", "Product", null, new { @class = "nav-link" })
                         </li>
+
                         <li class="nav-item"><a class="nav-link" href="gallery.html">الدعم الفنى</a></li>
                         <li class="nav-item">
-                            @Html.ActionLink("تواصل معنا", "Index", "HomePreview", null, new { @class = "nav-link" })
+                            @Html.ActionLink("المقالات", "Articles", "HomePreview", null, new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("تواصل معنا", "Index", "Contact", null, new { @class = "nav-link" })
                         </li>
                     </ul>
                 </div>
