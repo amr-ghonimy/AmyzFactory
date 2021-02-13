@@ -1940,8 +1940,8 @@ text-align: right;
 }
  .product-item-filter .toolbar-sorter-right span{
      line-height: 42px;
-     padding-right: 15px;
-     float: left;
+     padding-left: 15px;
+     float: right;
 }
  .product-item-filter .toolbar-sorter-right{
      width: 65%;
@@ -1960,6 +1960,7 @@ text-align: right;
 }
  .toolbar-sorter-right .bootstrap-select.btn-group .dropdown-toggle .filter-option{
      padding-left: 15px;
+text-align:center;
 }
  .toolbar-sorter-right .btn-light{
      background: #000000;

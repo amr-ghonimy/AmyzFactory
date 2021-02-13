@@ -34,7 +34,7 @@ namespace AmyzFactory.Controllers
         public ActionResult ShowProductsWithCategories()
         {
             // first get all categories
-            HttpResponseMessage categoriesResponse = GlobalVariables.WebApiClient.GetAsync("Departments/GetCategories").Result;
+            HttpResponseMessage categoriesResponse = GlobalVariables.WebApiClient.GetAsync("Departments/GetDepartments").Result;
             List<CategoryViewModel> categoriesVm = categoriesResponse.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
             // get All Products 
