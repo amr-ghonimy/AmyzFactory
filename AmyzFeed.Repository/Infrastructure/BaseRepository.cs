@@ -42,6 +42,12 @@ namespace AmyzFeed.Repository.Infrastructure
             return dbSet.Include(tableName).Where(whereCondition).AsEnumerable();
         }
 
+        public IEnumerable<T> GetAll(string tableName)
+        {
+            return dbSet.Include(tableName).AsEnumerable();
+        }
+
+
         public virtual T Insert(T entity)
         {
 

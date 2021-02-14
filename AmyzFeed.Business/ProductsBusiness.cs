@@ -399,11 +399,12 @@ namespace AmyzFeed.Business
 
         public List<ProductDomainModel> getAllProducts()
         {
-            return this.productRepository.GetAll()
+            return this.productRepository.GetAll("Category")
                            .Select(x => new ProductDomainModel
                            {
                                Id = x.ID,
                                Name = x.Name,
+                               CategoryName=x.Category.Name,
                                CategoryId=x.CategoryID,
                                Definition = x.Definition,
                                Description = x.Description,
