@@ -20,6 +20,7 @@
                             <tr>
                                 <th>الصورة</th>
                                 <th>اسم المنتج</th>
+                                <th>القسم</th>
                                 <th>السعر</th>
                                 <th>التفاصيل</th>
 
@@ -42,7 +43,12 @@
                                              @item.Name
                                             </a>
                                         </td>
-                                        <td class="price-pr">
+                                        <td class="name-pr">
+                                            <a href="#">
+                                                @item.CategoryName
+                                            </a>
+                                        </td>
+                                        <td class="price-tbl">
                                             <p>@item.Price ح.م</p>
                                         </td>
 

@@ -57,7 +57,24 @@ namespace AmyzFactory.Controllers
         }
 
 
-    
+
+        public JsonResult GetAllProducts()
+        {
+            HttpResponseMessage productsResponse = GlobalVariables.WebApiClient.GetAsync("Product/GetAllProducts").Result;
+            List<ProductViewModel> productsVm = productsResponse.Content.ReadAsAsync<List<ProductViewModel>>().Result;
+
+            return Json(productsVm, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult GetProductsByCategoryID(int categoryID)
+        {
+            HttpResponseMessage productsResponse = GlobalVariables.WebApiClient.GetAsync("Product/GetProductsByCategoryID?id="+categoryID).Result;
+            List<ProductViewModel> productsVm = productsResponse.Content.ReadAsAsync<List<ProductViewModel>>().Result;
+
+            return Json(productsVm, JsonRequestBehavior.AllowGet);
+
+        }
 
 
         public JsonResult AddToCart(int itemId)

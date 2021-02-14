@@ -130,6 +130,7 @@ namespace FeedApi
                   cfg.CreateMap<PriceDomainModel, PricesViewModel>()
                      .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
                      .ForMember(dst => dst.Name, src => src.MapFrom(e => e.Name))
+                     .ForMember(dst => dst.CategoryName, src => src.MapFrom(e => e.CategoryName))
                      .ForMember(dst => dst.CategoryID, src => src.MapFrom(e => e.CategoryID))
                      .ForMember(dst => dst.Price, src => src.MapFrom(e => e.Price))
                      .ReverseMap();
