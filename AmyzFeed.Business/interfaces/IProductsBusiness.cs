@@ -16,6 +16,8 @@ namespace AmyzFeed.Business.interfaces
         List<ProductDomainModel> getAllProducts(int pageNo, int displayLength);
         List<ProductDomainModel> getAllProducts();
         List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength);
+        List<ProductDomainModel> SearchInAllProducts(string searchWord);
+
 
         ProductDomainModel getProductByID(int id);
  

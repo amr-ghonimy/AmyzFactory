@@ -70,6 +70,18 @@ namespace FeedApi.Controllers.User
             return this.mapper.Map<List<ProductsViewModel>>(listDm);
         }
 
+
+        [HttpGet]
+        public IEnumerable<ProductsViewModel> SearchInProducts(string word)
+        {
+            List<ProductDomainModel> listDm = this.productsBusiness.SearchInAllProducts(word);
+
+            return this.mapper.Map<List<ProductsViewModel>>(listDm);
+        }
+
+
+
+
         public IEnumerable<ProductsViewModel> SearchInMaterials(string word, int pageNo, int displayLength)
         {
             List<ProductDomainModel> listDm = this.productsBusiness.SearchInAllMaterials(word, pageNo, displayLength);

@@ -2635,7 +2635,22 @@ text-align:center;
 
 
 
-
+  .category-item-title {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: #fff;
+    text-transform: uppercase;
+    position: absolute;
+text-align:center;
+    top: 50%;
+    left: 5%;
+right:5%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(0%, -50%);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.07);
+    border-radius: 15px;
+    opacity: .8;
+  }
 
 
 

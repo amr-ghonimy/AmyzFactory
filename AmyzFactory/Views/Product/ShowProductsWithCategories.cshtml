@@ -95,9 +95,30 @@
                     <div class="product-categorie-box">
                         <div class="tab-content" id="productsContainer">
 
-                           
+                            <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
 
-                          
+                                <div class="row" id="gridProducts">
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div role="tabpanel" class="tab-pane fade" id="list-view">
+
+
+                                <div class="list-view-box">
+
+                                    <div class="row"  id="listProducts">
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -118,12 +139,11 @@
 
         var html = '';
 
-        html += '<div role="tabpanel" class="tab-pane fade show active" id="grid-view">' +
-                '<div class="row">' +
+        html += 
                 '<div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">' +
                 '<div class="products-single fix"> <div class="box-img-hover">' +
+                '<strong class="category-item-title center">' + product.Name + '</strong>' +
                 '<div class="type-lb">' +
-                '<p class="category-item-title">' + product.Name + '</p>' +
                 '<p class="new" style="font-weight:400;text-align:center;">' + product.Price + ' ج.م' + '</p>' +
                 '</div>' +
                 '<img src="../Content/img/img-pro-01.jpg" class="img-fluid" alt="Image">' +
@@ -135,21 +155,18 @@
                 '<a class="cart" href="#">اضف الى العربة</a>' +
                 '</div>' +
                 '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
+                 '</div>' +
+                '</div>' ;
 
 
-        $('#productsContainer').append(html);
+        $('#gridProducts').append(html);
 
     }
 
     function fillListView(product) {
         var html = '';
 
-        html += '<div role="tabpanel" class="tab-pane fade" id="list-view">' +
-                '<div class="list-view-box">' +
-                '<div class="row">' +
+        html += 
                 '<div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">' +
                 '<div class="products-single fix">' +
                 '<div class="box-img-hover">' +
@@ -173,13 +190,10 @@
                '<p>' + product.Definition + '</p>' +
                '<a class="btn hvr-hover" href="#">اضف الى العربة</a>' +
                '</div>' +
-               '</div>' +
-               '</div>' +
-               '</div>' +
-               '</div>';
+               '</div>' ;
 
 
-        $('#productsContainer').append(html);
+        $('#listProducts').append(html);
 
        
     }
@@ -224,7 +238,7 @@
             dataType: "json",
             success: function (data) {
                 
-                $('#productsContainer').empty();
+           //     $('#productsContainer').empty();
 
                 $('#currentState').text(categoryName);
 
@@ -234,9 +248,10 @@
                 if (data != null)
                 {
                     $.each(data, function (index, value) {
-                         fillGrideView(value);
-                         fillListView(value);
+                        fillGrideView(value);
+                        fillListView(value);
                     });
+                 
                 }
                 
             }

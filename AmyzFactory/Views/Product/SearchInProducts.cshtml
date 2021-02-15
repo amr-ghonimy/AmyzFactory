@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AmyzFactory.Models.ProductViewModel>
+
+@{
+    ViewBag.Title = "SearchInProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="products-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-all text-center">
+                    <h1>جميع منتجاتنا</h1>
+                    <p>(@Model.Count()) منتج</p>
+                </div>
+            </div>
+        </div>
+     
+    @if (Model != null && Model.Count() > 0)
+    {
+
+        foreach (var product in Model)
+        {
+            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-4">
+                <div class="products-single fix">
+                    <div class="box-img-hover">
+
+                        <strong class="category-item-title center">@product.Name</strong>
+
+                        <div class="type-lb">
+
+                            <p class="new" style="font-weight:400;text-align:center;">@product.Price ج.م</p>
+                        </div>
+                        <img src="@product.ImageURL" class="img-fluid" alt="Image">
+                        <div class="mask-icon">
+                            <ul>
+                                <li><a href="../Product/ProductDetails?id=@product.Id" data-toggle="tooltip" data-placement="right" title="التفاصيل"><i class="fas fa-eye"></i></a></li>
+                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="اضف الى المفضلة"><i class="far fa-heart"></i></a></li>
+                            </ul>
+                            <a class="cart" href="#">اضف الى العربة</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        }
+
+
+
+    }else
+    {
+
+    }
+
+
+
+        </div>
+</div>

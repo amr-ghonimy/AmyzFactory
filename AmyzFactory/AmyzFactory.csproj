@@ -424,6 +424,7 @@
     <Content Include="Views\Shared\_Articles.cshtml" />
     <Content Include="Views\HomePreview\Articles.cshtml" />
     <Content Include="Views\Product\ProductDetails.cshtml" />
+    <Content Include="Views\Product\SearchInProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\css\" />

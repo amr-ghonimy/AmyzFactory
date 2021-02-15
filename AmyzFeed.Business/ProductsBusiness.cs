@@ -415,5 +415,24 @@ namespace AmyzFeed.Business
                                Quantity = x.Quantity.Value
                            }).ToList();
         }
+
+        public List<ProductDomainModel> SearchInAllProducts(string searchWord)
+        {
+            return productRepository.GetAll(p => p.IsDeleted == false && p.Name.Contains(searchWord) || p.Category.Name.Contains(searchWord))
+                         .OrderBy(x => x.ID)
+                         .Select(x => new ProductDomainModel()
+                         {
+                             Id = x.ID,
+                             CategoryName = x.Category?.Name,
+                             Name = x.Name,
+                             Definition = x.Definition,
+                             Description = x.Description,
+                             CategoryId = x.CategoryID,
+                             ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
+                             isVisible = x.Visibility,
+                             Price = float.Parse(x.Price?.ToString()),
+                             Quantity = x.Quantity.Value
+                         }).ToList();
+        }
     }
 }
