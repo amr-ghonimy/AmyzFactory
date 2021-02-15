@@ -1,9 +1,11 @@
 ﻿using AmyzFactory.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Controllers
 {
@@ -45,6 +47,19 @@ namespace AmyzFactory.Controllers
             ViewBag.Categories = categoriesVm;
 
             return View(productsVm);
+        }
+
+
+        public ActionResult ProductDetails(int id)
+        {
+            HttpResponseMessage categoriesResponse = GlobalVariables.WebApiClient.GetAsync("Product/GetProductById?id="+id).Result;
+            ResultViewModel result = categoriesResponse.Content.ReadAsAsync<ResultViewModel>().Result;
+
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            ProductViewModel productVm = js.Deserialize<ProductViewModel>(result.Data.ToString());
+
+            return View(productVm);
         }
 
 

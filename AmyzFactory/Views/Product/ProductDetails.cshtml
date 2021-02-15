@@ -1,0 +1,32 @@
+﻿@model AmyzFactory.Models.ProductViewModel
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="about-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="banner-frame">
+                    <img class="img-fluid" src="@Model.ImageURL" width="250px" height="400px" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-9" style="text-align:right;">
+                <h2 class="noo-sh-title-top footer-title">@Model.Name</h2>
+                <p class="footer-text">
+                    @Model.Definition
+                </p>
+                <p class="footer-text">
+                    @Model.Description
+                </p>
+                <a class="btn hvr-hover" href="../HomePreview/AboutUS">اضف الى العربة</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+

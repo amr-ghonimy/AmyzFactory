@@ -423,6 +423,7 @@
     <Content Include="Views\Product\ShowProductsWithCategories.cshtml" />
     <Content Include="Views\Shared\_Articles.cshtml" />
     <Content Include="Views\HomePreview\Articles.cshtml" />
+    <Content Include="Views\Product\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\css\" />
