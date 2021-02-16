@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AmyzFactory.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace FeedApi.Models
         public string[] DescriprionLines { get; set; }
         public HttpPostedFileWrapper ImageFile { get; set; }
 
-         public ResultViewModel ResponseResult { get; set; }
+         public ResultDomainModel ResponseResult { get; set; }
 
         public List<ProductViewModel> list { get; set; }
 

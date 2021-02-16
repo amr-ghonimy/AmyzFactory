@@ -264,7 +264,6 @@
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\QuestionairViewModel.cs" />
-    <Compile Include="Models\ResultViewModel.cs" />
     <Compile Include="Models\UsersViewModel.cs" />
     <Compile Include="Model\CategoriesViewModel.cs" />
     <Compile Include="Model\ContactViewModel.cs" />

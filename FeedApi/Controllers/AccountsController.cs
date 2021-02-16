@@ -1,13 +1,12 @@
-﻿using AmyzFeed.Repository.Data;
-using FeedApi.App_Start;
+﻿using AmyzFactory.Models;
+using AmyzFeed.Business.interfaces;
+using AmyzFeed.Repository.Data;
+using AutoMapper;
 using FeedApi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -15,51 +14,56 @@ namespace FeedApi.Controllers
 {
     public class AccountsController : ApiController
     {
+        private IAuthBusiness business;
+        private readonly IMapper mapper;
 
-        private ApplicationUserManager userManager;
-        private RoleManager<IdentityRole> roleManager;
-
-        public AccountsController()
+        public AccountsController(IAuthBusiness business)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
-
-            UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(dbContext);
-
-            this.roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbContext));
-
-
-            this.userManager = new ApplicationUserManager(userStore);
+            this.business = business;
+            this.mapper = AutoMapperConfig.Mapper;
         }
+
+
 
         [HttpPost]
-        public async Task<bool> LoginAdmin(AdminViewModel model)
+        public IHttpActionResult Login([FromBody]UserViemModel model)
         {
-            ApplicationUser isAdminExists = await this.userManager.FindAsync(model.UserName, model.Password);
+            UserDomainModel dm = this.mapper.Map<UserDomainModel>(model);
 
-            if (isAdminExists != null)
+
+            ResultDomainModel result = this.business.login(dm);
+
+            if (result.IsSuccess)
             {
-                // this get role 
-                IList<string> rolesName = await userManager.GetRolesAsync(isAdminExists.Id);
-                string roleName = rolesName[0];
-
-                if (roleName != "Admins")
-                {
-                    return false;
-                }
-
-                return true;
+                return Ok(result);
+            } else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
             }
 
-            return false;
-
         }
+     
 
-        private async Task signIn(ApplicationUser appUser)
+
+        [HttpPost]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult Register(UserViemModel userModel)
         {
-            var identity = await this.userManager.CreateIdentityAsync(appUser, DefaultAuthenticationTypes.ApplicationCookie);
-            
+            UserDomainModel dm = this.mapper.Map<UserDomainModel>(userModel);
 
+            ResultDomainModel result = this.business.Register(dm);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
         }
+
+     
+
 
     }
 }

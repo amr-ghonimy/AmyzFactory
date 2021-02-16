@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AmyzFactory.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace FeedApi.Models
  
         public List<OrderDetailsViewModel> OrderDetailsList { get; set; }
 
-        public ResultViewModel Result { get; set; }
+        public ResultDomainModel Result { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -44,6 +45,7 @@ namespace AmyzFactory.Models
         public string ReturnUrl { get; set; }
 
 
+        [JsonIgnore]
         public ResultViewModel result { get; set; }
 
         [RegularExpression("^[0-9]+$", ErrorMessage ="ادخل الهاتف بشكل صحيح")]

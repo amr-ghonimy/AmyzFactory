@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AmyzFactory.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace FeedApi.Models
         public string ReturnUrl { get; set; }
 
 
-        public ResultViewModel result { get; set; }
+        public ResultDomainModel result { get; set; }
 
     }
 
@@ -44,7 +45,7 @@ namespace FeedApi.Models
         public string ReturnUrl { get; set; }
 
 
-        public ResultViewModel result { get; set; }
+        public ResultDomainModel result { get; set; }
 
         [RegularExpression("^[0-9]+$", ErrorMessage ="ادخل الهاتف بشكل صحيح")]
         [Required(ErrorMessage = "ادخل رقم الهاتف")]

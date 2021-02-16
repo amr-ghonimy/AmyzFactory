@@ -35,10 +35,7 @@ namespace FeedApi
                                   .ForMember(dst => dst.visibility, src => src.MapFrom(e => e.visibility))
                                   .ReverseMap();
                   
-                  cfg.CreateMap<ResultViewModel, ResultDomainModel>()
-                                 .ForMember(dst => dst.IsSuccess, src => src.MapFrom(e => e.IsSuccess))
-                                 .ForMember(dst => dst.Message, src => src.MapFrom(e => e.Message))
-                                 .ReverseMap();
+             
 
                   cfg.CreateMap<ProductDomainModel, ProductViewModel>()
                                 .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
@@ -147,6 +144,18 @@ namespace FeedApi
                        .ForMember(dst => dst.Name, src => src.MapFrom(e => e.Name))
                        .ForMember(dst => dst.TechTextsList, src => src.MapFrom(e => e.TechTextsList))
                       .ReverseMap();
+
+                  cfg.CreateMap<UserViemModel, UserDomainModel>()
+                     .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
+                      .ForMember(dst => dst.UserName, src => src.MapFrom(e => e.UserName))
+                      .ForMember(dst => dst.FirstName, src => src.MapFrom(e => e.FirstName))
+                      .ForMember(dst => dst.LastName, src => src.MapFrom(e => e.LastName))
+                      .ForMember(dst => dst.Password, src => src.MapFrom(e => e.Password))
+                      .ForMember(dst => dst.Address, src => src.MapFrom(e => e.Address))
+                      .ForMember(dst => dst.Governorate, src => src.MapFrom(e => e.Governorate))
+                      .ForMember(dst => dst.PersonalId, src => src.MapFrom(e => e.PersonalId))
+                      .ForMember(dst => dst.FirstName, src => src.MapFrom(e => e.FirstName))
+                     .ReverseMap();
 
 
               });

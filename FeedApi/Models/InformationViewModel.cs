@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AmyzFactory.Models;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
@@ -24,7 +25,7 @@ namespace FeedApi.Models
         public string FilePath { get; set; }
 
          
-        public ResultViewModel Result { get; set; }
+        public ResultDomainModel Result { get; set; }
 
        
         [JsonIgnore]

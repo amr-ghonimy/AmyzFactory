@@ -19,13 +19,13 @@ namespace FeedApi.Controllers.User
         }
 
         [HttpPost]
-        public ResultViewModel ConfirmOrder(OrderViewModel model)
+        public ResultDomainModel ConfirmOrder(OrderViewModel model)
         {
             OrderDomainModel orderDm = this.mapper.Map<OrderDomainModel>(model);
 
             ResultDomainModel resultDm = this.business.ConfirmOrder(orderDm);
 
-            ResultViewModel resultVm = this.mapper.Map<ResultViewModel>(resultDm);
+            ResultDomainModel resultVm = this.mapper.Map<ResultDomainModel>(resultDm);
 
             return resultVm;
         }

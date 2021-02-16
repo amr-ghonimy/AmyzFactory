@@ -14,17 +14,22 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="icon" href="~/Content/img/favicon.png"> <!-- Logo Title-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+      <!-- Site Icons -->
+    <link rel="shortcut icon" href="~/Content/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/Content/img/apple-touch-icon.png">
 
-    <link rel="stylesheet" href="~/Content/css/reset.css"> <!-- CSS reset -->
-    <link rel="stylesheet" href="~/Content/css/bootstrap_rtl.css"> <!-- Bootstrap File Ar-->
-    <link rel="stylesheet" href="~/Content/css/bootstrap-table_rtl.css"> <!-- Bootstrap Table Ar-->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="~/Content/css/responsive.css">
     <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/Content/css/stylelogin.css" type="text/css"> <!-- Css Style -->
-    <script src="~/Content/js/modernizr.js"></script> <!-- Modernizr -->
 
-    <script src="~/Content/js/jquery-2.1.1.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    
 
     <script src="~/Areas/Admin/Content/js/dialogs.js"></script>
 </head>
@@ -56,6 +61,11 @@
  
 </body>
 </html>
+
+@Scripts.Render("~/bundles/jquery_admin")
+@Scripts.Render("~/bundles/jqueryval")
+
+
 
 
 <script>

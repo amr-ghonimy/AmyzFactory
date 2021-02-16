@@ -3,10 +3,11 @@ using AmyzFactory.Models;
 using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Collections.Generic;
+ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Controllers
 {
@@ -22,7 +23,11 @@ namespace AmyzFactory.Controllers
             this.userManager = new UserManager<ApplicationUser>(userStore);
         }
 
-        // GET: /Account/Login
+         [UserAuthorize(Roles = "Users")]
+        public ActionResult MyAccount()
+        {
+            return View();
+        }
 
         public ActionResult Login(string returnUrl = "")
         {
@@ -43,29 +48,20 @@ namespace AmyzFactory.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(UserViemModel model)
         {
-            
 
-            var isUserExists = await this.userManager.FindAsync(model.UserName, model.Password);
-            ResultViewModel result;
-            if (isUserExists != null)
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Accounts/Login", model).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            if (!result.IsSuccess)
             {
-                IList<string> rolesName = await userManager.GetRolesAsync(isUserExists.Id);
-                string roleName = rolesName[0];
-
-                if (roleName != "Users")
-                {
-                    result = new ResultViewModel
-                    {
-                        IsSuccess = false,
-                        Message = "البريد الالكترونى أو كلمة السر غير صحيح"
-                    };
-                    return Json(result, JsonRequestBehavior.AllowGet);
-
-                }
-
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }else
+            {
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
 
                 // store user is logined in our website
-                await this.signIn(isUserExists);
+                await this.signIn(user);
 
                 if (!string.IsNullOrEmpty(model.ReturnUrl))
                 {
@@ -74,23 +70,23 @@ namespace AmyzFactory.Controllers
                         IsSuccess = true,
                         Message = model.ReturnUrl
                     };
-                    return Json(result, JsonRequestBehavior.AllowGet);
-                }
-                result = new ResultViewModel
+ 
+                }else
+                {
+                    result = new ResultViewModel
                     {
                         IsSuccess = true,
-                        Message = "/homePreview/Index"
+                        Message = "../HomePreview/Index"
                     };
-            }else
-            {
-                result = new ResultViewModel
-                {
-                    IsSuccess = false,
-                    Message = "البريد الالكترونى أو كلمة السر غير صحيح"
-                };
+
+                }
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+
             }
- 
-            return Json(result, JsonRequestBehavior.AllowGet);
+
+
         }
 
 
@@ -99,51 +95,18 @@ namespace AmyzFactory.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(UserViemModel userModel)
         {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Accounts/Register", userModel).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            var name = userModel.FirstName.Trim() + "_" + userModel.LastName.Trim();
-
-
-            var user = new ApplicationUser();
-
-            user.Email = userModel.Email;
-            user.UserName = name;
-            user.PhoneNumber = userModel.PhoneNumber;
-            user.Address = userModel.Address;
-            user.PersonalID = userModel.PersonalId;
-            user.Governorate = userModel.Governorate;
-            user.IsActive = true;
-
-            var check = userManager.Create(user, userModel.Password);
-
- 
-
-
-            ResultViewModel result;
-
-
-            if (check.Succeeded)
+            /*
+               if (result.IsSuccess)
             {
-                var userID = user.Id;
-                this.userManager.AddToRole(userID, "Users");
-                
-                result = new ResultViewModel()
-                {
-                    IsSuccess = true,
-                    Message = "تم التسجيل بنجاح..."
-                };
-
-
-            }else
-            {
-                result = new ResultViewModel()
-                {
-                    IsSuccess = false,
-                    Message = "لم يتم التسجيل كعضو جديد البريد الالكترونى او اسم المستخدم مستخدم من قبل"
-                };
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
+                signIn(user);
             }
 
-           
-
+             */
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
