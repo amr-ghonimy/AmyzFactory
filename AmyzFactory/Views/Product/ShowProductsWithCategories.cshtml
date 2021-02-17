@@ -84,7 +84,7 @@
                                     <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i class="fa fa-th"></i> </a>
                                 </li>
                                 <li>
-                                    <a class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
+                                    <a  class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
                                 </li>
                                 <p id="currentState" style="padding-right:15px;">الكل</p>
                             </ul>
@@ -132,8 +132,7 @@
 
 @Scripts.Render("~/bundles/jquery_admin")
 
-<script src="~/Content/js/add_to_cart.js"></script>
-
+ <script src="~/Content/js/add_to_cart.js"></script>
 
 <script>
 
@@ -154,7 +153,7 @@
                 '<li><a href="../Product/ProductDetails?id='+product.Id+'" data-toggle="tooltip" data-placement="right" title="التفاصيل"><i class="fas fa-eye"></i></a></li>' +
                 '<li><a href="#" data-toggle="tooltip" data-placement="right" title="اضف الى المفضلة"><i class="far fa-heart"></i></a></li>' +
                 '</ul>' +
-                '<a class="cart add-to-card" href="#" itemid="' + product.Id + '" >اضف الى العربة</a>' +
+                '<a onclick="addToCart('+product.Id+')" class="cart" href="#" >اضف الى العربة</a>' +
                 '</div>' +
                 '</div>' +
                  '</div>' +
@@ -201,11 +200,16 @@
     }
 
 
+  
+
     $(document).ready(function () {
 
         getProducts("0", "الكل");
 
         
+
+
+         
 
     });
 
@@ -218,6 +222,14 @@
             debugger;
             getProducts(categoryId,categoryName);
         })
+
+
+
+
+
+
+
+
     })
 
 
@@ -255,7 +267,6 @@
                         fillGrideView(value);
                         fillListView(value);
                     });
-
                 }
 
             }

@@ -1,5 +1,18 @@
 ﻿
 @using Microsoft.AspNet.Identity
+ 
+@{ 
+    var list = Session["cartItems"] as List<AmyzFactory.Models.ProductViewModel>;
+
+    int cartCounter = 0;
+
+    if (list != null && list.Count > 0)
+    {
+        cartCounter = list.Count;
+    }
+
+
+}
 
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
@@ -47,7 +60,9 @@
                     </div>
                     <div class="our-link">
                         <ul>
-                            <li><a href="@Url.Action("MyAccount","Accounts")"><i class="fa fa-user s_color"></i> حسابى</a></li>
+                            @{ 
+                                Html.RenderAction("GetCurrentUser", "Accounts");
+                            }
                             <li><a href="#"><i class="fas fa-location-arrow"></i> موقعنا</a></li>
                             <li><a href="#"><i class="fas fa-headset"></i> تواصل معنا</a></li>
                         </ul>
@@ -104,9 +119,9 @@
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="side-menu">
-                            <a href="#">
+                            <a href="#" onclick="showCartSlide()">
                                 <i class="fa fa-shopping-bag"></i>
-                                <span id="counterText" class="badge">3</span>
+                                <span id="counterText" class="badge">@cartCounter</span>
                                 <p>العربة</p>
                             </a>
                         </li>
@@ -115,29 +130,12 @@
                 <!-- End Atribute Navigation -->
             </div>
             <!-- Start Side Menu -->
-            <div class="side">
+            <div class="side" id="cartSlide">
                 <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                 <li class="cart-box">
-                    <ul class="cart-list">
-                        <li>
-                            <a href="#" class="photo"><img src="~/Content/img/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Delica omtantur </a></h6>
-                            <p>1x - <span class="price">$80.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="~/Content/img/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Omnes ocurreret</a></h6>
-                            <p>1x - <span class="price">$60.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="~/Content/img/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Agam facilisis</a></h6>
-                            <p>1x - <span class="price">$40.00</span></p>
-                        </li>
-                        <li class="total">
-                            <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                            <span class="float-right"><strong>Total</strong>: $180.00</span>
-                        </li>
+                    <ul class="cart-list" id="cartSlidContainer">
+
+                      
                     </ul>
                 </li>
             </div>
@@ -296,6 +294,66 @@
 
 
 <script>
+
+
+    function drawSlidCartContent(product) {
+        var html=' <li>';
+        html += '<a href="../Product/ProductDetails?id=' + product.Id + '" class="photo"><img src="' + product.ImageURL + '" class="cart-thumb" alt="" /></a>';
+        html += '<h6><a href="../Product/ProductDetails?id='+product.Id+'">' + product.Name + ' </a></h6>';
+        html += '<p>'+product.Quantity+'x - <span class="price">' + product.Price + '</span></p>';
+        html += '</li>';                   
+                       
+        $('#cartSlidContainer').append(html);
+    }
+
+    function drawSlidCartTotal(total) {
+        var html = '<li class="total">';
+        html += '<a href="../Order/Index" class="btn btn-default hvr-hover btn-cart">التفاصيل</a>';
+        html += '<span class="float-right"><strong>الاجمالى</strong>:' + '&nbsp' + total + " ج.م " + '</span>';
+        html += '</li>';
+
+        $('#cartSlidContainer').append(html);
+
+                      
+    }
+
+    function drawEmptyCart() {
+        var html = '<img src="../Content/img/empty_box.jpg" class="cart-thumb" alt="" />';
+
+        $('#cartSlidContainer').append(html);
+    }
+
+    function showCartSlide() {
+        $.ajax({
+            url: "/HomePreview/GetProductsCartSession",
+            type: "Get",
+            dataType: "json",
+            success: function (products) {
+               
+
+                $('#cartSlidContainer').empty();
+                debugger;
+                if (products != null) {
+
+                    var total = 0.0;
+
+                    $.each(products, function (index, value) {
+                        total += (value.Price*value.Quantity);
+                        drawSlidCartContent(value);
+                    });
+
+                    drawSlidCartTotal(total);
+                } else {
+
+                    drawEmptyCart();
+                }
+
+            }
+        });
+
+      
+    }
+
 
 
     $(document).ready(function () {

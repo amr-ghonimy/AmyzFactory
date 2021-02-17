@@ -10,6 +10,7 @@ namespace AmyzFeed.Business.interfaces
     public interface IAuthBusiness
     {
          ResultDomainModel login(UserDomainModel model);
+                 ResultDomainModel GetCurrentUser(string Id);
 
         ResultDomainModel Register(UserDomainModel model);
     }

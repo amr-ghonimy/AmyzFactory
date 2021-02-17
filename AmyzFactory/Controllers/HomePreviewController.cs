@@ -9,6 +9,12 @@ namespace AmyzFactory.Controllers
     {
 
 
+        public JsonResult GetProductsCartSession()
+        {
+            var cardItemsList = Session["cartItems"] as List<ProductViewModel>;
+
+            return Json(cardItemsList, JsonRequestBehavior.AllowGet);
+        }
 
         public PartialViewResult _GetSliderimages()
         {

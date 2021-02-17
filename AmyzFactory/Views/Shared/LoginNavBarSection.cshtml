@@ -1,0 +1,10 @@
+﻿@model AmyzFactory.Models.UserViemModel
+
+@if (Model == null)
+{
+    <li><a href="@Url.Action("MyAccount","Accounts")"><i class="fa fa-user s_color"></i> حسابى</a></li>
+}
+else
+{
+    <li><a href="@Url.Action("MyAccount","Accounts")"><i class="fa fa-user s_color"></i> @Model.UserName - أهلا</a></li>
+}

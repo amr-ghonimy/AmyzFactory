@@ -149,8 +149,11 @@ namespace AmyzFactory.Controllers
         private ProductViewModel retrieveItemFromDb(int itemId)
         {
        
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/RetrieveItemFromDb"+itemId).Result;
-            ProductViewModel item = response.Content.ReadAsAsync<ProductViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetProductById?id=" + itemId).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            ProductViewModel item = js.Deserialize<ProductViewModel>(result.Data.ToString());
 
             return item;
         }

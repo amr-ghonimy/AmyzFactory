@@ -1,12 +1,12 @@
-﻿
-$('.add-to-card').click(function(){
+﻿function addToCart(itemID) {
 
-    var itemId = $(this).attr("data-catid");
+  //  var itemId = $(this).attr("data-catid");
 
+    debugger;
 
     var formData = new FormData();
     var URL = '/Product/AddToCart'
-    formData.append("itemid", itemId);
+    formData.append("itemid", itemID);
 
     $.ajax({
         async: true,
@@ -29,6 +29,6 @@ $('.add-to-card').click(function(){
 
     });
 
+}
 
-    
-})
+ 

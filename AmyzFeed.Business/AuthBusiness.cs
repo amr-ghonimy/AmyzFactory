@@ -26,6 +26,19 @@ namespace AmyzFeed.Business
             this.userManager = new UserManager<ApplicationUser>(userStore);
         }
 
+        public ResultDomainModel GetCurrentUser(string Id)
+        {          
+            var user = this.userManager.FindById(Id); ;
+
+            if (user == null)
+            {
+                return new ResultDomainModel(false, "لايوجد مستخدم حالى", Data: user);
+            }else
+            {
+                return new ResultDomainModel(true, "تم ايجاد المستخدم", Data: user);
+            }
+
+        }
 
         public ResultDomainModel login(UserDomainModel model)
         {

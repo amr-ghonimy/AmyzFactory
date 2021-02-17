@@ -426,6 +426,7 @@
     <Content Include="Views\Product\ProductDetails.cshtml" />
     <Content Include="Views\Product\SearchInProducts.cshtml" />
     <Content Include="Views\Accounts\MyAccount.cshtml" />
+    <Content Include="Views\Shared\LoginNavBarSection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\css\" />

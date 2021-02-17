@@ -45,6 +45,30 @@ namespace AmyzFactory.Controllers
             authManager.SignIn(identity);
         }
 
+        public PartialViewResult GetCurrentUser()
+        {
+            string userID = User.Identity.GetUserId();
+            ApplicationUser user = null;
+
+            UserViemModel userVm = null;
+
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Accounts/GetUserByID?id=" + userID).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            if (result.Data != null)
+            {
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                user = js.Deserialize<ApplicationUser>(result.Data.ToString());
+                userVm = new UserViemModel
+                {
+                    UserName = user.UserName
+                };
+            }
+
+
+            return PartialView("~/Views/Shared/LoginNavBarSection.cshtml", userVm);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Login(UserViemModel model)
         {

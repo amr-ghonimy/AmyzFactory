@@ -24,6 +24,20 @@ namespace FeedApi.Controllers
         }
 
 
+         public IHttpActionResult GetUserByID(string id)
+        {
+            ResultDomainModel result= this.business.GetCurrentUser(id);
+ 
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+        }
 
         [HttpPost]
         public IHttpActionResult Login([FromBody]UserViemModel model)
