@@ -106,7 +106,7 @@
                         <li class="side-menu">
                             <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">3</span>
+                                <span id="counterText" class="badge">3</span>
                                 <p>العربة</p>
                             </a>
                         </li>
@@ -309,6 +309,21 @@
             }
 
         });
+
+        
+
+
+        $.ajax({
+            url: "/AboutUS/ResponsibiltyTexts",
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+                $('#headerTitleRes').attr("value", data.Title);
+                $('#p1Res').val(data.SubTitle);
+                $('#p2Res').val(data.Description);
+            }
+        });
+        
 
     })
 
