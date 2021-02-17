@@ -620,8 +620,7 @@
 .custom-select-box .dropdown-item{
 	padding: 5px 10px;
 }
- .btn-cart{
-}
+ 
  .cart-list h6 a{
      font-size: 16px;
      font-weight: 700;
@@ -1002,6 +1001,9 @@ text-align:right;
      font-weight: 700;
      color: #ffffff;
 }
+
+ 
+
  .mask-icon a.cart:hover{
      background: #000000;
      color: #ffffff;
