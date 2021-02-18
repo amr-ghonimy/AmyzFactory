@@ -48,12 +48,12 @@
 
                                     <tr id="@rowId">
                                         <td class="thumbnail-img">
-                                            <a href="#">
+                                            <a href="@Url.Action("ProductDetails","Product",new { @id=item.Id})">
                                                 <img class="img-fluid" src="@item.ImageURL" alt="" />
                                             </a>
                                         </td>
                                         <td class="name-pr">
-                                            <a href="#">
+                                            <a href="@Url.Action("ProductDetails","Product",new { @id=item.Id})">
                                                 @item.Name
                                             </a>
                                         </td>
@@ -89,33 +89,9 @@
         <div class="row my-5">
             <div class="col-lg-8 col-sm-12"></div>
             <div class="col-lg-4 col-sm-12">
-                <div class="order-box">
-                    <h2 class="footer-title">تفاصيل الطلب</h2>
-                    <div class="d-flex">
-                        <h4 class="footer-text">السعر الجزئى</h4>
-                        <div class="ml-auto font-weight-bold" id="partialPrice">&nbsp;  </div>
-                    </div>
-                    <div class="d-flex">
-                        <h4 class="footer-text">الخصم</h4>
-                        <div class="ml-auto font-weight-bold">&nbsp; $ 40 </div>
-                    </div>
-                    <hr class="my-1">
-                     
-                    <div class="d-flex">
-                        <h4 class="footer-text">الضريبة</h4>
-                        <div class="ml-auto font-weight-bold">&nbsp; $ 2 </div>
-                    </div>
-                    <div class="d-flex">
-                        <h4 class="footer-text">مصاريف الشحن</h4>
-                        <div class="ml-auto font-weight-bold" id="shippingValue" shipping-cost="@shippingCost">&nbsp; @shippingCost </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex gr-total">
-                        <h5 class="footer-text">الاجمالى</h5>
-                        <div class="ml-auto h5" id="invoicePrice">&nbsp; $ 388 </div>
-                    </div>
-                    <hr>
-                </div>
+                @{
+                    Html.RenderAction("_GetOrderProducts", "Order");
+                }
             </div>
             <div class="col-12 d-flex shopping-box"><a href="#" onclick="continueOrder()" class="ml-auto btn hvr-hover">متابعه الطلب</a> </div>
         </div>

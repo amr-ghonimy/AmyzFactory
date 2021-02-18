@@ -1,5 +1,5 @@
 ﻿using AmyzFactory.Models;
- 
+
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -7,6 +7,8 @@ using System.Linq;
 using AmyzFactory.App_Start;
 using Microsoft.AspNet.Identity;
 using System.Net.Http;
+using System.Web.Script.Serialization;
+using AmyzFeed.Repository.Data;
 
 namespace AmyzFactory.Controllers
 {
@@ -28,15 +30,41 @@ namespace AmyzFactory.Controllers
         [UserAuthorize(Roles = "Users")]
         public ActionResult ContinueOrder()
         {
+            ApplicationUser user = null;
+            OrderViewModel order = null;
+
+
+            // first get current user data
+            string userID = User.Identity.GetUserId();
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Accounts/GetUserByID?id=" + userID).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            if (result.Data != null)
+            {
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                user = js.Deserialize<ApplicationUser>(result.Data.ToString());
+                order = new OrderViewModel
+                {
+                    Addreess=user.Address,
+                    Governorate = user.Governorate,
+                    Phone=user.PhoneNumber
+                };
+            }
+          
+            var cardItemsList = Session["cartItems"] as List<ProductViewModel>;
+            ViewBag.Products = cardItemsList;
+
+
+
+            return View(order);
+        }
+        [HttpGet]
+        public PartialViewResult _GetOrderProducts()
+        {
             var cardItemsList = Session["cartItems"] as List<ProductViewModel>;
 
-
-            ViewBag.OrderDetails = cardItemsList;
-
-
-            return View();
+            return PartialView("~/Views/Order/OrderHeader.cshtml", cardItemsList);
         }
-
         [HttpPost]
         public ActionResult ContinueOrder(IEnumerable<ProductViewModel> list)
         {

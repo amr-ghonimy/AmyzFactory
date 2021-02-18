@@ -1,0 +1,175 @@
+﻿
+@model IEnumerable<AmyzFactory.Models.ProductViewModel>
+
+@{
+    Layout = null;
+
+    float shippingCost = 30.5f;
+    int counter = 0;
+}
+
+<div class="order-box">
+    <h2 class="footer-title">تفاصيل الطلب</h2>
+    <div class="d-flex">
+        <h4 class="footer-text">السعر الجزئى</h4>
+        <div class="ml-auto font-weight-bold" id="partialPrice">&nbsp;  </div>
+    </div>
+    <div class="d-flex">
+        <h4 class="footer-text">الخصم</h4>
+        <div class="ml-auto font-weight-bold">&nbsp; $ 40 </div>
+    </div>
+    <hr class="my-1">
+
+    <div class="d-flex">
+        <h4 class="footer-text">الضريبة</h4>
+        <div class="ml-auto font-weight-bold">&nbsp; $ 2 </div>
+    </div>
+    <div class="d-flex">
+        <h4 class="footer-text">مصاريف الشحن</h4>
+        <div class="ml-auto font-weight-bold" id="shippingValue" shipping-cost="@shippingCost">&nbsp; @shippingCost </div>
+    </div>
+    <hr>
+    <div class="d-flex gr-total">
+        <h5 class="footer-text">الاجمالى</h5>
+        <div class="ml-auto h5" id="invoicePrice">&nbsp; $ 388 </div>
+    </div>
+    <hr>
+</div>
+
+
+
+<script src="~/Areas/Admin/Content/js/jquery-2.1.1.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Areas/Admin/Content/js/dialogs.js"></script>
+
+
+<script>
+
+
+    var list = @Html.Raw(Json.Encode(Model));
+
+    $(document).ready(function () {
+        $('#emptyContainer').hide();
+
+        if(list!==null){
+            updateInvoice();
+        }
+    });
+
+    $('#tbl').on('change', 'input', function () {
+        var totalID = $(this).attr("total-id")
+        var qty = $(this).val();
+        var price = $(this).attr("item-price")
+        var itemPosition = $(this).attr("item-position")
+
+        var totalValue = qty * price;
+        list[itemPosition].Total = totalValue;
+        list[itemPosition].Quantity=qty;
+        $("#" + totalID).text(totalValue.toFixed(2).toString());
+        updateInvoice();
+    });
+
+    function updateInvoice() {
+        debugger;
+        var total = 0.0;
+        var partial=0.0;
+        var shippingCost=$('#shippingValue').attr("shipping-cost");
+
+        list.forEach(function (item) {
+            total=total+item.Total;
+        });
+
+        partial=parseFloat(total);
+        $('#partialPrice').text(partial);
+
+        total= parseFloat(total)+parseFloat(shippingCost);
+        total=parseFloat(total).toFixed(2);
+        $('#invoicePrice').text(total);
+    }
+
+    function deleteRow(itemID) {
+
+        var URL = "/Order/Delete?itemID=" + itemID;
+        var rawID = "tr" + itemID;
+
+        $.ajax({
+            url: URL,
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+                if (data.IsSuccess) {
+                    $('#counterText').text(data.Message);
+
+                    // delete list[itemPosition];
+                    //    list.splice(itemPosition-1,1);
+
+                    for (var i = 0; i < list.length; i++) {
+                        var obj = list[i];
+                        if(obj.Id===itemID){
+                            list.splice(i, 1);
+                        }
+
+                    }
+
+
+                    $('#' + rawID).remove();
+
+                    debugger;
+                    if(list.length ===0){
+                        $('#sectionContainer').remove();
+                        $('#emptyContainer').show();
+                    }else {
+                        updateInvoice();
+                    }
+
+                }
+            }
+        });
+
+
+    }
+
+
+    function continueOrder() {
+
+
+        var finalList = new Array();
+
+
+        $.each(list, function (index, element) {
+            debugger;
+
+            var ProductViewModel = {};
+            if (element != null) {
+                ProductViewModel.Name = element.Name;
+                ProductViewModel.Id = element.Id;
+                ProductViewModel.Price = element.Price;
+                ProductViewModel.Quantity = element.Quantity;
+                ProductViewModel.Total = element.Total;
+                finalList.push(ProductViewModel);
+            }
+        });
+
+
+
+
+
+        var dataJson = JSON.stringify(finalList);
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/Order/ContinueOrder",
+            data: dataJson,
+            success: function (response) {
+                window.location.href =response ;
+            },
+            dataType: "json",
+            contentType: 'application/json; charset=utf=8',
+            traditional: true
+        });
+
+    }
+
+
+</script>

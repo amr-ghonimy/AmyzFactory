@@ -24,11 +24,11 @@ namespace AmyzFactory
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-
             bundles.Add(new ScriptBundle("~/bundles/jquery_user").Include(
-              "~/Areas/Admin/Content/js/jquery-2.1.1.js",
-              "~/Areas/Admin/Content/vendor/bootstrap/js/bootstrap.bundle.min.js",
-              "~/Areas/Admin/Content/js/sb-admin-2.min.js",
+              "~/Scripts/jquery-1.10.2.js",
+              "~/Scripts/js/jquery.validate.js",
+              "~/Scripts/js/jquery.validate.unobtrusive.js",
+              "~/Scripts/js/bootstrap.js",
               "~/Scripts/jquery.unobtrusive-ajax.js"));
 
 

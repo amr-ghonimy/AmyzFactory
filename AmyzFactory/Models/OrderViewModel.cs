@@ -24,6 +24,19 @@ namespace AmyzFactory.Models
         [Display(Name = "ادخل عنوانك بالتفصيل")]
         [Required(ErrorMessage ="من فضلك ادخل عنوانك بالتفصيل")]
         public string Addreess { get; set; }
+
+        [RegularExpression("^[0-9]+$", ErrorMessage = "ادخل الهاتف بشكل صحيح")]
+        [Required(ErrorMessage = "ادخل رقم الهاتف")]
+        [Display(Name = "رقم الهاتف")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "ادخل رقم الهاتف 11 رقم")]
+        public string Phone { get; set; }
+        [Display(Name = "اختر المدينة")]
+        [Required(ErrorMessage = "من فضلك اختر المدينة")]
+        public string Country { get; set; }
+        [Display(Name = "اختر المحافظة")]
+        [Required(ErrorMessage = "من فضلك اختر المحافظة")]
+        public string Governorate { get; set; }
+
         public double OrderTotalPrice { get; set; }
         public int ItemsCount { get; set; }
 
