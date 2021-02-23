@@ -40,7 +40,7 @@ namespace AmyzFactory.Models
         [JsonIgnore]
         public ResultViewModel Result { get; set; }
         [JsonIgnore]
-        public HttpPostedFileWrapper ImageFile { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
 
         public byte[] PicData { get; set; }
 

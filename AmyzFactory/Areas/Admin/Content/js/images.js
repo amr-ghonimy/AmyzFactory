@@ -8,7 +8,7 @@ var drawImageRaw = function (image, DeleteActionName, Controller, Container) {
         var html = '';
         html += '<tr id="' + trID + '">'
         html += '<td style="color:#1cc88a;">' + image.Title + '</td>'
-        html += '<td><a class="btn btn-info" style="margin-right: 4px;" href="' + "http://localhost:57756/" + image.ImageUrl + '" target="_blank" >Preview</a>'
+        html += '<td><a class="btn btn-info" style="margin-right: 4px;" href="' +  image.ImageUrl + '" target="_blank" >Preview</a>'
         html += '<button class="btn btn-danger"  onClick= "deleteImage(\'' + DeletedParems + '\',\'' + trID + '\')">Delete</button></td>'
         html += '</tr>'
 

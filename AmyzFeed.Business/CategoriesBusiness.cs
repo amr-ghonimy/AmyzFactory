@@ -52,7 +52,7 @@ namespace AmyzFeed.Business
                 Visibility = category.visibility
             };
 
-             var ifCategoryExists = this.catgRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == catg.Name.Trim().ToLower());
+             var ifCategoryExists = this.catgRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == catg.Name.Trim().ToLower()&&m.IsDeleted==false);
 
             if (ifCategoryExists!=null)
             {
@@ -83,7 +83,7 @@ namespace AmyzFeed.Business
                 Visibility = department.visibility,
             };
 
-             var ifDeparmtentExists = this.deptRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == dept.Name.Trim().ToLower());
+             var ifDeparmtentExists = this.deptRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == dept.Name.Trim().ToLower() && m.IsDeleted == false);
 
 
             if (ifDeparmtentExists!=null)
@@ -114,7 +114,7 @@ namespace AmyzFeed.Business
                 Visibility = technicalSupport.visibility,
             };
  
-             var ifCategoryExists = this.techRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == tech.Name.Trim().ToLower());
+             var ifCategoryExists = this.techRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == tech.Name.Trim().ToLower() && m.IsDeleted == false);
 
             if (ifCategoryExists!=null)
             {

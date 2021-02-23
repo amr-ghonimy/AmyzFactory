@@ -97,7 +97,7 @@
                                         <a href="#" onclick="clearPreview()"> Clear </a>
                                         <span id="infoDescription"></span>
                                     </div>
-                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#infoImageInput', 'UploadInfoImage', 'HomePage', 'TblInfoBody', '#infoDescription', '#imgInfoPreview', 'DeleteInfo')" data-dismiss="modal">Upload</button>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#infoImageInput', 'UploadInfoImage', 'HomePage', 'TblInfoBody', '#infoDescription', '#imgInfoPreview', 'DeleteInfoImage')" data-dismiss="modal">Upload</button>
                                     <hr />
                                 </div>
                             </div>
@@ -144,10 +144,10 @@
             Html.RenderPartial("~/Areas/Admin/Views/HomePage/partial/_Phones.cshtml");
         }
 
-        @{
-            Html.RenderPartial("~/Areas/Admin/Views/HomePage/partial/_Email.cshtml");
-        }
-      
+     @{
+         Html.RenderPartial("~/Areas/Admin/Views/HomePage/partial/_Email.cshtml");
+     }
+
     </article>
 </section>
 
@@ -204,7 +204,8 @@
             dataType: "json",
             success: function (data) {
                 $('#headerTitle').attr("value", data.Title);
-                $('#infoTitle').attr("value", data.Content);
+                $('#subTitle').attr("value", data.SubTitle);
+                $('#infoDescription').val(data.Description);
             }
         });
 
@@ -247,7 +248,7 @@
     var addAddress = function (FrmID,ActionName,ControllerName,TbContainer,DeleteActionName,btnID) {
 
         // first disable button
- 
+        debugger;
         if (!$(FrmID).valid()) {
             return false;
         }
@@ -272,7 +273,7 @@
                 if (data.Result.IsSuccess) {
                     successDialog(data.Result.Message);
                     drawAddress(data, DeleteActionName, ControllerName, TbContainer)
-                     $(FrmID).trigger("reset");
+                    $(FrmID).trigger("reset");
 
 //                    $("input").val("");
                 } else {
@@ -297,6 +298,8 @@
             }
         });
     }
+
+    
 
       var updateInfoTexts = function (btnID) {
 

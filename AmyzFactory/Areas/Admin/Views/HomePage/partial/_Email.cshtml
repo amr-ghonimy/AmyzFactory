@@ -18,7 +18,7 @@
                     </th>
                     <th>
                         <label for="emailInput">E-mail :</label>
-                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "E-mail", @type = "email" })
+                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "E-mail", @type = "text" })
                         @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
                     </th>
                     <th>

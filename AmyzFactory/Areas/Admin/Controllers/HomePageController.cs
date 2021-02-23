@@ -7,6 +7,7 @@ using System.IO;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -55,7 +56,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult DeleteInfoImage(string imageName)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Images/DeleteInfoImage?imageName="+ imageName).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Images/DeleteInfoImage?imageName=" + imageName).Result;
 
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
@@ -63,12 +64,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return Json(resultVm, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult UploadSlider(TextsViewModel image)
-        {
 
-            var file = image.ImageFile;
-            HttpResponseMessage response = null;
+        private TextsViewModel uploadImage(HttpPostedFileBase file, string apiPath)
+        {
 
             using (var content = new MultipartFormDataContent())
             {
@@ -78,39 +76,66 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
 
                 file.InputStream.Read(Bytes, 0, Bytes.Length);
-
                 var fileContent = new ByteArrayContent(Bytes);
                 fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = file.FileName };
 
 
                 content.Add(fileContent);
-                content.Add(new StringContent("123"), "FileId");
 
 
-                response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/UploadSlider", content).Result;
+               // content.Add(new StringContent(imageUniqueKey), "FileId");
+                //content.Headers.Add("Key", "abc23sdflsdf");
+
+                var response = GlobalVariables.WebApiClient.PostAsync(apiPath, content).Result;
+                ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+                TextsViewModel textVm = null;
+
+                if (resultVm.Data != null)
+                {
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    ImagesViewModel imgVm = js.Deserialize<ImagesViewModel>(resultVm.Data.ToString());
+
+
+
+                    textVm = new TextsViewModel()
+                    {
+                        Id = imgVm.Id,
+                        ImageUrl = imgVm.ImageUrl,
+                        Title = imgVm.Title,
+                        Result = resultVm
+                    };
+                }
+                else
+                {
+
+                    textVm = new TextsViewModel()
+                    {
+                        Result = resultVm
+                    };
+                }
+
+                return textVm;
             }
 
-            TextsViewModel newImageVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
-            
-            return Json(newImageVm, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult UploadSlider(TextsViewModel image)
+        {
+            TextsViewModel imageResult = this.uploadImage(image.ImageFile, "Images/UploadSilderImage/");
+
+            return Json(imageResult, JsonRequestBehavior.AllowGet);
+        }
 
 
 
         [HttpPost]
         public JsonResult UploadInfoImage(TextsViewModel image)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Home/UploadInfoImage", image).Result;
+            TextsViewModel imageResult = this.uploadImage(image.ImageFile, "Images/UploadInfoImage/");
 
-            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
-
-            image.Id = result.modelID;
-            image.Result = result;
-
-
-            return Json(image, JsonRequestBehavior.AllowGet);
-
+            return Json(imageResult, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -187,7 +212,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult GetSiteInfo()
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetSiteInfo").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetAboutUs").Result;
 
             var model = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
@@ -222,7 +247,6 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return Json(listVm, JsonRequestBehavior.AllowGet);
         }
 
-
         public JsonResult DeleteEmail(int id)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Information/DeleteEmail?id="+id).Result;
@@ -252,5 +276,6 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
  
         
+
     }
 }

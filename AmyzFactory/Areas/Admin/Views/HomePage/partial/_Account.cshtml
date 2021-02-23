@@ -12,13 +12,8 @@
                     <!-- Add & Delet Social Media -->
                     <th>
                         <label for="urlSocialInput">URL :</label>
-                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "URL", @type = "url" })
+                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "URL", @type = "text" })
                          @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
-
-
-
-
-
 
                     </th>
                     <th>

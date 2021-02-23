@@ -6,7 +6,7 @@ namespace AmyzFeed.Business.interfaces
 {
   public  interface IImageBusiness
     {
-        ResultDomainModel uploadImage(HttpPostedFile image, string serverPath, string folderResponse, int maxImages);
+        ResultDomainModel uploadImage(HttpRequest image, string fullPath,string responsePath, int maxImages);
         ResultDomainModel deleteImage(string imagePath);
 
         List<ImageDomainModel> getImages(string folderPath, string folderResponse);

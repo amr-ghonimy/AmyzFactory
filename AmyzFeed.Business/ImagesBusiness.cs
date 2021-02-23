@@ -22,10 +22,11 @@ namespace AmyzFeed.Business
         }
 
 
-        private ResultDomainModel initResultModel(bool isSuccess,string message)
+        private ResultDomainModel initResultModel(bool isSuccess,string message,object data=null)
         {
             this.resultModel.IsSuccess = isSuccess;
             this.resultModel.Message = message;
+            this.resultModel.Data = data;
             return resultModel;
         }
 
@@ -76,7 +77,7 @@ namespace AmyzFeed.Business
             return new ResultDomainModel(false, "Max Images You Can Add: " + max);
         }
 
-        private Boolean imagesCountValidation(string serverPath, string folderPath, int max)
+        private Boolean imagesCountValidation(string serverPath, int max)
         {
 
             DirectoryInfo di = new DirectoryInfo(serverPath);
@@ -90,22 +91,45 @@ namespace AmyzFeed.Business
         }
 
 
-        public ResultDomainModel uploadImage(HttpPostedFile postedFile,string serverPath,  string folderResponse, int maxImages)
+        public ResultDomainModel uploadImage(HttpRequest httpRequest, string fullPath,string responsePath, int maxImages)
         {
 
-
-            var validationResult = imagesCountValidation(serverPath, folderResponse, maxImages);
+            var validationResult = imagesCountValidation(fullPath,  maxImages);
             if (validationResult == false)
             {
                 return CancelUploadImageResponse(maxImages);
             }
 
             try
-            { 
-                string uniqueKey = string.Concat(DateTime.Now.ToString("yyyyMMddHHmmssf"), Guid.NewGuid().ToString());
-                var filePath = HttpContext.Current.Server.MapPath("~/" + folderResponse + "/" + uniqueKey);
-                postedFile.SaveAs(filePath);
-                return initResultModel(true, "Image Uploaded Successfully");
+            {
+
+                string imageExt = Path.GetExtension(httpRequest.Files[0].FileName);
+                if (imageExt == "")
+                {
+                    return initResultModel(false, "Please select image with english litters only");
+
+                }
+                string uniqueKey = string.Concat(DateTime.Now.ToString("yyyyMMddHHmmssf"), Guid.NewGuid().ToString())+ imageExt;
+                string filePath = "";
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    filePath = fullPath+ uniqueKey;
+                    postedFile.SaveAs(filePath);
+                }
+
+              
+
+                ImageDomainModel dataDm = new ImageDomainModel()
+                {
+                    Id = new Random().Next(1, 120),
+                    Title = uniqueKey,
+                    ImageUrl= responsePath+'/'+uniqueKey
+                };
+
+
+
+                return initResultModel(true, "Image Uploaded Successfully",data:dataDm);
                 
             }
             catch (Exception e)

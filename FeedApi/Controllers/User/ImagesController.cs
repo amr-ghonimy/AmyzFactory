@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace FeedApi.Controllers.User
@@ -24,6 +25,53 @@ namespace FeedApi.Controllers.User
             this.mapper = AutoMapperConfig.Mapper;
         }
 
+
+        [HttpPost]
+        public IHttpActionResult UploadSilderImage()
+        {
+            string folderPath = Constans.sliderImageFolderPath;
+            return this.UploadImage(folderPath,Constans.sliderImageResponse,10);
+        }
+
+        [HttpPost]
+        public IHttpActionResult UploadInfoImage()
+        {
+            string folderPath = Constans.infoImageFolderPath;
+            return this.UploadImage(folderPath, Constans.infoImageResponse, 1);
+        }
+
+
+
+        private IHttpActionResult UploadImage(string folderPath,string response,int imageCountValidation)
+        {
+            ResultDomainModel result = new ResultDomainModel();
+         
+            var httpRequest = HttpContext.Current.Request;
+
+            if (httpRequest.Files.Count < 1)
+            {
+                result.IsSuccess = false;
+                result.Message = "حدث مشكلة فى رفع الصورة";
+                return Content(HttpStatusCode.BadRequest,"");
+            }
+ 
+
+            result=this.business.uploadImage(httpRequest, folderPath, response, imageCountValidation);
+
+            if (result.IsSuccess)
+            {
+                ImageDomainModel imgDm = result.Data as ImageDomainModel;
+                imgDm.ImageUrl = Constans.apiServerPath + imgDm.ImageUrl;
+
+                result.Data = imgDm;
+
+                return Ok(result);
+            }else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+        }
 
         public IEnumerable<ImagesViewModel> GetSliders()
         {

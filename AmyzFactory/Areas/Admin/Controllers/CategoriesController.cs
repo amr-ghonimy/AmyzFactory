@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -222,11 +223,15 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public ActionResult EditCategory(int id)
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Categories/GetCategoryByID?id="+id).Result;
-            CategoryViewModel catgVm = response.Content.ReadAsAsync<CategoryViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetCategoryByID?id=" + id).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-       
-           catgVm.mainDepartmentsDropDown = new SelectList(this.getDepartments(), "Id", "Name");
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            CategoryViewModel catgVm = js.Deserialize<CategoryViewModel>(result.Data.ToString());
+
+
+
+            catgVm.mainDepartmentsDropDown = new SelectList(this.getDepartments(), "Id", "Name");
 
            return PartialView("~/Areas/Admin/Views/categories/_EditCategory.cshtml", catgVm);
 
