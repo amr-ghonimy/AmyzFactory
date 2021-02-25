@@ -3,7 +3,8 @@ using AmyzFactory.Models;
 using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
- using System.Net.Http;
+using Newtonsoft.Json;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -87,6 +88,14 @@ namespace AmyzFactory.Controllers
                 // store user is logined in our website
                 await this.signIn(user);
 
+                UserViemModel userVm = new UserViemModel()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName
+                };
+
+                this.applyToken(userVm);
+
                 if (!string.IsNullOrEmpty(model.ReturnUrl))
                 {
                     result = new ResultViewModel
@@ -114,23 +123,32 @@ namespace AmyzFactory.Controllers
         }
 
 
-        
+
+        private void  applyToken(UserViemModel user)
+        {
+            string token = user.Token;
+
+            Session["TokenNumber"] = token;
+            Session["UserName"] = user.Id;
+            Session["UserId"] = user.UserName;
+        }
+
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(UserViemModel userModel)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Accounts/Register", userModel).Result;
             ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            /*
-               if (result.IsSuccess)
+
+            if (result.IsSuccess)
             {
-                JavaScriptSerializer js = new JavaScriptSerializer();
-                ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
-                signIn(user);
+                UserViemModel user = JsonConvert.DeserializeObject<UserViemModel>(result.Data.ToString());
+
+                this.applyToken(user);
             }
 
-             */
+             
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

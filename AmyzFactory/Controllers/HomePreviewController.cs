@@ -1,6 +1,7 @@
 ﻿using AmyzFactory.Models;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Mvc;
 
 namespace AmyzFactory.Controllers
@@ -19,9 +20,15 @@ namespace AmyzFactory.Controllers
         public PartialViewResult _GetSliderimages()
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetSliders").Result;
-            List<ImagesViewModel> imagesVmList = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
+            string tokenNumber = Session["TokenNumber"]?.ToString() +":"+ Session["UserName"];
 
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer", tokenNumber);
+
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetSliders").Result;
+              List<ImagesViewModel> imagesVmList = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = null;
 
             return PartialView("~/Views/Shared/images/_sliders.cshtml", imagesVmList);
         }

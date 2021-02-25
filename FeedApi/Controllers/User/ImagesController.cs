@@ -3,6 +3,7 @@ using AmyzFeed.Business;
 using AmyzFeed.Business.interfaces;
 using AmyzFeed.FeedApi.Helpers;
 using AutoMapper;
+using FeedApi.Helpers;
 using FeedApi.Model;
 using System;
 using System.Collections.Generic;
@@ -73,6 +74,7 @@ namespace FeedApi.Controllers.User
 
         }
 
+       // [CustomAuthFilter]
         public IEnumerable<ImagesViewModel> GetSliders()
         {
             List<ImageDomainModel> images = this.business.getImages(Constans.sliderImageFolderPath,Constans.sliderImageResponse);

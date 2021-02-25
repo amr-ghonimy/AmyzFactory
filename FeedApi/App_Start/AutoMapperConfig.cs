@@ -153,7 +153,6 @@ namespace FeedApi
                       .ForMember(dst => dst.Password, src => src.MapFrom(e => e.Password))
                       .ForMember(dst => dst.Address, src => src.MapFrom(e => e.Address))
                       .ForMember(dst => dst.Governorate, src => src.MapFrom(e => e.Governorate))
-                      .ForMember(dst => dst.PersonalId, src => src.MapFrom(e => e.PersonalId))
                       .ForMember(dst => dst.FirstName, src => src.MapFrom(e => e.FirstName))
                      .ReverseMap();
 

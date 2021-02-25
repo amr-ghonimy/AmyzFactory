@@ -24,9 +24,9 @@ namespace AmyzFactory.Models
 
     public class UserDomainModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
-        
+        public string Token { get; set; }
         public string UserName { get; set; }
 
         public string FirstName { get; set; }
@@ -46,7 +46,6 @@ namespace AmyzFactory.Models
         public string Address { get; set; }
 
        
-        public string PersonalId { get; set; }
         
          
         public string Password { get; set; }

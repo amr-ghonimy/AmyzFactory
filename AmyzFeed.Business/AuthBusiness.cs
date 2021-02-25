@@ -111,7 +111,6 @@ namespace AmyzFeed.Business
             user.UserName = name;
             user.PhoneNumber = model.PhoneNumber;
             user.Address = model.Address;
-            user.PersonalID = model.PersonalId;
             user.Governorate = model.Governorate;
             user.IsActive = true;
 
@@ -126,13 +125,24 @@ namespace AmyzFeed.Business
             if (check.Succeeded)
             {
                 var userID = user.Id;
+
                 this.userManager.AddToRole(userID, "Users");
+
+                UserDomainModel userDm = new UserDomainModel()
+                {
+                    Id = userID,
+                    Address = user.Address,
+                    UserName = user.UserName,
+                    Password = user.PasswordHash,
+                    PhoneNumber = user.PhoneNumber,
+                    Email = user.Email
+                };
 
                 result = new ResultDomainModel()
                 {
                     IsSuccess = true,
                     Message = "تم التسجيل بنجاح...",
-                    Data = user
+                    Data = userDm
                 };
 
 

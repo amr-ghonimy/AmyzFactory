@@ -16,6 +16,7 @@ namespace AmyzFactory
             WebApiClient.BaseAddress = new Uri(url) ;
             WebApiClient.DefaultRequestHeaders.Clear();
             WebApiClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            
         }
     }
 }

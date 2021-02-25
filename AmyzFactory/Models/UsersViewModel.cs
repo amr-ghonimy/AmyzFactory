@@ -10,11 +10,12 @@ namespace AmyzFactory.Models
  
     public class AdminViewModel 
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
+        public string Token { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -25,9 +26,10 @@ namespace AmyzFactory.Models
 
     public class UserViemModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string UserName { get; set; }
 
+        public string Token{ get; set; }
 
         [Required (ErrorMessage ="ادخل الاسم الأول")]
         [Display(Name = "الاسم الأول")]
