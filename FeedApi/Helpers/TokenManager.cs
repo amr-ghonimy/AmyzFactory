@@ -1,10 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Web;
 
 namespace FeedApi.Helpers
 {
@@ -12,14 +9,14 @@ namespace FeedApi.Helpers
     {
         public static string secret = "333322554DSSDFGFDGfcdsfjksdljflkdsjflkdjslfjdslfdsdfsfds";
 
-        public static string GenerateToken(string userName)
+        public static string GenerateToken(string userName,string role)
         {
             byte[] key = Convert.FromBase64String(secret);
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
 
             SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, userName) }),
+                Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, userName), new Claim(ClaimTypes.Role, role) }),
                 Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials=new SigningCredentials(securityKey,
                 SecurityAlgorithms.HmacSha256Signature)
@@ -62,6 +59,32 @@ namespace FeedApi.Helpers
                return null;
             }
         }
+        public static string GetRoleByToken(string token)
+        {
+            string role = null;
+
+             ClaimsPrincipal principal = GetPrincipal(token);
+            if (principal == null)
+            {
+                return null;
+            }
+            ClaimsIdentity identity = null;
+            try
+            {
+                identity = (ClaimsIdentity)principal.Identity;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+            Claim userNameClaim = identity.FindFirst(ClaimTypes.Role);
+            role = userNameClaim.Value;
+
+            return role;
+        }
+
         public static string validToken(string token)
         {
             string userName = null;

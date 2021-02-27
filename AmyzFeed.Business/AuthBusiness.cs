@@ -134,6 +134,7 @@ namespace AmyzFeed.Business
                     Address = user.Address,
                     UserName = user.UserName,
                     Password = user.PasswordHash,
+                    Role= "Users",
                     PhoneNumber = user.PhoneNumber,
                     Email = user.Email
                 };

@@ -28,7 +28,7 @@ namespace AmyzFactory.Models
         public string  ImageURL { get; set; }
 
         public string[] DescriprionLines { get; set; }
-        public HttpPostedFileWrapper ImageFile { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
 
          public ResultViewModel ResponseResult { get; set; }
 

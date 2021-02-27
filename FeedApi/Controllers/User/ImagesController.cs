@@ -53,7 +53,7 @@ namespace FeedApi.Controllers.User
             {
                 result.IsSuccess = false;
                 result.Message = "حدث مشكلة فى رفع الصورة";
-                return Content(HttpStatusCode.BadRequest,"");
+                return Content(HttpStatusCode.BadRequest, result);
             }
  
 

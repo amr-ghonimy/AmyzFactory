@@ -9,38 +9,32 @@ namespace AmyzFeed.Business.interfaces
 {
   public  interface IProductsBusiness
     {
-        ResultDomainModel createProduct(ProductDomainModel product, HttpPostedFileWrapper productImage, string serverPathToUploadImage);
+        ResultDomainModel createProduct(ProductDomainModel product);
         ResultDomainModel deleteProduct(int productID);
 
-
-        List<ProductDomainModel> getAllProducts(int pageNo, int displayLength);
-        List<ProductDomainModel> getAllProducts();
-        List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength);
-        List<ProductDomainModel> SearchInAllProducts(string searchWord);
+        ResultDomainModel uplaodImage(HttpRequest image, string savedFilePath);
+        List<ProductDomainModel> getAllProducts(int pageNo, int displayLength,string role);
+        List<ProductDomainModel> getAllProducts(string role);
+        List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength, string role);
+        List<ProductDomainModel> SearchInAllProducts(string searchWord, string role);
 
 
         ProductDomainModel getProductByID(int id);
  
-        int getAllProductsCount();
-        int getSearchedProductCount(string searchWord);
+        int getAllProductsCount(string role);
+        int getSearchedProductCount(string searchWord, string role);
  
         // for admin panel table
-        List<ProductDomainModel> getAllMaterials(int pageNo, int displayLength);
-        List<ProductDomainModel> getAllMaterials();
+ 
+         List<ProductDomainModel> getProductsByCategoryID(int id, string role);
 
-        List<ProductDomainModel> SearchInAllMaterials(string searchWord, int pageNo, int displayLength);
-        List<ProductDomainModel> getProductsByCategoryID(int id);
-
-        int getAllMaterialsCount();
-        int getSearchedMaterialsCount(string searchWord);
-
+ 
         ResultDomainModel editProduct(ProductDomainModel newProduct);
-        List<ProductDomainModel> getAllPrices(int pageNo, int displayLength);
+        List<ProductDomainModel> getAllPrices(int pageNo, int displayLength, string role);
   
         ResultDomainModel updatePrices(List<ProductDomainModel> list);
 
-         List<PriceDomainModel> getProductsPrices();
+         List<PriceDomainModel> getProductsPrices(string role);
 
-        List<PriceDomainModel> getMaterialsPrices();
     }
 }

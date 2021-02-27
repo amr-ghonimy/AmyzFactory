@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
 namespace AmyzFeed.Business
@@ -28,33 +29,42 @@ namespace AmyzFeed.Business
         }
 
 
-        private ResultDomainModel initResultModel(bool isSuccess, string message)
+        private ResultDomainModel initResultModel(bool isSuccess, string message, object data = null)
         {
             resultModel.IsSuccess = isSuccess;
             resultModel.Message = message;
+            resultModel.Data = data;
             return resultModel;
         }
 
 
-        private ResultDomainModel uplaodImage(HttpPostedFileWrapper image, string savedFilePath)
+        public ResultDomainModel uplaodImage(HttpRequest image, string savedFilePath)
         {
  
-            var imageExtention = Path.GetExtension(image.FileName);
-            string title = Guid.NewGuid().ToString() + imageExtention;
+            var imageExtention = Path.GetExtension(image.Files[0].FileName);
+            if (imageExtention == "")
+            {
+                return initResultModel(false, "Please select image with english litters only");
 
-            try
-            {
-                image.SaveAs(savedFilePath + title);
-                return initResultModel(true, title);
             }
-            catch (Exception e)
+
+            string uniqueKey = string.Concat(DateTime.Now.ToString("yyyyMMddHHmmssf"), Guid.NewGuid().ToString()) + imageExtention;
+
+
+ 
+            foreach (string file in image.Files)
             {
-                return initResultModel(false, e.Message.ToString());
+                var postedFile = image.Files[file];
+                string filePath = savedFilePath + uniqueKey;
+                postedFile.SaveAs(filePath);
             }
+
+
+            return initResultModel(true, "Image Uploaded!", uniqueKey);
             
         }
 
-        public ResultDomainModel createProduct(ProductDomainModel product, HttpPostedFileWrapper productImage, string serverPathToUploadImage)
+        public ResultDomainModel createProduct(ProductDomainModel product)
         {
             // check if product is already exists
             var ifProducExists = this.productRepository.SingleOrDefault(m => m.Name.ToLower().Trim() == product.Name.ToLower().Trim());
@@ -81,19 +91,7 @@ namespace AmyzFeed.Business
                 };
 
 
-                if (productImage != null)
-                {
-                    // uplaod Image
-                    var uploadImgResult = this.uplaodImage(productImage, serverPathToUploadImage);
-
-                    bool isSuccess = uploadImgResult.IsSuccess;
-
-                    if (isSuccess)
-                    {
-                        // here title of image not message
-                        prd.Image = uploadImgResult.Message;
-                    }
-                }
+               
 
                 return confirmUploadProduct(prd);
             }
@@ -173,9 +171,9 @@ namespace AmyzFeed.Business
             }
         }
 
-        public List<ProductDomainModel> getAllProducts(int pageNo, int displayLength)
+        public List<ProductDomainModel> getAllProducts(int pageNo, int displayLength, string role)
         {
-            return productRepository.GetAll(p => p.CategoryID > 0 && p.IsDeleted==false, "Category")
+            return productRepository.GetAll(generateQuery(role), "Category")
                   .OrderBy(x => x.CreationDate)
                     .Skip((pageNo - 1) * displayLength)
                     .Take(displayLength)
@@ -194,10 +192,71 @@ namespace AmyzFeed.Business
             }).ToList();
         }
 
-     
+
+        private Expression<Func<Product, bool>> generateQuery(string role)
+        {
+            Expression<Func<Product, bool>> whereCondition = null;
+            switch (role)
+            {
+                case "Admins":
+                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false;
+                    break;
+                case "Users":
+                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false&&x.Visibility== true && x.Category.Visibility==true;
+                    break;
+                default:
+                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false && x.Visibility == true && x.Category.Visibility == true;
+                    break;
+            }
+
+            return whereCondition;
+        }
+
+
+        private Expression<Func<Product, bool>> generateQueryByCategoryID(string role,int id)
+        {
+            Expression<Func<Product, bool>> whereCondition = null;
+            switch (role)
+            {
+                case "Admins":
+                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false&&x.CategoryID==id;
+                    break;
+                case "Users":
+                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false && x.CategoryID == id &&x.Visibility == true && x.Category.Visibility == true;
+                    break;
+                default:
+                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false && x.Visibility == true && x.Category.Visibility == true;
+                    break;
+            }
+
+            return whereCondition;
+        }
+
+        private Expression<Func<Product, bool>> generateSearchQuery(string role,string word)
+        {
+
+            Expression<Func<Product, bool>> whereCondition = null;
+            switch (role)
+            {
+                case "Admins":
+                    whereCondition = p => p.IsDeleted == false && p.Category.IsDeleted == false && p.Name.Contains(word) || p.Category.Name.Contains(word);
+                   
+                    break;
+                case "Users":
+                    whereCondition = p => p.IsDeleted == false && p.Category.IsDeleted == false &&p.Category.Visibility==true&&p.Visibility==true&& p.Name.Contains(word) || p.Category.Name.Contains(word);
+                    break;
+                default:
+                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false && x.Visibility == true && x.Category.Visibility == true;
+                    break;
+            }
+
+            return whereCondition;
+        }
+
         public ProductDomainModel getProductByID(int id)
         {
-           Product product= this.productRepository.SingleOrDefault(x => x.ID == id);
+
+           Product product= this.productRepository.SingleOrDefault(x => x.ID == id, "Category");
 
             ProductDomainModel prdDm = new ProductDomainModel()
             {
@@ -216,10 +275,10 @@ namespace AmyzFeed.Business
             return prdDm;
         }
 
-        public List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength)
+        public List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength, string role)
         {
  
-            return productRepository.GetAll(p => p.CategoryID > 0 && p.IsDeleted == false && p.Name.Contains(searchWord)||p.Category.Name.Contains(searchWord))
+            return productRepository.GetAll(generateSearchQuery(role,searchWord))
                 .OrderBy(x => x.ID)
                     .Skip((pageNo - 1) * displayLength)
                     .Take(displayLength)
@@ -238,67 +297,23 @@ namespace AmyzFeed.Business
             }).ToList();
         }
 
-        public int getAllProductsCount()
+        public int getAllProductsCount(string role)
         {
-           return productRepository.GetAll(x=>x.CategoryID > 0 && x.IsDeleted == false).Count();
+           return productRepository.GetAll(generateQuery(role)).Count();
         }
 
-        public int getSearchedProductCount(string searchWord)
+        public int getSearchedProductCount(string searchWord, string role)
         {
-            return productRepository.GetAll(p => p.CategoryID >0 && p.IsDeleted == false && p.Name.Contains(searchWord) || p.Category.Name.Contains(searchWord)).Count();
-         }
-
-        public List<ProductDomainModel> getAllMaterials(int pageNo, int displayLength)
-        {
-            return productRepository.GetAll(p => p.CategoryID == 0 && p.IsDeleted == false)
-                          .OrderBy(x => x.CreationDate)
-                            .Skip((pageNo - 1) * displayLength)
-                            .Take(displayLength)
-                    .Select(x => new ProductDomainModel()
-                    {
-                        Id = x.ID,
-                        Name = x.Name,
-                        Definition = x.Definition,
-                        Description = x.Description,
-                        ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
-                        isVisible = x.Visibility,
-                        Price = float.Parse(x.Price?.ToString()),
-                        Quantity = x.Quantity.Value
-                    }).ToList();
+            return productRepository.GetAll(generateSearchQuery(role, searchWord)).Count();
         }
 
-        public List<ProductDomainModel> SearchInAllMaterials(string searchWord, int pageNo, int displayLength)
-        {
-            return productRepository.GetAll(p => p.CategoryID == 0 && p.IsDeleted == false && p.Name.Contains(searchWord) || p.Category.Name.Contains(searchWord))
-                         .OrderBy(x => x.ID)
-                             .Skip((pageNo - 1) * displayLength)
-                             .Take(displayLength)
-                         .Select(x => new ProductDomainModel()
-                         {
-                             Id = x.ID,
-                              Name = x.Name,
-                             Definition = x.Definition,
-                             Description = x.Description,
-                              ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
-                             isVisible = x.Visibility,
-                             Price = float.Parse(x.Price?.ToString()),
-                             Quantity = x.Quantity.Value
-                         }).ToList();
-        }
+      
+    
+    
 
-        public int getAllMaterialsCount()
+        public List<ProductDomainModel> getAllPrices(int pageNo, int displayLength, string role)
         {
-            return productRepository.GetAll(x => x.CategoryID == 0 && x.IsDeleted == false).Count();
-        }
-
-        public int getSearchedMaterialsCount(string searchWord)
-        {
-            return productRepository.GetAll(p => p.CategoryID == 0 && p.IsDeleted == false && p.Name.Contains(searchWord) || p.Category.Name.Contains(searchWord)).Count();
-        }
-
-        public List<ProductDomainModel> getAllPrices(int pageNo, int displayLength)
-        {
-            return this.productRepository.GetAll(x=> x.IsDeleted == false)
+            return this.productRepository.GetAll(generateQuery(role))
                  .OrderBy(x => x.ID)
                             .Skip((pageNo - 1) * displayLength)
                             .Take(displayLength)
@@ -340,9 +355,9 @@ namespace AmyzFeed.Business
 
         }
 
-        public List<ProductDomainModel> getProductsByCategoryID(int id)
+        public List<ProductDomainModel> getProductsByCategoryID(int id, string role)
         {
-            List<ProductDomainModel> products = this.productRepository.GetAll(x => x.CategoryID == id)
+            List<ProductDomainModel> products = this.productRepository.GetAll(generateQueryByCategoryID(role,id))
                 .Select(x => new ProductDomainModel()
                 {
                     Id = x.ID,
@@ -359,9 +374,9 @@ namespace AmyzFeed.Business
             return products;
         }
 
-        public List<PriceDomainModel> getProductsPrices()
+        public List<PriceDomainModel> getProductsPrices(string role)
         {
-            return this.productRepository.GetAll(z => z.Visibility == true && z.Price > 0,"Category")
+            return this.productRepository.GetAll(generateQuery(role), "Category")
                                     .Select(x => new PriceDomainModel
                                     {
                                         Id = x.ID,
@@ -372,35 +387,12 @@ namespace AmyzFeed.Business
                                     }).ToList();
         }
 
-        public List<PriceDomainModel> getMaterialsPrices()
+     
+     
+        public List<ProductDomainModel> getAllProducts(string role)
         {
-            return this.productRepository.GetAll(z => z.Visibility == true && z.Price > 0 && z.CategoryID == null)
-                                          .Select(x => new PriceDomainModel
-                                          {
-                                              Id = x.ID,
-                                              Name = x.Name,
-                                              Price = x.Price.Value
-                                          }).ToList();
-        }
 
-        public List<ProductDomainModel> getAllMaterials()
-        {
-            return this.productRepository.GetAll(x=>x.CategoryID==null)
-                .Select(x=> new ProductDomainModel {
-                    Id = x.ID,
-                    Name = x.Name,
-                    Definition = x.Definition,
-                    Description = x.Description,
-                    ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
-                    isVisible = x.Visibility,
-                    Price = float.Parse(x.Price?.ToString()),
-                    Quantity = x.Quantity.Value
-                }).ToList();
-        }
-
-        public List<ProductDomainModel> getAllProducts()
-        {
-            return this.productRepository.GetAll("Category")
+            return this.productRepository.GetAll(generateQuery(role), "Category")
                            .Select(x => new ProductDomainModel
                            {
                                Id = x.ID,
@@ -416,9 +408,9 @@ namespace AmyzFeed.Business
                            }).ToList();
         }
 
-        public List<ProductDomainModel> SearchInAllProducts(string searchWord)
+        public List<ProductDomainModel> SearchInAllProducts(string searchWord, string role)
         {
-            return productRepository.GetAll(p => p.IsDeleted == false && p.Name.Contains(searchWord) || p.Category.Name.Contains(searchWord))
+            return productRepository.GetAll(generateSearchQuery(role,searchWord))
                          .OrderBy(x => x.ID)
                          .Select(x => new ProductDomainModel()
                          {

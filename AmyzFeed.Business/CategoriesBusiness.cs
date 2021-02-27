@@ -152,6 +152,21 @@ namespace AmyzFeed.Business
             }
         }
 
+        private void deleteAllCategoriesByDeptId(int departmentID)
+        {
+            var categories = this.catgRepository.GetAll(x => x.DepartmentID == departmentID);
+            if (categories != null && categories.Count() > 0)
+            {
+                 
+                    foreach (var item in categories)
+                    {
+                        item.IsDeleted = true;
+                        catgRepository.Update(item);
+                    }
+                
+            }
+        }
+
         public bool deleteDepartment(int departmentID)
         {
             try
@@ -159,9 +174,12 @@ namespace AmyzFeed.Business
                 var deptObj = this.deptRepository.SingleOrDefault(x => x.ID == departmentID);
                 deptObj.IsDeleted = true;
                 this.deptRepository.Update(deptObj);
+
+                this.deleteAllCategoriesByDeptId(departmentID);
+
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

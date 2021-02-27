@@ -1,0 +1,89 @@
+﻿@model AmyzFactory.Models.ProductViewModel
+
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<h1 style="text-align:center;">تفاصيل المنتج</h1>
+
+<!-- Modal -->
+<div id="productModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modelBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<section class="container">
+
+    <div class="row">
+        <div class="col-sm-4 col-md-4">
+            <img src="@Model.ImageURL" />
+        </div>
+        <div class="col-sm-8 col-md-8" style="text-align:right;direction:rtl;">
+         
+            <div>
+                <h5>القسم</h5>
+                <p>@Model.CategoryName</p>
+            </div>
+
+            <div>
+                <h5>الاسم</h5>
+                <p>@Model.Name</p>
+            </div>
+            <hr />
+            <div>
+                <h5>التعريف</h5>
+                <p>@Model.Definition</p>
+            </div>
+            <hr />
+            <div>
+                <h5>المواصفات</h5>
+                <p>@Model.Description</p>
+            </div>
+            <hr />
+
+            <div>
+                <h5>السعر</h5>
+                <p>@Model.Price <strong>ج.م</strong></p>
+            </div>
+            <div>
+                <h5>الكمية المتاحة</h5>
+                <p>@Model.Quantity <strong>طن</strong></p>
+            </div>
+
+            <hr />
+        </div>
+    </div>
+    <center>
+        <button type="button" class="btn btn-success" onclick="editProduct(@Model.Id)">Edit</button>
+    </center>
+
+</section>
+
+
+
+
+<script>
+    var editProduct = function (id) {
+        var url = "/Admin/Products/EditProduct?id=" + id;
+
+        $("#modelBody").load(url, function () {
+            $("#productModal").modal("show");
+        })
+
+    }
+</script>

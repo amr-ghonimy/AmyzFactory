@@ -78,6 +78,7 @@ namespace FeedApi
             Constans.responsibiltyImageFolderPath = Server.MapPath(Constans.responsibiltyImageResponse);
             Constans.censirshipFooterImageFolderPath = Server.MapPath(Constans.censirshipFooterImageResponse);
             Constans.censirshipHeaderImageFolderPath = Server.MapPath(Constans.censirshipHeaderImageResponse);
+            Constans.productsImageFolderPath = Server.MapPath(Constans.productsImageResponse);
 
         }
 

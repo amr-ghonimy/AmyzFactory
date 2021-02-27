@@ -113,7 +113,7 @@
                           "render": function (Id, type, full, meta) {
                               return '<a class="btn btn-success" href="#" style="margin-right: 4px;"  onclick="editProduct(' + Id + ')"><i class="fa fa-pencil-alt"></i></a>' +
                                   '<a class="btn btn-danger" href="#" style="margin-right: 4px;"  onclick="deleteProduct(\'' + Id + '\',\'' + Action + '\',\'' + Controller + '\',\'' + tableID + '\')"><i class="fa fa-trash-alt"></i></a>' +
-                                  '<a class="btn btn-info"  href="#" onclick="editProduct(\'' + Id + '\',\'' + Action + '\',\'' + Controller + '\')"><i class="fa fa-info"></i></a>'
+                                  '<a class="btn btn-info"  href="../Products/ProductDetails?id='+Id+'"><i class="fa fa-info"></i></a>'
                           }
                       }
                 ]

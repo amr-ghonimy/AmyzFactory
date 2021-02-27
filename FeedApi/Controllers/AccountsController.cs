@@ -48,7 +48,7 @@ namespace FeedApi.Controllers
             {
                 UserDomainModel userDm = (UserDomainModel)result.Data;
 
-                userDm.Token = TokenManager.GenerateToken(userDm.UserName);
+                userDm.Token = TokenManager.GenerateToken(userDm.UserName,userDm.Role);
 
                 result.Data = userDm;
 
@@ -74,7 +74,7 @@ namespace FeedApi.Controllers
             {
                 UserDomainModel userDm =(UserDomainModel) result.Data;
 
-                userDm.Token = TokenManager.GenerateToken(userDm.UserName);
+                userDm.Token = TokenManager.GenerateToken(userDm.UserName, userDm.Role);
                 
                 result.Data = userDm;
                

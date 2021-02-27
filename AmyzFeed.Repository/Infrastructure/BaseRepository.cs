@@ -28,6 +28,12 @@ namespace AmyzFeed.Repository.Infrastructure
             return dbResult;
         }
 
+        public T SingleOrDefault(Expression<Func<T, bool>> whereCondition, string tableName)
+        {
+            var dbResult = dbSet.Include(tableName).Where(whereCondition).FirstOrDefault();
+            return dbResult;
+        }
+
         public IEnumerable<T> GetAll()
         {
             return dbSet.AsEnumerable();

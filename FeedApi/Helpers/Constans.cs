@@ -33,6 +33,7 @@ namespace AmyzFeed.FeedApi.Helpers
         public static string responsibiltyImageFolderPath;
         public static string censirshipHeaderImageFolderPath;
         public static string censirshipFooterImageFolderPath;
+        public static string productsImageFolderPath;
 
         public static string infoImageFolderPath;
 
@@ -45,6 +46,7 @@ namespace AmyzFeed.FeedApi.Helpers
         public static string infoImageResponse= @"Images/Info/";
         public static string censirshipHeaderImageResponse = @"Images/CensirshipHeader/";
         public static string censirshipFooterImageResponse = @"Images/CensirshipFooter/";
+        public static string productsImageResponse = @"Images/Products/";
 
     }
 }

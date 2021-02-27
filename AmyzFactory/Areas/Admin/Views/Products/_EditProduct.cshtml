@@ -99,20 +99,32 @@
                 data: formData,
                 success: function (data) {
         
-                    if (data.IsSuccess) {
-                        successDialogEdit(data.Message)
-                    } else {
-                        failedDialog(data.Message)
-                    }
+                 
 
 
                     $("#productModal").modal("hide");
                     
-                    if(categoryId>0){
-                        bindDataTable("tblProducts", "AllProducts", "Products");
-                    }else {
-                        bindDataTable("tblMaterials", "AllMaterials", "Products");
+
+                    if ($.isFunction(window.bindDataTable)) {
+
+                        if (data.IsSuccess) {
+                            successDialogEdit(data.Message)
+                        } else {
+                            failedDialog(data.Message)
+                        }
+
+                        if(categoryId>0){
+                            bindDataTable("tblProducts", "AllProducts", "Products");
+                        }else {
+                            bindDataTable("tblMaterials", "AllMaterials", "Products");
+                        }
+                    } else {
+                        window.location.reload();
                     }
+
+                   
+
+
                 }
 
 

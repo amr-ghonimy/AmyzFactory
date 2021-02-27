@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -41,6 +42,7 @@ namespace AmyzFactory.Controllers
 
             // get All Products 
 
+        
             HttpResponseMessage productsResponse = GlobalVariables.WebApiClient.GetAsync("Product/GetAllProducts").Result;
             List<ProductViewModel> productsVm = productsResponse.Content.ReadAsAsync<List<ProductViewModel>>().Result;
 
@@ -95,6 +97,8 @@ namespace AmyzFactory.Controllers
 
         public JsonResult GetProductsByCategoryID(int categoryID)
         {
+          
+
             HttpResponseMessage productsResponse = GlobalVariables.WebApiClient.GetAsync("Product/GetProductsByCategoryID?id="+categoryID).Result;
             List<ProductViewModel> productsVm = productsResponse.Content.ReadAsAsync<List<ProductViewModel>>().Result;
 

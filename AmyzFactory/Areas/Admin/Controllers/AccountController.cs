@@ -4,9 +4,11 @@ using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -49,52 +51,65 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
 
 
+        private void applyToken(UserViemModel user)
+        {
+            string token = user.Token;
+            
+            Session["TokenNumber"] = token;
+            Session["UserName"] = user.Id;
+            Session["UserId"] = user.UserName;
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task< ActionResult> Login(AdminViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var isAdminExists = await this.userManager.FindAsync(model.UserName, model.Password);
 
-              
-                if (isAdminExists != null)
+
+                HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Accounts/Login", model).Result;
+                ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+                if (!result.IsSuccess)
                 {
-                    // this get role 
-                    IList<string> rolesName = await userManager.GetRolesAsync(isAdminExists.Id);
-                    string roleName = rolesName[0];
-
-                    if (roleName != "Admins")
-                    {
-                        model.result = new ResultViewModel
-                        {
-                            IsSuccess = false,
-                            Message = "Email or password is not correct!"
-                        };
-                        return View(model);
-
-                    }
+                    model.result = result;
+                    return View(model);
+                }
+                else
+                {
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
 
                     // store user is logined in our website
-                    await this.signIn(isAdminExists);
+                    await this.signIn(user);
+
+                    UserViemModel userVm = new UserViemModel()
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName
+                    };
+
+                    this.applyToken(userVm);
 
                     if (!string.IsNullOrEmpty(model.ReturnUrl))
                     {
-                        return Redirect(model.ReturnUrl);
-                    }
 
-                    return RedirectToAction("Index", "Home");
+                        return Redirect(model.ReturnUrl);
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
 
-                model.result = new ResultViewModel
-                {
-                    IsSuccess = false,
-                    Message = "Email or password is not correct!"
-                };
 
             }
 
             return View(model);
+
         }
 
         private async Task signIn(ApplicationUser appUser)

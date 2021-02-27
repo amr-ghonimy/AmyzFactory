@@ -1,10 +1,15 @@
 ﻿using AmyzFactory.Models;
 using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
+using AmyzFeed.FeedApi.Helpers;
 using AutoMapper;
+using FeedApi.Helpers;
 using FeedApi.Model;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 
 namespace FeedApi.Controllers.User
@@ -23,9 +28,29 @@ namespace FeedApi.Controllers.User
 
 
 
+        private string GetRole()
+        {
+            string role = "";
+
+            HttpRequestMessage request = this.ActionContext.Request;
+            AuthenticationHeaderValue authorization = request.Headers.Authorization;
+
+            if (!string.IsNullOrEmpty(authorization.Parameter))
+            {
+               string token = authorization.Parameter;
+
+                role = TokenManager.GetRoleByToken(token);
+            }
+
+            return role;
+        }
+
         public IEnumerable<ProductsViewModel> GetProductsByCategoryID(int id)
         {
-            List<ProductDomainModel> productsDm = this.productsBusiness.getProductsByCategoryID(id);
+           
+
+
+            List<ProductDomainModel> productsDm = this.productsBusiness.getProductsByCategoryID(id, GetRole());
 
             var result = mapper.Map<List<ProductsViewModel>>(productsDm);
 
@@ -34,38 +59,22 @@ namespace FeedApi.Controllers.User
 
         public IEnumerable<ProductsViewModel> GetAllProducts(int pageNo, int displayLength)
         {
-            List<ProductDomainModel> productsList = this.productsBusiness.getAllProducts(pageNo, displayLength);
+            List<ProductDomainModel> productsList = this.productsBusiness.getAllProducts(pageNo, displayLength, GetRole());
 
             return this.mapper.Map<List<ProductsViewModel>>(productsList);
         }
 
         public IEnumerable<ProductsViewModel> GetAllProducts()
         {
-            List<ProductDomainModel> productsList = this.productsBusiness.getAllProducts();
+            List<ProductDomainModel> productsList = this.productsBusiness.getAllProducts(GetRole());
 
             return this.mapper.Map<List<ProductsViewModel>>(productsList);
         }
-        public IEnumerable<ProductsViewModel> GetAllMaterials(int pageNo, int displayLength)
-        {
-            List<ProductDomainModel> productsDm = this.productsBusiness.getAllMaterials(pageNo, displayLength);
-
-            var result = mapper.Map<List<ProductsViewModel>>(productsDm);
-
-            return result;
-        }
-        public IEnumerable<ProductsViewModel> GetAllMaterials()
-        {
-            List<ProductDomainModel> productsDm = this.productsBusiness.getAllMaterials();
-
-            var result = mapper.Map<List<ProductsViewModel>>(productsDm);
-
-            return result;
-        }
-
+        
 
         public IEnumerable<ProductsViewModel> SearchInProducts(string word, int pageNo, int displayLength)
         {
-            List<ProductDomainModel> listDm = this.productsBusiness.SearchInAllProducts(word, pageNo, displayLength);
+            List<ProductDomainModel> listDm = this.productsBusiness.SearchInAllProducts(word, pageNo, displayLength, GetRole());
 
             return this.mapper.Map<List<ProductsViewModel>>(listDm);
         }
@@ -74,26 +83,18 @@ namespace FeedApi.Controllers.User
         [HttpGet]
         public IEnumerable<ProductsViewModel> SearchInProducts(string word)
         {
-            List<ProductDomainModel> listDm = this.productsBusiness.SearchInAllProducts(word);
+            List<ProductDomainModel> listDm = this.productsBusiness.SearchInAllProducts(word, GetRole());
 
             return this.mapper.Map<List<ProductsViewModel>>(listDm);
         }
 
 
 
-
-        public IEnumerable<ProductsViewModel> SearchInMaterials(string word, int pageNo, int displayLength)
-        {
-            List<ProductDomainModel> listDm = this.productsBusiness.SearchInAllMaterials(word, pageNo, displayLength);
-
-            return this.mapper.Map<List<ProductsViewModel>>(listDm);
-        }
-
-
+ 
         public IEnumerable<PricesViewModel> GetProductsPrices()
         {
 
-            List<PriceDomainModel> productsDm = this.productsBusiness.getProductsPrices();
+            List<PriceDomainModel> productsDm = this.productsBusiness.getProductsPrices(GetRole());
 
             var productsList = this.mapper.Map<List<PricesViewModel>>(productsDm);
 
@@ -101,15 +102,7 @@ namespace FeedApi.Controllers.User
         }
 
 
-        public IEnumerable<PricesViewModel> GetMaterialsPrices()
-        {
-
-            List<PriceDomainModel> materialsDm = this.productsBusiness.getMaterialsPrices();
-
-            var materialsList = this.mapper.Map<List<PricesViewModel>>(materialsDm);
-
-            return materialsList;
-        }
+        
 
         public IHttpActionResult GetProductById(int id)
         {
@@ -135,31 +128,19 @@ namespace FeedApi.Controllers.User
 
         public IHttpActionResult GetSearchedProductCount(string searchWord)
         {
-            int count = this.productsBusiness.getSearchedProductCount(searchWord);
+            int count = this.productsBusiness.getSearchedProductCount(searchWord, GetRole());
             return Ok(count);
         }
 
 
         public IHttpActionResult GetAllProductsCount()
         {
-            int count = this.productsBusiness.getAllProductsCount();
+            int count = this.productsBusiness.getAllProductsCount(GetRole());
             return Ok(count);
         }
 
-        public IHttpActionResult GetSearchedMaterialsCount(string searchWord)
-        {
-            int count = this.productsBusiness.getSearchedMaterialsCount(searchWord);
-            return Ok(count);
-        }
-
-
-        public IHttpActionResult GetAllMaterialsCount()
-        {
-            int count = this.productsBusiness.getAllMaterialsCount();
-            return Ok(count);
-        }
-
-
+     
+ 
 
 
 
@@ -191,6 +172,33 @@ namespace FeedApi.Controllers.User
         }
 
 
+        [HttpPost]
+        public IHttpActionResult UploadImage()
+        {
+            ResultDomainModel result = new ResultDomainModel();
+
+            var httpRequest = HttpContext.Current.Request;
+
+            if (httpRequest.Files.Count < 1)
+            {
+                result.IsSuccess = false;
+                result.Message = "حدث مشكلة فى رفع الصورة";
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+
+            result = this.productsBusiness.uplaodImage(httpRequest, Constans.productsImageFolderPath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+        }
 
 
         [HttpPost]
@@ -201,10 +209,13 @@ namespace FeedApi.Controllers.User
                 return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "You enter null data!!"));
             }
 
+            ResultDomainModel result = new ResultDomainModel();
+
             try
             {
                 ProductDomainModel dm = this.mapper.Map<ProductDomainModel>(model);
-                ResultDomainModel result = this.productsBusiness.createProduct(dm, null, null);
+
+                 result = this.productsBusiness.createProduct(dm);
 
                 if (result.IsSuccess)
                 {
@@ -219,7 +230,6 @@ namespace FeedApi.Controllers.User
             {
                 return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false,e.Message));
             }
-
 
         }
 

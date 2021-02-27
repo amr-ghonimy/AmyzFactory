@@ -28,7 +28,7 @@ namespace AmyzFactory.Controllers
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetSliders").Result;
               List<ImagesViewModel> imagesVmList = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
-            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = null;
+        //    GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = null;
 
             return PartialView("~/Views/Shared/images/_sliders.cshtml", imagesVmList);
         }

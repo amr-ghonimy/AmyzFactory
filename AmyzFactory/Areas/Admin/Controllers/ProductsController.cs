@@ -1,15 +1,14 @@
 ﻿
-using System;
 using System.Collections.Generic;
-
 using System.Web.Mvc;
-
 using AmyzFactory.Models;
-
 using AmyzFactory.App_Start;
 using System.Net.Http;
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using System.Web.Script.Serialization;
+using System.Web;
+using System.IO;
+using System.Net.Http.Formatting;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -189,10 +188,57 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
 
 
+
+        public ResultViewModel UploadProductImage(HttpPostedFileBase imageFile, string apiPath)
+        {
+            using (var content = new MultipartFormDataContent())
+            {
+                MemoryStream target = new MemoryStream();
+                imageFile.InputStream.CopyTo(target);
+                byte[] Bytes = target.ToArray();
+
+
+                imageFile.InputStream.Read(Bytes, 0, Bytes.Length);
+                var fileContent = new ByteArrayContent(Bytes);
+                fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = imageFile.FileName };
+
+
+                content.Add(fileContent);
+
+
+                // content.Add(new StringContent(imageUniqueKey), "FileId");
+                //content.Headers.Add("Key", "abc23sdflsdf");
+
+                var response = GlobalVariables.WebApiClient.PostAsync(apiPath, content).Result;
+                ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+                return resultVm;
+            }
+        }
+
+    
+
         [HttpPost]
         public JsonResult Create(ProductViewModel model)
         {
             // start upload image
+            if (model.ImageFile != null)
+            {
+                // this means user select image to upload image
+                HttpPostedFileBase imageFile = model.ImageFile;
+                ResultViewModel imageUploadResult = this.UploadProductImage(imageFile, "Product/UploadImage");
+
+                model.ImageFile = null;
+
+                if (imageUploadResult.IsSuccess==false)
+                {
+                    model.ResponseResult = imageUploadResult;
+                    return Json(model, JsonRequestBehavior.AllowGet);
+                }
+
+                model.ImageURL =(string)imageUploadResult.Data;
+            }
+
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Product/Create", model).Result;
             var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
@@ -207,24 +253,42 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult EditProduct(int id)
         {
+            ProductViewModel product = this.getProductByID(id);
+
+            ViewBag.Categories = new SelectList(this.getCategories(), "Id", "Name");
+
+
+            return PartialView("~/Areas/Admin/Views/Products/_EditProduct.cshtml", product);
+        }
+
+
+        private ProductViewModel getProductByID(int id)
+        {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetProductByID?id=" + id).Result;
 
             ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            ViewBag.Categories = new SelectList(this.getCategories(), "Id", "Name");
 
-            ProductViewModel products = null;
+            ProductViewModel product = null;
 
             if (result.Data != null)
             {
                 string jsonString = result.Data.ToString();
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                products = js.Deserialize<ProductViewModel>(jsonString);
+                product = js.Deserialize<ProductViewModel>(jsonString);
             }
-            return PartialView("~/Areas/Admin/Views/Products/_EditProduct.cshtml", products);
+
+            return product;
         }
 
+        [HttpGet]
+        public ActionResult ProductDetails(int id)
+        {
+            ProductViewModel product = this.getProductByID(id);
+
+            return View(product);
+        }
 
         [HttpPost]
         public ActionResult EditProduct(ProductViewModel product)
