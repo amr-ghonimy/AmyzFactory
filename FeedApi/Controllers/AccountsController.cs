@@ -1,12 +1,13 @@
 ﻿using AmyzFactory.Models;
 using AmyzFeed.Business.interfaces;
- using AutoMapper;
+using AmyzFeed.Repository.Data;
+using AutoMapper;
 using FeedApi.Helpers;
 using FeedApi.Model;
- 
+using Newtonsoft.Json;
 using System.Net;
- using System.Web.Http;
- 
+using System.Web.Http;
+
 namespace FeedApi.Controllers
 {
     public class AccountsController : ApiController
@@ -46,9 +47,9 @@ namespace FeedApi.Controllers
 
             if (result.IsSuccess)
             {
-                UserDomainModel userDm = (UserDomainModel)result.Data;
+                UserDomainModel userDm = (UserDomainModel) result.Data;
 
-                userDm.Token = TokenManager.GenerateToken(userDm.UserName,userDm.Role);
+               userDm.Token = TokenManager.GenerateToken(userDm.UserName,userDm.Role);
 
                 result.Data = userDm;
 
@@ -66,26 +67,34 @@ namespace FeedApi.Controllers
 
         public IHttpActionResult Register(UserViemModel userModel)
         {
-            UserDomainModel dm = this.mapper.Map<UserDomainModel>(userModel);
-
-            ResultDomainModel result = this.business.Register(dm);
-
-            if (result.IsSuccess)
+            if (ModelState.IsValid)
             {
-                UserDomainModel userDm =(UserDomainModel) result.Data;
+                UserDomainModel dm = this.mapper.Map<UserDomainModel>(userModel);
 
-                userDm.Token = TokenManager.GenerateToken(userDm.UserName, userDm.Role);
-                
-                result.Data = userDm;
-               
-                return Ok(result);
-            }else
-            {
-                return Content(HttpStatusCode.BadRequest, result);
+                ResultDomainModel result = this.business.Register(dm);
+
+                if (result.IsSuccess)
+                {
+                    UserDomainModel userDm = (UserDomainModel)result.Data;
+
+                    userDm.Token = TokenManager.GenerateToken(userDm.UserName, userDm.Role);
+
+                    result.Data = userDm;
+
+                    return Ok(result);
+                }
+                else
+                {
+                    return Content(HttpStatusCode.BadRequest, result);
+                }
             }
+
+            return Content(HttpStatusCode.BadRequest, new ResultDomainModel { IsSuccess=false,Message="تأكد من ادخال البيانات بشكل صحبح!"});
+
+
         }
 
-     
+
 
 
     }

@@ -1,15 +1,9 @@
 ﻿using AmyzFactory.Models;
 using AmyzFeed.Business.interfaces;
-using AmyzFeed.Repository;
 using AmyzFeed.Repository.Data;
-using AmyzFeed.Repository.Infrastructure.Contract;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmyzFeed.Business
 {
@@ -44,23 +38,26 @@ namespace AmyzFeed.Business
         {
             ResultDomainModel result;
 
-            ApplicationUser isUserExists =  this.userManager.Find(model.UserName, model.Password);
+            ApplicationUser isUserExists = this.userManager.Find(model.Email, model.Password);
 
             if (isUserExists != null)
             {
                 IList<string> rolesName =  userManager.GetRoles(isUserExists.Id);
                 string roleName = rolesName[0];
 
-                if (roleName != "Users")
+                UserDomainModel userDm = new UserDomainModel
                 {
-                    result = new ResultDomainModel
-                    {
-                        IsSuccess = false,
-                        Message = "البريد الالكترونى أو كلمة السر غير صحيح",
-                        Data = isUserExists
-                    };
-                    return result;
-                }
+                    Id=isUserExists.Id,
+                    FirstName=isUserExists.FirstName,
+                    LastName=isUserExists.LastName,
+                    UserName=isUserExists.UserName,
+                    Password=isUserExists.PasswordHash,
+                    Address=isUserExists.Address,
+                    Email=isUserExists.Email,
+                    PhoneNumber=isUserExists.PhoneNumber,
+                    Role=roleName
+                };
+
 
                 if (!string.IsNullOrEmpty(model.ReturnUrl))
                 {
@@ -68,7 +65,7 @@ namespace AmyzFeed.Business
                     {
                         IsSuccess = true,
                         Message = model.ReturnUrl,
-                        Data = isUserExists
+                        Data = userDm
                     };
                 }
                 else
@@ -77,7 +74,7 @@ namespace AmyzFeed.Business
                     {
                         IsSuccess = true,
                         Message = "/homePreview/Index",
-                        Data = isUserExists
+                        Data = userDm
                     };
                 }
 
@@ -91,7 +88,6 @@ namespace AmyzFeed.Business
                     IsSuccess = false,
                     Message = "البريد الالكترونى أو كلمة السر غير صحيح",
                     Data = isUserExists
-
                 };
 
             }
@@ -102,25 +98,41 @@ namespace AmyzFeed.Business
 
         public ResultDomainModel Register(UserDomainModel model)
         {
-            var name = model.FirstName.Trim() + "_" + model.LastName.Trim();
+
+
+
 
 
             var user = new ApplicationUser();
-
+            user.FirstName = model.FirstName?.Trim();
+            user.LastName = model.LastName?.Trim();
             user.Email = model.Email;
-            user.UserName = name;
+            user.UserName = model.Email;
             user.PhoneNumber = model.PhoneNumber;
             user.Address = model.Address;
-            user.Governorate = model.Governorate;
             user.IsActive = true;
+
+            var isUserExists = userManager.FindByEmail(model.Email);
+            ResultDomainModel result;
+
+            if (isUserExists != null)
+            {
+                result = new ResultDomainModel()
+                {
+                    IsSuccess = false,
+                    Message = "لم يتم التسجيل كعضو جديد البريد الالكترونى مستخدم من قبل",
+                    Data = user
+                };
+
+            }
+
 
             var check = userManager.Create(user, model.Password);
 
 
 
 
-            ResultDomainModel result;
-
+           
 
             if (check.Succeeded)
             {
@@ -157,7 +169,6 @@ namespace AmyzFeed.Business
                     Message = "لم يتم التسجيل كعضو جديد البريد الالكترونى او اسم المستخدم مستخدم من قبل",
                     Data = user
                 };
-
              }
 
             return result;

@@ -3,6 +3,7 @@ using AmyzFactory.Models;
 using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -79,17 +80,20 @@ namespace AmyzFactory.Areas.Admin.Controllers
                 }
                 else
                 {
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
+                  //  JavaScriptSerializer js = new JavaScriptSerializer();
+                    UserViemModel userVm = JsonConvert.DeserializeObject<UserViemModel>(result.Data.ToString());
+
+                    ApplicationUser user = new ApplicationUser
+                    {
+                        Id = userVm.Id,
+                        UserName = userVm.UserName,
+                        Email = userVm.Email,
+                    };
 
                     // store user is logined in our website
                     await this.signIn(user);
 
-                    UserViemModel userVm = new UserViemModel()
-                    {
-                        Id = user.Id,
-                        UserName = user.UserName
-                    };
+                 
 
                     this.applyToken(userVm);
 

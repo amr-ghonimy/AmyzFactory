@@ -16,15 +16,11 @@ namespace FeedApi
             var config = new MapperConfiguration(cfg =>
               {
 
-               
-
                   cfg.CreateMap<QuestionairViewModel, QuestionaireDomainModel > ()
                             .ForMember(dst => dst.UserName, src => src.MapFrom(e => e.FirstNAme +" "+ e.LastNAme))
                             .ForMember(dst => dst.Email, src => src.MapFrom(e => e.Email))
                             .ForMember(dst => dst.Question, src => src.MapFrom(e => e.Question))
                             .ReverseMap();
-
-
               
                   cfg.CreateMap<DepartmentDomainModel, CategoryViewModel>()
                                   .ForMember(dst => dst.Id, src => src.MapFrom(e => e.Id))
@@ -152,7 +148,6 @@ namespace FeedApi
                       .ForMember(dst => dst.LastName, src => src.MapFrom(e => e.LastName))
                       .ForMember(dst => dst.Password, src => src.MapFrom(e => e.Password))
                       .ForMember(dst => dst.Address, src => src.MapFrom(e => e.Address))
-                      .ForMember(dst => dst.Governorate, src => src.MapFrom(e => e.Governorate))
                       .ForMember(dst => dst.FirstName, src => src.MapFrom(e => e.FirstName))
                      .ReverseMap();
 

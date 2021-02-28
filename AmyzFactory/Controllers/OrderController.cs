@@ -46,7 +46,6 @@ namespace AmyzFactory.Controllers
                 order = new OrderViewModel
                 {
                     Addreess=user.Address,
-                    Governorate = user.Governorate,
                     Phone=user.PhoneNumber
                 };
             }

@@ -56,8 +56,7 @@ namespace FeedApi.Model
         [StringLength(11, MinimumLength = 11, ErrorMessage = "ادخل رقم الهاتف 11 رقم")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "ادخل العنوان")]
-        [Display(Name = "العنوان")]
+      
         public string Address { get; set; }
 
      
@@ -67,14 +66,8 @@ namespace FeedApi.Model
         [Display(Name = "كلمة السر")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "ادخل تأكيد رقم المرور")]
-        [Compare("Password",ErrorMessage ="كلمة السر وتأكيد كلمة السر غير متطابقين")]
-        [Display(Name = "تأكيد كلمة السر")]
-        public string ConfirmPassword { get; set; }
 
-        [Required]
-        [Display(Name = "ادخل المحافظة")]
-        public string Governorate { get; set; }
+        
 
     }
 }

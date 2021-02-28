@@ -35,11 +35,22 @@ namespace FeedApi.Controllers.User
             HttpRequestMessage request = this.ActionContext.Request;
             AuthenticationHeaderValue authorization = request.Headers.Authorization;
 
+            if (authorization == null)
+            {
+                role = "Users";
+                return role;
+            }
+
             if (!string.IsNullOrEmpty(authorization.Parameter))
             {
                string token = authorization.Parameter;
 
                 role = TokenManager.GetRoleByToken(token);
+
+                if (role == null)
+                {
+                    role = "Users";
+                }
             }
 
             return role;

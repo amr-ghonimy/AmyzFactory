@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 using System.Web;
 using System.IO;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -29,6 +30,13 @@ namespace AmyzFactory.Areas.Admin.Controllers
         private List<ProductViewModel> getAllProducts(int pageNo, int displayLength)
         {
             string url = "Product/GetAllProducts?pageNo=" + pageNo + "&displayLength=" + displayLength;
+
+            string tokenNumber = Session["TokenNumber"]?.ToString();
+        //    string tokenNumber = Session["TokenNumber"]?.ToString() + ":" + Session["UserName"];
+
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer", tokenNumber);
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
 

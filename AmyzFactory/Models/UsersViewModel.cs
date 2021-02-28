@@ -12,7 +12,7 @@ namespace AmyzFactory.Models
     {
         public string Id { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string Email { get; set; }
         [Required]
         public string Password { get; set; }
         public string Token { get; set; }
@@ -28,6 +28,7 @@ namespace AmyzFactory.Models
     {
         public string Id { get; set; }
         public string UserName { get; set; }
+        public string Role { get; set; }
 
         public string Token{ get; set; }
 
@@ -60,11 +61,6 @@ namespace AmyzFactory.Models
         [Display(Name = "العنوان")]
         public string Address { get; set; }
 
-        [StringLength(14, MinimumLength = 14, ErrorMessage = "ادخل رقم البطاقة 14 رقم")]
-        [Required(ErrorMessage = "ادخل رقم البطافة 14 رقما")]
-        [Display(Name = "رقم البطاقة")]
-        public string PersonalId { get; set; }
-
         [StringLength(30, MinimumLength = 6, ErrorMessage = "أقل عدد حروف 6")]
         [Required(ErrorMessage = "ادخل رقم المرور")]
         [Display(Name = "كلمة السر")]
@@ -75,9 +71,8 @@ namespace AmyzFactory.Models
         [Display(Name = "تأكيد كلمة السر")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
-        [Display(Name = "ادخل المحافظة")]
-        public string Governorate { get; set; }
+        
+
 
     }
 }

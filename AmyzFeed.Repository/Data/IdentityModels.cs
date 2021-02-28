@@ -9,13 +9,13 @@ namespace AmyzFeed.Repository.Data
 {
     public class ApplicationUser : IdentityUser
     {
-
         // here i will add some colomn to user table
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         public bool IsActive { get; set; }
-        public string PersonalID { get; set; }
         public string Address{ get; set; }
-        public string Governorate { get; set; }
-         
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

@@ -343,7 +343,6 @@
     <Content Include="Areas\Admin\Views\Categories\_EditCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Products\_EditProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Prices\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <Content Include="Content\dataTable\images\Sorting icons.psd" />
     <Content Include="Areas\Admin\Views\AboutUS\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Materials.cshtml" />
@@ -407,10 +406,7 @@
     <Content Include="Views\HomePreview\Index.cshtml" />
     <Content Include="Views\Product\ShowProducts.cshtml" />
     <Content Include="Views\HomePreview\AboutUS.cshtml" />
-    <Content Include="Views\Shared\_Products_Materials_Show.cshtml" />
-    <Content Include="Views\Product\ShowMaterials.cshtml" />
     <Content Include="Views\Product\ProductsPrices.cshtml" />
-    <Content Include="Views\Product\MaterialsPrices.cshtml" />
     <Content Include="Views\HomePreview\TechnocalSupport.cshtml" />
     <Content Include="Views\Product\PeoductQuality.cshtml" />
     <Content Include="Views\HomePreview\Censorship.cshtml" />
