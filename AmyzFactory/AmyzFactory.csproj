@@ -224,10 +224,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\AboutUSController.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\ArticlesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CensorshipController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomePageController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
@@ -344,12 +342,9 @@
     <Content Include="Areas\Admin\Views\Products\_EditProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Prices\Index.cshtml" />
     <Content Include="Content\dataTable\images\Sorting icons.psd" />
-    <Content Include="Areas\Admin\Views\AboutUS\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Products\Materials.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Products.cshtml" />
     <Content Include="Areas\Admin\Views\Technicals\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Qualities\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Censorship\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LoginAdminLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />

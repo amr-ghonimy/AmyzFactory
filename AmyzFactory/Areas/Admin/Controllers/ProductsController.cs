@@ -4,11 +4,9 @@ using System.Web.Mvc;
 using AmyzFactory.Models;
 using AmyzFactory.App_Start;
 using System.Net.Http;
-using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using System.Web.Script.Serialization;
 using System.Web;
 using System.IO;
-using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 
 namespace AmyzFactory.Areas.Admin.Controllers
@@ -53,26 +51,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             var list = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
             return list;
         }
-        private List<ProductViewModel> getAllMaterials(int pageNo, int displayLength)
-        {
-            string url = "Product/GetAllMaterials?pageNo=" + pageNo + "&displayLength=" + displayLength;
-
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
-
-            var list = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
-            return list;
-        }
-        private List<ProductViewModel> searchInMaterials(string word, int pageNo, int displayLength)
-        {
-            string url = "Product/SearchInMaterials?word=" + word + "&pageNo="+ pageNo + "&displayLength=" + displayLength;
-
-
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
-
-            var list = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
-            return list;
-
-        }
+     
 
         [HttpGet]
         public ActionResult Products()
@@ -88,12 +67,8 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Materials()
-        {
-            return View();
-        }
-        
+   
+
         [HttpGet]
         public JsonResult AllProducts(DataTableParams param)
         {
@@ -142,50 +117,8 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
          }
 
-        [HttpGet]
-        public JsonResult AllMaterials(DataTableParams param)
-        {
-            List<ProductViewModel> productsList = new List<ProductViewModel>();
+      
 
-            int pageNo = 1;
-
-            if (param.iDisplayStart >= param.iDisplayLength)
-            {
-
-                pageNo = (param.iDisplayStart / param.iDisplayLength) + 1;
-
-            }
-
-            int totalCount = 0;
-
-            if (param.sSearch != null)
-            {
-                productsList = this.searchInMaterials(param.sSearch, pageNo, param.iDisplayLength);
-
-                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Products/GetSearchedMaterialsCount?searchWord=" + param.sSearch).Result;
-                totalCount = response.Content.ReadAsAsync<int>().Result;
-            }
-            else
-            {
-                productsList = this.getAllMaterials(pageNo, param.iDisplayLength);
-
-                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Products/GetAllMaterialsCount").Result;
-                totalCount = response.Content.ReadAsAsync<int>().Result;
-            }
-
-
-
-
-            return Json(new
-            {
-                aaData = productsList,
-                sEcho = param.sEcho,
-                iTotalDisplayRecords = totalCount,
-                iTotalRecords = totalCount
-            }
-           , JsonRequestBehavior.AllowGet);
-
-        }
 
         public JsonResult Delete(int id)
         {

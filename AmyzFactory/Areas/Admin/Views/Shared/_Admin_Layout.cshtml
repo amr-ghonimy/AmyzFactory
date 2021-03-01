@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
 
-    @Styles.Render("~/bundles/css_admin");
+    @Styles.Render("~/bundles/css_admin")
     @Styles.Render("~/bundles/data_table_css")
 
 </head>
@@ -78,8 +78,7 @@
 
                         @Html.ActionLink("Product", "Products", "Products", null, new { @class = "collapse-item" })
 
-                        @Html.ActionLink("Material", "Materials", "Products", null, new { @class = "collapse-item" })
-
+ 
 
                     </div>
                 </div>
@@ -95,13 +94,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom:</h6>
                         @Html.ActionLink("Product Prices", "Index", "Prices", null, new { @class = "collapse-item" })
-                        @Html.ActionLink("About", "Index", "AboutUS", null, new { @class = "collapse-item" })
                         @Html.ActionLink("Quality", "Index", "Qualities", null, new { @class = "collapse-item" })
                         @Html.ActionLink("Technical", "Index", "Technicals", null, new { @class = "collapse-item" })
-                        @Html.ActionLink("Censorship", "Index", "Censorship", null, new { @class = "collapse-item" })
-                        @Html.ActionLink("Articles", "Index", "Articles", null, new { @class = "collapse-item" })
-
-
+                         @Html.ActionLink("Articles", "Index", "Articles", null, new { @class = "collapse-item" })
                     </div>
                 </div>
             </li>

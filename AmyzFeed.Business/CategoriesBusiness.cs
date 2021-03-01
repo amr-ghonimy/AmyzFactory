@@ -356,14 +356,14 @@ namespace AmyzFeed.Business
 
         public List<DepartmentDomainModel> getTechniclas()
         {
-            return techRepository.GetAll(x => x.IsDeleted == true).Select(x => new DepartmentDomainModel()
+            return techRepository.GetAll(x => x.IsDeleted == false).Select(x => new DepartmentDomainModel()
             {
                 Name = x.Name,Id = x.ID}).ToList();
         }
 
         public CategoryDomainModel getCategoryByID(int id)
         {
-            var catg = this.catgRepository.SingleOrDefault(x => x.ID == id&& x.IsDeleted == false);
+            var catg = this.catgRepository.SingleOrDefault(x => x.ID == id&& x.IsDeleted == false,"Department");
             if (catg == null)
             {
                 return null;
@@ -373,7 +373,7 @@ namespace AmyzFeed.Business
             {
                 Id = catg.ID,
                 Name = catg.Name,
-                DepartmentID = catg.ID,
+                DepartmentID = catg.DepartmentID,
                 visibility = catg.Visibility
             };
            return result;

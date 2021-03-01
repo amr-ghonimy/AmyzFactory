@@ -14,12 +14,11 @@ namespace AmyzFactory.Models
 
      //   public ResultDomainModel Result { get; set; }
 
-        public HttpPostedFileWrapper ImageFile { get; set; }
+       //   public HttpPostedFileWrapper ImageFile { get; set; }
 
         // For Delete
         public int Id { get; set; }
 
-        public byte[] PicData { get; set; }
 
 
     }

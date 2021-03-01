@@ -64,9 +64,9 @@ namespace FeedApi.Controllers.User
                     new ResultDomainModel(false, "category with id = " + id + " is not exist",id));
             }
 
-            CategoriesViewModel vm = this.mapper.Map<CategoriesViewModel>(dm);
+
             
-            return Ok(new ResultDomainModel(true, "category exist", Data: vm));
+            return Ok(new ResultDomainModel(true, "category exist", Data: dm));
         }
 
         public IEnumerable<DepartmentsViewModel> GetTechnicals()
@@ -78,7 +78,22 @@ namespace FeedApi.Controllers.User
             return result;
         }
 
-        
+
+        public IHttpActionResult GetTechnicalByID(int id)
+        {
+            DepartmentDomainModel dm = this.catBusiness.getTechniclByID(id);
+
+            if (dm == null)
+            {
+                return Content(HttpStatusCode.NotFound,
+                    new ResultDomainModel(false, "Technical with id = " + id + " is not exist", id));
+            }
+
+ 
+            return Ok(new ResultDomainModel(true, "Technical exist", Data: dm));
+        }
+
+
         [HttpDelete]
         public IHttpActionResult DeleteDepartment(int id)
         {
@@ -323,6 +338,43 @@ namespace FeedApi.Controllers.User
             try
             {
                 ResultDomainModel result = this.catBusiness.editSubCategory(dm);
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest,
+              new ResultDomainModel(false, ex.Message)
+              );
+
+
+            }
+
+        }
+        [HttpPut]
+        public IHttpActionResult EditTechnical(DepartmentsViewModel model)
+        {
+            if (model == null)
+            {
+                return Content(HttpStatusCode.BadRequest,
+                  new ResultDomainModel(false, "you send category with null value!")
+                  );
+            }
+
+            if (model.Id == 0)
+            {
+                return Content(HttpStatusCode.BadRequest,
+                  new ResultDomainModel(false, "category with his id = " + model.Id + " not found!")
+                  );
+            }
+          
+
+            DepartmentDomainModel dm = this.mapper.Map<DepartmentDomainModel>(model);
+
+            try
+            {
+                ResultDomainModel result = this.catBusiness.editTechnical(dm);
 
                 return Ok(result);
 

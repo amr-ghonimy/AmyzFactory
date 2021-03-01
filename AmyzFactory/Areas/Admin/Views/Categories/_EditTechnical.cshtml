@@ -29,11 +29,12 @@
                 data: formData,
                 success: function (data) {
                
-                    if (data.Result.IsSuccess) {
-                        successDialogEdit(data.Result.Message)
-                        window.location.href = "Index";
+                    if (data.IsSuccess) {
+                        successDialogEdit(data.Message)
+                        $("#tbTechBody").empty();
+                        getCategories("Technicals", "Categories", "#tbTechBody", "EditTechnical", "DeleteTechnical", "EditTechnicalVisibility");
                     } else {
-                        failedDialog(data.Result.Message)
+                        failedDialog(data.Message)
                     }
                     $("#myModal").modal("hide");
 

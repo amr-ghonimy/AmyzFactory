@@ -241,19 +241,25 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditCategory(CategoryViewModel category)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/EditCategory", category).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PutAsJsonAsync("Departments/EditCategory", category).Result;
 
-            category = response.Content.ReadAsAsync<CategoryViewModel>().Result;
 
-            return Json(category, JsonRequestBehavior.AllowGet);
+
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            return Json(result, JsonRequestBehavior.AllowGet);
          }
 
 
         [HttpGet]
         public ActionResult EditTechnical(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Categories/GetTechnicalByID?id=" + id).Result;
-            CategoryViewModel techVm = response.Content.ReadAsAsync<CategoryViewModel>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetTechnicalByID?id=" + id).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            CategoryViewModel techVm = js.Deserialize<CategoryViewModel>(result.Data.ToString());
+
 
             return PartialView("~/Areas/Admin/Views/categories/_EditTechnical.cshtml" , techVm);
         }
@@ -261,12 +267,10 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditTechnical(CategoryViewModel category)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/EditTechnical", category).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PutAsJsonAsync("Departments/EditTechnical", category).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            category = response.Content.ReadAsAsync<CategoryViewModel>().Result;
-
-            return Json(category, JsonRequestBehavior.AllowGet);
-
+            return Json(result, JsonRequestBehavior.AllowGet);
            }
 
 

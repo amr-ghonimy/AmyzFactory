@@ -183,5 +183,42 @@ namespace AmyzFeed.Business
 
             return list;
         }
+
+        public ResultDomainModel UpdateArticle(TextsDomainModel model, string filePath)
+        {
+            var list = new List<TextsDomainModel>();
+
+            string textJson = File.ReadAllText(filePath);
+
+            if (textJson.Length > 0)
+            {
+                list = JsonConvert.DeserializeObject<List<TextsDomainModel>>(textJson);
+            }
+
+            foreach (var item in list)
+            {
+                if (item.Id == model.Id)
+                {
+                    item.Title = model.Title;
+                    item.Description = model.Description;
+                    break;
+                }
+            }
+
+            File.WriteAllText(filePath, String.Empty);
+
+           
+            var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
+            try
+            {
+                File.WriteAllText(filePath, convertedJson);
+                return initResultModel(true, "Insertion Success!!");
+            }
+            catch (Exception)
+            {
+
+                return initResultModel(false, "Insertion Failed");
+            }
+        }
     }
 }

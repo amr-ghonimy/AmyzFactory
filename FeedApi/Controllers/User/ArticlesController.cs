@@ -64,6 +64,37 @@ namespace FeedApi.Controllers.User
 
 
         }
+        [HttpPut]
+        public IHttpActionResult UpdateArticle(TextsDomainModel model)
+        {
+            if (model == null)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "You pass empty article!"));
+            }
+
+            ResultDomainModel result = this.addressBusiness.UpdateArticle(model, Constans.articleFilePath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+
+            return Content(HttpStatusCode.BadRequest, result);
+        }
+
+
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+          ResultDomainModel result=  this.addressBusiness.deleteContact(id, Constans.articleFilePath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+
+            return Content(HttpStatusCode.BadRequest, result);
+        }
 
     }
 }

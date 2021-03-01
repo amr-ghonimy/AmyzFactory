@@ -70,7 +70,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             ordersListVm = this.getAllOrders(pageNo, param.iDisplayLength);
 
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Orders/GetAllOrdersCount").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Order/GetAllOrdersCount").Result;
             totalCount = response.Content.ReadAsAsync<int>().Result;
             
 
@@ -99,7 +99,8 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<OrderViewModel> getAllOrders(int pageNo, int displayLength)
         {
-           HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Orders/getAllOrders").Result;
+            string url = "Order/getAllOrders?pageNo=" + pageNo + "&displayLength=" + displayLength;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
             List<OrderViewModel> newList = response.Content.ReadAsAsync<List<OrderViewModel>>().Result;
             return newList;
         }

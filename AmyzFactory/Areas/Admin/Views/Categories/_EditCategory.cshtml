@@ -40,11 +40,16 @@
                 
                  
 
-                    if (data.Result.IsSuccess) {
-                        successDialogEdit(data.Result.Message);
-                        window.location.href = "/Admin/Categories/Index";
+                    if (data.IsSuccess) {
+                        successDialogEdit(data.Message);
+
+                        $('#accordion').empty();
+
+                        getCategories("MainDepartments", "Categories", "#TblMainCategoriesBody", "EditDepartment", "DeleteDepartment", "EditDepartmentVisibility");
+
+//window.location.href = "/Admin/Categories/Index";
                     } else {
-                        failedDialog(data.Result.Message);
+                        failedDialog(data.Message);
                     }
                     $("#myModal").modal("hide");
 

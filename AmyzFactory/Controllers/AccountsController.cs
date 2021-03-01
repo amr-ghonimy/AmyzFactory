@@ -129,8 +129,8 @@ namespace AmyzFactory.Controllers
             string token = user.Token;
 
             Session["TokenNumber"] = token;
-            Session["UserName"] = user.Id;
-            Session["UserId"] = user.UserName;
+            Session["UserName"] = user.UserName;
+            Session["UserId"] = user.Id;
         }
 
 
@@ -143,10 +143,21 @@ namespace AmyzFactory.Controllers
 
             if (result.IsSuccess)
             {
-                UserViemModel user = JsonConvert.DeserializeObject<UserViemModel>(result.Data.ToString());
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
 
-                this.applyToken(user);
-            }
+                // store user is logined in our website
+                await this.signIn(user);
+
+
+                UserViemModel userVm = new UserViemModel()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName
+                };
+
+                this.applyToken(userVm);
+             }
 
              
 

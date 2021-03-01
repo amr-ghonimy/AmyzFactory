@@ -30,6 +30,10 @@
 
                         
                         <hr class="mb-4">
+                        <div class="col-12 d-flex shopping-box">
+                            <button onclick="confirmOrder()" type="button" class="ml-auto btn hvr-hover">تأكيد الطلب</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -71,7 +75,7 @@
                             }
                         </div>
                     </div>
-                    <div class="col-12 d-flex shopping-box"> <a href="#" onclick="confirmOrder()" class="ml-auto btn hvr-hover">تأكيد الطلب</a> </div>
+                   
                 </div>
             </div>
         </div>
@@ -83,11 +87,6 @@
 
 <script>
     function confirmOrder() {
-
-
-        if (!$('#frmConfirmOrder').valid()) {
-            return false;
-        }
 
 
         var orderHeaderData = $('#frmConfirmOrder').serialize();

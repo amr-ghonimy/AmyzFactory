@@ -22,7 +22,8 @@ namespace AmyzFeed.Business.interfaces
         ResultDomainModel createOrUpdateFile(TextsDomainModel model, string filePath);
 
         ResultDomainModel createArticle(TextsDomainModel model, string filePath);
+        ResultDomainModel UpdateArticle(TextsDomainModel model, string filePath);
 
-
+        
     }
 }

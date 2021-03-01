@@ -59,7 +59,7 @@
                 </div>
 
                 <hr />
-                <input class="btn btn-success" onclick="updateArticle('frmArticle', 'CreateArticle')" type="button" value="Upload" />
+                <input class="btn btn-success" onclick="createArticle('#frmArticle')" type="button" value="Upload" />
             </form>
         </div>
     </article>
@@ -69,24 +69,173 @@
 
 
 
-<script>
-    var updateArticle = function (FrmID, ActionName) {
+<section class="container">
+    <article id="cate-add">
+        <caption>Add Articles Title & Description</caption>
+        <div id="accordion">
 
-        var formData = $("#" + FrmID).serialize();
-        var URL = '/Articles/' + ActionName;
+        </div>
+    </article>
+</section>
+
+<script>
+
+    $(document).ready(function () {
+
+        getArticles("Articles","Delete");
+    })
+
+
+
+
+    var drawArticleRaw = function (item, deleteDepartmentURL, DropDownItemID) {
+
+        var subCategoryCollapseID = 'subCollapse' + item.Id;
+        var containerID = 'container' + item.Id;
+
+        var html = '<div class="card" id="' + containerID + '">';
+        // header (Main Department)
+        html += '<div class="card-header">' + '<div class="row">' + '<h5 class="col">';
+        html += '<button class="btn btn-link" data-toggle="collapse" data-target="#' + subCategoryCollapseID + '" aria-expanded="true" aria-controls="' + subCategoryCollapseID + '">'
+        html += '<i class="fa fa-sort-down"></i>' + item.Title + '</button></h5><h5 class="col"></h5><h5 class="col"></h5>'
+        html += '</div></div>'
+
+        // body (Sub Categories)
+
+        var tblBodyId = "tbody" + item.Id;
+
+        html += '<div id="' + subCategoryCollapseID + '" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">'
+
+        html = drawArticleTitle_Desc(item, html);
+
+        html += '</div>'
+        $('#accordion').append(html);
+
+    }
+
+    var drawArticleTitle_Desc = function (subItem, html) {
+        var title = subItem.Title;
+        var description = subItem.Description;
+
+        var trID = 'subTr' + subItem.Id;
+        var titleTxtId = 'title' + subItem.Id;
+        var descTxtId = 'desc' + subItem.Id;
+        html += '<div id="' + trID + '">'
+
+        html += '</br><input class="form-control" type="text" value="' + subItem.Title + '" id="' + titleTxtId + '" name="lname">'
+        html += '</br><textarea class="form-control" rows="15" cols="50" type="text" id="' + descTxtId + '" name="lname">' + subItem.Description + '</textarea>'
+        html += '<center><button type="button" class="btn btn-primary" style="margin:10px"  onclick="updateArticle(' + subItem.Id + ')">Update</button>'
+        html += '<button type="button" class="btn btn-danger"  style="margin:10px" onclick="deleteArticle(\'' + subItem.Id + '\',\'' + trID + '\')">Delete</button></center>'
+
+
+        html += '</div>'
+
+        return html
+    }
+
+
+
+
+
+
+
+
+
+    var createArticle = function (frmID) {
+        debugger;
+        var model = $(frmID).serialize();
+
+        $.ajax(
+          {
+              type: "POST", //HTTP POST Method
+              url: "/Articles/CreateArticle", // Controller/View 
+              data: model,
+              success: function (data) {
+                  if (data.IsSuccess) {
+                      successDialogEdit(data.Message);
+                      getArticles();
+                  } else {
+                      failedDialog(data.Message);
+                  }
+              }
+
+          });
+    }
+
+
+ 
+    var getArticles = function (ControllerName, DeleteActionName) {
+
+        $('#accordion').empty();
+
+        var URL = '/Articles/GetArticles';
         $.ajax({
             url: URL,
-            type: "Post",
-            data: formData,
+            type: "Get",
             dataType: "json",
             success: function (data) {
+             
+                $.each(data, function (index, value) {
+
+                    var DeleteURL = "/Admin/" + ControllerName + "/" + DeleteActionName + "?id=" + value.Id;
+
+
+                    var dropDownListItemID = 'item' + value.Id;
+
+
+
+                    drawArticleRaw(value, DeleteURL, dropDownListItemID)
+
+                });
+            }
+        });
+    }
+
+
+    var updateArticle = function (id) {
+        debugger;
+        $.ajax(
+          {
+              type: "POST", //HTTP POST Method
+              url: "/Articles/UpdateArticle", // Controller/View 
+              data: { //Passing data
+                  Id: id,
+                  Title: $('#title' + id).val(),
+                  Description: $('#desc' + id).val(),
+              },
+              success: function (data) {
+                  if (data.IsSuccess) {
+                      successDialogEdit(data.Message);
+                  } else {
+                      failedDialog(data.Message);
+                  }
+              }
+
+          });
+    }
+
+    var deleteArticle = function (id, rowId) {
+
+        var URL = "/Admin/Articles/Delete?id=" + id;
+
+        $.ajax({
+            url: URL,
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+
                 if (data.IsSuccess) {
                     successDialog(data.Message);
+                    getArticles();
+                   // $('#' + rowId).remove();
                 } else {
                     failedDialog(data.Message);
                 }
-            }
-        });
 
+            }
+        })
     }
+
+
+    
 </script>

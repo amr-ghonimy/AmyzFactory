@@ -1,20 +1,24 @@
 ﻿
 using AmyzFactory.Models;
+using AmyzFeed.Business;
 using AmyzFeed.Business.interfaces;
 using AutoMapper;
 using FeedApi.Models;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace FeedApi.Controllers.User
 {
     public class OrderController : ApiController
     {
+        private IOrdersBusiness orderAdminBusiness;
         private IOrderUsersBusiness business;
         private readonly IMapper mapper;
 
-        public OrderController(IOrderUsersBusiness _business)
+        public OrderController(IOrderUsersBusiness _business, IOrdersBusiness _orderAdminBusiness)
         {
             this.business = _business;
+            this.orderAdminBusiness = _orderAdminBusiness;
             this.mapper = AutoMapperConfig.Mapper;
         }
 
@@ -29,7 +33,19 @@ namespace FeedApi.Controllers.User
 
             return resultVm;
         }
+        [HttpGet]
+        public List<OrderDomainModel> getAllOrders(int pageNo, int displayLength)
+        {
+            List<OrderDomainModel> dm = this.orderAdminBusiness.getAllOrders(pageNo,displayLength);
+            return dm;
+        }
 
+        [HttpGet]
+        public int GetAllOrdersCount()
+        {
+          return this.orderAdminBusiness.getAllOrdersCount();
+
+        }
 
     }
  
