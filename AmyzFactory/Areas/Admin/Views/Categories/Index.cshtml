@@ -50,6 +50,22 @@
 
 <section class="container">
 
+    <div class="form-group">
+        <p><strong>Select an image:</strong></p>
+        <input id="deptCatgImageInput" type="file" name="image" accept="image/*" onchange="viewImageFile('#deptCatgImageInput', '#deptCatgDescription', '#deptCatgTargetImg', '#imgDeptCatgPreview', 0, 0)">
+    </div>
+
+
+    <div id="imgDeptCatgPreview" class="thumbnail" style="display:none">
+        <img class="img-responsive" id="deptCatgTargetImg" width="120" height="120" />
+        <div class="caption">
+            <a onclick="clearPreview()"> Clear </a>
+            <span id="deptCatgDescription"></span>
+        </div>
+        <hr />
+    </div>
+
+
     @{
         Html.RenderAction("_Departments", "Categories");
         Html.RenderAction("_Categories", "Categories");
@@ -243,13 +259,26 @@
             return false;
         }
 
-       
-
         disableBtn(btnID)
-      
-        debugger;
 
-        var categoryData = $(FormID).serialize();
+
+
+
+       // var formData = new FormData();
+        var file = $('#deptCatgImageInput').get(0).files;
+
+        var data = $(FormID).serialize();
+
+        var formData = JSON.parse(JSON.stringify(jQuery(FormID).serializeArray())) // store json object
+
+
+
+        var name = formData[0].Name;
+
+        formData.append("Name", name);
+        formData.append("ImageFile", file[0]);
+
+ 
         var URL = "/" + ControllerName + "/" + ActionName;
 
 
@@ -258,7 +287,7 @@
         $.ajax({
             url: URL,
             type: "Post",
-            data: categoryData,
+            data: formData,
             dataType: "json",
             success: function (data) {
 
