@@ -60,10 +60,18 @@ namespace AmyzFactory.Controllers
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 user = js.Deserialize<ApplicationUser>(result.Data.ToString());
-                userVm = new UserViemModel
+
+                if (User.IsInRole("Users"))
                 {
-                    UserName = user.UserName
-                };
+                    userVm = new UserViemModel
+                    {
+                        UserName = user.FirstName + ' ' + user.LastName
+                    };
+                }
+                
+
+
+              
             }
 
 

@@ -1,10 +1,7 @@
 {
-  "Title": "title 2 header",
-  "SubTitle": "Title 3 sub title",
-  "Description": "content2 here",
+  "Title": "عن مصنع أميز للأعلاف",
+  "SubTitle": "إحدى مصانع الشركة المتحدة للكيماويات والمستحضرات الطبية ( أميز).",
+  "Description": "نتيجة الى تطورات شركة أميز ققررت انتاج: \r\n1- انشاء مصنع أميز للأعلاف و الأسمدة الكيماوية",
   "ImageUrl": null,
-  "Result": null,
-  "ImageFile": null,
-  "Id": 0,
-  "PicData": null
+  "Id": 0
 }

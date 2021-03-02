@@ -399,7 +399,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\HomePreview\Index.cshtml" />
-    <Content Include="Views\Product\ShowProducts.cshtml" />
     <Content Include="Views\HomePreview\AboutUS.cshtml" />
     <Content Include="Views\Product\ProductsPrices.cshtml" />
     <Content Include="Views\HomePreview\TechnocalSupport.cshtml" />

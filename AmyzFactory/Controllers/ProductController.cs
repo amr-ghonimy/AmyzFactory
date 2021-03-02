@@ -17,7 +17,7 @@ namespace AmyzFactory.Controllers
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetProductsByCategoryID?id=" + categoryId).Result;
             List<ProductViewModel> productsVm = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
             ViewBag.CategoryName = categoryName;
-            return View(productsVm);
+            return View("~/Views/Product/SearchInProducts.cshtml", productsVm);
         }
 
 
@@ -87,6 +87,7 @@ namespace AmyzFactory.Controllers
         {
             HttpResponseMessage productsResponse = GlobalVariables.WebApiClient.GetAsync("Product/SearchInProducts?word=" + word).Result;
             List<ProductViewModel> productsVm = productsResponse.Content.ReadAsAsync<List<ProductViewModel>>().Result;
+            ViewBag.CategoryName = "نتائج البحث";
 
             return View(productsVm);
         }

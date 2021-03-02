@@ -10,6 +10,6 @@ namespace AmyzFeed.Business.helpers
     {
         public static string ServerFile = "http://192.168.10.180:45461/";
         public static string LogoPath = ServerFile + "Images/AmyzFeed/logo.jpg";
-
+        
     }
 }

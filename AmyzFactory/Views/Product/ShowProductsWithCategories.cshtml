@@ -3,29 +3,27 @@
 @{
     ViewBag.Title = "ShowProductsWithCategories";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    string title = "جميع منتجاتنا";
     List<AmyzFactory.Models.CategoryViewModel> departments = ViewBag.Categories;
 }
 
  
 <div class="shop-box-inner">
     <div class="container">
+        
+       
+
         <div class="row">
             <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
                 <div class="product-categori">
-                    <div class="search-product">
-                        <form action="#">
-                            <input class="form-control" style="text-align:center;" placeholder="ابحث هنا..." type="text">
-                            <button type="submit"> <i class="fa fa-search"></i> </button>
-                        </form>
-                    </div>
-                    <div class="filter-sidebar-left">
+                    
+                    <div class="filter-sidebar-left" style="text-align:right">
                         <div class="title-left">
                             <h3 class="footer-title">الأقسام</h3>
                         </div>
                         <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
 
-                            <a class="categories list-group-item list-group-item-action" data-name="الكل" data-catid="0" href="#">
+                            <a  class="list-group-item list-group-item-action" href="#" data-toggle="collapse" aria-expanded="true">
                                 الكل
                             </a>
 
@@ -37,12 +35,13 @@
                                     <div class="list-group-collapse sub-men">
                                         <a data-name="@item.Name" class="list-group-item list-group-item-action" href="#@itemId" data-toggle="collapse" aria-expanded="true" aria-controls="@itemId">
                                             @item.Name
+                                            <small class="text-muted">(@item.Categories.Count)</small>
                                         </a>
                                         <div class="collapse show" id="@itemId" data-parent="#list-group-men">
                                             <div class="list-group">
                                                 @foreach (var category in item.Categories)
                                                 {
-                                                    <a href="#" data-name="@category.Name" data-catid="@category.Id" class="list-group-item list-group-item-action categories">@category.Name <small class="text-muted">(@item.Categories.Count)</small></a>
+                                                    <a href="#" data-name="@category.Name" data-catid="@category.Id" class="list-group-item list-group-item-action categories">@category.Name</a>
                                                 }
                                             </div>
                                         </div>
@@ -61,23 +60,6 @@
                 <div class="right-product-box">
                     <div class="product-item-filter row">
 
-                        <div class="col-12 col-sm-8 text-center text-sm-left">
-                           
-                              
-                                <div class="toolbar-sorter-right">
-                                    <span class="footer-title">الترتيب</span>
-                                    <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-                                        <option data-display="Select">اظهار الكل</option>
-                                        <option value="1">الأحدث</option>
-                                        <option value="2">الأعلى فى السعر</option>
-                                        <option value="3">الأقل فى السعر</option>
-                                        <option value="4">الأكثر طلبا</option>
-                                    </select>
-
-
-                                </div>
-
-                            </div>
                         <div class="col-12 col-sm-4 text-center text-sm-right">
                             <ul class="nav nav-tabs ml-auto">
                                 <li>
@@ -86,9 +68,22 @@
                                 <li>
                                     <a  class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
                                 </li>
-                                <p id="currentState" style="padding-right:15px;">الكل</p>
+                              
                             </ul>
                         </div>
+
+                        <div class="col-12 col-sm-4 text-center text-sm-right">
+                            <ul class="nav nav-tabs ml-auto">
+                                <li>
+                                    <h1 id="currentState">@title</h1>
+                                </li>
+                                <li>
+                                    <span>(@Model.Count()) منتج</span>
+                                </li>
+                            </ul>
+                        </div>
+                       
+                     
 
                     </div>
 
@@ -254,7 +249,9 @@
             dataType: "json",
             success: function (data) {
 
-           //     $('#productsContainer').empty();
+                $('#listProducts').empty();
+
+                $('#gridProducts').empty();
 
                 $('#currentState').text(categoryName);
 
