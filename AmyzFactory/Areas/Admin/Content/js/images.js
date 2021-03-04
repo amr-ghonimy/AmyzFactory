@@ -93,7 +93,7 @@ var readImage = function (file, descriptionID, targetImageID, imgPreviewID, imag
     }
 
 var clearPreview = function (inputFileID, descriptionID, imgPreviewID) {
-    $(inputFileID).val('');
+	$(inputFileID).val('');
     $(descriptionID).text('');
     $(imgPreviewID).hide();
 

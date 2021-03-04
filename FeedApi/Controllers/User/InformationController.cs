@@ -40,21 +40,7 @@ namespace FeedApi.Controllers.User
             TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
             return vm;
         }
-        public TextsViewModel GetAboutUs()
-        {
-            TextsDomainModel dm = this.addressBusiness.getTexts(Constans.aboutFilePath);
-
-            List<ImageDomainModel> images = this.imagesBusiness.getImages(Constans.aboutImageFolderPath, Constans.aboutImageResponse);
-
-            if (images != null && images.Count > 0)
-            {
-                dm.ImageUrl = images[0].ImageUrl;
-            }
-
-            TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
-            return vm;
-        }
-
+ 
         public TextsViewModel GetQualities()
         {
             TextsDomainModel dm = this.addressBusiness.getTexts(Constans.qualityFilePath);

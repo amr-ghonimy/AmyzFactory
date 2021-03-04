@@ -302,6 +302,8 @@
             dataType: "json",
             success: function (data) {
 
+                enableBtn(btnID, "Upload");
+
                 if (data.Result.IsSuccess) {
 
                     successDialog(data.Result.Message);

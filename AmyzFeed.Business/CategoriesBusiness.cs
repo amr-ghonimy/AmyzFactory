@@ -136,9 +136,7 @@ namespace AmyzFeed.Business
         {
             try
             {
-                var categoryObj = this.catgRepository.SingleOrDefault(x => x.ID == categoryID);
-                categoryObj.IsDeleted = true;
-                this.catgRepository.Update(categoryObj);
+                this.catgRepository.Delete(x => x.ID == categoryID);
                 return true;
             }
             catch (Exception)
@@ -147,34 +145,15 @@ namespace AmyzFeed.Business
             }
         }
 
-        private void deleteAllCategoriesByDeptId(int departmentID)
-        {
-            var categories = this.catgRepository.GetAll(x => x.DepartmentID == departmentID);
-            if (categories != null && categories.Count() > 0)
-            {
-                 
-                    foreach (var item in categories)
-                    {
-                        item.IsDeleted = true;
-                        catgRepository.Update(item);
-                    }
-                
-            }
-        }
-
+       
         public bool deleteDepartment(int departmentID)
         {
             try
             {
-                var deptObj = this.deptRepository.SingleOrDefault(x => x.ID == departmentID);
-                deptObj.IsDeleted = true;
-                this.deptRepository.Update(deptObj);
-
-                this.deleteAllCategoriesByDeptId(departmentID);
-
+                this.deptRepository.Delete(x => x.ID == departmentID);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
@@ -185,12 +164,11 @@ namespace AmyzFeed.Business
         {
             try
             {
-                var techObj = this.techRepository.SingleOrDefault(x => x.ID == techID);
-                techObj.IsDeleted = true;
-                this.techRepository.Update(techObj);
+                this.techRepository.Delete(x => x.ID == techID);
+                
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

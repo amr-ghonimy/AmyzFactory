@@ -203,9 +203,9 @@
             type: "Get",
             dataType: "json",
             success: function (data) {
-                $('#headerTitle').attr("value", data.Title);
+                 $('#headerTitle').attr("value", data.Title);
                 $('#subTitle').attr("value", data.SubTitle);
-                $('#infoDescription').val(data.Description);
+                $('#infoDesc').val(data.Description);
             }
         });
 
@@ -223,7 +223,7 @@
         html += '<tr id="' + trID + '">'
         html += '<td><h7 style="font-weight: bold; color:#4e73df;">' + address.Title + '</h7></td>'
         html += '<td style="vertical-align:middle; color:#1cc88a;">' + address.Value + '</td>'
-        html += '<td><button class="btn btn-danger btn-block"  onClick= "deleteAddress(\'' + DeletedParems + '\',\'' + trID + '\')">Delete</button></td>'
+        html += '<td><button class="btn btn-danger btn-block" type="button"  onClick= "deleteAddress(\'' + DeletedParems + '\',\'' + trID + '\')">Delete</button></td>'
         html += '</tr>'
 
         $('#' + TblContainer).append(html);

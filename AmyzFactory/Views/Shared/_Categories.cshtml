@@ -32,13 +32,13 @@
                            {
                                foreach (var category in department.Categories)
                                {
-                    <div class="col-lg-3 col-md-6 special-grid @category.DepartmentID">
+                    <div class="col-lg-3 col-md-6 special-grid @category.DepartmentID" >
                         <div class="products-single fix">
                             <div class="box-img-hover">
                                 <div class="type-lb">
                                     <p class="new">@category.Name</p>
                                 </div>
-                                <img src="@category.ImageUrl" class="img-fluid" alt="Image">
+                                <img src="@category.ImageUrl" width="250px" height="250px" class="img-fluid" alt="Image">
                                 <div class="mask-icon">
                                     <ul>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="اضافة الى المفضلة"><i class="far fa-heart"></i></a></li>

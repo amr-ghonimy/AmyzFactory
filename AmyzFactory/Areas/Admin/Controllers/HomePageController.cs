@@ -203,7 +203,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetEmails").Result;
 
-            var listVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
+            var listVm = response.Content.ReadAsAsync<List<ContactViewModel>>().Result;
 
             return Json(listVm, JsonRequestBehavior.AllowGet);
         }
@@ -214,7 +214,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult GetSiteInfo()
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetAboutUs").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetFactoryInformation").Result;
 
             var model = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
@@ -248,7 +248,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
             return Json(listVm, JsonRequestBehavior.AllowGet);
         }
-
+        [HttpGet]
         public JsonResult DeleteEmail(int id)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Information/DeleteEmail?id="+id).Result;
@@ -258,6 +258,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return Json(resultVm, JsonRequestBehavior.AllowGet);
         }
         
+        [HttpGet]
         public JsonResult DeletePhone(int id)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Information/DeletePhone?id=" + id).Result;
@@ -266,6 +267,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);
          }
+        [HttpGet]
 
         public JsonResult DeleteAccount(int id)
         {

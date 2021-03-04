@@ -490,5 +490,37 @@ namespace FeedApi.Controllers.User
 
         }
 
+        [HttpGet]
+        public IHttpActionResult EditDepartmentVisibility(int id)
+        {
+            if (id == 0)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "You enter valid id", modelID : id));
+            }
+
+            bool isSuccess = this.catBusiness.changeDepartmentVisibility(id);
+
+            ResultDomainModel result = new ResultDomainModel(isSuccess, "Visisbility Cahnged Successfully", modelID: id);
+
+            return Ok(result);
+            
+        }
+
+        [HttpGet]
+        public IHttpActionResult EditCategoryVisibility(int id)
+        {
+            if (id == 0)
+            {
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "You enter valid id", modelID: id));
+            }
+
+            bool isSuccess = this.catBusiness.changeCategoryVisibility(id);
+
+            ResultDomainModel result = new ResultDomainModel(isSuccess, "Visisbility Cahnged Successfully", modelID: id);
+
+            return Ok(result);
+
+        }
+
     }
 }

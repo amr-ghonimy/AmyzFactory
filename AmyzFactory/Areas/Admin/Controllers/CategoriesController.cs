@@ -5,9 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Threading.Tasks;
-using System.Web;
+ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
@@ -193,8 +191,6 @@ namespace AmyzFactory.Areas.Admin.Controllers
             }
 
 
-            categoryModel.ImageUrl = "any image";
-
             return this.uploadData(categoryModel, "Departments/CreateDepartment");
         }
 
@@ -231,8 +227,6 @@ namespace AmyzFactory.Areas.Admin.Controllers
                 }
             }
 
-
-            categoryModel.ImageUrl = "any image";
 
             return this.uploadData(categoryModel, "Departments/CreateCategory");
         }
@@ -378,9 +372,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public ActionResult EditDepartmentVisibility(int id)
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/EditDepartmentVisibility",id).Result;
-            bool visibility = response.Content.ReadAsAsync<bool>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/EditDepartmentVisibility?id="+id).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
+            // this means current state on item
+            bool visibility = result.IsSuccess;
             
             return Json(visibility, JsonRequestBehavior.AllowGet);
         }
@@ -388,8 +384,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditCategoryVisibility(int id)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/EditCategoryVisibility", id).Result;
-            bool visibility = response.Content.ReadAsAsync<bool>().Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/EditCategoryVisibility?id="+ id).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            // this means current state on item
+            bool visibility = result.IsSuccess;
 
 
             return Json(visibility, JsonRequestBehavior.AllowGet);
