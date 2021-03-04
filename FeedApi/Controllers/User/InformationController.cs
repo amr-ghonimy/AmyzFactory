@@ -69,53 +69,7 @@ namespace FeedApi.Controllers.User
             TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
             return vm;
         }
-        public TextsViewModel GetResponsibiltyTexts()
-        {
-            TextsDomainModel dm = this.addressBusiness.getTexts(Constans.responsibiltyFilePath);
-
-            List<ImageDomainModel> images = this.imagesBusiness.getImages(Constans.responsibiltyImageFolderPath, Constans.responsibiltyImageResponse);
-
-            if (images != null && images.Count > 0)
-            {
-                dm.ImageUrl = images[0].ImageUrl;
-            }
-
-            TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
-            return vm;
-        }
-
-        public TextsViewModel GetCensorshipHeaderTexts()
-        {
-            TextsDomainModel dm = this.addressBusiness.getTexts(Constans.censirshipHeaderFilePath);
-
-            List<ImageDomainModel> images = this.imagesBusiness.getImages(Constans.censirshipHeaderImageFolderPath, Constans.censirshipHeaderImageResponse);
-
-            if (images != null && images.Count > 0)
-            {
-                dm.ImageUrl = images[0].ImageUrl;
-            }
-
-            TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
-            return vm;
-        }
-
-        public TextsViewModel GetCensorshipFooterTexts()
-        {
-            TextsDomainModel dm = this.addressBusiness.getTexts(Constans.censirshipFooterFilePath);
-
-            List<ImageDomainModel> images = this.imagesBusiness.getImages(Constans.censirshipFooterImageFolderPath, Constans.censirshipFooterImageResponse);
-
-            if (images != null && images.Count > 0)
-            {
-                dm.ImageUrl = images[0].ImageUrl;
-            }
-
-            TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
-            return vm;
-        }
-
-
-
+   
         public IEnumerable<ContactViewModel> GetAccounts()
         {
             List<ContactDomainModel> dm = this.addressBusiness.getContacts(Constans.accountsFilePath);

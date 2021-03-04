@@ -25,6 +25,20 @@ namespace FeedApi.Controllers.User
         }
 
 
+
+        public IHttpActionResult GetArticleById(int id)
+        {
+           ResultDomainModel result= this.addressBusiness.getArticleById(id, Constans.articleFilePath);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+
+            return Content(HttpStatusCode.BadRequest, result);
+        }
+
+
         public IEnumerable<TextsViewModel> GetArticles()
         {
             List<TextsDomainModel> list=this.addressBusiness.getArticles(Constans.articleFilePath);

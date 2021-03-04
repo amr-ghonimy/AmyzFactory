@@ -20,10 +20,11 @@ namespace AmyzFeed.Business
             this.resultModel = _resultModel;
         }
 
-        private ResultDomainModel initResultModel(bool isSuccess,string message)
+        private ResultDomainModel initResultModel(bool isSuccess,string message,object data=null)
         {
             this.resultModel.IsSuccess = isSuccess;
             this.resultModel.Message = message;
+            this.resultModel.Data = data;
             return resultModel;
         }
 
@@ -220,5 +221,31 @@ namespace AmyzFeed.Business
                 return initResultModel(false, "Insertion Failed");
             }
         }
+
+        public ResultDomainModel getArticleById(int id,string filePath)
+        {
+            var list = new List<TextsDomainModel>();
+            
+            string textJson = File.ReadAllText(filePath);
+
+            if (textJson.Length > 0)
+            {
+                list = JsonConvert.DeserializeObject<List<TextsDomainModel>>(textJson);
+
+
+                TextsDomainModel item = list.Single(r => r.Id == id);
+
+                if (item == null)
+                {
+                    return initResultModel(false, "Article Not Exists!!");
+                }
+
+                return initResultModel(true, "Article is Exists!!", item);
+
+            }
+ 
+            return initResultModel(false, "Article Not Exists!!");
+
+         }
     }
 }

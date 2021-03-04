@@ -20,13 +20,13 @@
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="~/Content/img/categories_img_01.jpg" alt="" />
-                    <a class="btn hvr-hover" href="#">أسعار المنتجات</a>
+                    <a class="btn hvr-hover" href="../Product/ProductsPrices">أسعار المنتجات</a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="~/Content/img/categories_img_02.jpg" alt="" />
-                    <a class="btn hvr-hover" href="#">الرقابة والجودة</a>
+                    <a class="btn hvr-hover" href="../HomePreview/ProductQuality">الرقابة والجودة</a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -43,46 +43,50 @@
 @{
     Html.RenderAction("_GetInfo", "HomePreview");
 }
-<!-- End About Page -->
-<!-- Start Products  -->
-<div class="products-box">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="title-all text-center">
-                    <h1>أقسامنا</h1>
-                    <p>أقسام أميز للعلف</p>
-                </div>
-            </div>
-        </div>
-        @{
-            Html.RenderAction("_GetDepartments", "HomePreview");
-        }
+<center>
+    <a id="moreInfo" class="btn hvr-hover" href="../HomePreview/AboutUS">المزيد</a>
+</center>
 
-    </div>
-</div>
-<!-- End Products  -->
-<!-- Start Blog  -->
- 
-<div class="latest-blog">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="title-all text-center">
-                    <h1>المقالات</h1>
-                    <p>أجدد المقالات</p>
+    <!-- End About Page -->
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>أقسامنا</h1>
+                        <p>أقسام أميز للعلف</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             @{
-                Html.RenderAction("_GetArticles", "HomePreview");
+                Html.RenderAction("_GetDepartments", "HomePreview");
             }
 
-
         </div>
     </div>
-</div>
+    <!-- End Products  -->
+    <!-- Start Blog  -->
+
+    <div class="latest-blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>المقالات</h1>
+                        <p>أجدد المقالات</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @{
+                    Html.RenderAction("_GetArticles", "HomePreview");
+                }
 
 
-<!-- End Blog  -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- End Blog  -->

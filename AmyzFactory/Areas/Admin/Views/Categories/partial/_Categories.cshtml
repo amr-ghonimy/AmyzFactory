@@ -3,14 +3,42 @@
 
 <article>
     <div class="table-responsive">
+
+        <section class="head-page" style="margin-top:20px;">
+            <article class="container">
+                <div class="row">
+                    <div class="col-xs--12">
+                        <header>
+                            <h2><i class="fas fa-list-alt">&nbsp;&nbsp; You Can Add Category </i></h2>
+                        </header>
+                    </div>
+                </div>
+            </article>
+        </section>
+
         <form name="frm2" id="frmSubCategory">
+
+            <div class="form-group">
+                <p><strong>Select an image:</strong></p>
+                <input id="catgImageInput" type="file" name="image" accept="image/*" onchange="viewImageFile('#catgImageInput', '#catgDescription', '#catgTargetImg', '#imgCatgPreview', 0, 0)">
+            </div>
+
+            <div id="imgCatgPreview" class="thumbnail" style="display:none">
+                <img class="img-responsive" id="catgTargetImg" width="120" height="120" />
+                <div class="caption">
+                    <a onclick="clearPreview('#catgImageInput', '#catgDescription', '#imgCatgPreview')"> Clear </a>
+                    <span id="catgDescription"></span>
+                </div>
+                <hr />
+            </div>
+
             <table class="table table-bordered table-hover">
                 <caption>You Can Sub Category</caption>
                 <thead>
                     <tr>
                         <th>
                             Sub Category:
-                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @name = "subCategoryName", @placeholder = "name" })
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @name = "subCategoryName",@id= "catgName", @placeholder = "name" })
                             @Html.ValidationMessageFor(x => x.Name, null, new { @class = "text-danger" })
                         </th>
                         <th>
@@ -18,7 +46,7 @@
                             @Html.DropDownListFor(m => m.DepartmentID, Model.mainDepartmentsDropDown, new { @class = "form-control", @id = "MainCategoriesDropdown" })
                         </th>
                         <th>
-                            <button id="addSubCategoryBtn" class="btn btn-success btn-block" onclick="addCategory('#frmSubCategory', 'CreateCategory', 'Categories', '', 'EditCategory', 'DeleteCategory', '#subCategoryName', '#addSubCategoryBtn')" type="button">Add</button>
+                            <button id="addSubCategoryBtn" class="btn btn-success btn-block" onclick="addCategory('#frmSubCategory', '#addSubCategoryBtn')" type="button">Add</button>
                         </th>
                     </tr>
                 </thead>

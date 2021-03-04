@@ -34,36 +34,12 @@
 
 
   <!-- Add & Delete Main Category -->
-<section class="head-page" style="margin-top:20px;">
-    <article class="container">
-        <div class="row">
-            <div class="col-xs--12">
-                <header>
-                    <h2><i class="fas fa-list-alt">&nbsp;&nbsp; You Can Add Main & Sub Category </i></h2>
-                </header>
-            </div>
-        </div>
-    </article>
-</section>
 
 
 
 <section class="container">
 
-    <div class="form-group">
-        <p><strong>Select an image:</strong></p>
-        <input id="deptCatgImageInput" type="file" name="image" accept="image/*" onchange="viewImageFile('#deptCatgImageInput', '#deptCatgDescription', '#deptCatgTargetImg', '#imgDeptCatgPreview', 0, 0)">
-    </div>
-
-
-    <div id="imgDeptCatgPreview" class="thumbnail" style="display:none">
-        <img class="img-responsive" id="deptCatgTargetImg" width="120" height="120" />
-        <div class="caption">
-            <a onclick="clearPreview()"> Clear </a>
-            <span id="deptCatgDescription"></span>
-        </div>
-        <hr />
-    </div>
+ 
 
 
     @{
@@ -247,9 +223,108 @@
 
     
 
+    var addDepartment = function (FormID, btnID) {
+
+        if (!$(FormID).valid()) {
+            return false;
+        }
+
+        disableBtn(btnID);
+
+        debugger;
+
+        var formData = new FormData();
+
+        var file = $('#deptImageInput').get(0).files;
+
+        formData.append("Name", $('#deptName').val());
+
+        formData.append("ImageFile", file[0]);
+
+        var URL = "/Categories/CreateDepartment";
+
+
+        $.ajax({
+            url: URL,
+            type: "Post",
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+
+                debugger;
+                enableBtn(btnID, "Upload");
+
+                clearPreview('#deptImageInput', '#deptDescription', '#imgDeptPreview');
+
+                 if (data.Result.IsSuccess) {
+                    $('input').val("");
+
+                    successDialog(data.Result.Message);
+
+                    var editURL = "/Categories/EditDepartment?id=" + data.Id;
+                    var DeleteURL = "/Categories/DeleteDepartment?id=" + data.Id;
+                    var visibilityDepartmentURL = "/Categories/EditDepartmentVisibility";
+                    var dropDownListItemID = 'item' + data.Id;
+
+  
+
+                    updateDropDownList(data, dropDownListItemID)
+                    drawNewDepartment(data, visibilityDepartmentURL, DeleteURL, dropDownListItemID);
+                } else {
+                    failedDialog(data.Result.Message);
+                }
+            }
+        });
+
+
+
+    }
+
+
+    var addTechnical = function (FormID, btnID) {
+
+        if (!$(FormID).valid()) {
+            return false;
+        }
+
+        disableBtn(btnID)
+
+        var formData = $(FormID).serialize();
+
+        var URL = "/Categories/CreateTechnical";
+
+        $.ajax({
+            url: URL,
+            type: "Post",
+            data: formData,
+            dataType: "json",
+            success: function (data) {
+
+                if (data.Result.IsSuccess) {
+
+                    successDialog(data.Result.Message);
+
+                    var editURL = "/Categories/EditTechnical?id=" + data.Id;
+                    var DeleteURL = "/Categories/DeleteTechnical?id=" + data.Id;
+
+                    $('#tbTechBody').append(drawTechnical(data))
+
+
+                } else {
+                    failedDialog(data.Result.Message);
+                }
+
+            }
+        });
+
+    }
+
+
+
  
- 
-    var addCategory = function (FormID, ActionName, ControllerName, TblBodyID, EditActionName, DeleteActionName,  btnID) {
+    var addCategory = function (FormID, btnID) {
 
         // validation 
         // access data from form 
@@ -263,58 +338,39 @@
 
 
 
+        var formData = new FormData();
 
-       // var formData = new FormData();
-        var file = $('#deptCatgImageInput').get(0).files;
+        var file = $('#catgImageInput').get(0).files;
 
-        var data = $(FormID).serialize();
-
-        var formData = JSON.parse(JSON.stringify(jQuery(FormID).serializeArray())) // store json object
-
-
-
-        var name = formData[0].Name;
-
-        formData.append("Name", name);
+        formData.append("Name", $('#catgName').val());
+        formData.append("DepartmentID", $('#MainCategoriesDropdown').val());
         formData.append("ImageFile", file[0]);
 
- 
-        var URL = "/" + ControllerName + "/" + ActionName;
-
-
+        var URL = "/Categories/CreateCategory";
 
 
         $.ajax({
             url: URL,
             type: "Post",
             data: formData,
-            dataType: "json",
+            dataType: 'json',
+            contentType: false,
+            processData: false,
             success: function (data) {
 
                 enableBtn(btnID, "Add");
-
+              
+                clearPreview('#catgImageInput', '#catgDescription', '#imgCatgPreview');
 
                 if (data.Result.IsSuccess) {
                     $('input').val("");
                     successDialog(data.Result.Message);
 
-                    var editURL = "/Admin/" + ControllerName + "/" + EditActionName + "?id=" + data.Id;
-                    var DeleteURL = "/Admin/" + ControllerName + "/" + DeleteActionName + "?id=" + data.Id;
+                    var editURL = "/Categories/EditCategory?id=" + data.Id;
+                    var DeleteURL = "/Categories/DeleteCategory?id=" + data.Id;
 
-                    if (ActionName === "CreateDepartment") {
+                    $('#tbody' + data.DepartmentID).append(drawSubCategory(data, ''))
 
-                        var dropDownListItemID = 'item' + data.Id;
-                        var visibilityDepartmentURL = "/Admin/" + ControllerName + "/EditDepartmentVisibility";
-                        updateDropDownList(data, dropDownListItemID)
-                        drawNewDepartment(data, visibilityDepartmentURL, DeleteURL, dropDownListItemID);
-
-                    } else if (ActionName === "CreateTechnical") {
-
-                        $(TblBodyID).append(drawTechnical(data))
-
-                    } else {
-                        $('#tbody' + data.DepartmentID).append(drawSubCategory(data, ''))
-                    }
                 } else {
                     failedDialog(data.Result.Message);
                 }

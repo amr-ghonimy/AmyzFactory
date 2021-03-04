@@ -35,10 +35,9 @@
                                 <div id="imgArticlePreview" class="thumbnail" style="display:none">
                                     <img class="img-responsive" id="articleTargetImg" width="120" height="80" />
                                     <div class="caption">
-                                        <a href="#" onclick="clearPreview()"> Clear </a>
+                                        <a href="#" onclick="clearPreview('#articleImageInput', '#articleDescription', '#articleTargetImg')"> Clear </a>
                                         <span id="articleDescription"></span>
                                     </div>
-                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#articleImageInput', 'UploadArticleImage', 'Articles', 'TblArticleImages', '#articleDescription', '#imgArticlePreview', 'DeleteArticleImage')" data-dismiss="modal">Upload</button>
                                     <hr />
                                 </div>
                             </div>
@@ -50,12 +49,12 @@
             <form id="frmArticle">
                 <div class="form-group">
                     <label for="titleInput"> Title:</label>
-                    @Html.TextBoxFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", placeholder = "Title here", @type = "text" })
+                    @Html.TextBoxFor(m => m.Title, new { @id = "artTitle", @class = "form-control", placeholder = "Title here", @type = "text" })
                 </div>
 
                 <div class="form-group">
                     <label for="titleInput"> Content:</label>
-                    @Html.TextAreaFor(m => m.Description, new { @id = "p2", @class = "form-control", @rows = "14", placeholder = "Content here", @type = "text" })
+                    @Html.TextAreaFor(m => m.Description, new { @id = "artDescription", @class = "form-control", @rows = "14", placeholder = "Content here", @type = "text" })
                 </div>
 
                 <hr />
@@ -143,14 +142,35 @@
 
     var createArticle = function (frmID) {
         debugger;
-        var model = $(frmID).serialize();
 
+
+        var formData = new FormData();
+        var file = $('#articleImageInput').get(0).files;
+
+        if (file.length==0) {
+            failedDialog("Article Image Required!");
+            return false;
+        }
+       
+
+        formData.append("Title", $('#artTitle').val());
+        formData.append("Description", $('#artDescription').val());
+        formData.append("ImageFile", file[0]);
+
+
+
+
+ 
         $.ajax(
           {
               type: "POST", //HTTP POST Method
               url: "/Articles/CreateArticle", // Controller/View 
-              data: model,
+              data: formData,
+              dataType: 'json',
+              contentType: false,
+              processData: false,
               success: function (data) {
+                  clearPreview('#articleImageInput', '#articleDescription', '#articleTargetImg');
                   if (data.IsSuccess) {
                       successDialogEdit(data.Message);
                       getArticles();

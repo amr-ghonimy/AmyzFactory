@@ -11,7 +11,12 @@ namespace AmyzFeed.FeedApi.Helpers
 
         public static string apiServerPath = @"http://localhost:57756/";
 
+
+      
         // files
+
+
+
         public static string emailFilePath ;
         public static string phonesFilePath;
         public static string accountsFilePath;
@@ -30,11 +35,11 @@ namespace AmyzFeed.FeedApi.Helpers
         public static string sliderImageFolderPath;
         public static string qualityImageFolderPath;
         public static string aboutImageFolderPath;
+        public static string deptsImageFolderPath;
         public static string responsibiltyImageFolderPath;
         public static string censirshipHeaderImageFolderPath;
         public static string censirshipFooterImageFolderPath;
         public static string productsImageFolderPath;
-
         public static string infoImageFolderPath;
 
 
@@ -47,6 +52,15 @@ namespace AmyzFeed.FeedApi.Helpers
         public static string censirshipHeaderImageResponse = @"Images/CensirshipHeader/";
         public static string censirshipFooterImageResponse = @"Images/CensirshipFooter/";
         public static string productsImageResponse = @"Images/Products/";
+        public static string deptsImageResponse = @"Images/Departments/";
+
+
+
+
+        public static string defaultProductImage = productsImageResponse + "defaultImage.jpg";
+        public static string defaultDeptImage = deptsImageResponse + "defaultDeptImage.jpg";
+        public static string defaultCatgImage = deptsImageResponse + "defaultCatgImage.jpg";
+
 
     }
 }

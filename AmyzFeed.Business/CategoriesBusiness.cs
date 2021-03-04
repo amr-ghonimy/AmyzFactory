@@ -48,6 +48,7 @@ namespace AmyzFeed.Business
                 ID = category.Id,
                 Name = category.Name.Trim(),
                 CreationDate = DateTime.Now,
+                Image = category.ImageUrl,
                 DepartmentID = category.DepartmentID.Value,
                 Visibility = category.visibility
             };
@@ -79,18 +80,12 @@ namespace AmyzFeed.Business
             {
                 ID = department.Id,
                 Name = department.Name.Trim(),
+                Image= department.ImageUrl,
                 CreationDate = DateTime.Now,
                 Visibility = department.visibility,
             };
 
-             var ifDeparmtentExists = this.deptRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == dept.Name.Trim().ToLower() && m.IsDeleted == false);
-
-
-            if (ifDeparmtentExists!=null)
-            {
-                return initResultModel(false, "Department Already Exists Enter Another Name!");
-            }
-
+            
             try
             {
                 deptRepository.Insert(dept);
@@ -311,6 +306,7 @@ namespace AmyzFeed.Business
             {
                 Name = x.Name,
                 DepartmentID = x.DepartmentID,
+                ImageUrl = Constans.ServerFile + x.Image,
                 Id = x.ID,
                 visibility = x.Visibility
             }).ToList();
@@ -323,6 +319,7 @@ namespace AmyzFeed.Business
                 Name = x.Name,
                 DepartmentID = x.DepartmentID,
                 visibility = x.Visibility,
+                ImageUrl = Constans.ServerFile + x.Image,
                 Id = x.ID
             }).ToList();
         }
@@ -335,7 +332,7 @@ namespace AmyzFeed.Business
                 Name = x.Name,
                 Id = x.ID,
                 visibility = x.Visibility,
-                ImageUrl = x.Image!=null ? Constans.ServerFile + x.Image : Constans.LogoPath  
+                ImageUrl = Constans.ServerFile + x.Image
             }).ToList();
 
 
@@ -346,7 +343,8 @@ namespace AmyzFeed.Business
                         Id=s.ID,
                         DepartmentID=s.DepartmentID,
                         Name=s.Name,
-                        visibility=s.Visibility
+                        ImageUrl = Constans.ServerFile + s.Image,
+                        visibility = s.Visibility
                     }).ToList();
             }
 
@@ -373,6 +371,7 @@ namespace AmyzFeed.Business
             {
                 Id = catg.ID,
                 Name = catg.Name,
+                ImageUrl = Constans.ServerFile + catg.Image,
                 DepartmentID = catg.DepartmentID,
                 visibility = catg.Visibility
             };
@@ -436,6 +435,51 @@ namespace AmyzFeed.Business
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public ResultDomainModel isCategoyExists(string name)
+        {
+            var ifCategoryExists = this.catgRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.IsDeleted == false);
+
+            if (ifCategoryExists == null)
+            {
+                return new ResultDomainModel(false, "category not exists");
+            }else
+            {
+                return new ResultDomainModel(true, "category is exists");
+
+            }
+
+         }
+
+        public ResultDomainModel isDepartmentExists(string name)
+        {
+            var ifCategoryExists = this.deptRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.IsDeleted == false);
+
+            if (ifCategoryExists == null)
+            {
+                return new ResultDomainModel(false, "department not exists");
+            }
+            else
+            {
+                return new ResultDomainModel(true, "department is exists");
+
+            }
+        }
+
+        public ResultDomainModel isTechnicalExists(string name)
+        {
+            var ifCategoryExists = this.techRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.IsDeleted == false);
+
+            if (ifCategoryExists == null)
+            {
+                return new ResultDomainModel(false, "technical not exists");
+            }
+            else
+            {
+                return new ResultDomainModel(true, "technical is exists");
+
             }
         }
     }

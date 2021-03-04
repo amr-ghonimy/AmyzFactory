@@ -87,7 +87,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
                 //content.Headers.Add("Key", "abc23sdflsdf");
 
                 var response = GlobalVariables.WebApiClient.PostAsync(apiPath, content).Result;
-                ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+                string result = response.Content.ReadAsStringAsync().Result;
+                ResultViewModel resultVm = JsonConvert.DeserializeObject<ResultViewModel>(result);
 
                 TextsViewModel textVm = null;
 

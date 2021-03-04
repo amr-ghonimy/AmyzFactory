@@ -13,6 +13,7 @@ namespace AmyzFeed.Business.interfaces
         TextsDomainModel getTexts(string filePath);
         List<TextsDomainModel> getArticles(string filePath);
 
+        ResultDomainModel getArticleById(int  id, string filePath);
 
 
         ResultDomainModel createContact(ContactDomainModel model, string filePath, int maxNumber);

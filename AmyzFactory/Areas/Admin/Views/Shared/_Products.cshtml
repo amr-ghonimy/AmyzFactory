@@ -12,7 +12,7 @@
 <div id="imgProductPreview" class="thumbnail" style="display:none">
     <img class="img-responsive" id="productTargetImg" width="120" height="120" />
     <div class="caption">
-        <a onclick="clearPreview()"> Clear </a>
+        <a href="#" onclick="clearPreview('#productImageInput', '#productDescription', '#imgProductPreview')"> Clear </a>
         <span id="productDescription"></span>
     </div>
     <hr />
@@ -178,6 +178,7 @@
                 enableBtn(btnID, "Upload");
 
                 if (data.ResponseResult.IsSuccess) {
+                    clearPreview('#productImageInput', '#productDescription', '#imgProductPreview');
                     clearfields();
                     successDialog(data.ResponseResult.Message);
                     bindDataTable(tblId, actionName, controllerName);

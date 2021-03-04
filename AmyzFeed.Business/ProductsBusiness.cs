@@ -38,7 +38,7 @@ namespace AmyzFeed.Business
         }
 
 
-        public ResultDomainModel uplaodImage(HttpRequest image, string savedFilePath)
+        public ResultDomainModel uplaodImage(HttpRequest image, string savedFilePath, string folderResponse)
         {
  
             var imageExtention = Path.GetExtension(image.Files[0].FileName);
@@ -60,28 +60,19 @@ namespace AmyzFeed.Business
             }
 
 
-            return initResultModel(true, "Image Uploaded!", uniqueKey);
+            return initResultModel(true, "Image Uploaded!", folderResponse+uniqueKey);
             
         }
 
         public ResultDomainModel createProduct(ProductDomainModel product)
         {
-            // check if product is already exists
-            var ifProducExists = this.productRepository.SingleOrDefault(m => m.Name.ToLower().Trim() == product.Name.ToLower().Trim());
-
-            if (ifProducExists!=null)
-            {
-                return initResultModel(false, "The Product is Already Exists please enter another name");
-            }
-            else
-            {
-
                 // mapping ProductDomainModel to Product
 
                 var prd = new Product()
                 {
                     Name = product.Name,
                     CreationDate = DateTime.Now,
+                    Image=product.ImageUrl,
                     Definition = product.Definition,
                     Description = product.Description,
                     Quantity = product.Quantity,
@@ -94,7 +85,7 @@ namespace AmyzFeed.Business
                
 
                 return confirmUploadProduct(prd);
-            }
+            
 
         }
 
@@ -160,7 +151,7 @@ namespace AmyzFeed.Business
                 oldProduct.Quantity = newProduct.Quantity;
                 oldProduct.CategoryID= newProduct.CategoryId;
                 oldProduct.Price = float.Parse(newProduct.Price.ToString());
-                oldProduct.Image = newProduct.ImageURL;
+                oldProduct.Image = newProduct.ImageUrl;
 
                 this.productRepository.Update(oldProduct);
                 return initResultModel(true, "Product updated successfully");
@@ -185,7 +176,7 @@ namespace AmyzFeed.Business
                 Definition = x.Definition,
                 Description = x.Description,
                 CategoryId = x.CategoryID,
-                ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
+                ImageUrl = Constans.ServerFile + x.Image,
                 isVisible = x.Visibility,
                 Price = float.Parse(x.Price?.ToString()),
                 Quantity = x.Quantity.Value
@@ -266,7 +257,7 @@ namespace AmyzFeed.Business
                 CategoryId = product.CategoryID,
                 Definition = product.Definition,
                 Description = product.Description,
-                ImageURL = product.Image != null ? Constans.ServerFile + product.Image : Constans.LogoPath,
+                ImageUrl = Constans.ServerFile + product.Image,
                 isVisible = product.Visibility,
                 Price = Double.Parse( product.Price?.ToString()),
                 Quantity=product.Quantity.Value
@@ -290,7 +281,7 @@ namespace AmyzFeed.Business
                 Definition = x.Definition,
                 Description = x.Description,
                 CategoryId = x.CategoryID,
-                ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
+                ImageUrl = Constans.ServerFile + x.Image,
                 isVisible = x.Visibility,
                 Price = float.Parse(x.Price?.ToString()),
                 Quantity = x.Quantity.Value
@@ -357,14 +348,16 @@ namespace AmyzFeed.Business
 
         public List<ProductDomainModel> getProductsByCategoryID(int id, string role)
         {
-            List<ProductDomainModel> products = this.productRepository.GetAll(generateQueryByCategoryID(role,id))
+            List<ProductDomainModel> products = this.productRepository.GetAll(generateQueryByCategoryID(role,id),"Category")
                 .Select(x => new ProductDomainModel()
                 {
                     Id = x.ID,
                     Name = x.Name,
+                    CategoryId=x.CategoryID,
+                    CategoryName=x.Category.Name,
                     Definition = x.Definition,
                     Description = x.Description,
-                    ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
+                    ImageUrl = Constans.ServerFile + x.Image,
                     isVisible = x.Visibility,
                     Price = float.Parse(x.Price?.ToString()),
                     Quantity = x.Quantity.Value
@@ -381,6 +374,7 @@ namespace AmyzFeed.Business
                                     {
                                         Id = x.ID,
                                         Name = x.Name,
+                                        ImageURL =Constans.ServerFile+ x.Image,
                                         CategoryName=x.Category?.Name,
                                         CategoryID = x.CategoryID.Value,
                                         Price = x.Price.Value
@@ -401,7 +395,7 @@ namespace AmyzFeed.Business
                                CategoryId=x.CategoryID,
                                Definition = x.Definition,
                                Description = x.Description,
-                               ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
+                               ImageUrl = Constans.ServerFile + x.Image,
                                isVisible = x.Visibility,
                                Price = float.Parse(x.Price?.ToString()),
                                Quantity = x.Quantity.Value
@@ -420,11 +414,26 @@ namespace AmyzFeed.Business
                              Definition = x.Definition,
                              Description = x.Description,
                              CategoryId = x.CategoryID,
-                             ImageURL = x.Image != null ? Constans.ServerFile + x.Image : Constans.LogoPath,
+                             ImageUrl = Constans.ServerFile + x.Image,
                              isVisible = x.Visibility,
                              Price = float.Parse(x.Price?.ToString()),
                              Quantity = x.Quantity.Value
                          }).ToList();
+        }
+
+        public ResultDomainModel isProductExists(string name)
+        {
+            var ifCategoryExists = this.productRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.IsDeleted == false&&m.Category.IsDeleted==false,"Category");
+
+            if (ifCategoryExists == null)
+            {
+                return new ResultDomainModel(false, "Product not exists");
+            }
+            else
+            {
+                return new ResultDomainModel(true, "Product is exists");
+
+            }
         }
     }
 }

@@ -17,8 +17,11 @@ namespace AmyzFeed.Business.interfaces
         List<DepartmentDomainModel> getTechniclas();
         DepartmentDomainModel getTechniclByID(int id);
 
+        ResultDomainModel isCategoyExists(string name);
+        ResultDomainModel isDepartmentExists(string name);
+        ResultDomainModel isTechnicalExists(string name);
 
-        
+
         ResultDomainModel createCategory(CategoryDomainModel category);
         ResultDomainModel createDepartment(  DepartmentDomainModel department);
         ResultDomainModel createTechnecalSupport(  DepartmentDomainModel technicalSupport);

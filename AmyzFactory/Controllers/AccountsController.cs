@@ -3,7 +3,6 @@ using AmyzFactory.Models;
 using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -69,12 +68,7 @@ namespace AmyzFactory.Controllers
                     };
                 }
                 
-
-
-              
             }
-
-
             return PartialView("~/Views/Shared/LoginNavBarSection.cshtml", userVm);
         }
 

@@ -1,0 +1,40 @@
+﻿@model AmyzFactory.Models.TextsViewModel
+@{
+    ViewBag.Title = "ArticleDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div style="margin-top:25px;">
+    <h2 class="noo-sh-title-top footer-title" style="text-align:center;">@Model.Title</h2>
+</div>
+<div class="about-box-main">
+   
+     <div class="container">
+        
+
+        <div class="row">
+            
+
+            <div class="col-lg-6" style="text-align:right;">
+
+                 
+                <p class="footer-text">
+                    @Model.Description
+                </p>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="banner-frame">
+                    <img class="img-fluid" src="~/Content/img/blog-img.jpg" alt="" />
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+

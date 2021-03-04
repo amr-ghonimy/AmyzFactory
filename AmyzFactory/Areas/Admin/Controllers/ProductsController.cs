@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using System.Web;
 using System.IO;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -151,17 +152,38 @@ namespace AmyzFactory.Areas.Admin.Controllers
                 //content.Headers.Add("Key", "abc23sdflsdf");
 
                 var response = GlobalVariables.WebApiClient.PostAsync(apiPath, content).Result;
-                ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
+                string result = response.Content.ReadAsStringAsync().Result;
+                ResultViewModel resultVm = JsonConvert.DeserializeObject<ResultViewModel>(result);
 
+ 
                 return resultVm;
             }
         }
 
-    
+
+        private ResultViewModel checkIfModelExistsInDb(ProductViewModel model, string apiPath)
+        {
+            string url = apiPath + "?name=" + model.Name;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            return result;
+        }
+
 
         [HttpPost]
         public JsonResult Create(ProductViewModel model)
         {
+
+
+            if (checkIfModelExistsInDb(model, "Product/isProductExists").IsSuccess)
+            {
+                ResultViewModel resultVm = new ResultViewModel { IsSuccess = false, Message = "Product is already Exists" };
+                model.ResponseResult = resultVm;
+                return Json(model, JsonRequestBehavior.AllowGet);
+            }
+
+
             // start upload image
             if (model.ImageFile != null)
             {
@@ -169,24 +191,24 @@ namespace AmyzFactory.Areas.Admin.Controllers
                 HttpPostedFileBase imageFile = model.ImageFile;
                 ResultViewModel imageUploadResult = this.UploadProductImage(imageFile, "Product/UploadImage");
 
-                model.ImageFile = null;
 
-                if (imageUploadResult.IsSuccess==false)
+                if (imageUploadResult.IsSuccess == false)
                 {
                     model.ResponseResult = imageUploadResult;
                     return Json(model, JsonRequestBehavior.AllowGet);
                 }
 
-                model.ImageURL =(string)imageUploadResult.Data;
+                model.ImageURL = (string)imageUploadResult.Data;
             }
 
-
+            
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Product/Create", model).Result;
             var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
             model.Id = result.modelID;
             model.ResponseResult = result;
-            
+            model.ImageFile = null;
+
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 

@@ -423,6 +423,7 @@
     <Content Include="Views\Accounts\MyAccount.cshtml" />
     <Content Include="Views\Shared\LoginNavBarSection.cshtml" />
     <Content Include="Views\Order\OrderHeader.cshtml" />
+    <Content Include="Views\HomePreview\ArticleDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\css\" />

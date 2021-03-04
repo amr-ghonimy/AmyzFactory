@@ -1,4 +1,5 @@
 ﻿using AmyzFactory.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -33,7 +34,7 @@ namespace AmyzFactory.Controllers
             return PartialView("~/Views/Shared/images/_sliders.cshtml", imagesVmList);
         }
 
-        public ActionResult PeoductQuality()
+        public ActionResult ProductQuality()
         {
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetQualities").Result;
@@ -43,12 +44,6 @@ namespace AmyzFactory.Controllers
             return View(qualityVm);
         }
 
-        public ActionResult Information()
-        {
-
-
-            return View();
-        }
        
         public PartialViewResult _GetInfo()
         {
@@ -72,6 +67,16 @@ namespace AmyzFactory.Controllers
         }
 
 
+
+        public ActionResult ArticleDetails(int id)
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Articles/GetArticleById?id="+id).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            TextsViewModel model = JsonConvert.DeserializeObject<TextsViewModel>(result.Data.ToString());
+
+            return View(model);
+        }
         public ActionResult Articles()
         { 
             return View(getAllArticles());
@@ -128,31 +133,7 @@ namespace AmyzFactory.Controllers
              return View(techsVm);
         }
 
-        private TextsViewModel getCensorshipHeader()
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetCensorshipHeader").Result;
-            TextsViewModel headerVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
-
-            return headerVm;
-        }
-
-
-        private TextsViewModel getCensorshipFooter()
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetCensorshipFooter").Result;
-            TextsViewModel footerVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
-
-            return footerVm;
-        }
-
-        public ActionResult Censorship()
-        {
-            TextsViewModel headerModel = this.getCensorshipHeader();
-            TextsViewModel footerModel = this.getCensorshipFooter();
-            ViewBag.FooterModel = footerModel;
-
-            return View(headerModel);
-        }
+     
 
 
 

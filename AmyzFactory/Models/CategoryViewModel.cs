@@ -22,6 +22,8 @@ namespace AmyzFactory.Models
         public Boolean Visibility { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+
+        [JsonIgnore]
         public HttpPostedFileBase ImageFile { get; set; }
 
         public SelectList mainDepartmentsDropDown { get; set; }

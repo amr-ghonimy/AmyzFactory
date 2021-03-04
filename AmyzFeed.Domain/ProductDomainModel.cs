@@ -16,7 +16,7 @@ namespace AmyzFactory.Models
         public string Description { get; set; }
         public double Price{ get; set; }
         public int Quantity{ get; set; }
-        public string ImageURL { get; set; }
+        public string ImageUrl { get; set; }
         public HttpRequest ImageFile { get; set; }
         
         public bool isVisible{ get; set; }

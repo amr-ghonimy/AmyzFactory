@@ -1,12 +1,14 @@
 ﻿using AmyzFactory.Models;
 using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
+using AmyzFeed.FeedApi.Helpers;
 using AutoMapper;
 using FeedApi.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 
 namespace FeedApi.Controllers.User
@@ -16,10 +18,12 @@ namespace FeedApi.Controllers.User
 
         private readonly IMapper mapper;
         private readonly ICategoriesBusiness catBusiness;
+        private readonly IImageBusiness imgBusiness;
 
 
-        public DepartmentsController(ICategoriesBusiness _catbusiness)
+        public DepartmentsController(ICategoriesBusiness _catbusiness, IImageBusiness _imgBusiness)
         {
+            this.imgBusiness = _imgBusiness;
             this.catBusiness = _catbusiness;
             this.mapper = AutoMapperConfig.Mapper;
         }
@@ -191,6 +195,11 @@ namespace FeedApi.Controllers.User
                      );
             }
 
+            if (string.IsNullOrEmpty(model.ImageUrl))
+            {
+                model.ImageUrl = Constans.defaultDeptImage;
+            }
+
             DepartmentDomainModel dm = this.mapper.Map<DepartmentDomainModel>(model);
 
             try
@@ -220,6 +229,13 @@ namespace FeedApi.Controllers.User
                      );
 
             }
+
+            if (string.IsNullOrEmpty(model.ImageUrl))
+            {
+                model.ImageUrl = Constans.defaultCatgImage;
+            }
+
+
 
             if (model.DepartmentID == 0)
             {
@@ -390,6 +406,89 @@ namespace FeedApi.Controllers.User
 
         }
 
+
+        public IHttpActionResult ISDepartmentExists(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return Content(HttpStatusCode.BadRequest, "you enter empty value");
+            }
+
+            ResultDomainModel result = this.catBusiness.isDepartmentExists(name);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+        }
+        public IHttpActionResult ISCategoryExists(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return Content(HttpStatusCode.BadRequest, "you enter empty value");
+            }
+
+            ResultDomainModel result = this.catBusiness.isCategoyExists(name);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+        }
+        public IHttpActionResult ISTechnicalExists(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return Content(HttpStatusCode.BadRequest, "you enter empty value");
+            }
+
+            ResultDomainModel result = this.catBusiness.isTechnicalExists(name);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+        }
+
+
+        [HttpPost]
+        public IHttpActionResult UploadImage()
+        {
+            ResultDomainModel result = new ResultDomainModel();
+
+            var httpRequest = HttpContext.Current.Request;
+
+            if (httpRequest.Files.Count < 1)
+            {
+                result.IsSuccess = false;
+                result.Message = "حدث مشكلة فى رفع الصورة";
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+
+            result = this.imgBusiness.uploadImage(httpRequest,Constans.deptsImageFolderPath, Constans.deptsImageResponse,1000);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+        }
 
     }
 }

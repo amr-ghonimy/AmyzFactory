@@ -1,20 +1,17 @@
 [
   {
-    "Title": "المشتريات",
-    "SubTitle": null,
-    "Description": null,
-    "ImageUrl": null,
-    "ImageFile": null,
-    "Id": 1,
-    "PicData": null
+    "Id": 0,
+    "Title": "الدعم الفنى",
+    "Value": "01015462278"
   },
   {
-    "Title": "dsadsa",
-    "SubTitle": null,
-    "Description": null,
-    "ImageUrl": null,
-    "ImageFile": null,
+    "Id": 1,
+    "Title": "المدير العام",
+    "Value": "01024595552"
+  },
+  {
     "Id": 2,
-    "PicData": null
+    "Title": "مدير المشتريات",
+    "Value": "01000683388"
   }
 ]

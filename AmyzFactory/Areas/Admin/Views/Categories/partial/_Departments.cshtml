@@ -3,7 +3,37 @@
 
 <article>
     <div class="table-responsive">
+        
+        <section class="head-page" style="margin-top:20px;">
+            <article class="container">
+                <div class="row">
+                    <div class="col-xs--12">
+                        <header>
+                            <h2><i class="fas fa-list-alt">&nbsp;&nbsp; You Can Add Department </i></h2>
+                        </header>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+
         <form name="frm1" id="frmDepartments">
+
+            <div class="form-group">
+                <p><strong>Select an image:</strong></p>
+                <input id="deptImageInput" type="file" name="image" accept="image/*" onchange="viewImageFile('#deptImageInput', '#deptDescription', '#deptTargetImg', '#imgDeptPreview', 0, 0)">
+            </div>
+
+
+            <div id="imgDeptPreview" class="thumbnail" style="display:none">
+                <img class="img-responsive" id="deptTargetImg" width="120" height="120" />
+                <div class="caption">
+                    <a href="#" onclick="clearPreview('#deptImageInput', '#deptDescription', '#imgDeptPreview')"> Clear </a>
+                    <span id="deptDescription"></span>
+                </div>
+                <hr />
+            </div>
+
 
             <table class="table table-bordered table-hover">
                 <caption>You Can Add Main Category</caption>
@@ -11,11 +41,11 @@
                     <tr>
                         <th>
                             Main Category:
-                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control",@name = "depName", @placeholder = "name" })
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control",@name = "depName",@id="deptName", @placeholder = "name" })
                             @Html.ValidationMessageFor(x => x.Name, null, new { @class = "text-danger" })
                         </th>
                         <th>
-                            <button id="addMaincategoryBtn" class="btn btn-success btn-block" onclick="addCategory('#frmDepartments', 'CreateDepartment', 'Categories', '', 'EditDepartment', 'DeleteDepartment', '#categoryName','#addMaincategoryBtn')" type="button">Add</button>
+                            <button id="addMaincategoryBtn" class="btn btn-success btn-block" onclick="addDepartment('#frmDepartments', '#addMaincategoryBtn')" type="button">Add</button>
                         </th>
                     </tr>
                 </thead>

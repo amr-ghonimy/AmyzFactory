@@ -72,6 +72,7 @@ namespace FeedApi
             Constans.articleFilePath = Server.MapPath(@"Files\articles.txt");
 
             Constans.sliderImageFolderPath = Server.MapPath(Constans.sliderImageResponse);
+            Constans.deptsImageFolderPath = Server.MapPath(Constans.deptsImageResponse);
             Constans.qualityImageFolderPath = Server.MapPath(Constans.qualityImageResponse);
             Constans.aboutImageFolderPath = Server.MapPath(Constans.aboutImageResponse);
             Constans.infoImageFolderPath = Server.MapPath(Constans.infoImageResponse);

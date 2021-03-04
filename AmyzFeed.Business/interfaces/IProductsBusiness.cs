@@ -12,12 +12,13 @@ namespace AmyzFeed.Business.interfaces
         ResultDomainModel createProduct(ProductDomainModel product);
         ResultDomainModel deleteProduct(int productID);
 
-        ResultDomainModel uplaodImage(HttpRequest image, string savedFilePath);
+        ResultDomainModel uplaodImage(HttpRequest image, string savedFilePath,string folderResponse);
         List<ProductDomainModel> getAllProducts(int pageNo, int displayLength,string role);
         List<ProductDomainModel> getAllProducts(string role);
         List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength, string role);
         List<ProductDomainModel> SearchInAllProducts(string searchWord, string role);
 
+        ResultDomainModel isProductExists(string name);
 
         ProductDomainModel getProductByID(int id);
  

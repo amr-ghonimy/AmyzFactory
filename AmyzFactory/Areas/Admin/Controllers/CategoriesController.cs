@@ -1,10 +1,13 @@
 ﻿using AmyzFactory.App_Start;
 using AmyzFactory.Models;
-
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
@@ -106,30 +109,132 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         // Create
 
- 
+
+        private ResultViewModel uploadImage(HttpPostedFileBase imageFile, string apiPath)
+        {
+
+            using (var content = new MultipartFormDataContent())
+            {
+                MemoryStream target = new MemoryStream();
+                imageFile.InputStream.CopyTo(target);
+                byte[] Bytes = target.ToArray();
+
+
+                imageFile.InputStream.Read(Bytes, 0, Bytes.Length);
+                var fileContent = new ByteArrayContent(Bytes);
+                fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = imageFile.FileName };
+
+
+                content.Add(fileContent);
+
+
+                // content.Add(new StringContent(imageUniqueKey), "FileId");
+                //content.Headers.Add("Key", "abc23sdflsdf");
+
+                var response = GlobalVariables.WebApiClient.PostAsync(apiPath, content).Result;
+                string resultVm = response.Content.ReadAsStringAsync().Result;
+                ResultViewModel result = JsonConvert.DeserializeObject<ResultViewModel>(resultVm);
+                return result;
+            }
+
+        }
+
+        private JsonResult uploadData(CategoryViewModel model,string apiPath)
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync(apiPath, model).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            model.Id = result.modelID;
+            model.Result = result;
+            model.ImageFile = null;
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+
+        private ResultViewModel checkIfModelExistsInDb(CategoryViewModel model,string apiPath)
+        {
+            string url = apiPath + "?name=" + model.Name;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            return result;
+        }
+
+
         [HttpPost]
         public JsonResult CreateDepartment(CategoryViewModel categoryModel)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Departments/CreateDepartment", categoryModel).Result;
-            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            categoryModel.Id = result.modelID;
-            categoryModel.Result = result;
+            if(checkIfModelExistsInDb(categoryModel, "Departments/ISDepartmentExists").IsSuccess)
+            {
+                ResultViewModel resultVm = new ResultViewModel { IsSuccess = false, Message = "Department is already Exists" };
+                categoryModel.Result = resultVm;
+                return Json(categoryModel, JsonRequestBehavior.AllowGet);
+            }
 
-            return Json(categoryModel, JsonRequestBehavior.AllowGet);
+
+
+            if (categoryModel.ImageFile != null)
+            {
+                ResultViewModel imageUploadResult = this.uploadImage(categoryModel.ImageFile, "Departments/UploadImage");
+
+                if (imageUploadResult.IsSuccess)
+                {
+                    ImagesViewModel img = JsonConvert.DeserializeObject<ImagesViewModel>(imageUploadResult.Data.ToString());
+                    categoryModel.ImageUrl = img.ImageUrl;
+                    return this.uploadData(categoryModel, "Departments/CreateDepartment");
+                }else
+                {
+                    categoryModel.Result = imageUploadResult;
+
+                    return Json(categoryModel, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+
+            categoryModel.ImageUrl = "any image";
+
+            return this.uploadData(categoryModel, "Departments/CreateDepartment");
         }
 
 
         [HttpPost]
         public JsonResult CreateCategory(CategoryViewModel categoryModel)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Departments/CreateCategory", categoryModel).Result;
-            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
-            categoryModel.Id = result.modelID;
-            categoryModel.Result = result;
 
-            return Json(categoryModel, JsonRequestBehavior.AllowGet);
+            if (checkIfModelExistsInDb(categoryModel, "Departments/ISCategoryExists").IsSuccess)
+            {
+                ResultViewModel resultVm = new ResultViewModel { IsSuccess = false, Message = "Category is already Exists enter another name" };
+                categoryModel.Result = resultVm;
+                return Json(categoryModel, JsonRequestBehavior.AllowGet);
+            }
+
+
+
+            if (categoryModel.ImageFile != null)
+            {
+                ResultViewModel imageUploadResult = this.uploadImage(categoryModel.ImageFile, "Departments/UploadImage");
+
+                if (imageUploadResult.IsSuccess)
+                {
+                    ImagesViewModel img = JsonConvert.DeserializeObject<ImagesViewModel>(imageUploadResult.Data.ToString());
+                    categoryModel.ImageUrl = img.ImageUrl;
+                    return this.uploadData(categoryModel, "Departments/CreateCategory");
+                }
+                else
+                {
+                    categoryModel.Result = imageUploadResult;
+
+                    return Json(categoryModel, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+
+            categoryModel.ImageUrl = "any image";
+
+            return this.uploadData(categoryModel, "Departments/CreateCategory");
         }
 
 
@@ -145,12 +250,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return Json(categoryModel, JsonRequestBehavior.AllowGet);
         }
 
-
-
-
-
         // Delete
-
 
         private ResultViewModel deleteResponse(Boolean result,string action,string controller,string tblBody,string editAction,string deleteAction) {
             ResultViewModel resultModel = null;

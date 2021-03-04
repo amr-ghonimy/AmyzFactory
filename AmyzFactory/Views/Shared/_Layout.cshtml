@@ -307,7 +307,7 @@
 
     function drawSlidCartTotal(total) {
         var html = '<li class="total">';
-        html += '<a href="../Order/Index" class="btn btn-default hvr-hover btn-cart">التفاصيل</a>';
+        html += '<a href="@Url.Action("Index", "Order")" class="btn btn-default hvr-hover btn-cart">التفاصيل</a>';
         html += '<span class="float-right"><strong>الاجمالى</strong>:' + '&nbsp' + total + " ج.م " + '</span>';
         html += '</li>';
 

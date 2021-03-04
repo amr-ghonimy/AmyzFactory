@@ -198,7 +198,7 @@ namespace FeedApi.Controllers.User
             }
 
 
-            result = this.productsBusiness.uplaodImage(httpRequest, Constans.productsImageFolderPath);
+            result = this.productsBusiness.uplaodImage(httpRequest, Constans.productsImageFolderPath,Constans.productsImageResponse);
 
             if (result.IsSuccess)
             {
@@ -218,6 +218,11 @@ namespace FeedApi.Controllers.User
             if (model == null)
             {
                 return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "You enter null data!!"));
+            }
+
+            if (string.IsNullOrEmpty( model.ImageUrl))
+            {
+                model.ImageUrl = Constans.defaultProductImage;
             }
 
             ResultDomainModel result = new ResultDomainModel();

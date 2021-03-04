@@ -11,7 +11,7 @@ namespace AmyzFeed.Domain
         public int Id { get; set; }
         public string Name { get; set; }
         public Boolean visibility { get; set; }
-
+        public string  ImageUrl { get; set; }
         public DateTime creation_date { get; set; }
         public DateTime updated_date { get; set; }
 

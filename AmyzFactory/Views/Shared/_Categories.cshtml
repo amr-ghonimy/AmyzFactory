@@ -38,14 +38,12 @@
                                 <div class="type-lb">
                                     <p class="new">@category.Name</p>
                                 </div>
-                                <img src="~/Content/img/about-img.jpg" class="img-fluid" alt="Image">
+                                <img src="@category.ImageUrl" class="img-fluid" alt="Image">
                                 <div class="mask-icon">
                                     <ul>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="اضافة الى المفضلة"><i class="far fa-heart"></i></a></li>
                                     </ul>
-
                                     @Html.ActionLink("عرض المنتجات", "ShowProducts", "Product",new { categoryId=category.Id,categoryName=category.Name},new { @class="cart"})
-                                    
                                 </div>
                             </div>
                             

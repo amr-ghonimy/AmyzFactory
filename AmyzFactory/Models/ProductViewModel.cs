@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace AmyzFactory.Models
 
         public string  ImageURL { get; set; }
 
-        public string[] DescriprionLines { get; set; }
+
+        [JsonIgnore]
         public HttpPostedFileBase ImageFile { get; set; }
 
          public ResultViewModel ResponseResult { get; set; }
