@@ -5,6 +5,7 @@ using AutoMapper;
 using FeedApi.Model;
 using System.Collections.Generic;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 
 namespace FeedApi.Controllers.User
@@ -24,6 +25,34 @@ namespace FeedApi.Controllers.User
             this.mapper = AutoMapperConfig.Mapper;
         }
 
+
+        [HttpPost]
+        public IHttpActionResult UploadImage()
+        {
+            ResultDomainModel result = new ResultDomainModel();
+
+            var httpRequest = HttpContext.Current.Request;
+
+            if (httpRequest.Files.Count < 1)
+            {
+                result.IsSuccess = false;
+                result.Message = "حدث مشكلة فى رفع الصورة";
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+
+            result = this.imagesBusiness.uploadImage(httpRequest, Constans.ArticlesImageFolderPath, Constans.articleImageResponse,50);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+        }
 
 
         public IHttpActionResult GetArticleById(int id)

@@ -27,7 +27,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult UpdatePrices(IEnumerable<ProductViewModel> list)
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Prices/UpdatePrices",list).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Product/UpdatePrices", list).Result;
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel> ().Result;
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);
@@ -55,7 +55,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             {
                 productsList = this.searchInProducts(param.sSearch, pageNo, param.iDisplayLength);
 
-                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Prices/GetSearchedProductCount?searchWord=" + param.sSearch).Result;
+                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetSearchedProductCount?searchWord=" + param.sSearch).Result;
                 totalCount = response.Content.ReadAsAsync<int>().Result;
 
             }
@@ -63,7 +63,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             {
                 productsList = this.getAllPrices(pageNo, param.iDisplayLength);
                  
-                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Prices/GetAllProductsCount").Result;
+                HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetAllProductsCount").Result;
                 totalCount = response.Content.ReadAsAsync<int>().Result;
             }
 
@@ -85,7 +85,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
         private List<ProductViewModel> getAllPrices(int pageNo, int displayLengt)
         {
-            string url = "Prices/getAllPrices?pageNo=" + pageNo + "&displayLengt=" + displayLengt;
+            string url = "Product/getAllPrices?pageNo=" + pageNo + "&displayLengt=" + displayLengt;
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
             List<ProductViewModel> list = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
@@ -96,7 +96,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<ProductViewModel> searchInProducts(string word, int pageNo, int displayLength)
         {
-            string url = "Prices/SearchInProducts?word=" + word + "&pageNo=" + pageNo + "&displayLength=" + displayLength;
+            string url = "Product/SearchInProducts?word=" + word + "&pageNo=" + pageNo + "&displayLength=" + displayLength;
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
             List<ProductViewModel> list = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;

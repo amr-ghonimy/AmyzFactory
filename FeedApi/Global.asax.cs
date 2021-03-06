@@ -80,6 +80,8 @@ namespace FeedApi
             Constans.censirshipFooterImageFolderPath = Server.MapPath(Constans.censirshipFooterImageResponse);
             Constans.censirshipHeaderImageFolderPath = Server.MapPath(Constans.censirshipHeaderImageResponse);
             Constans.productsImageFolderPath = Server.MapPath(Constans.productsImageResponse);
+            Constans.ArticlesImageFolderPath = Server.MapPath(Constans.articleImageResponse);
+
 
         }
 

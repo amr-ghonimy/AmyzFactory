@@ -98,6 +98,16 @@
      -o-transition: all .3s ease-in-out;
      transition: all .3s ease-in-out;
 }
+
+ .shadow-img{
+     -moz-box-shadow: 10px 10px 5px #ccc;
+  -webkit-box-shadow: 10px 10px 5px #ccc;
+  box-shadow: 10px 10px 5px #ccc;
+  -moz-border-radius:25px;
+  -webkit-border-radius:25px;
+  border-radius:25px;
+ }
+
  .btn-custom {
      margin-top: 20px;
      background-color: transparent !important;
@@ -130,6 +140,7 @@
 }
  p{
      margin: 0px;
+     font-size:1.1rem;
 }
  .bootstrap-select .dropdown-toggle:focus{
      outline: none !important;

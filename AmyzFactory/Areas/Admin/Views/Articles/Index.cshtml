@@ -58,7 +58,7 @@
                 </div>
 
                 <hr />
-                <input class="btn btn-success" onclick="createArticle('#frmArticle')" type="button" value="Upload" />
+                <button class="btn btn-success" onclick="createArticle('#frmArticle')" type="button" >Upload</button>
             </form>
         </div>
     </article>
@@ -153,10 +153,17 @@
         }
        
 
+     
         formData.append("Title", $('#artTitle').val());
         formData.append("Description", $('#artDescription').val());
-        formData.append("ImageFile", file[0]);
+            formData.append("ImageFile", file[0]);
 
+
+ 
+
+
+
+       
 
 
 
