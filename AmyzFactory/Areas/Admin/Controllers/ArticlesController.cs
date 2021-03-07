@@ -77,6 +77,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             }
             ImagesViewModel imgVm =JsonConvert.DeserializeObject<ImagesViewModel> (imageUploadResult.Data.ToString());
             model.ImageUrl = imgVm.ImageUrl;
+            model.ImageFile = null;
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Articles/CreateArticle", model).Result;
             var result = response.Content.ReadAsAsync<ResultViewModel>().Result;

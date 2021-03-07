@@ -12,26 +12,26 @@ using System.Linq;
 
 namespace AmyzFeed.Business
 {
-    public class CategoriesBusiness :ICategoriesBusiness
+    public class CategoriesBusiness : ICategoriesBusiness
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly CategoryRepository catgRepository;
         private readonly DepartmentsRepository deptRepository;
         private readonly TechnicalRepository techRepository;
- 
+
         private ResultDomainModel resultModel;
 
-        public CategoriesBusiness(IUnitOfWork _unitOfWork,ResultDomainModel _resultModel)
+        public CategoriesBusiness(IUnitOfWork _unitOfWork, ResultDomainModel _resultModel)
         {
             this.unitOfWork = _unitOfWork;
             this.resultModel = _resultModel;
             this.catgRepository = new CategoryRepository(this.unitOfWork);
             this.techRepository = new TechnicalRepository(this.unitOfWork);
             this.deptRepository = new DepartmentsRepository(this.unitOfWork);
-          }
+        }
 
 
-        private ResultDomainModel initResultModel(bool isSuccess,string message,int modelID=0)
+        private ResultDomainModel initResultModel(bool isSuccess, string message, int modelID = 0)
         {
             resultModel.IsSuccess = isSuccess;
             resultModel.Message = message;
@@ -53,17 +53,17 @@ namespace AmyzFeed.Business
                 Visibility = category.visibility
             };
 
-             var ifCategoryExists = this.catgRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == catg.Name.Trim().ToLower()&&m.IsDeleted==false);
+            var ifCategoryExists = this.catgRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == catg.Name.Trim().ToLower() && m.IsDeleted == false);
 
-            if (ifCategoryExists!=null)
+            if (ifCategoryExists != null)
             {
-               
+
                 return initResultModel(false, "Category Already Exists Enter Another Name!");
             }
             try
             {
                 catgRepository.Insert(catg);
-               
+
                 return initResultModel(true, "Category Inserted Successfully", catg.ID);
 
             }
@@ -80,16 +80,16 @@ namespace AmyzFeed.Business
             {
                 ID = department.Id,
                 Name = department.Name.Trim(),
-                Image= department.ImageUrl,
+                Image = department.ImageUrl,
                 CreationDate = DateTime.Now,
                 Visibility = department.visibility,
             };
 
-            
+
             try
             {
                 deptRepository.Insert(dept);
-              
+
                 return initResultModel(true, "Department Inserted Successfully", dept.ID);
             }
             catch (Exception e)
@@ -99,38 +99,6 @@ namespace AmyzFeed.Business
 
         }
 
-        public ResultDomainModel createTechnecalSupport(DepartmentDomainModel technicalSupport)
-        {
-            var tech = new Technical()
-            {
-                ID = technicalSupport.Id,
-                Name = technicalSupport.Name.Trim(),
-                CreationDate = DateTime.Now,
-                Visibility = technicalSupport.visibility,
-            };
- 
-             var ifCategoryExists = this.techRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == tech.Name.Trim().ToLower() && m.IsDeleted == false);
-
-            if (ifCategoryExists!=null)
-            {
-                return initResultModel(false, "Technical Already Exists Enter Another Name!");
-            }
-            try
-            {
-                this.techRepository.Insert(tech);
-                
-                return initResultModel(true, "Technical Inserted Successfully", tech.ID);
-
-
-            }
-            catch (Exception e)
-            {
-                return initResultModel(false, "Failed To Insert Technical Error is: " + e.Message);
-
-            }
-
-
-        }
 
         public bool deleteCategory(int categoryID)
         {
@@ -145,7 +113,7 @@ namespace AmyzFeed.Business
             }
         }
 
-       
+
         public bool deleteDepartment(int departmentID)
         {
             try
@@ -157,22 +125,9 @@ namespace AmyzFeed.Business
             {
                 return false;
             }
-            
+
         }
 
-        public bool deleteTechnical(int techID)
-        {
-            try
-            {
-                this.techRepository.Delete(x => x.ID == techID);
-                
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
 
         public ResultDomainModel editDepartment(DepartmentDomainModel department)
         {
@@ -240,40 +195,6 @@ namespace AmyzFeed.Business
             }
         }
 
-        public ResultDomainModel editTechnical(DepartmentDomainModel technical)
-        {
-
-            var oldTech = this.techRepository.SingleOrDefault(x => x.ID == technical.Id);
-
-
-            if (oldTech == null)
-            {
-                return initResultModel(false, "model with his id = " + technical.Id + " not found!", technical.Id);
-            }
-
-            try
-            {
-
-
-                bool ifNameExists = this.techRepository.Exists(x => x.Name == technical.Name.Trim() && x.ID != technical.Id);
-                if (ifNameExists)
-                {
-                    return initResultModel(false, "The name already exists!");
-                }
-
-                oldTech.Name = technical.Name.Trim();
-                oldTech.Visibility = technical.visibility;
-                oldTech.UpdatedDate = DateTime.Now;
-
-                this.techRepository.Update(oldTech);
-                return initResultModel(true, "Updated Success Technical has updated");
-
-            }
-            catch (Exception e)
-            {
-                return initResultModel(false, "Updated failed " + e.Message);
-            }
-        }
 
 
 
@@ -316,11 +237,12 @@ namespace AmyzFeed.Business
 
             foreach (var item in list)
             {
-                item.SubCategoriesList = catgRepository.GetAll(x => x.DepartmentID == item.Id&& x.IsDeleted == false)
-                    .Select(s=>new CategoryDomainModel() {
-                        Id=s.ID,
-                        DepartmentID=s.DepartmentID,
-                        Name=s.Name,
+                item.SubCategoriesList = catgRepository.GetAll(x => x.DepartmentID == item.Id && x.IsDeleted == false)
+                    .Select(s => new CategoryDomainModel()
+                    {
+                        Id = s.ID,
+                        DepartmentID = s.DepartmentID,
+                        Name = s.Name,
                         ImageUrl = Constans.ServerFile + s.Image,
                         visibility = s.Visibility
                     }).ToList();
@@ -330,16 +252,10 @@ namespace AmyzFeed.Business
 
         }
 
-        public List<DepartmentDomainModel> getTechniclas()
-        {
-            return techRepository.GetAll(x => x.IsDeleted == false).Select(x => new DepartmentDomainModel()
-            {
-                Name = x.Name,Id = x.ID}).ToList();
-        }
 
         public CategoryDomainModel getCategoryByID(int id)
         {
-            var catg = this.catgRepository.SingleOrDefault(x => x.ID == id&& x.IsDeleted == false,"Department");
+            var catg = this.catgRepository.SingleOrDefault(x => x.ID == id && x.IsDeleted == false, "Department");
             if (catg == null)
             {
                 return null;
@@ -353,27 +269,10 @@ namespace AmyzFeed.Business
                 DepartmentID = catg.DepartmentID,
                 visibility = catg.Visibility
             };
-           return result;
-        }
-
-        public DepartmentDomainModel getTechniclByID(int id)
-        {
-            var tech = this.techRepository.SingleOrDefault(x => x.ID == id& x.IsDeleted == false);
-            if (tech == null)
-            {
-                return null;
-            }
-
-            var result = new DepartmentDomainModel()
-            {
-                Id = tech.ID,
-                Name = tech.Name,
-                 visibility = tech.Visibility
-            };
             return result;
         }
 
- 
+
         public bool changeDepartmentVisibility(int id)
         {
 
@@ -387,7 +286,7 @@ namespace AmyzFeed.Business
             {
                 obj.Visibility = !obj.Visibility;
                 this.deptRepository.Update(obj);
- 
+
                 return obj.Visibility;
             }
             catch (Exception)
@@ -423,13 +322,14 @@ namespace AmyzFeed.Business
             if (ifCategoryExists == null)
             {
                 return new ResultDomainModel(false, "category not exists");
-            }else
+            }
+            else
             {
                 return new ResultDomainModel(true, "category is exists");
 
             }
 
-         }
+        }
 
         public ResultDomainModel isDepartmentExists(string name)
         {
@@ -442,21 +342,6 @@ namespace AmyzFeed.Business
             else
             {
                 return new ResultDomainModel(true, "department is exists");
-
-            }
-        }
-
-        public ResultDomainModel isTechnicalExists(string name)
-        {
-            var ifCategoryExists = this.techRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.IsDeleted == false);
-
-            if (ifCategoryExists == null)
-            {
-                return new ResultDomainModel(false, "technical not exists");
-            }
-            else
-            {
-                return new ResultDomainModel(true, "technical is exists");
 
             }
         }

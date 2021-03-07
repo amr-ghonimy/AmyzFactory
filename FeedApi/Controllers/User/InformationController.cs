@@ -56,14 +56,7 @@ namespace FeedApi.Controllers.User
             return vm;
         }
    
-        public IEnumerable<ContactViewModel> GetAccounts()
-        {
-            List<ContactDomainModel> dm = this.addressBusiness.getContacts(Constans.accountsFilePath);
-
-            List<ContactViewModel> vm = this.mapper.Map<List<ContactViewModel>>(dm);
-
-            return vm;
-        }
+    
 
         public IEnumerable<ContactViewModel> GetEmails()
         {
@@ -108,31 +101,7 @@ namespace FeedApi.Controllers.User
             }
         }
 
-        [HttpPost]
-        public IHttpActionResult CreateResponsibilities(TextsViewModel model)
-        {
-            if (model == null)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                    new ResultDomainModel(false, "No data came!"));
-            }
-
-            try
-            {
-                TextsDomainModel dm = this.mapper.Map<TextsDomainModel>(model);
-                ResultDomainModel result = this.addressBusiness.createOrUpdateFile(dm, Constans.responsibiltyFilePath);
-
-                result.Data = model;
-
-                return Ok(result);
-            }
-            catch (System.Exception ex)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                    new ResultDomainModel(false, ex.Message));
-            }
-        }
-
+        
 
         [HttpPost]
         public IHttpActionResult CreateQuality(TextsViewModel model)
@@ -183,82 +152,8 @@ namespace FeedApi.Controllers.User
             }
         }
 
-        [HttpPost]
-        public IHttpActionResult CreateUpdateCensorshipHeaderText(TextsViewModel model)
-        {
-            if (model == null)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                    new ResultDomainModel(false, "No data came!"));
-            }
-
-            try
-            {
-                TextsDomainModel dm = this.mapper.Map<TextsDomainModel>(model);
-                ResultDomainModel result = this.addressBusiness.createOrUpdateFile(dm, Constans.censirshipHeaderFilePath);
-
-                result.Data = model;
-
-                return Ok(result);
-            }
-            catch (System.Exception ex)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                    new ResultDomainModel(false, ex.Message));
-            }
-        }
-
-        [HttpPost]
-        public IHttpActionResult CreateUpdateCensorshipFooterText(TextsViewModel model)
-        {
-            if (model == null)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                    new ResultDomainModel(false, "No data came!"));
-            }
-
-            try
-            {
-                TextsDomainModel dm = this.mapper.Map<TextsDomainModel>(model);
-                ResultDomainModel result = this.addressBusiness.createOrUpdateFile(dm, Constans.censirshipFooterFilePath);
-
-                result.Data = model;
-
-                return Ok(result);
-            }
-            catch (System.Exception ex)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                    new ResultDomainModel(false, ex.Message));
-            }
-        }
-
-        [HttpPost]
-        public IHttpActionResult CreateAccount(ContactViewModel model)
-        {
-            if (model == null)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                    new ResultDomainModel(false, "Account is not have data!"));
-            }
-
-            try
-            {
-                ContactDomainModel dm = this.mapper.Map<ContactDomainModel>(model);
-                ResultDomainModel result = this.addressBusiness.createContact(dm, Constans.accountsFilePath, 5);
-                result.Data = model;
-
-                return Ok(result);
-            }
-            catch (System.Exception ex)
-            {
-
-                return Content(HttpStatusCode.BadRequest,
-                    new ResultDomainModel(false, ex.Message));
-            }
-        }
-     
-
+       
+       
         [HttpPost]
         public IHttpActionResult CreatePhone(ContactViewModel model)
         {
@@ -356,33 +251,7 @@ namespace FeedApi.Controllers.User
 
         }
 
-        [HttpDelete]
-        public IHttpActionResult DeleteAccount(int id)
-        {
-            try
-            {
-                ResultDomainModel dm = this.addressBusiness.deleteContact(id, Constans.accountsFilePath);
-
-                if (dm.IsSuccess)
-                {
-                    return Ok(dm);
-                }
-                else
-                {
-                    return Content(HttpStatusCode.NotFound, dm.Message);
-                }
-
-            }
-            catch (System.Exception e)
-            {
-
-                return Content(HttpStatusCode.BadRequest, e.Message);
-            }
-
-        }
-
-
-
+      
 
     }
 }

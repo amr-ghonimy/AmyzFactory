@@ -31,6 +31,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link href="~/Areas/Admin/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+
     <!-- Site Icons -->
     <link rel="shortcut icon" href="~/Content/img/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="~/Content/img/apple-touch-icon.png">
@@ -83,7 +87,7 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="~/HomePreview/Index"><img src="~/Content/img/logo.jpg" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="@Url.Action("Index","HomePreview")"><img src="~/Content/img/logo.jpg" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -104,10 +108,14 @@
                             @Html.ActionLink("الأسعار", "ProductsPrices", "Product", null, new { @class = "nav-link" })
                         </li>
 
-                        <li class="nav-item"><a class="nav-link" href="gallery.html">الدعم الفنى</a></li>
                         <li class="nav-item">
+                            @Html.ActionLink("جودة المنتج", "Articles", "HomePreview", null, new { @class = "nav-link" })
+                        </li>                       
+
+                         <li class="nav-item">
                             @Html.ActionLink("المقالات", "Articles", "HomePreview", null, new { @class = "nav-link" })
                         </li>
+
                         <li class="nav-item">
                             @Html.ActionLink("تواصل معنا", "Index", "Contact", null, new { @class = "nav-link" })
                         </li>
@@ -294,6 +302,7 @@
 
 <script>
 
+ 
 
     function drawSlidCartContent(product) {
         var html=' <li>';

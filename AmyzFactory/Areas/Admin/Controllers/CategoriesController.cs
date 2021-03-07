@@ -31,10 +31,8 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
             return PartialView("~/Areas/Admin/Views/Categories/partial/_Departments.cshtml");
         }
-        public PartialViewResult _Technicals()
-        {
-            return PartialView("~/Areas/Admin/Views/Categories/partial/_Technicals.cshtml");
-        }
+       
+
 
 
 
@@ -55,14 +53,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
 
 
-        private List<CategoryViewModel> getTechnecals()
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetTechnicals").Result;
-            List<CategoryViewModel> categories = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
-
-            return categories;
-        }
-
+    
 
 
         public ActionResult Index()
@@ -93,14 +84,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
          }
 
-        [HttpGet]
-        public JsonResult Technicals()
-        {
-            var technicals = getTechnecals();
-
-            return Json(technicals, JsonRequestBehavior.AllowGet);
-
-         }
+    
 
 
 
@@ -232,17 +216,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
 
 
-        [HttpPost]
-        public JsonResult CreateTechnical(CategoryViewModel categoryModel)
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Departments/CreateTechnical", categoryModel).Result;
-            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
-
-            categoryModel.Id = result.modelID;
-            categoryModel.Result = result;
-
-            return Json(categoryModel, JsonRequestBehavior.AllowGet);
-        }
+     
 
         // Delete
 
@@ -294,17 +268,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult DeleteTechnical(int id)
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Departments/DeleteTechnical?id=" + id).Result;
-
-            ResultViewModel isDeleted = response.Content.ReadAsAsync<ResultViewModel>().Result;
-
-            var result = this.deleteResponse(isDeleted.IsSuccess, "Technicals"
-                , "Categories", "#TbltechniclasBody", "EditTechnical", "DeleteTechnical"
-                );
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+     
 
 
 
@@ -336,37 +300,14 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public ActionResult EditCategory(CategoryViewModel category)
         {
             HttpResponseMessage response = GlobalVariables.WebApiClient.PutAsJsonAsync("Departments/EditCategory", category).Result;
-
-
-
+ 
             ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
             return Json(result, JsonRequestBehavior.AllowGet);
          }
 
 
-        [HttpGet]
-        public ActionResult EditTechnical(int id)
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetTechnicalByID?id=" + id).Result;
-            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
-
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            CategoryViewModel techVm = js.Deserialize<CategoryViewModel>(result.Data.ToString());
-
-
-            return PartialView("~/Areas/Admin/Views/categories/_EditTechnical.cshtml" , techVm);
-        }
-
-        [HttpPost]
-        public ActionResult EditTechnical(CategoryViewModel category)
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PutAsJsonAsync("Departments/EditTechnical", category).Result;
-            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-           }
-
+       
 
         [HttpPost]
         public ActionResult EditDepartmentVisibility(int id)

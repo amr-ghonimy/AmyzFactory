@@ -285,7 +285,6 @@
     <Compile Include="Controllers\User\InformationController.cs" />
     <Compile Include="Controllers\User\OrderController.cs" />
     <Compile Include="Controllers\User\ProductController.cs" />
-    <Compile Include="Controllers\User\TechnicalSupportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

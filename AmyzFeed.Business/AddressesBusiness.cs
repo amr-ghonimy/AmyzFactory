@@ -1,4 +1,5 @@
 ﻿using AmyzFactory.Models;
+using AmyzFeed.Business.helpers;
 using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
 using Newtonsoft.Json;
@@ -182,6 +183,11 @@ namespace AmyzFeed.Business
                 list = JsonConvert.DeserializeObject<List<TextsDomainModel>>(textJson);
             }
 
+            foreach (var item in list)
+            {
+                item.ImageUrl = Constans.ServerFile + item.ImageUrl;
+            }
+
             return list;
         }
 
@@ -235,10 +241,13 @@ namespace AmyzFeed.Business
 
                 TextsDomainModel item = list.Single(r => r.Id == id);
 
+
                 if (item == null)
                 {
                     return initResultModel(false, "Article Not Exists!!");
                 }
+
+                item.ImageUrl = Constans.ServerFile + item.ImageUrl;
 
                 return initResultModel(true, "Article is Exists!!", item);
 

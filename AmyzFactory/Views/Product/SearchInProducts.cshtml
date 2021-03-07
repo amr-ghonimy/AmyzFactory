@@ -38,7 +38,7 @@
                         <img src="@product.ImageURL" class="img-fluid" alt="Image">
                         <div class="mask-icon">
                             <ul>
-                                <li><a href="../Product/ProductDetails?id=@product.Id" data-toggle="tooltip" data-placement="right" title="التفاصيل"><i class="fas fa-eye"></i></a></li>
+                                <li><a  href="@Url.Action("ProductDetails","Product",new { @id=product.Id})" data-toggle="tooltip" data-placement="right" title="التفاصيل"><i class="fas fa-eye"></i></a></li>
                                 <li><a href="#" data-toggle="tooltip" data-placement="right" title="اضف الى المفضلة"><i class="far fa-heart"></i></a></li>
                             </ul>
                             <a class="cart" href="#">اضف الى العربة</a>

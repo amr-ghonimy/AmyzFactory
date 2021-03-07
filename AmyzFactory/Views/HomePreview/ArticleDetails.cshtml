@@ -12,27 +12,15 @@
    
      <div class="container">
         
+         <div class="banner-frame" style="text-align:center;">
+             <img  class="shadow-img" width="50%" height="auto" src="@Model.ImageUrl" alt="centered image"  />
+         </div> 
 
-        <div class="row">
-            
+         <p class="footer-text" style="margin-top:35px;">
+             @Model.Description
+         </p>
 
-            <div class="col-lg-6" style="text-align:right;">
-
-                 
-                <p class="footer-text">
-                    @Model.Description
-                </p>
-            </div>
-
-
-            <div class="col-lg-6">
-                <div class="banner-frame">
-                    <img class="img-fluid" src="~/Content/img/blog-img.jpg" alt="" />
-                </div>
-            </div>
-
-
-        </div>
+    
 
     </div>
 </div>

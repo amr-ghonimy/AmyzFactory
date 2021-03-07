@@ -226,28 +226,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
 
 
-        [HttpPost]
-        public ActionResult CreateAccount(ContactViewModel model)
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateAccount", model).Result;
-
-            var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
-
-            model.Id = result.modelID;
-            model.Result = result;
-
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public ActionResult GetAccounts()
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetAccounts").Result;
-
-            List<TextsViewModel> listVm = response.Content.ReadAsAsync<List<TextsViewModel>>().Result;
-
-            return Json(listVm, JsonRequestBehavior.AllowGet);
-        }
+      
         [HttpGet]
         public JsonResult DeleteEmail(int id)
         {
@@ -267,16 +246,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);
          }
-        [HttpGet]
-
-        public JsonResult DeleteAccount(int id)
-        {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Information/DeleteAccount?id=" + id).Result;
-
-            ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
-            
-            return Json(resultVm, JsonRequestBehavior.AllowGet);
-        }
+        
 
  
         

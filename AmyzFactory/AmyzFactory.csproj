@@ -332,12 +332,10 @@
     </Content>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_Admin_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Products.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\_CategoryTables.cshtml" />
     <Content Include="Areas\Admin\Views\HomePage\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Categories\_EditTechnical.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\_EditCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Products\_EditProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Prices\Index.cshtml" />
@@ -350,9 +348,7 @@
     <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\partial\_Departments.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\partial\_Categories.cshtml" />
-    <Content Include="Areas\Admin\Views\Categories\partial\_Technicals.cshtml" />
     <Content Include="Areas\Admin\Views\HomePage\partial\_Info.cshtml" />
-    <Content Include="Areas\Admin\Views\HomePage\partial\_Account.cshtml" />
     <Content Include="Areas\Admin\Views\HomePage\partial\_Phones.cshtml" />
     <Content Include="Areas\Admin\Views\HomePage\partial\_Email.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\OrderDetails.cshtml" />

@@ -101,11 +101,9 @@
     <Compile Include="OrderBusiness.cs" />
     <Compile Include="OrderUserBusiness.cs" />
     <Compile Include="QuestionaireBusiness.cs" />
-    <Compile Include="TechnicalBusiness.cs" />
     <Compile Include="ImagesBusiness.cs" />
     <Compile Include="interfaces\IAddressesBusiness.cs" />
     <Compile Include="interfaces\ICategoriesBusiness.cs" />
-    <Compile Include="interfaces\ITechnicalBusiness.cs" />
     <Compile Include="interfaces\IImageBusiness.cs" />
     <Compile Include="interfaces\IProductsBusiness.cs" />
     <Compile Include="ProductsBusiness.cs" />

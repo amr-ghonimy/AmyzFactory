@@ -73,30 +73,9 @@ namespace FeedApi.Controllers.User
             return Ok(new ResultDomainModel(true, "category exist", Data: dm));
         }
 
-        public IEnumerable<DepartmentsViewModel> GetTechnicals()
-        {
-            List<DepartmentDomainModel> dm = this.catBusiness.getTechniclas();
+       
 
-            var result = this.mapper.Map<List<DepartmentsViewModel>>(dm);
-
-            return result;
-        }
-
-
-        public IHttpActionResult GetTechnicalByID(int id)
-        {
-            DepartmentDomainModel dm = this.catBusiness.getTechniclByID(id);
-
-            if (dm == null)
-            {
-                return Content(HttpStatusCode.NotFound,
-                    new ResultDomainModel(false, "Technical with id = " + id + " is not exist", id));
-            }
-
- 
-            return Ok(new ResultDomainModel(true, "Technical exist", Data: dm));
-        }
-
+      
 
         [HttpDelete]
         public IHttpActionResult DeleteDepartment(int id)
@@ -153,35 +132,7 @@ namespace FeedApi.Controllers.User
             }
 
         }
-        [HttpDelete]
-        public IHttpActionResult DeleteTechnical(int id)
-        {
-
-            if (id == 0)
-            {
-                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "you enter not valid id=" + id, modelID: id));
-            }
-
-            try
-            {
-                bool isSuccess = this.catBusiness.deleteTechnical(id);
-                if (isSuccess)
-                {
-                    return Ok(new ResultDomainModel(true, "Technical deleted successfully!", id));
-                }
-                else
-                {
-                    return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "you enter not valid id=" + id, modelID: id));
-
-                }
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, e.Message, modelID: id));
-            }
-
-        }
-
+     
 
 
         [HttpPost]
@@ -262,34 +213,7 @@ namespace FeedApi.Controllers.User
 
         }
 
-        [HttpPost]
-        public IHttpActionResult CreateTechnical(DepartmentsViewModel model)
-        {
-            if (model == null)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                     new ResultDomainModel(false, "you send Technical with null value!")
-                     );
-            }
-
-        
-            DepartmentDomainModel dm = this.mapper.Map<DepartmentDomainModel>(model);
-
-            try
-            {
-                ResultDomainModel result = this.catBusiness.createTechnecalSupport(dm);
-
-                return Ok(result);
-
-            }
-            catch (Exception ex)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                   new ResultDomainModel(false, ex.Message)
-                   );
-            }
-
-        }
+      
 
         [HttpPut]
         public IHttpActionResult EditDepartment(DepartmentsViewModel model)
@@ -368,45 +292,7 @@ namespace FeedApi.Controllers.User
             }
 
         }
-        [HttpPut]
-        public IHttpActionResult EditTechnical(DepartmentsViewModel model)
-        {
-            if (model == null)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                  new ResultDomainModel(false, "you send category with null value!")
-                  );
-            }
-
-            if (model.Id == 0)
-            {
-                return Content(HttpStatusCode.BadRequest,
-                  new ResultDomainModel(false, "category with his id = " + model.Id + " not found!")
-                  );
-            }
-          
-
-            DepartmentDomainModel dm = this.mapper.Map<DepartmentDomainModel>(model);
-
-            try
-            {
-                ResultDomainModel result = this.catBusiness.editTechnical(dm);
-
-                return Ok(result);
-
-            }
-            catch (Exception ex)
-            {
-                return Content(HttpStatusCode.BadRequest,
-              new ResultDomainModel(false, ex.Message)
-              );
-
-
-            }
-
-        }
-
-
+        
         public IHttpActionResult ISDepartmentExists(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -442,26 +328,7 @@ namespace FeedApi.Controllers.User
                 return Content(HttpStatusCode.BadRequest, result);
             }
         }
-        public IHttpActionResult ISTechnicalExists(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return Content(HttpStatusCode.BadRequest, "you enter empty value");
-            }
-
-            ResultDomainModel result = this.catBusiness.isTechnicalExists(name);
-
-            if (result.IsSuccess)
-            {
-                return Ok(result);
-            }
-            else
-            {
-                return Content(HttpStatusCode.BadRequest, result);
-            }
-        }
-
-
+    
         [HttpPost]
         public IHttpActionResult UploadImage()
         {

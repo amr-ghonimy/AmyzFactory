@@ -70,22 +70,7 @@
     </article>
 </section>
 <!-- End Sub Category -->
-<!-- Add & Delete Technical -->
-<section class="head-page">
-    <article class="container">
-        <div class="row">
-            <div class="col-xs--12">
-                <header style="margin-top:24px;">
-                    <h2><i class="fas fa-list-alt">&nbsp;&nbsp; Add Technical </i></h2>
-                </header>
-            </div>
-        </div>
-    </article>
-</section>
 
-@{ 
-    Html.RenderAction("_Technicals", "Categories");
-}
 
 
 
@@ -199,26 +184,13 @@
          return html
      }
 
-     var drawTechnical = function (category) {
-         var trID = 'technicalTr' + category.Id;
-         var editBtnID = 'editTech' + category.Id;
-         var html = '';
-         html += '<tr id="' + trID + '">'
-         html += '<td style="color:#1cc88a;">' + category.Name + '</td>'
-         html += '<td><button id="' + editBtnID + '" style="margin-right: 4px;" type="button" class="btn btn-info" onclick="editCategory(\'' + 'EditTechnical' + '\',\'' + category.Id + '\',\'' + '#' + editBtnID + '\')">Edit</button>'
-         html += '<button type="button" class="btn btn-danger" onclick="deleteSubCategory(\'' + trID + '\',\'' + "DeleteTechnical" + '\',\'' + category.Id + '\')">Delete</button></td>'
-         html += '</tr>'
-         return html;
-     }
+    
 
     $(document).ready(function () {
 
         // GetDeparmtnets
         getCategories("MainDepartments", "Categories", "#TblMainCategoriesBody", "EditDepartment", "DeleteDepartment", "EditDepartmentVisibility");
-        // Get Technicals
-        getCategories("Technicals", "Categories", "#tbTechBody", "EditTechnical", "DeleteTechnical", "EditTechnicalVisibility");
- 
-
+      
     })
 
     
@@ -283,46 +255,7 @@
     }
 
 
-    var addTechnical = function (FormID, btnID) {
-
-        if (!$(FormID).valid()) {
-            return false;
-        }
-
-        disableBtn(btnID)
-
-        var formData = $(FormID).serialize();
-
-        var URL = "/Categories/CreateTechnical";
-
-        $.ajax({
-            url: URL,
-            type: "Post",
-            data: formData,
-            dataType: "json",
-            success: function (data) {
-
-                enableBtn(btnID, "Upload");
-
-                if (data.Result.IsSuccess) {
-
-                    successDialog(data.Result.Message);
-
-                    var editURL = "/Categories/EditTechnical?id=" + data.Id;
-                    var DeleteURL = "/Categories/DeleteTechnical?id=" + data.Id;
-
-                    $('#tbTechBody').append(drawTechnical(data))
-
-
-                } else {
-                    failedDialog(data.Result.Message);
-                }
-
-            }
-        });
-
-    }
-
+  
 
 
  
