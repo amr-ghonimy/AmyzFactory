@@ -7,12 +7,8 @@
 
 <div class="latest-blog">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="title-all text-center">
-                    <h1>المقالات</h1>
-                </div>
-            </div>
+        <div class="title-all" style="margin-top:20px;text-align:right">
+            <h1 class="header-pages">المقالات والأخبار</h1>
         </div>
         <div class="row" style="justify-content: center;">
 
@@ -20,21 +16,16 @@
             {
 
 
-                for (int i = 0; i < Model.Count(); i++)
+                if (Model.Count() == 1)
                 {
-
-                    AmyzFactory.Models.TextsViewModel item = Model.ToList()[i];
+                    var item = Model.ToList()[0];
 
                     string content = item.Description;
                     if (content.Length > 80)
                     {
                         content = content.Substring(0, 80) + ".......";
                     }
-
-
-                 //   string detailsUrl = "/HomePreview/ArticleDetails?id=" + item.Id;
-
-                    <div class="col-md-6 col-lg-4 col-xl-4">
+                    <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="blog-box">
                             <div class="blog-img">
                                 <img class="img-fluid" src="@item.ImageUrl" alt="" />
@@ -52,6 +43,43 @@
                         </div>
                     </div>
                 }
+                else
+                {
+                    for (int i = 0; i < Model.Count(); i++)
+                    {
+
+                        AmyzFactory.Models.TextsViewModel item = Model.ToList()[i];
+
+                        string content = item.Description;
+                        if (content.Length > 80)
+                        {
+                            content = content.Substring(0, 80) + ".......";
+                        }
+
+
+                        //   string detailsUrl = "/HomePreview/ArticleDetails?id=" + item.Id;
+
+                        <div class="col-md-6 col-lg-4 col-xl-4">
+                            <div class="blog-box">
+                                <div class="blog-img">
+                                    <img class="img-fluid" src="@item.ImageUrl" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="title-blog">
+                                        <h3 class="footer-title">@item.Title</h3>
+                                        <p class="footer-text">@content</p>
+                                    </div>
+                                    <ul class="option-blog">
+                                        <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                        <li><a href="@Url.Action("ArticleDetails","HomePreview",new { @id=item.Id})"><i class="fas fa-eye"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+
 
 
             }

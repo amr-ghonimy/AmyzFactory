@@ -6,13 +6,26 @@
     var emails = ViewBag.Emails;
 }
 
-@{
-    Html.RenderAction("_GetInfo", "HomePreview");
-}
+
+<div class="shop-box-inner">
+    <div class="container">
+        <div class="title-all" style="margin-top:20px;text-align:right">
+            <h1 class="header-pages">من نحن</h1>
+        </div>
 
 
+
+
+
+        @{
+            Html.RenderAction("_GetInfo", "HomePreview");
+        }
+
+    </div>
+</div>
 
 <div class="row my-5">
+
 
     <div class="col-2 col-sm-6 col-lg-2">
     </div>

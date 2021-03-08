@@ -3,6 +3,42 @@
 
 
 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @if (Model != null && Model.Count() > 0)
 {
 
@@ -12,35 +48,38 @@
 
         if (i == 3)
         {
+
+            <center>
+                <a id="moreInfo" class="btn btn-outline-success" href="@Url.Action("AboutUS","HomePreview")">المزيد</a>
+            </center>
             return;
         }
 
         AmyzFactory.Models.TextsViewModel item = Model.ToList()[i];
 
         string content = item.Description;
-        if (content.Length > 80)
+        if (content.Length > 300)
         {
-            content = content.Substring(0, 80) +".......";
+            content = content.Substring(0, 300) + ".......";
         }
 
-
-        <div class="col-md-6 col-lg-4 col-xl-4">
-            <div class="blog-box">
-                <div class="blog-img">
-                    <img class="img-fluid" src="@item.ImageUrl" alt="" />
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-sm-3" style="background: #868e96;">
+                    <img src="@item.ImageUrl" class="card-img-top h-100" alt="">
                 </div>
-                <div class="blog-content">
-                    <div class="title-blog">
-                        <h3 class="footer-title">@item.Title</h3>
-                        <p class="footer-text">@content</p>
+                <div class="col-sm-9">
+                    <div class="card-body">
+                        <h2 class="noo-sh-title-top footer-title" style="color:#62A73C;">@item.Title</h2>
+                        <p class="footer-title">@content</p>
+                        <a href="@Url.Action("ArticleDetails","HomePreview",new { @id=item.Id})" class="btn btn-success stretched-link">قراءة المزيد</a>
                     </div>
-                    <ul class="option-blog">
-                        <li><a href="#"><i class="far fa-heart"></i></a></li>
-                        <li><a href="@Url.Action("ArticleDetails","HomePreview",new { @id=item.Id})"><i class="fas fa-eye"></i></a></li>
-                    </ul>
                 </div>
             </div>
         </div>
+
+
+      
     }
 
 

@@ -61,16 +61,13 @@
 
     <!-- End About Page -->
     <!-- Start Products  -->
+
+ <div class="title-all text-center" style="margin-top:80px;">
+    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">الأقسام الرئيسية و<span style="color:#f19304;"> الفرعية </span></h1>
+</div>
     <div class="products-box">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="title-all text-center">
-                        <h1>أقسامنا</h1>
-                        <p>أقسام أميز للعلف</p>
-                    </div>
-                </div>
-            </div>
+          
             @{
                 Html.RenderAction("_GetDepartments", "HomePreview");
             }
@@ -83,7 +80,7 @@
     <div class="latest-blog">
         <div class="container">
             <div class="title-all text-center" style="margin-top:80px;">
-                <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">معلومات<span style="color:#f19304;"> عنا </span></h1>
+                <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">المقالات و<span style="color:#f19304;"> الأخبار </span></h1>
             </div>
 
             <div class="row"  style="justify-content: center;">
