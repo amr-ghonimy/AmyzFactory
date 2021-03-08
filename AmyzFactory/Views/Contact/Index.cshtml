@@ -15,33 +15,33 @@
                 <div class="contact-form-right">
                     <h2>التواصل معنا</h2>
                     <p> ارسل الينا رسالة وسيتم الرد فى أقرب وقت</p>
-                    <form id="contactForm">
+                    <form id="frmQuest">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required data-error="Please enter your name">
-                                    <div class="help-block with-errors"></div>
+                                    @Html.LabelFor(m => m.FullName, new { @class = "lbll" })
+                                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control form-control-user", @type = "text", @autocomplete = "off", @placeholder = "الاسم كامل" })
+                                    @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "help-block with-errors" })
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" placeholder="Your Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
-                                    <div class="help-block with-errors"></div>
-                                </div>
+                                    @Html.LabelFor(m => m.Email, new { @class = "lbll" })
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-user", @type = "email", @autocomplete = "off", @placeholder = "البريد الالكترونى" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "help-block with-errors" })
+                               </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
-                                    <div class="help-block with-errors"></div>
+                                    @Html.LabelFor(m => m.Question, new { @class = "lbll" })
+                                    @Html.TextBoxFor(m => m.Question, new { @class = "form-control form-control-user", @type = "text", @autocomplete = "off", @placeholder = "اكتب استفسارك هنا..." })
+                                    @Html.ValidationMessageFor(m => m.Question, "", new { @class = "help-block with-errors" })
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea class="form-control" id="message" placeholder="Your Message" rows="4" data-error="Write your message" required></textarea>
-                                    <div class="help-block with-errors"></div>
-                                </div>
+                                 
                                 <div class="submit-button text-center">
-                                    <button class="btn hvr-hover" id="submit" type="submit">Send Message</button>
+                                    <button id="btnSend" class="btn hvr-hover"  type="button">ارسل الان</button>
                                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -52,8 +52,7 @@
             </div>
             <div class="col-lg-4 col-sm-12">
                 <div class="contact-info-left">
-                    <h2>معلومات اضافية</h2>
-                    <p>اعرض لنا مشكلتك أو استفسارك عبر رسالة نصية وسيتم الرد والتواصل معك فى أقرب وقت ممكن على بريدك الالكترونى </p>
+                    <h2>طرق أخرى للتواصل</h2>
                     <ul>
                         <li>
                             <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 9000 <br>Preston Street Wichita,<br> KS 87213 </p>
@@ -64,7 +63,17 @@
                         <li>
                             <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
                         </li>
+
                     </ul>
+                 
+                        <h3 class="footer-title">صفاحتنا على مواقع التواصل الاجتماعى</h3>
+                        <ul>
+                            <li><a href="javascript:void(0)" title="صفحتنا على الفيسبوك"><i class="fab fa-facebook" aria-hidden="true"></i> الفيسبوك</a></li>
+                            <li><a href="javascript:void(0)" title="صفحتنا على تويتر"><i class="fab fa-twitter" aria-hidden="true"></i>تويتر</a></li>
+                            <li><a href="javascript:void(0)" title="صفحتنا على الانستجرام"><i class="fab fa-instagram" aria-hidden="true"></i>الانستجرام</a></li>
+                        </ul>
+                  
+
                 </div>
             </div>
         </div>
@@ -103,7 +112,6 @@
                     if (data.IsSuccess) {
                         clearFields();
                          successDialog(data.Message);
-                        bindDataTable(tblId, actionName, controllerName);
                     } else {
                         failedDialog(data.Message);
                     }
@@ -117,10 +125,7 @@
 
 
     var clearFields = function () {
-        $('#fName').val('');
-        $('#lName').val('');
-        $('#emailAddress').val('');
-        $('#questionText').val('');
+        $('#frmQuest').find("input").val("");
     }
     
     function enableBtn(btnId, message) {

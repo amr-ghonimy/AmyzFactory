@@ -17,7 +17,7 @@ namespace FeedApi
               {
 
                   cfg.CreateMap<QuestionairViewModel, QuestionaireDomainModel > ()
-                            .ForMember(dst => dst.UserName, src => src.MapFrom(e => e.FirstNAme +" "+ e.LastNAme))
+                            .ForMember(dst => dst.UserName, src => src.MapFrom(e => e.FullName))
                             .ForMember(dst => dst.Email, src => src.MapFrom(e => e.Email))
                             .ForMember(dst => dst.Question, src => src.MapFrom(e => e.Question))
                             .ReverseMap();

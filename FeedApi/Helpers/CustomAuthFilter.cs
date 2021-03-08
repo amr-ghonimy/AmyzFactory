@@ -46,20 +46,25 @@ namespace FeedApi.Helpers
                 context.ErrorResult = new AuthenticationFailureResult("Missing Token", request);
                 return;
             }
-  
-            tokenWithUserName = authorization.Parameter.Split(':');
-            string tokenNumber = tokenWithUserName[0];
-            string userName = tokenWithUserName[1];
 
-            string validUserName = TokenManager.validToken(tokenNumber);
 
-            if (validUserName != userName)
+           string token=authorization.Parameter;
+
+
+            // this for wibsite
+        //    tokenWithUserName = authorization.Parameter.Split(':');
+          //  string tokenNumber = tokenWithUserName[0];
+            //string userName = tokenWithUserName[1];
+
+     string validUserName = TokenManager.validToken(token);
+
+            if (string.IsNullOrEmpty(validUserName))
             {
                 context.ErrorResult = new AuthenticationFailureResult("Invalid token for User!", request);
                 return;
             }
 
-            context.Principal = TokenManager.GetPrincipal(tokenNumber);
+            context.Principal = TokenManager.GetPrincipal(validUserName);
 
         }
 

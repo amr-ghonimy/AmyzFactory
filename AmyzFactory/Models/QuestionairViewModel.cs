@@ -8,14 +8,11 @@ namespace AmyzFactory.Models
 {
     public class QuestionairViewModel
     {
+ 
 
-        [Required(ErrorMessage = "ادخل اسمك الأول")]
-        [Display(Name = "الاسم الأول")]
-        public string  FirstNAme { get; set; }
-
-        [Display(Name = "اسم العائلة")]
-        [Required(ErrorMessage = "ادخل اسم العائلة")]
-        public string LastNAme { get; set; }
+        [Display(Name = "الاســم")]
+        [Required(ErrorMessage = "ادخل الاســم")]
+        public string FullName { get; set; }
 
         [Display(Name = "البريد الالكترونى")]
         [EmailAddress(ErrorMessage ="من فضلك ادخل بريد الكترونى صحيح")]

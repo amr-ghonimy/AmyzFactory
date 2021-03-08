@@ -33,6 +33,15 @@ namespace AmyzFactory.Controllers
 
             return PartialView("~/Views/Shared/images/_sliders.cshtml", imagesVmList);
         }
+        public PartialViewResult _GetAllProducts()
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetAllProducts").Result;
+            List<ProductViewModel> products = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
+            //    GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = null;
+
+            return PartialView("~/Views/Product/_AllProducts.cshtml", products);
+        }
+        
 
         public ActionResult ProductQuality()
         {

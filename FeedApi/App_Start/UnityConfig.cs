@@ -21,7 +21,6 @@ namespace FeedApi
             container.RegisterType<IProductsBusiness, ProductsBusiness>();
             container.RegisterType<ICategoriesBusiness, CategoriesBusiness>();
             container.RegisterType<IImageBusiness, ImagesBusiness>();
-             container.RegisterType<IOrderUsersBusiness, OrderUserBusiness>();
             container.RegisterType<IOrdersBusiness, OrderBusiness>();
             container.RegisterType<IQuestionaireBusiness, QuestionaireBusiness>();
             container.RegisterType<IAuthBusiness, AuthBusiness>();

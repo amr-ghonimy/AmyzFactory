@@ -3,8 +3,11 @@ using AmyzFactory.Models;
 using AmyzFeed.Business;
 using AmyzFeed.Business.interfaces;
 using AutoMapper;
+using FeedApi.Helpers;
 using FeedApi.Models;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace FeedApi.Controllers.User
@@ -12,27 +15,75 @@ namespace FeedApi.Controllers.User
     public class OrderController : ApiController
     {
         private IOrdersBusiness orderAdminBusiness;
-        private IOrderUsersBusiness business;
         private readonly IMapper mapper;
 
-        public OrderController(IOrderUsersBusiness _business, IOrdersBusiness _orderAdminBusiness)
+        public OrderController(IOrdersBusiness _orderAdminBusiness)
         {
-            this.business = _business;
             this.orderAdminBusiness = _orderAdminBusiness;
             this.mapper = AutoMapperConfig.Mapper;
         }
 
-        [HttpPost]
-        public ResultDomainModel ConfirmOrder(OrderViewModel model)
+
+        private bool isAuthurized()
         {
-            OrderDomainModel orderDm = this.mapper.Map<OrderDomainModel>(model);
+            HttpRequestMessage request = this.ActionContext.Request;
+            AuthenticationHeaderValue authorization = request.Headers.Authorization;
 
-            ResultDomainModel resultDm = this.business.ConfirmOrder(orderDm);
 
-            ResultDomainModel resultVm = this.mapper.Map<ResultDomainModel>(resultDm);
+            if (authorization == null)
+            {
+                return false;
+            }
 
-            return resultVm;
+            if (!string.IsNullOrEmpty(authorization.Parameter))
+            {
+                string token = authorization.Parameter;
+
+                string isValid = TokenManager.validToken(token);
+
+                if (string.IsNullOrEmpty(isValid))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
+
+
         }
+
+        [HttpPost]
+        public IHttpActionResult ConfirmOrder(OrderDomainModel model)
+        {
+            if (!isAuthurized())
+            {
+                return Content(System.Net.HttpStatusCode.BadRequest, new ResultDomainModel(false, "You Unauthorized"));
+            }
+
+            if (string.IsNullOrEmpty(model.Addreess))
+            {
+                return Content(System.Net.HttpStatusCode.BadRequest, new ResultDomainModel(false, "enter address"));
+            }
+
+
+            if (string.IsNullOrEmpty(model.Addreess))
+            {
+                return Content(System.Net.HttpStatusCode.BadRequest, new ResultDomainModel(false, "enter address"));
+            }
+            
+            ResultDomainModel resultDm = this.orderAdminBusiness.ConfirmOrder(model);
+
+            if (resultDm.IsSuccess)
+            {
+
+                return Ok(resultDm);
+            }
+
+            return Content(System.Net.HttpStatusCode.BadRequest, resultDm);
+        }
+
         [HttpGet]
         public List<OrderDomainModel> getAllOrders(int pageNo, int displayLength)
         {

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<AmyzFactory.Models.ProductViewModel>
+
+
+
+
+<div class="instagram-box" dir="ltr">
+    <div class="main-instagram owl-carousel owl-theme">
+
+        @if (Model != null && Model.Count() > 0)
+        {
+
+            foreach (var item in Model)
+            {
+                <div class="item">
+                    <div class="ins-inner-box">
+                        <img src="@item.ImageURL" alt="" />
+                        <strong class="category-item-title center">' + @item.Name + '</strong>
+                        <div class="hov-in">
+                            <a href="@Url.Action("ProductDetails","Product",new { @id = item.Id })"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+

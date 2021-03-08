@@ -14,6 +14,22 @@
 
 
  <!-- Start Categories  -->
+
+<!-- End Categories -->
+ <!-- Start About Page  -->
+
+<div class="title-all text-center" style="margin-top:80px;">
+    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">معلومات<span style="color:#f19304;"> عنا </span></h1>
+</div>
+
+@{
+    Html.RenderAction("_GetInfo", "HomePreview");
+}
+
+<center>
+    <a id="moreInfo" class="btn btn-outline-success" href="@Url.Action("AboutUS","HomePreview")">المزيد</a>
+</center>
+
 <div class="categories-shop">
     <div class="container">
         <div class="row">
@@ -38,14 +54,10 @@
         </div>
     </div>
 </div>
-<!-- End Categories -->
- <!-- Start About Page  -->
-@{
-    Html.RenderAction("_GetInfo", "HomePreview");
-}
-<center>
-    <a id="moreInfo" class="btn btn-outline-success" href="@Url.Action("AboutUS","HomePreview")">المزيد</a>
-</center>
+
+
+
+
 
     <!-- End About Page -->
     <!-- Start Products  -->
@@ -70,18 +82,15 @@
 
     <div class="latest-blog">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="title-all text-center">
-                        <h1>المقالات</h1>
-                        <p>أجدد المقالات</p>
-                    </div>
-                </div>
+            <div class="title-all text-center" style="margin-top:80px;">
+                <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">معلومات<span style="color:#f19304;"> عنا </span></h1>
             </div>
+
             <div class="row"  style="justify-content: center;">
                 @{
                     Html.RenderAction("_GetArticles", "HomePreview");
                 }
+
 
 
             </div>
@@ -89,4 +98,26 @@
     </div>
 
 
+
+<div class="title-all text-center" style="margin-top:80px;">
+    <h1 style="color:#f19304;font-weight:500;font-size:35px;font-family:system-ui;">منتجاتنا</h1>
+</div>
+
+@{
+    Html.RenderAction("_GetAllProducts", "HomePreview");
+}
+
+ 
+
     <!-- End Blog  -->
+
+<script>
+
+    (function ($) {
+        "use strict";
+        // manual carousel controls
+        $('.prev').click(function () { $('.carousel').carousel('prev'); return false; });
+        $('.next').click(function () { $('.carousel').carousel('next'); return false; });
+       
+    })(jQuery);
+</script>

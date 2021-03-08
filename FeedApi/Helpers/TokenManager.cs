@@ -53,7 +53,7 @@ namespace FeedApi.Helpers
 
                 return principal;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                return null;

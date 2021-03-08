@@ -97,9 +97,7 @@
     <Compile Include="interfaces\IAuthBusiness.cs" />
     <Compile Include="interfaces\IQuestionaireBusiness.cs" />
     <Compile Include="interfaces\IOrdersBusiness.cs" />
-    <Compile Include="interfaces\IOrderUsersBusiness.cs" />
     <Compile Include="OrderBusiness.cs" />
-    <Compile Include="OrderUserBusiness.cs" />
     <Compile Include="QuestionaireBusiness.cs" />
     <Compile Include="ImagesBusiness.cs" />
     <Compile Include="interfaces\IAddressesBusiness.cs" />

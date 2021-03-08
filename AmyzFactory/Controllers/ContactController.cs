@@ -19,7 +19,7 @@ namespace AmyzFactory.Controllers
         [HttpPost]
         public JsonResult CreateQuest(QuestionairViewModel model)
         {
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/CreateQuest", model).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("ContactUs/CreateQuestionaire", model).Result;
 
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 

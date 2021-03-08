@@ -29,11 +29,7 @@ namespace AmyzFeed.Business
             this.productsRepository = new ProductRepository(this.unitOfWork);
         }
 
-
-        public bool DeleteOrder(int orderID)
-        {
-            throw new NotImplementedException();
-        }
+ 
 
         public List<OrderDomainModel> GetAllOrders()
         {
@@ -117,5 +113,130 @@ namespace AmyzFeed.Business
         {
            return this.repository.Count(x => x.UserID == userID);
         }
+
+
+
+        private ResultDomainModel initResult(bool isSuccess, string message)
+        {
+            return new ResultDomainModel() { IsSuccess = isSuccess, Message = message };
+        }
+
+
+
+        private int uplaodOrderDetails(OrderDomainModel order)
+        {
+            if (order != null)
+            {
+                List<OrderDetailsDomainModel> orderDetails = order.OrderDetailsList;
+                if (orderDetails != null && orderDetails.Count > 0)
+                {
+                    foreach (var item in orderDetails)
+                    {
+                        OrderDetail detail = new OrderDetail()
+                        {
+                            OrderID = order.OrderID,
+                            ProductID = item.ItemID,
+                            Price = item.Price,
+                            Quantity = item.Quantity,
+                            Total = item.Total
+                        };
+
+                        try
+                        {
+                            this.detailsRepository.Insert(detail);
+                        }
+                        catch (Exception e)
+                        {
+                            return 0;
+                     
+                        }
+
+                    }
+                    return 1;
+                }
+
+            }
+
+
+
+
+            return 0;
+        }
+
+        private int uploadOrderHeader(OrderDomainModel model)
+        {
+            Order order = new Order()
+            {
+                OrderDate = DateTime.Now,
+                OrderNumber = string.Format("{0:ddmmyyyHHmmsss}", DateTime.Now),
+                ShippingCost = 30,
+                ItemsCount = model.ItemsCount,
+                Address = model.Addreess,
+                Note = model.Notes,
+                TotalCost = model.OrderTotalPrice,
+                UserID = model.UserID
+            };
+
+            try
+            {
+                this.repository.Insert(order);
+                model.OrderID = order.OrderID;
+                return 1;
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+        }
+
+        private void deleteOrderHeader(int orderId)
+        {
+            this.repository.Delete(x => x.OrderID == orderId);
+        }
+
+
+        public ResultDomainModel ConfirmOrder(OrderDomainModel model)
+        {
+            if (model != null)
+            {
+                model.OrderDate = DateTime.Now;
+                int uploadOrderHeaderResult = this.uploadOrderHeader(model);
+
+                if (uploadOrderHeaderResult > 0)
+                {
+                    // lets uplaod order details
+
+                    int uploadOrderDetailsResult = this.uplaodOrderDetails(model);
+
+                    if (uploadOrderDetailsResult <= 0)
+                    {
+                        // remove Order header from Db 
+                        deleteOrderHeader(model.OrderID);
+                        return initResult(false, "هناك مشكلة فى ارسال الطلب");
+                    }
+
+                }
+                else
+                {
+                    return initResult(false, "هناك مشكلة فى ارسال الطلب");
+                }
+
+
+            }
+
+            return initResult(true, "تم ارسال طلبك بنجاح .. سنتواصل معك");
+        }
+
+        public bool DeleteOrder(int orderID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ResultDomainModel EditOrder(OrderDomainModel model)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

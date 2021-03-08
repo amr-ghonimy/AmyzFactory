@@ -18,5 +18,10 @@ namespace AmyzFeed.Business.interfaces
 
         List<OrderDetailsDomainModel> getOrderDetails(int orderID);
         int getAllOrdersCount();
+
+        ResultDomainModel ConfirmOrder(OrderDomainModel model);
+        ResultDomainModel EditOrder(OrderDomainModel model);
+
+
     }
 }

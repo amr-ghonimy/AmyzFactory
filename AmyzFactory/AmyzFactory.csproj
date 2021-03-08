@@ -420,6 +420,7 @@
     <Content Include="Views\Shared\LoginNavBarSection.cshtml" />
     <Content Include="Views\Order\OrderHeader.cshtml" />
     <Content Include="Views\HomePreview\ArticleDetails.cshtml" />
+    <Content Include="Views\Product\_AllProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\css\" />

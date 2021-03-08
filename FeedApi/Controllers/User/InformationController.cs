@@ -20,8 +20,7 @@ namespace FeedApi.Controllers.User
         public InformationController(IAddressesBusiness _addressBusiness, IImageBusiness _imagesBusiness)
         {
             this.addressBusiness = _addressBusiness;
-            this.imagesBusiness = _imagesBusiness;
-
+            this.imagesBusiness = _imagesBusiness; 
             this.mapper = AutoMapperConfig.Mapper;
         }
 
