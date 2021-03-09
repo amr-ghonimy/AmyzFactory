@@ -40,6 +40,12 @@ namespace FeedApi.Controllers.User
             string folderPath = Constans.infoImageFolderPath;
             return this.UploadImage(folderPath, Constans.infoImageResponse, 1);
         }
+        [HttpPost]
+        public IHttpActionResult UploadQualityImage()
+        {
+            string folderPath = Constans.qualityImageFolderPath;
+            return this.UploadImage(folderPath, Constans.qualityImageResponse, 1);
+        }
 
 
 

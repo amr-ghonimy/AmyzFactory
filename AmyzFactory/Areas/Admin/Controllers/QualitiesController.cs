@@ -1,8 +1,12 @@
 ﻿using AmyzFactory.App_Start;
 using AmyzFactory.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -39,11 +43,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         public JsonResult UploadQualityImage(TextsViewModel image)
         {
+            TextsViewModel imageResult = this.uploadImage(image.ImageFile, "Images/UploadQualityImage/");
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Categories/UploadQualityImage", image).Result;
-            TextsViewModel imageVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
-
-            return Json(imageVm, JsonRequestBehavior.AllowGet);
+            return Json(imageResult, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult getQualityImages()
@@ -64,6 +66,66 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+
+
+        private TextsViewModel uploadImage(HttpPostedFileBase file, string apiPath)
+        {
+
+            using (var content = new MultipartFormDataContent())
+            {
+                MemoryStream target = new MemoryStream();
+                file.InputStream.CopyTo(target);
+                byte[] Bytes = target.ToArray();
+
+
+                file.InputStream.Read(Bytes, 0, Bytes.Length);
+                var fileContent = new ByteArrayContent(Bytes);
+                fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = file.FileName };
+
+
+                content.Add(fileContent);
+
+
+                // content.Add(new StringContent(imageUniqueKey), "FileId");
+                //content.Headers.Add("Key", "abc23sdflsdf");
+
+                var response = GlobalVariables.WebApiClient.PostAsync(apiPath, content).Result;
+
+                string result = response.Content.ReadAsStringAsync().Result;
+                ResultViewModel resultVm = JsonConvert.DeserializeObject<ResultViewModel>(result);
+
+                TextsViewModel textVm = null;
+
+                if (resultVm.Data != null)
+                {
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    ImagesViewModel imgVm = js.Deserialize<ImagesViewModel>(resultVm.Data.ToString());
+
+
+
+                    textVm = new TextsViewModel()
+                    {
+                        Id = imgVm.Id,
+                        ImageUrl = imgVm.ImageUrl,
+                        Title = imgVm.Title,
+                        Result = resultVm
+                    };
+                }
+                else
+                {
+
+                    textVm = new TextsViewModel()
+                    {
+                        Result = resultVm
+                    };
+                }
+
+                return textVm;
+            }
+
+        }
+
 
     }
 }

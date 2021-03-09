@@ -115,12 +115,7 @@
      padding: 12px 40px;
      font-size: 16px;
 }
-.header-pages{
-	color:#f19304;
-	font-weight:350;
-	font-size:35px;
-	font-family:system-ui;
-}
+
  .lead {
      font-size: 18px;
      line-height: 30px;
@@ -899,9 +894,7 @@ font-size: 15px;
 }
 
 /*------------------------------------------------------------------ Products -------------------------------------------------------------------*/
- .title-all{
-     margin-bottom: 50px;
-}
+ 
  .title-all h1{
      font-size: 32px;
      font-weight: 700;
@@ -1122,7 +1115,7 @@ text-align:right;
 
 /*------------------------------------------------------------------ Blog -------------------------------------------------------------------*/
  .latest-blog{
-     padding: 70px 0px;
+     padding: 5px 0px;
      background: #f5f5f5;
 }
  .blog-box{
@@ -1601,7 +1594,7 @@ text-align: right;
      color: #000000;
 }
  .about-box-main{
-     padding: 70px 0px;
+     padding: 20px 0px;
 }
  .noo-sh-title{
      font-size: 28px;
@@ -2757,7 +2750,12 @@ right:5%;
 
 
 
-
+.header-pages{
+	color:#f19304;
+	font-weight:350;
+	font-size:35px;
+	font-family:system-ui;
+}
 
 
 

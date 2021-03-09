@@ -1,9 +1,7 @@
 {
-  "Title": "aqwer",
-  "SubTitle": "inj",
-  "Description": "uiu",
+  "Title": "عمرو",
+  "SubTitle": "محمد ",
+  "Description": "صالح",
   "ImageUrl": null,
-  "ImageFile": null,
-  "Id": 0,
-  "PicData": null
+  "Id": 0
 }

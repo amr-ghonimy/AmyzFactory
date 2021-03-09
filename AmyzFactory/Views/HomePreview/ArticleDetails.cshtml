@@ -3,22 +3,41 @@
     ViewBag.Title = "ArticleDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<div style="margin-top:25px;">
-    <h2 class="noo-sh-title-top footer-title" style="text-align:center;">@Model.Title</h2>
-</div>
+ 
 <div class="about-box-main">
    
      <div class="container">
+         <div class="title-all" style="margin-top:20px;text-align:right">
+             <h1 class="header-pages">"@Model.Title"</h1>
+         </div>
+
+         <div class="title-all" style="margin-top:2.5px;text-align:right">
+             <hp class="footer-title">@Model.SubTitle</hp>
+         </div>
         
          <div class="banner-frame" style="text-align:center;">
-             <img  class="shadow-img" width="50%" height="auto" src="@Model.ImageUrl" alt="centered image"  />
+             <img  width="90%" height="500px"  style="margin-bottom:40px;margin-top:20px;" src="@Model.ImageUrl" alt="centered image"  />
          </div> 
 
-         <p class="footer-text" style="margin-top:35px;">
-             @Model.Description
-         </p>
+ 
+
+         @if (Model.Description != null)
+         {
+             using (StringReader reader = new StringReader(Model.Description))
+             {
+                 string line;
+            <ul>
+                @while ((line = reader.ReadLine()) != null)
+                    {
+
+                    <li class="footer-text">@line</li>
+
+                }
+            </ul>
+              
+           
+             }
+         }
 
     
 

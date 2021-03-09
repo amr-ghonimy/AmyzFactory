@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using System.Net.Http;
 using System.Web.Script.Serialization;
 using AmyzFeed.Repository.Data;
+using System.Net.Http.Headers;
 
 namespace AmyzFactory.Controllers
 {
@@ -132,6 +133,13 @@ namespace AmyzFactory.Controllers
 
         private ResultViewModel confirmOrderFromApi(OrderViewModel order)
         {
+            //   string tokenNumber = Session["TokenNumber"]?.ToString() + ":" + Session["UserName"];
+            string tokenNumber = Session["TokenNumber"]?.ToString();
+
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer", tokenNumber);
+
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Order/ConfirmOrder", order).Result;
             return response.Content.ReadAsAsync<ResultViewModel>().Result;
         }

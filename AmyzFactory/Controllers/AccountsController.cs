@@ -85,10 +85,10 @@ namespace AmyzFactory.Controllers
             }else
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
+                UserViemModel user = js.Deserialize<UserViemModel>(result.Data.ToString());
 
                 // store user is logined in our website
-                await this.signIn(user);
+            //    await this.signIn(user);
 
                 UserViemModel userVm = new UserViemModel()
                 {

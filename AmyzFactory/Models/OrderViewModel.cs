@@ -35,7 +35,6 @@ namespace AmyzFactory.Models
 
         public double OrderTotalPrice { get; set; }
         public int ItemsCount { get; set; }
-
  
         public List<OrderDetailsViewModel> OrderDetailsList { get; set; }
 

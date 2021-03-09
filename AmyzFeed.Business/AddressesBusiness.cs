@@ -5,6 +5,7 @@ using AmyzFeed.Domain;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -21,11 +22,12 @@ namespace AmyzFeed.Business
             this.resultModel = _resultModel;
         }
 
-        private ResultDomainModel initResultModel(bool isSuccess,string message,object data=null)
+        private ResultDomainModel initResultModel(bool isSuccess,string message,int modelID=0,object data=null)
         {
             this.resultModel.IsSuccess = isSuccess;
             this.resultModel.Message = message;
             this.resultModel.Data = data;
+            this.resultModel.modelID = modelID;
             return resultModel;
         }
 
@@ -51,7 +53,7 @@ namespace AmyzFeed.Business
             try
             {
                 File.WriteAllText(filePath, convertedJson);
-                return initResultModel(true, "Insertion Success!!");
+                return initResultModel(true, "Insertion Success!!",modelID:model.Id);
             }
             catch (Exception)
             {
@@ -148,6 +150,9 @@ namespace AmyzFeed.Business
         public ResultDomainModel createArticle(TextsDomainModel model, string filePath)
         {
             var list = new List<TextsDomainModel>();
+
+            model.SubTitle= DateTime.Now.ToString("dd dddd , MMMM, yyyy", new CultureInfo("ar-AE"));
+
 
             string textJson = File.ReadAllText(filePath);
 
@@ -249,7 +254,7 @@ namespace AmyzFeed.Business
 
                 item.ImageUrl = Constans.ServerFile + item.ImageUrl;
 
-                return initResultModel(true, "Article is Exists!!", item);
+                return initResultModel(true, "Article is Exists!!", data:item);
 
             }
  

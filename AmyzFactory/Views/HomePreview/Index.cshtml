@@ -26,35 +26,36 @@
     Html.RenderAction("_GetInfo", "HomePreview");
 }
 
-<center>
+<center style="margin-bottom:15px;">
     <a id="moreInfo" class="btn btn-outline-success" href="@Url.Action("AboutUS","HomePreview")">المزيد</a>
 </center>
 
-<div class="categories-shop">
+
+<div class="box-add-products">
     <div class="container">
         <div class="row">
+
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
-                    <img class="img-fluid" src="~/Content/img/categories_img_01.jpg" alt="" />
-                    <a class="btn hvr-hover" href="../Product/ProductsPrices">أسعار المنتجات</a>
+                    <img class="img-fluid" src="~/Content/img/prices.png" alt="" />
+                    <a class="btn hvr-hover" href="@Url.Action("ProductsPrices","Product")">أسعار المنتجات</a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
-                    <img class="img-fluid" src="~/Content/img/categories_img_02.jpg" alt="" />
+                    <img class="img-fluid" src="~/Content/img/quality.jpg" alt="" />
                     <a class="btn hvr-hover" href="../HomePreview/ProductQuality">الرقابة والجودة</a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
-                    <img class="img-fluid" src="~/Content/img/categories_img_03.jpg" alt="" />
+                    <img class="img-fluid" src="~/Content/img/feeding.jpg" alt="" />
                     <a class="btn hvr-hover" href="#">برامج التغذية</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 
@@ -79,9 +80,7 @@
 
     <div class="latest-blog">
         <div class="container">
-            <div class="title-all text-center" style="margin-top:80px;">
-                <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">المقالات و<span style="color:#f19304;"> الأخبار </span></h1>
-            </div>
+       
 
             <div class="row"  style="justify-content: center;">
                 @{
@@ -96,7 +95,7 @@
 
 
 
-<div class="title-all text-center" style="margin-top:80px;">
+<div class="title-all text-center" style="margin-top:80px;margin-bottom:80px;">
     <h1 style="color:#f19304;font-weight:500;font-size:35px;font-family:system-ui;">منتجاتنا</h1>
 </div>
 

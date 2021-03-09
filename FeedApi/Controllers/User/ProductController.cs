@@ -83,6 +83,7 @@ namespace FeedApi.Controllers.User
         }
         
 
+        [HttpGet]
         public IEnumerable<ProductsViewModel> SearchInProducts(string word, int pageNo, int displayLength)
         {
             List<ProductDomainModel> listDm = this.productsBusiness.SearchInAllProducts(word, pageNo, displayLength, GetRole());
@@ -112,8 +113,23 @@ namespace FeedApi.Controllers.User
             return productsList;
         }
 
+        public IEnumerable<ProductsViewModel> GetAllPrices(int pageNo, int displayLengt)
+        {
+            List<ProductDomainModel> listDm = this.productsBusiness.getAllPrices(pageNo,displayLengt, GetRole());
 
-        
+            return this.mapper.Map<List<ProductsViewModel>>(listDm);
+        }
+
+        [HttpPut]
+        public IHttpActionResult UpdatePrices(List<ProductDomainModel> products)
+        {
+          ResultDomainModel result=  this.productsBusiness.updatePrices(products);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return Content(HttpStatusCode.BadRequest, result);
+        }
 
         public IHttpActionResult GetProductById(int id)
         {

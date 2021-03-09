@@ -6,10 +6,11 @@
     var emails = ViewBag.Emails;
 }
 
+ 
 
 <div class="shop-box-inner">
     <div class="container">
-        <div class="title-all" style="margin-top:20px;text-align:right">
+        <div class="title-all" style="text-align:right">
             <h1 class="header-pages">من نحن</h1>
         </div>
 
@@ -24,6 +25,59 @@
     </div>
 </div>
 
+
+
+ <!-- Start My Account  -->
+<div class="my-account-box-main">
+    <div class="container">
+        <div class="my-account-page">
+            <div class="row">
+
+                <div class="col-lg-2">
+                   
+                </div>
+              
+                <div class="col-lg-4 col-md-12">
+                    <div class="account-box">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <a href="#"><i class="fas fa-clock"></i> </a>
+                            </div>
+                            <div class="service-desc">
+                                <h4>أوقــات العمــل</h4>
+                                <p>من الأحد الى الخميس</p>
+                                <p>من الساعة 8 صباحا الى الساعة 5 مساءا</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="account-box">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <a href="#"> <i class="fas fa-map-marker-alt"></i> </a>
+                            </div>
+                            <div class="service-desc">
+                                <h4>عنــوان المصنــع</h4>
+                                <p>قويسنا المنوفية بجوار ستاحة الطلائع طريق جيهان اتجاه القاهرة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End My Account -->
+
+
+
+ 
+ 
 <div class="row my-5">
 
 
@@ -35,7 +89,7 @@
             <h3 class="footer-title">أرقامنا</h3>
             @foreach (var item in phones)
             {
-                <p class="footer-text"> <strong>@item.Title:</strong> <span> @item.Value</span> </p>
+                <p class="footer-text"> <b>@item.Title:</b> <span> @item.Value</span> </p>
             }
         </div>
     </div>
@@ -44,7 +98,7 @@
             <h3 class="footer-title">حساباتنا الالكترونية</h3>
             @foreach (var item in emails)
             {
-                <p class="footer-text"> <strong>@item.Title: </strong> <span> @item.Value</span> </p>
+                <p class="footer-text"> <b>@item.Title: </b> <span> @item.Value</span> </p>
             }
         </div>
     </div>

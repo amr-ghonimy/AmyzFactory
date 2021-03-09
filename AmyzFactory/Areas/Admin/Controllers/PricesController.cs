@@ -23,11 +23,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         
 
     
-    [HttpPost]
+      [HttpPost]
         public JsonResult UpdatePrices(IEnumerable<ProductViewModel> list)
         {
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Product/UpdatePrices", list).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PutAsJsonAsync("Product/UpdatePrices", list).Result;
             ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel> ().Result;
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);

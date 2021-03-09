@@ -1,5 +1,6 @@
-﻿using AmyzFactory.Models;
- using Newtonsoft.Json;
+﻿using AmyzFactory.App_Start;
+using AmyzFactory.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +11,8 @@ using System.Web.Mvc;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
+    [AdminAuthorize(Roles = "Admins")]
+
     public class ArticlesController : Controller
     {
 
