@@ -108,6 +108,14 @@
   border-radius:25px;
  }
 
+.content-description{
+ margin:40px;
+}
+
+.center {
+  width: 50%;
+}
+
  .btn-custom {
      margin-top: 20px;
      background-color: transparent !important;
@@ -115,7 +123,9 @@
      padding: 12px 40px;
      font-size: 16px;
 }
-
+.more-btn{
+margin:15px;
+}
  .lead {
      font-size: 18px;
      line-height: 30px;
@@ -904,9 +914,7 @@ font-size: 15px;
      color: #999999;
      font-size: 16px;
 }
- .products-box{
-     padding: 70px 0px;
-}
+ 
  .special-menu{
      margin-bottom: 40px;
 }
@@ -1187,7 +1195,7 @@ text-align:right;
 }
 /*------------------------------------------------------------------ Instagram Feed -------------------------------------------------------------------*/
  .instagram-box{
-     padding: 70px 0px;
+     padding: 0px 0px;
      background: url(../images/ins-bg.jpg) no-repeat center center;
      background-size: auto auto;
      -webkit-background-size: cover;
@@ -1208,7 +1216,7 @@ text-align:right;
      z-index: 0;
 }
  .main-instagram.owl-carousel .owl-nav button.owl-prev{
-     background: #000000;
+     background: #010;
      position: absolute;
      z-index: 1;
      display: block;
@@ -1228,7 +1236,7 @@ text-align:right;
      transition: all 0.3s ease;
 }
  .main-instagram.owl-carousel .owl-nav button.owl-next{
-     background: #000000;
+     background: #010;
      position: absolute;
      z-index: 1;
      display: block;
@@ -1794,7 +1802,7 @@ text-align: right;
      border-bottom: 2px solid #62A73C;
 }
  .shop-box-inner{
-     padding: 70px 0px;
+     padding: 20px 0px;
 }
  .search-product {
      position: relative;
@@ -2080,7 +2088,7 @@ text-align:center;
      animation: bounceY 0.9s linear;
 }
  .cart-box-main{
-     padding: 70px 0px;
+     padding: 20px 0px;
 }
  .table-main table thead{
      background: #62A73C;
@@ -2403,13 +2411,13 @@ text-align:center;
      border: none;
 }
  .wishlist-box-main{
-     padding: 70px 0px;
+     padding: 20px 0px;
 }
  .services-box-main{
      padding: 70px 0px;
 }
  .contact-box-main{
-     padding: 70px 0px;
+     padding: 20px 0px;
 }
  .contact-info-left{
      padding: 20px;
@@ -2750,22 +2758,70 @@ right:5%;
 
 
 
-.header-pages{
+.page-define{
 	color:#f19304;
-	font-weight:350;
-	font-size:35px;
+	font-weight:500;
+	font-size:25px;
 	font-family:system-ui;
+margin-top:15px;
+margin-bottom:15px;
+text-align:right;
 }
 
 
 
+.product-items{
+margin: 8px;
+}
 
 
-
-
-
-
-
-
+.product-img{
+border-radius: 15px;
  
+  background-position: left top;
+  background-repeat: repeat;
+
+}
+
+.produc-name{
+color:#fff;
+font-size:14px;
+font-weight: 500;
+text-align:center;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin-top:10px;
+}
+
+
+
+.department-name{
+    color:rgb(98, 167, 60);
+    font-size:18px;
+    font-weight: 500;
+    text-align:right;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-top:10px;
+    }
+    
+    .category-name{
+        color: #000;;
+        font-size:14px;
+        font-weight: 500;
+        text-align:right;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin-top:5px;
+        margin-right: 15px;
+        }
+
+        .product-catg-name{
+            color: #000;;
+            font-size:14px;
+            font-weight: 500;
+            text-align:center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin-top:5px;
+         
+            }
+
+
  

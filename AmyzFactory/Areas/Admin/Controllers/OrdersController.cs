@@ -41,9 +41,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
             
             
 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Orders/GetOrderOfUserCount"+UserID).Result;
-            int ordersCount = response.Content.ReadAsAsync<int>().Result;
-            ViewBag.NumberOfOrders = ordersCount;
+          //  HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Order/GetOrderOfUserCount"+UserID).Result;
+           // int ordersCount = response.Content.ReadAsAsync<int>().Result;
+           // ViewBag.NumberOfOrders = ordersCount;
 
 
             return PartialView("~/Areas/Admin/Views/Orders/_UserInfo.cshtml", user);
@@ -90,7 +90,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public ActionResult OrderDetails(int orderID,string userID)
         {
             ViewBag.UserID = userID;
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Orders/GetOrderDetails"+orderID).Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Order/GetOrderDetails?id=" + orderID).Result;
             List<OrderDetailsViewModel> orderDetailsVm = response.Content.ReadAsAsync<List<OrderDetailsViewModel>>().Result;
             
             return View(orderDetailsVm);
@@ -99,7 +99,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<OrderViewModel> getAllOrders(int pageNo, int displayLength)
         {
-            string url = "Order/getAllOrders?pageNo=" + pageNo + "&displayLength=" + displayLength;
+            string url = "Order/GetAllOrders?pageNo=" + pageNo + "&displayLength=" + displayLength;
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
             List<OrderViewModel> newList = response.Content.ReadAsAsync<List<OrderViewModel>>().Result;
             return newList;

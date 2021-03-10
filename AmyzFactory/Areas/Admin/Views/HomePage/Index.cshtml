@@ -117,7 +117,63 @@
     </article>
 </section> <!-- End Add & Delet photo Information -->
 
- 
+
+ <section class="head-page-edit-home">
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <header style="margin-top: 25px;">
+                    <h2><i class="fa fa-list-alt"></i>&nbsp;&nbsp;Edit Photo Responsibility</h2>
+                </header>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="container">
+    <article id="slider-edit">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <caption>You can Add / Delete Photo Responsibilty </caption>
+                <form>
+                    <thead>
+                        <tr>
+
+                            <th class="form-group">
+                                <label for="imageInput">PC Image :</label>
+                                <input id="responImageInput" type="file" name="image" onchange="viewImageFile('#responImageInput', '#responDescription', '#respontargetImg', '#responPreview', 0, 0)">
+                            </th>
+
+                            <th><label>Actions</label></th>
+
+                            <div>
+                                <div id="responPreview" class="thumbnail" style="display:none">
+                                    <img class="img-responsive" id="respontargetImg" width="120" height="80" />
+                                    <div class="caption">
+                                        <a href="#" onclick="clearPreview()"> Clear </a>
+                                        <span id="responDescription"></span>
+                                    </div>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#responImageInput', 'UploadResponsiblityImage', 'HomePage', 'TblResponBody', '#responDescription', '#responPreview', 'DeleteResponsiblityImage')" data-dismiss="modal">Upload</button>
+                                    <hr />
+                                </div>
+                            </div>
+
+                        </tr>
+
+                    </thead>
+                </form>
+
+                <tbody id="TblResponBody"></tbody>
+
+            </table>
+           
+             @{
+                Html.RenderPartial("~/Areas/Admin/Views/HomePage/partial/_Responsibilty.cshtml");
+            }
+
+        </div>
+    </article>
+</section> <!-- End Add & Delet Responsibility -->
 
 
 
@@ -180,9 +236,10 @@
     $(document).ready(function () {
         getImages("GetSliders", "HomePage", "TblSlidersBody", "DeleteSlider");
         getImages("GetInfoImage", "HomePage", "TblInfoBody", "DeleteInfoImage");
+        getImages("GetResponsibilityImage", "HomePage", "TblResponBody", "DeleteResponsiblityImage");
     })
 
-
+    
 
     // Ed from Images Functions
 
@@ -206,6 +263,22 @@
         });
 
     })
+
+
+    $(document).ready(function () {
+        $.ajax({
+            url: "/HomePage/GetResponsibilityText",
+            type: "Get",
+            dataType: "json",
+            success: function (data) {
+                $('#headerResTitle').attr("value", data.Title);
+                $('#subResTitle').attr("value", data.SubTitle);
+                $('#ResDesc').val(data.Description);
+            }
+        });
+
+    })
+
 
    
     var drawAddress = function (address, DeleteActionName, Controller, TblContainer) {
@@ -297,14 +370,14 @@
 
     
 
-      var updateInfoTexts = function (btnID) {
+    var updateResponTexts = function (btnID) {
 
           disableBtn(btnID);
 
-        var formData = $("#frmInfo").serialize();
+          var formData = $("#frmRespon").serialize();
 
         $.ajax({
-            url: "/HomePage/CreateUpdateInfo",
+            url: "/HomePage/CreateUpdateResponsibility",
             type: "Post",
             data: formData,
             dataType: "json",
@@ -318,7 +391,28 @@
 
     }
 
-   
+      var updateInfoTexts = function (btnID) {
+
+          disableBtn(btnID);
+
+          var formData = $("#frmInfo").serialize();
+          
+          $.ajax({
+              url: "/HomePage/CreateUpdateInfo",
+              type: "Post",
+              data: formData,
+              dataType: "json",
+              success: function (data) {
+
+                  enableBtn(btnID, "Update");
+
+                  successDialog(data.Result.Message);
+              }
+          });
+
+      }
+
+
       function enableBtn(btnId,message) {
           $(btnId).html(message);
           $(btnId).prop('disabled', false);

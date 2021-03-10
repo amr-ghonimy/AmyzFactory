@@ -1,16 +1,11 @@
 ﻿using AmyzFactory.Models;
-using AmyzFeed.Business;
-using AmyzFeed.Business.interfaces;
+ using AmyzFeed.Business.interfaces;
 using AmyzFeed.FeedApi.Helpers;
 using AutoMapper;
-using FeedApi.Helpers;
-using FeedApi.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
+ using FeedApi.Model;
+ using System.Collections.Generic;
+ using System.Net;
+ using System.Web;
 using System.Web.Http;
 
 namespace FeedApi.Controllers.User
@@ -47,7 +42,12 @@ namespace FeedApi.Controllers.User
             return this.UploadImage(folderPath, Constans.qualityImageResponse, 1);
         }
 
-
+        [HttpPost]
+        public IHttpActionResult UploadResponsibiltyImage()
+        {
+            string folderPath = Constans.responsibiltyImageFolderPath;
+            return this.UploadImage(folderPath, Constans.responsibiltyImageResponse, 1);
+        }
 
         private IHttpActionResult UploadImage(string folderPath,string response,int imageCountValidation)
         {

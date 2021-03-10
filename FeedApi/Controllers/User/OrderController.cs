@@ -2,6 +2,7 @@
 using AmyzFactory.Models;
 using AmyzFeed.Business;
 using AmyzFeed.Business.interfaces;
+using AmyzFeed.Domain;
 using AutoMapper;
 using FeedApi.Helpers;
 using FeedApi.Models;
@@ -85,14 +86,23 @@ namespace FeedApi.Controllers.User
         }
 
         [HttpGet]
-        public List<OrderDomainModel> getAllOrders(int pageNo, int displayLength)
+        public List<OrderDomainModel> GetAllOrders(int pageNo, int displayLength)
         {
             List<OrderDomainModel> dm = this.orderAdminBusiness.getAllOrders(pageNo,displayLength);
             return dm;
         }
 
+        
+       
 
 
+        [HttpGet]
+        public List<OrderDetailsDomainModel> GetOrderDetails(int id)
+        {
+            List<OrderDetailsDomainModel> dm = this.orderAdminBusiness.getOrderDetails(id);
+
+            return dm;
+        }
 
         [HttpGet]
         public int GetAllOrdersCount()

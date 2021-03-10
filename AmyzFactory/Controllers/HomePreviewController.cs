@@ -69,6 +69,15 @@ namespace AmyzFactory.Controllers
             return PartialView("~/Views/Shared/_Categories.cshtml", categsVm);
         }
 
+
+        public PartialViewResult _GetResponsibilty()
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetResponsibilityText").Result;
+            TextsViewModel model = response.Content.ReadAsAsync<TextsViewModel>().Result;
+
+            return PartialView("~/Views/Shared/images/_responsibilty.cshtml", model);
+        }
+
         // GET: Default
         public ActionResult Index()
         {

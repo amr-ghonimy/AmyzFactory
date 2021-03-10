@@ -54,8 +54,23 @@ namespace FeedApi.Controllers.User
             TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
             return vm;
         }
-   
-    
+
+        public TextsViewModel GetResponsibilityText()
+        {
+            TextsDomainModel dm = this.addressBusiness.getTexts(Constans.responsibiltyFilePath);
+
+            List<ImageDomainModel> images = this.imagesBusiness.getImages(Constans.responsibiltyImageFolderPath, Constans.responsibiltyImageResponse);
+
+            if (images != null && images.Count > 0)
+            {
+                dm.ImageUrl = images[0].ImageUrl;
+            }
+
+            TextsViewModel vm = this.mapper.Map<TextsViewModel>(dm);
+            return vm;
+        }
+
+        
 
         public IEnumerable<ContactViewModel> GetEmails()
         {
@@ -65,6 +80,7 @@ namespace FeedApi.Controllers.User
 
             return vm;
         }
+
         public IEnumerable<ContactViewModel> GetPhones()
         {
             List<ContactDomainModel> dm = this.addressBusiness.getContacts(Constans.phonesFilePath);
@@ -99,8 +115,6 @@ namespace FeedApi.Controllers.User
                     new ResultDomainModel(false, ex.Message));
             }
         }
-
-        
 
         [HttpPost]
         public IHttpActionResult CreateQuality(TextsViewModel model)
@@ -151,8 +165,31 @@ namespace FeedApi.Controllers.User
             }
         }
 
-       
-       
+
+        [HttpPost]
+        public IHttpActionResult CreateUpdateResponsibility(TextsViewModel model)
+        {
+            if (model == null)
+            {
+                return Content(HttpStatusCode.BadRequest,
+                    new ResultDomainModel(false, "No data came!"));
+            }
+
+            try
+            {
+                TextsDomainModel dm = this.mapper.Map<TextsDomainModel>(model);
+                ResultDomainModel result = this.addressBusiness.createOrUpdateFile(dm, Constans.responsibiltyFilePath);
+                result.Data = model;
+
+                return Ok(result);
+            }
+            catch (System.Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest,
+                    new ResultDomainModel(false, ex.Message));
+            }
+        }
+
         [HttpPost]
         public IHttpActionResult CreatePhone(ContactViewModel model)
         {
@@ -177,6 +214,7 @@ namespace FeedApi.Controllers.User
                     new ResultDomainModel(false, ex.Message));
             }
         }
+
         [HttpPost]
         public IHttpActionResult CreateEmail(ContactViewModel model)
         {
@@ -249,8 +287,6 @@ namespace FeedApi.Controllers.User
             }
 
         }
-
-      
 
     }
 }

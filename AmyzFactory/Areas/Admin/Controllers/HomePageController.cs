@@ -43,6 +43,14 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return Json(imagesVm, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetResponsibilityImage()
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetResponsibilityImages").Result;
+            var imagesVm = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
+            return Json(imagesVm, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult DeleteSlider(string imageName)
         {
@@ -63,8 +71,17 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult DeleteResponsiblityImage(string imageName)
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.DeleteAsync("Images/DeleteResponsiobilityImage?imageName=" + imageName).Result;
+
+            ResultViewModel resultVm = response.Content.ReadAsAsync<ResultViewModel>().Result;
 
 
+            return Json(resultVm, JsonRequestBehavior.AllowGet);
+        }
+        
         private TextsViewModel uploadImage(HttpPostedFileBase file, string apiPath)
         {
 
@@ -140,6 +157,14 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return Json(imageResult, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult UploadResponsiblityImage(TextsViewModel image)
+        {
+            TextsViewModel imageResult = this.uploadImage(image.ImageFile, "Images/UploadResponsibiltyImage/");
+
+            return Json(imageResult, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         public ActionResult CreatePhone(ContactViewModel phoneVm)
@@ -181,7 +206,18 @@ namespace AmyzFactory.Areas.Admin.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        
+        [HttpPost]
+        public JsonResult CreateUpdateResponsibility(TextsViewModel model)
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Information/CreateUpdateResponsibility", model).Result;
+
+            var result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            model.Id = result.modelID;
+            model.Result = result;
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public ActionResult CreateEmail(ContactViewModel model)
@@ -195,7 +231,6 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
-
 
 
         [HttpGet]
@@ -222,11 +257,23 @@ namespace AmyzFactory.Areas.Admin.Controllers
         }
 
 
-        
+
+        [HttpGet]
+        public JsonResult GetResponsibilityText()
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetResponsibilityText").Result;
+
+            var model = response.Content.ReadAsAsync<TextsViewModel>().Result;
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
 
 
 
-      
+
+
+
+
         [HttpGet]
         public JsonResult DeleteEmail(int id)
         {

@@ -18,18 +18,9 @@
 <!-- End Categories -->
  <!-- Start About Page  -->
 
-<div class="title-all text-center" style="margin-top:80px;">
-    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">معلومات<span style="color:#f19304;"> عنا </span></h1>
+<div class="title-all text-center content-description">
+    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">خدمات<span style="color:#f19304;"> أميز </span></h1>
 </div>
-
-@{
-    Html.RenderAction("_GetInfo", "HomePreview");
-}
-
-<center style="margin-bottom:15px;">
-    <a id="moreInfo" class="btn btn-outline-success" href="@Url.Action("AboutUS","HomePreview")">المزيد</a>
-</center>
-
 
 <div class="box-add-products">
     <div class="container">
@@ -60,21 +51,54 @@
 
 
 
+
+<div class="title-all text-center content-description">
+    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">الأقسام الرئيسية و<span style="color:#f19304;"> الفرعية </span></h1>
+</div>
+<div class="products-box">
+    <div class="container">
+
+        @{
+            Html.RenderAction("_GetDepartments", "HomePreview");
+        }
+
+    </div>
+</div>
+
+
+
+<div class="title-all text-center content-description">
+    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">تصفح<span style="color:#f19304;"> منتجاتنا </span></h1>
+</div>
+
+@{
+    Html.RenderAction("_GetAllProducts", "HomePreview");
+}
+
+
+
+
+
+
+
+<div class="title-all text-center content-description">
+    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">معلومات<span style="color:#f19304;"> عنا </span></h1>
+</div>
+
+@{
+    Html.RenderAction("_GetInfo", "HomePreview");
+}
+
+<div class="center">
+    <a id="moreInfo" class="btn btn-outline-success more-btn" href="@Url.Action("AboutUS","HomePreview")">المزيد</a>
+</div>
+
+
+
     <!-- End About Page -->
     <!-- Start Products  -->
 
- <div class="title-all text-center" style="margin-top:80px;">
-    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">الأقسام الرئيسية و<span style="color:#f19304;"> الفرعية </span></h1>
-</div>
-    <div class="products-box">
-        <div class="container">
-          
-            @{
-                Html.RenderAction("_GetDepartments", "HomePreview");
-            }
 
-        </div>
-    </div>
     <!-- End Products  -->
     <!-- Start Blog  -->
 
@@ -94,26 +118,22 @@
     </div>
 
 
+ 
 
-<div class="title-all text-center" style="margin-top:80px;margin-bottom:80px;">
-    <h1 style="color:#f19304;font-weight:500;font-size:35px;font-family:system-ui;">منتجاتنا</h1>
+<div class="title-all text-center content-description">
+    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">المسئوليات و<span style="color:#f19304;"> المهام </span></h1>
 </div>
 
 @{
-    Html.RenderAction("_GetAllProducts", "HomePreview");
+    Html.RenderAction("_GetResponsibilty", "HomePreview");
 }
 
  
 
+
+
+
+
+
     <!-- End Blog  -->
-
-<script>
-
-    (function ($) {
-        "use strict";
-        // manual carousel controls
-        $('.prev').click(function () { $('.carousel').carousel('prev'); return false; });
-        $('.next').click(function () { $('.carousel').carousel('next'); return false; });
-       
-    })(jQuery);
-</script>
+ 

@@ -1,0 +1,24 @@
+﻿
+
+
+@model AmyzFactory.Models.TextsViewModel
+
+<form id="frmRespon">
+    <div class="container">
+        <label for="imgNameInput">Main Title:</label>
+        @Html.TextBoxFor(m => m.Title, new { @id = "headerResTitle", @class = "form-control", placeholder = "Header Title", @type = "text" })
+        @Html.ValidationMessageFor(m => m.Title, "")
+
+        <label for="imgNameInput">Sub Title:</label>
+        @Html.TextBoxFor(m => m.SubTitle, new { @id = "subResTitle", @class = "form-control", placeholder = "Sub Title", @type = "text" })
+        @Html.ValidationMessageFor(m => m.SubTitle, "")
+
+
+        <label for="imgNameInput">Factory Details:</label>
+        @Html.TextAreaFor(m => m.Description, new { @id = "ResDesc", @class = "form-control", placeholder = "Description", @type = "text", @cols = "1", @rows = "7" })
+        @Html.ValidationMessageFor(m => m.Description, "")
+
+        <hr />
+        <button id="btnUpdateResponsFrm" class="btn btn-success" onclick="updateResponTexts('#btnUpdateResponsFrm')" type="button" name="submit">Update</button>
+    </div>
+</form>

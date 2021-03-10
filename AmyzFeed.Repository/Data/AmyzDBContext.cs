@@ -21,7 +21,8 @@ namespace AmyzFeed.Repository.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Questionnaire> Questionnaires { get; set; }
+        public DbSet<FeedsProgram> FeedsPrograms { get; set; }
 
-        
+
     }
 }

@@ -13,10 +13,11 @@
 <div class="shop-box-inner">
     <div class="container">
         
-       
-        <div class="title-all" style="margin-top:20px;text-align:right">
-            <h1  class="header-pages">منتجاتنــا</h1>
+        <div>
+            <p class="page-define">منتجاتنـــا</p>
         </div>
+
+      
 
         <div class="row">
             <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
@@ -26,9 +27,9 @@
                         <div class="title-left">
                             <h3 class="footer-title">الأقسام</h3>
                         </div>
-                        <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+                        <div >
 
-                            <a  class="list-group-item list-group-item-action"onclick="getProducts('0','الكل')" href="javascript:void(0)" data-toggle="collapse" aria-expanded="true">
+                            <a  class="department-name categories" data-catid="0" data-name="الكل" href="javascript:void(0)">
                                 الكل
                             </a>
 
@@ -36,17 +37,16 @@
                             {
                                 foreach (var item in departments)
                                 {
-                                    var itemId = "sub-men" + item.Id;
-                                    <div class="list-group-collapse sub-men">
-                                        <a data-name="@item.Name" class="list-group-item list-group-item-action" href="javascript:void(0)" data-toggle="collapse" aria-expanded="true" aria-controls="@itemId">
+                                    <div>
+                                        <p class="department-name">
                                             @item.Name
                                             <small class="text-muted">(@item.Categories.Count)</small>
-                                        </a>
-                                        <div class="collapse show" id="@itemId" data-parent="#list-group-men">
+                                        </p>
+                                        <div >
                                             <div class="list-group">
                                                 @foreach (var category in item.Categories)
                                                 {
-                                                    <a href="javascript:void(0)" data-name="@category.Name" data-catid="@category.Id" class="list-group-item list-group-item-action categories">@category.Name</a>
+                                                    <a href="javascript:void(0)"  data-name="@category.Name" data-catid="@category.Id" class="category-name categories">@category.Name</a>
                                                 }
                                             </div>
                                         </div>
@@ -143,7 +143,6 @@
         html +=
                 '<div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">' +
                 '<div class="products-single fix"> <div class="box-img-hover">' +
-                '<strong class="category-item-title center">' + product.Name + '</strong>' +
                 '<div class="type-lb">' +
                 '<p class="new" style="font-weight:400;text-align:center;">' + product.Price + ' ج.م' + '</p>' +
                 '</div>' +
@@ -156,6 +155,9 @@
                 '<a onclick="addToCart(' + product.Id + ')" class="cart" href="javascript:void(0)" >اضف الى العربة</a>' +
                 '</div>' +
                 '</div>' +
+                '<div class="why-text">' +
+                '<h4 class="product-catg-name">' + product.Name + '</h4>' +
+                  '</div>' +
                  '</div>' +
                 '</div>' ;
 

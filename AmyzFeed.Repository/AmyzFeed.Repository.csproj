@@ -91,6 +91,7 @@
     <Compile Include="Data\AmyzDBContext.cs" />
     <Compile Include="Data\Category.cs" />
     <Compile Include="Data\Department.cs" />
+    <Compile Include="Data\FeedsProgram.cs" />
     <Compile Include="Data\IdentityModels.cs" />
     <Compile Include="Data\OrderDetail.cs" />
     <Compile Include="Data\Order.cs" />
