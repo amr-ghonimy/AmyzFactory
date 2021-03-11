@@ -9,8 +9,7 @@ using System.Web.Mvc;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
-    [AdminAuthorize(Roles = "Admins")]
-
+ 
     public class PricesController : Controller
     {
       

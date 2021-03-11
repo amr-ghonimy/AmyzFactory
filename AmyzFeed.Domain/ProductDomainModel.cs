@@ -8,7 +8,7 @@ namespace AmyzFactory.Models
     public class ProductDomainModel
     {
         public int Id { get; set; }
-        public Nullable<int> CategoryId { get; set; }
+        public Nullable<int> CategoryID { get; set; }
         public string CategoryName { get; set; }
 
         public string Name { get; set; }

@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@model  IEnumerable<AmyzFactory.Models.FeedsProgramViewModel>
+
+ 
+
+
+<div class="wishlist-box-main">
+    <div class="container">
+        <div>
+            <p class="page-define">برامج التغذية</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table class="table" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>العمر باليوم</th>
+                                <th>نوع العلف</th>
+                                <th>نسبة البروتين</th>
+                                 <th>الكمية</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    string days = item.DayFrom +" - "+item.DayTo +" يوم ";
+                                    string protien = item.ProtienPercentage + "%";
+                                    string qty = item.Quantity + " جرام ";
+                                    <tr>
+                                  
+                                        <td class="name-pr">
+                                            <p class="product-catg-name">
+                                                @days
+                                            </p>
+                                        </td>
+                                        <td class="name-pr">
+                                            <p class="product-catg-name" >
+                                                @item.ProductType
+                                            </p>
+                                        </td>
+                                        <td class="price-tbl">
+                                            <p class="product-catg-name" style="color:#62A73C;">@protien</p>
+                                        </td>
+
+                                        <td class="name-pr">
+                                            <p class="product-catg-name" style="color:#ff6a00">
+                                                @qty
+                                            </p>
+                                        </td>
+
+                                  
+                                    </tr>
+
+                                }
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

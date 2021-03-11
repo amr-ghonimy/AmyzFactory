@@ -92,9 +92,11 @@
     <Compile Include="AddressesBusiness.cs" />
     <Compile Include="AuthBusiness.cs" />
     <Compile Include="CategoriesBusiness.cs" />
+    <Compile Include="FeedsProgramBusiness.cs" />
     <Compile Include="helpers\Constans.cs" />
     <Compile Include="helpers\MemoryPostedFile.cs" />
     <Compile Include="interfaces\IAuthBusiness.cs" />
+    <Compile Include="interfaces\IFeedsProgramBusiness.cs" />
     <Compile Include="interfaces\IQuestionaireBusiness.cs" />
     <Compile Include="interfaces\IOrdersBusiness.cs" />
     <Compile Include="OrderBusiness.cs" />

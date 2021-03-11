@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+  @model AmyzFactory.Models.TextsViewModel
+
+
+
+<div class="about-box-main">
+    <div class="container">
+        <div>
+            <p class="page-define">الرقابة والجودة</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="banner-frame">
+                    <img class="img-fluid shadow-img" src="@Model.ImageUrl" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-6" style="text-align:right;">
+
+                <h2 class="noo-sh-title-top footer-title" style="color:#62A73C;">@Model.Title</h2>
+                <p class="footer-text">
+                    <b>@Model.SubTitle</b>
+                </p>
+                <p class="footer-title">
+                    @Model.Description
+                </p>
+            </div>
+        </div>
+        <img width="100%" src="~/Content/img/all_products.jpg"/>
+    </div>
+</div>
+

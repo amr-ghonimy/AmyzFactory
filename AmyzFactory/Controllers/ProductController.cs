@@ -95,7 +95,6 @@ namespace AmyzFactory.Controllers
 
         public JsonResult GetProductsByCategoryID(int categoryID)
         {
-          
 
             HttpResponseMessage productsResponse = GlobalVariables.WebApiClient.GetAsync("Product/GetProductsByCategoryID?id="+categoryID).Result;
             List<ProductViewModel> productsVm = productsResponse.Content.ReadAsAsync<List<ProductViewModel>>().Result;

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmyzFeed.Repository", "Amyz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedApi", "FeedApi\FeedApi.csproj", "{8E720BB9-BA94-47E7-9E62-B12E2D9732E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmyzApi", "AmyzApi\AmyzApi.csproj", "{01F9F31A-1679-482A-9136-BB3BCEA1D8FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8E720BB9-BA94-47E7-9E62-B12E2D9732E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E720BB9-BA94-47E7-9E62-B12E2D9732E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E720BB9-BA94-47E7-9E62-B12E2D9732E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01F9F31A-1679-482A-9136-BB3BCEA1D8FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01F9F31A-1679-482A-9136-BB3BCEA1D8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01F9F31A-1679-482A-9136-BB3BCEA1D8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01F9F31A-1679-482A-9136-BB3BCEA1D8FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

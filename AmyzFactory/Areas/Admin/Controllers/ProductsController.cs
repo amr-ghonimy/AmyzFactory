@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
-    [AdminAuthorize(Roles = "Admins")]
+    
 
     public class ProductsController : Controller
     {

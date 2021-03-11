@@ -278,40 +278,13 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BrowserJsonFormatter.cs" />
-    <Compile Include="Controllers\AccountsController.cs" />
-    <Compile Include="Controllers\User\ArticlesController.cs" />
-    <Compile Include="Controllers\User\ContactUsController.cs" />
-    <Compile Include="Controllers\User\DepartmentsController.cs" />
-    <Compile Include="Controllers\User\ImagesController.cs" />
-    <Compile Include="Controllers\User\InformationController.cs" />
-    <Compile Include="Controllers\User\OrderController.cs" />
-    <Compile Include="Controllers\User\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Constans.cs" />
     <Compile Include="Helpers\CustomAuthFilter.cs" />
     <Compile Include="Helpers\TokenManager.cs" />
-    <Compile Include="Models\CategoryShowModel.cs" />
-    <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\DataTableParams.cs" />
-    <Compile Include="Models\ImageModel.cs" />
-    <Compile Include="Models\InformationViewModel.cs" />
-    <Compile Include="Models\OrderDetailsViewModel.cs" />
-    <Compile Include="Models\OrderViewModel.cs" />
-    <Compile Include="Models\ProductViewModel.cs" />
-    <Compile Include="Models\QuestionairViewModel.cs" />
-    <Compile Include="Model\UsersViewModel.cs" />
-    <Compile Include="Model\CategoriesViewModel.cs" />
-    <Compile Include="Model\ContactViewModel.cs" />
-    <Compile Include="Model\DepartmentBase.cs" />
-    <Compile Include="Model\DepartmentsViewModel.cs" />
-    <Compile Include="Model\ImagesViewModel.cs" />
-    <Compile Include="Model\PricesViewModel.cs" />
-    <Compile Include="Model\ProductsViewModel.cs" />
-    <Compile Include="Model\TechnicalSupportViewModel.cs" />
-    <Compile Include="Model\TechnicalTextViewModel.cs" />
-    <Compile Include="Model\TextsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,21 +6,59 @@
     var emails = ViewBag.Emails;
 }
 
- 
+ @model AmyzFactory.Models.TextsViewModel
 
 <div class="shop-box-inner">
     <div class="container">
    
         <div>
-            <p class="page-define">معلومات عننا</p>
+            <p class="page-define">معلومات عنا</p>
         </div>
 
 
 
+        <div class="about-box-main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="banner-frame">
+                            <img class="img-fluid shadow-img" style="width:500px;height:400px;" src="@Model.ImageUrl" alt="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6" style="text-align:right;">
 
-        @{
-            Html.RenderAction("_GetInfo", "HomePreview");
-        }
+                        <h2 class="noo-sh-title-top footer-title" style="color:#62A73C;">@Model.Title</h2>
+                        <p class="footer-text">
+                            <b>@Model.SubTitle</b>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="footer-title" style="margin:20px;">
+                @if (Model.Description != null)
+                {
+                    using (StringReader reader = new StringReader(Model.Description))
+                    {
+                        string line;
+                        <ul>
+                            @while ((line = reader.ReadLine()) != null)
+                    {
+
+                                <li class="footer-text">@line</li>
+
+                            }
+                        </ul>
+
+
+                    }
+                }
+             
+            </p>
+        </div>
+
+
 
     </div>
 </div>

@@ -9,6 +9,6 @@ namespace AmyzFactory.Models
     {
         public string ImageUrl { get; set; }
 
-        public List<CategoryDomainModel> SubCategoriesList { get; set; }
+        public List<CategoryDomainModel> Categories { get; set; }
     }
 }

@@ -245,18 +245,20 @@
     <Compile Include="Areas\Admin\Controllers\PricesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\QualitiesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\TechnicalsController.cs" />
     <Compile Include="Areas\Admin\HttpPostedFileConverter.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\FeedProgramController.cs" />
     <Compile Include="Controllers\HomePreviewController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\QuantityController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="Models\ContactViewModel.cs" />
+    <Compile Include="Models\FeedsProgramViewModel.cs" />
     <Compile Include="Models\ImagesViewModel.cs" />
     <Compile Include="Models\OrderDetailsViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
@@ -437,6 +439,8 @@
     <Content Include="Views\HomePreview\ArticleDetails.cshtml" />
     <Content Include="Views\Product\_AllProducts.cshtml" />
     <Content Include="Views\Shared\images\_responsibilty.cshtml" />
+    <Content Include="Views\FeedProgram\Index.cshtml" />
+    <Content Include="Views\Quantity\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

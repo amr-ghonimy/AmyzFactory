@@ -11,8 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
-    [AdminAuthorize(Roles = "Admins")]
-    public class CategoriesController : Controller
+     public class CategoriesController : Controller
     {
       
         public PartialViewResult _Categories()

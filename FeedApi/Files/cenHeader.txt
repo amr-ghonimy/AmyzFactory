@@ -1,9 +1,0 @@
-{
-  "Title": "title 1",
-  "SubTitle": "sub title 1",
-  "Description": "description 1",
-  "ImageUrl": null,
-  "ImageFile": null,
-  "Id": 0,
-  "PicData": null
-}

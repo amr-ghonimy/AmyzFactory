@@ -11,8 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
-    [AdminAuthorize(Roles = "Admins")]
-
+ 
     public class HomePageController : Controller
     {
       

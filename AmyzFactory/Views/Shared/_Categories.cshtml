@@ -2,69 +2,47 @@
 
  
 
-@if (Model != null && Model.Count() > 0)
-{
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="special-menu text-center">
-                <div class="button-group filter-button-group">
-                    @{
-                        <button class="active" data-filter="*">الكل</button>
-
-                        foreach (var item in Model)
-                        {
-                            if (item.Categories != null&&item.Categories.Count>0)
-                            {
-                                <button data-filter=".@item.Id">@item.Name</button>
-                            }
-                        }
-
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row special-list" dir="rtl">
-
-                       @foreach (var department in Model)
-                       {
-
-                           if (department.Categories != null && department.Categories.Count > 0)
-                           {
-                               foreach (var category in department.Categories)
-                               {
-
-                    <div class="col-lg-3 col-md-6 special-grid @category.DepartmentID" >
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <div class="type-lb">
-                                    <p class="new">@category.Name</p>
+       <!-- Topic Cards -->
+<div id="cards_landscape_wrap-2">
+    <div class="container">
+        <div class="row justify-content-center" >
+            @foreach (var item in Model)
+            {
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <a href="">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="@item.ImageUrl" alt="" />
                                 </div>
-                                <img src="@category.ImageUrl" width="250px" height="250px" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    @Html.ActionLink("عرض المنتجات", "ShowProducts", "Product",new { categoryId=category.Id,categoryName=category.Name},new { @class="cart"})
+                                <div class="text-container" >
+                                    <a class="department-name" href="@Url.Action("ProductDetails","Product",new { @id=item.Id})">@item.Name</a>
+
                                 </div>
                             </div>
-                            
                         </div>
-                    </div>
-
-                               }
-                           }
-
-
-
-
-
-                       }
-
-                        </div>
-
-
-                        }
+                    </a>
+                </div>
+            }
+          
+        </div>
+    </div>
+</div>
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

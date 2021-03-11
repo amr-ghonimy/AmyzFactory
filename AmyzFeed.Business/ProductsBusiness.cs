@@ -78,7 +78,7 @@ namespace AmyzFeed.Business
                     Quantity = product.Quantity,
                     Price = float.Parse(product.Price.ToString()),
                     Visibility = product.isVisible,
-                    CategoryID = product.CategoryId
+                    CategoryID = product.CategoryID
                 };
 
 
@@ -149,7 +149,7 @@ namespace AmyzFeed.Business
                 oldProduct.UpdatedDate = DateTime.Now;
                 oldProduct.Visibility = newProduct.isVisible;
                 oldProduct.Quantity = newProduct.Quantity;
-                oldProduct.CategoryID= newProduct.CategoryId;
+                oldProduct.CategoryID= newProduct.CategoryID;
                 oldProduct.Price = float.Parse(newProduct.Price.ToString());
                 oldProduct.Image = newProduct.ImageUrl;
 
@@ -175,7 +175,7 @@ namespace AmyzFeed.Business
                 Name = x.Name,
                 Definition = x.Definition,
                 Description = x.Description,
-                CategoryId = x.CategoryID,
+                CategoryID = x.CategoryID,
                 ImageUrl = Constans.ServerFile + x.Image,
                 isVisible = x.Visibility,
                 Price = float.Parse(x.Price?.ToString()),
@@ -254,7 +254,7 @@ namespace AmyzFeed.Business
                 Id = product.ID,
                 CategoryName = product.Category?.Name,
                 Name = product.Name,
-                CategoryId = product.CategoryID,
+                CategoryID = product.CategoryID,
                 Definition = product.Definition,
                 Description = product.Description,
                 ImageUrl = Constans.ServerFile + product.Image,
@@ -280,7 +280,7 @@ namespace AmyzFeed.Business
                 Name = x.Name,
                 Definition = x.Definition,
                 Description = x.Description,
-                CategoryId = x.CategoryID,
+                CategoryID = x.CategoryID,
                 ImageUrl = Constans.ServerFile + x.Image,
                 isVisible = x.Visibility,
                 Price = float.Parse(x.Price?.ToString()),
@@ -353,7 +353,7 @@ namespace AmyzFeed.Business
                 {
                     Id = x.ID,
                     Name = x.Name,
-                    CategoryId=x.CategoryID,
+                    CategoryID=x.CategoryID,
                     CategoryName=x.Category.Name,
                     Definition = x.Definition,
                     Description = x.Description,
@@ -392,7 +392,7 @@ namespace AmyzFeed.Business
                                Id = x.ID,
                                Name = x.Name,
                                CategoryName=x.Category.Name,
-                               CategoryId=x.CategoryID,
+                               CategoryID=x.CategoryID,
                                Definition = x.Definition,
                                Description = x.Description,
                                ImageUrl = Constans.ServerFile + x.Image,
@@ -413,7 +413,7 @@ namespace AmyzFeed.Business
                              Name = x.Name,
                              Definition = x.Definition,
                              Description = x.Description,
-                             CategoryId = x.CategoryID,
+                             CategoryID = x.CategoryID,
                              ImageUrl = Constans.ServerFile + x.Image,
                              isVisible = x.Visibility,
                              Price = float.Parse(x.Price?.ToString()),

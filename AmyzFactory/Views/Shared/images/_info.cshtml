@@ -1,23 +1,40 @@
 ﻿@model AmyzFactory.Models.TextsViewModel
 
- 
+ @{ 
+     string title = Model.Description;
+     string subTitle = Model.SubTitle;
+     string description = Model.Description;
+
+     if (title.Length >60)
+     {
+         title = title.Substring(0, 60) + ".......";
+     }
+     if (subTitle.Length > 80)
+     {
+         subTitle = subTitle.Substring(0, 80) + ".......";
+     }
+     if (description.Length > 300)
+     {
+         description = description.Substring(0, 300) + ".......";
+     }
+ }
 
 <div class="about-box-main">
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
                 <div class="banner-frame">
-                    <img class="img-fluid shadow-img" src="@Model.ImageUrl" alt="" />
+                    <img class="img-fluid shadow-img" style="width:500px;height:400px;" src="@Model.ImageUrl" alt="" />
                 </div>
             </div>
             <div class="col-lg-6" style="text-align:right;">
                 
-                <h2 class="noo-sh-title-top footer-title" style="color:#62A73C;">@Model.Title</h2>
+                <h2 class="noo-sh-title-top footer-title" style="color:#62A73C;">@title</h2>
                 <p class="footer-text">
-                <b>@Model.SubTitle</b>   
+                <b>@subTitle</b>   
                 </p>
                 <p class="footer-title">
-                @Model.Description
+                @description
                 </p>
              </div>
         </div>

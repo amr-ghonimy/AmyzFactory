@@ -3,6 +3,7 @@ using AmyzFactory.Models;
 using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -91,9 +92,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
                     };
 
                     // store user is logined in our website
-                    await this.signIn(user);
+                                   await this.signIn(user);
 
-                 
+
 
                     this.applyToken(userVm);
 

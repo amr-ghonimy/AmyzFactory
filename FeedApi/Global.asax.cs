@@ -2,10 +2,6 @@
 using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
-using System.Security.Policy;
-using System.Web;
 using System.Web.Http;
 
 namespace FeedApi

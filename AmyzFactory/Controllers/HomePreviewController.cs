@@ -2,8 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web.Mvc;
+    using System.Web.Mvc;
 
 namespace AmyzFactory.Controllers
 {
@@ -24,8 +23,8 @@ namespace AmyzFactory.Controllers
             string tokenNumber = Session["TokenNumber"]?.ToString() +":"+ Session["UserName"];
 
             GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
-            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                "Bearer", tokenNumber);
+         //   GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+           //     "Bearer", tokenNumber);
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetSliders").Result;
               List<ImagesViewModel> imagesVmList = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
@@ -43,15 +42,7 @@ namespace AmyzFactory.Controllers
         }
         
 
-        public ActionResult ProductQuality()
-        {
-
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetQualities").Result;
-            TextsViewModel qualityVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
-
-          
-            return View(qualityVm);
-        }
+      
 
        
         public PartialViewResult _GetInfo()
@@ -63,7 +54,7 @@ namespace AmyzFactory.Controllers
         }
         public PartialViewResult _GetDepartments()
         { 
-            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetDepartments").Result;
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetCategories").Result;
             List<CategoryViewModel> categsVm = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
             return PartialView("~/Views/Shared/_Categories.cshtml", categsVm);
@@ -133,10 +124,15 @@ namespace AmyzFactory.Controllers
 
         public ActionResult AboutUS()
         {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetFactoryInformation").Result;
+            TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
+
+
             ViewBag.Emails = this.getEmails();
             ViewBag.Phones = this.getPhones();
 
-            return View();
+
+            return View(modelVm);
         }
         
         public ActionResult TechnocalSupport(int technicalID,string techName)

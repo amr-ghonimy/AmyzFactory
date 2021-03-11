@@ -237,7 +237,7 @@ namespace AmyzFeed.Business
 
             foreach (var item in list)
             {
-                item.SubCategoriesList = catgRepository.GetAll(x => x.DepartmentID == item.Id && x.IsDeleted == false)
+                item.Categories = catgRepository.GetAll(x => x.DepartmentID == item.Id && x.IsDeleted == false)
                     .Select(s => new CategoryDomainModel()
                     {
                         Id = s.ID,

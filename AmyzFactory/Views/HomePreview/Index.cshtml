@@ -35,13 +35,13 @@
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="~/Content/img/quality.jpg" alt="" />
-                    <a class="btn hvr-hover" href="../HomePreview/ProductQuality">الرقابة والجودة</a>
+                    <a class="btn hvr-hover" href="@Url.Action("Index","Quantity")">الرقابة والجودة</a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="~/Content/img/feeding.jpg" alt="" />
-                    <a class="btn hvr-hover" href="#">برامج التغذية</a>
+                    <a class="btn hvr-hover" href="@Url.Action("Index","feedsProgram")">برامج التغذية</a>
                 </div>
             </div>
         </div>
@@ -53,18 +53,11 @@
 
 
 <div class="title-all text-center content-description">
-    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">الأقسام الرئيسية و<span style="color:#f19304;"> الفرعية </span></h1>
+    <h1 style="font-weight:500;font-size:35px;font-family:system-ui;">أقسام أميز<span style="color:#f19304;"> للأعلاف </span></h1>
 </div>
-<div class="products-box">
-    <div class="container">
-
-        @{
-            Html.RenderAction("_GetDepartments", "HomePreview");
-        }
-
-    </div>
-</div>
-
+ @{
+     Html.RenderAction("_GetDepartments", "HomePreview");
+}
 
 
 <div class="title-all text-center content-description">

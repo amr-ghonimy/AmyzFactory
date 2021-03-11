@@ -99,6 +99,7 @@
     <Compile Include="Data\Questionnaire.cs" />
     <Compile Include="Data\Technical.cs" />
     <Compile Include="DepartmentsRepository.cs" />
+    <Compile Include="FeedsProgramRepository.cs" />
     <Compile Include="Infrastructure\BaseRepository.cs" />
     <Compile Include="Infrastructure\Contract\IBaseRepository.cs" />
     <Compile Include="Infrastructure\Contract\IUnitOfWork.cs" />
