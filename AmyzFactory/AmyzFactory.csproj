@@ -372,6 +372,7 @@
     <Content Include="Areas\Admin\Views\Products\ProductDetails.cshtml" />
     <Content Include="Areas\Admin\Views\HomePage\partial\_Responsibilty.cshtml" />
     <Content Include="Areas\Admin\Views\FeedsProgram\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\new.pubxml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -443,7 +444,6 @@
     <Content Include="Views\Quantity\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Content\css\" />
     <Folder Include="Areas\Admin\Content\fonts\" />
     <Folder Include="Areas\Admin\Content\img\" />

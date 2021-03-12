@@ -86,7 +86,10 @@
              dataType: "json",
              success: function (data) {
                  $.each(data, function (i, category) {
+                
+                     
 
+                     
                      var editURL = "/Admin/" + ControllerName + "/" + EditActionName + "?id=" + category.Id;
                      var DeleteURL = "/Admin/" + ControllerName + "/" + DeleteActionName + "?id=" + category.Id;
                      var visibilityDepartmentURL = "/Admin/" + ControllerName + "/" + VisibilityActionName;
