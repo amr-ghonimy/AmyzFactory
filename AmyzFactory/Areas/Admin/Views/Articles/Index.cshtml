@@ -49,12 +49,12 @@
             <form id="frmArticle">
                 <div class="form-group">
                     <label for="titleInput"> Title:</label>
-                    @Html.TextBoxFor(m => m.Title, new { @id = "artTitle", @class = "form-control", placeholder = "Title here", @type = "text" })
+                    @Html.TextBoxFor(m => m.Title, new { @id = "artTitle", @class = "form-control", placeholder = "اكتب هنا عنوان المقال", @type = "text" })
                 </div>
 
                 <div class="form-group">
                     <label for="titleInput"> Content:</label>
-                    @Html.TextAreaFor(m => m.Description, new { @id = "artDescription", @class = "form-control", @rows = "14", placeholder = "Content here", @type = "text" })
+                    @Html.TextAreaFor(m => m.Description, new { @id = "artDescription", @class = "form-control", @rows = "14", placeholder = "اكتب هنا محتوى المقال", @type = "text" })
                 </div>
 
                 <hr />

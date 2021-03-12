@@ -13,12 +13,12 @@
 
                     <th>
                         <label for="emailInput">E-mail Title:</label>
-                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "E-mail Title", @type = "text" })
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "اكتب هنا مالك البريد الالكترونى مثال : الدعم الفنى", @type = "text" })
                         @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
                     </th>
                     <th>
                         <label for="emailInput">E-mail :</label>
-                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "E-mail", @type = "text" })
+                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "اكتب هنا البريد الالكترونى ", @type = "text" })
                         @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
                     </th>
                     <th>

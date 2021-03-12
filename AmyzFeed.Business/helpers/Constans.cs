@@ -8,7 +8,7 @@ namespace AmyzFeed.Business.helpers
 {
    public  class Constans
     {
-        public static string ServerFile = "http://localhost:57756/";
+        public static string ServerFile = "http://localhost:60709/";
         public static string LogoPath = ServerFile + "Images/AmyzFeed/logo.jpg";
         
     }

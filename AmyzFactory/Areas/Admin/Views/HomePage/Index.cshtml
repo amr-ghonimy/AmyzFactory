@@ -256,8 +256,8 @@
             type: "Get",
             dataType: "json",
             success: function (data) {
-                 $('#headerTitle').attr("value", data.Title);
-                $('#subTitle').attr("value", data.SubTitle);
+                $('#headerTitle').val( data.Title);
+                 $('#subTitle').val( data.SubTitle);
                 $('#infoDesc').val(data.Description);
             }
         });
@@ -271,8 +271,8 @@
             type: "Get",
             dataType: "json",
             success: function (data) {
-                $('#headerResTitle').attr("value", data.Title);
-                $('#subResTitle').attr("value", data.SubTitle);
+                $('#headerResTitle').val( data.Title);
+                $('#subResTitle').val( data.SubTitle);
                 $('#ResDesc').val(data.Description);
             }
         });

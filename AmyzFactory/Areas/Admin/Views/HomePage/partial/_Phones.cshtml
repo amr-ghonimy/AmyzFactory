@@ -15,13 +15,13 @@
 
                     <th>
                         <label for="phoneInput">Phone Title:</label>
-                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Phone Title", @name = "phone", @type = "text" })
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "اكتب هنا مالك الهاتف مثال : الدعم الفنى", @name = "phone", @type = "text" })
                          @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
 
                     </th>
                     <th>
                         <label for="phoneInput">Phone Number:</label>
-                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "Phone Number", @type = "tel" })
+                        @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "اكتب هنا رقم الهاتف", @type = "tel" })
                         @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
                      </th>
                     <th>

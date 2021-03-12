@@ -6,16 +6,16 @@
 <form id="frmRespon">
     <div class="container">
         <label for="imgNameInput">Main Title:</label>
-        @Html.TextBoxFor(m => m.Title, new { @id = "headerResTitle", @class = "form-control", placeholder = "Header Title", @type = "text" })
+        @Html.TextAreaFor(m => m.Title, new { @id = "headerResTitle", @class = "form-control", placeholder = "اكتب هنا عنوان قصير", @type = "text" , @cols = "1", @rows = "2" })
         @Html.ValidationMessageFor(m => m.Title, "")
 
         <label for="imgNameInput">Sub Title:</label>
-        @Html.TextBoxFor(m => m.SubTitle, new { @id = "subResTitle", @class = "form-control", placeholder = "Sub Title", @type = "text" })
+        @Html.TextAreaFor(m => m.SubTitle, new { @id = "subResTitle", @class = "form-control", placeholder = "اكتب هنا نبزة مختصرة عن مسؤليات وخدمات المصنع", @type = "text" , @cols = "1", @rows = "4" })
         @Html.ValidationMessageFor(m => m.SubTitle, "")
 
 
         <label for="imgNameInput">Factory Details:</label>
-        @Html.TextAreaFor(m => m.Description, new { @id = "ResDesc", @class = "form-control", placeholder = "Description", @type = "text", @cols = "1", @rows = "7" })
+        @Html.TextAreaFor(m => m.Description, new { @id = "ResDesc", @class = "form-control", placeholder = "اكتب هنا التفاصيل الكاملة", @type = "text", @cols = "1", @rows = "7" })
         @Html.ValidationMessageFor(m => m.Description, "")
 
         <hr />

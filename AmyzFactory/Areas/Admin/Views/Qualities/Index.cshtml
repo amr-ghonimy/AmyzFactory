@@ -55,12 +55,12 @@
             <form id="frmQualities">
                 <div class="container">
                     <label for="imgNameInput">Header Name:</label>
-                    @Html.TextBoxFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", placeholder = "Title", @type = "text" })
+                    @Html.TextAreaFor(m => m.Title, new { @id = "headerTitle", @class = "form-control", @rows = "2", placeholder = "اكتب هنا عنوان قصير", @type = "text" })
 
                     <label for="imgNameInput">Information</label>
-                    @Html.TextAreaFor(m => m.SubTitle, new { @id = "qualityTitle", @class = "form-control", placeholder = "Sub Title", @type = "text" })
+                    @Html.TextAreaFor(m => m.SubTitle, new { @id = "qualityTitle", @class = "form-control", @rows = "4", placeholder = "اكتب هنا نبزة مختصرة عن الجودة التى يقدمها المصنع", @type = "text" })
                     <label for="imgNameInput">Description</label>
-                    @Html.TextAreaFor(m => m.Description, new { @id = "description", @class = "form-control", @rows = "6", placeholder = "Description", @type = "text" })
+                    @Html.TextAreaFor(m => m.Description, new { @id = "description", @class = "form-control", @rows = "7", placeholder = "اكتب هنا التفاصيل وجميع المميزات", @type = "text" })
                     <hr />
                     <button class="btn btn-success" onclick="updateQuality()" type="button" name="submit">Update</button>
                 </div>
@@ -94,7 +94,7 @@
             type: "Get",
             dataType: "json",
             success: function (data) {
-                $('#headerTitle').attr("value", data.Title);
+                $('#headerTitle').val( data.Title);
                 $('#qualityTitle').val(data.SubTitle);
                 $('#description').val(data.Description);
              }

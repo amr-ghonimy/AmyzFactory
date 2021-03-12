@@ -10,7 +10,7 @@ namespace AmyzFactory
     public static class GlobalVariables
     {
         public static HttpClient WebApiClient = new HttpClient();
-        public static string url = "http://localhost:57756/api/";
+        public static string url = "http://localhost:60709/api/";
 
        static GlobalVariables()
         {
