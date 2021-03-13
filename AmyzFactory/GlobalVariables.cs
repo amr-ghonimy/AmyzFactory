@@ -4,14 +4,15 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
+using System.Web.Configuration;
 
 namespace AmyzFactory
 {
     public static class GlobalVariables
     {
         public static HttpClient WebApiClient = new HttpClient();
-        public static string url = "http://localhost/Amyz-Feed-Api/api/";
-
+        public static string url = WebConfigurationManager.AppSettings["apiBaseUrl"]; 
+                
        static GlobalVariables()
         {
            

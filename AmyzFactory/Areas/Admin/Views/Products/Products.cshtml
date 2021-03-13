@@ -72,11 +72,11 @@
                         <center>
                             @if (catModel != null && catModel.mainDepartmentsDropDown != null && catModel.mainDepartmentsDropDown.Count() > 0)
                             {
-                                <button type="button" id="btnAddProduct" name='submit' class="btn btn-success" onclick="addProduct('tblProducts', 'Create', 'Products', $('#categoryIDDropDown').val(), '#productFrm', '#btnAddProduct')">Upload</button>
+                                <button type="button" id="btnAddProduct" name='submit' class="btn btn-success" onclick="addProduct('tblProducts','@Url.Action("Create","Products")', $('#categoryIDDropDown').val(), '#productFrm', '#btnAddProduct')">Upload</button>
                             }
                             else
                             {
-                                <button type="button" id="btnAddProduct" disabled name='submit' class="btn btn-danger" onclick="addProduct('tblProducts', 'Create', 'Products', $('#categoryIDDropDown').val(), '#productFrm', '#btnAddProduct')">Upload</button>
+                                <button type="button" id="btnAddProduct" disabled name='submit' class="btn btn-danger" onclick="addProduct('tblProducts','@Url.Action("Create","Products")', $('#categoryIDDropDown').val(), '#productFrm', '#btnAddProduct')">Upload</button>
                             }
 
                         </center>
@@ -143,7 +143,7 @@
  $(document).ready(function () {
 
      //   getProducts("tblProducts", "AllProducts");
-        bindDataTable("tblProducts", "AllProducts", "Products");
+        bindDataTable("tblProducts");
     });
 </script>
 

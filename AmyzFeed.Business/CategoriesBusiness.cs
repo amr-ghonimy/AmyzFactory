@@ -8,7 +8,8 @@ using AmyzFeed.Repository.Infrastructure.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Web;
+using System.Web.Configuration;
 
 namespace AmyzFeed.Business
 {
@@ -21,6 +22,9 @@ namespace AmyzFeed.Business
 
         private ResultDomainModel resultModel;
 
+        private string baseUrl;
+
+
         public CategoriesBusiness(IUnitOfWork _unitOfWork, ResultDomainModel _resultModel)
         {
             this.unitOfWork = _unitOfWork;
@@ -28,6 +32,9 @@ namespace AmyzFeed.Business
             this.catgRepository = new CategoryRepository(this.unitOfWork);
             this.techRepository = new TechnicalRepository(this.unitOfWork);
             this.deptRepository = new DepartmentsRepository(this.unitOfWork);
+ 
+             this.baseUrl = WebConfigurationManager.AppSettings["baseUrl"];
+
         }
 
 
@@ -201,11 +208,12 @@ namespace AmyzFeed.Business
 
         public List<CategoryDomainModel> getCategories()
         {
+ 
             return catgRepository.GetAll(x => x.IsDeleted == false).Select(x => new CategoryDomainModel()
             {
                 Name = x.Name,
                 DepartmentID = x.DepartmentID,
-                ImageUrl = Constans.ServerFile + x.Image,
+                ImageUrl = baseUrl + x.Image,
                 Id = x.ID,
                 visibility = x.Visibility
             }).ToList();
@@ -213,12 +221,13 @@ namespace AmyzFeed.Business
 
         public List<CategoryDomainModel> getCategoriesByDepID(int departmentID)
         {
+
             return catgRepository.GetAll(x => x.DepartmentID == departmentID && x.IsDeleted == false).Select(x => new CategoryDomainModel()
             {
                 Name = x.Name,
                 DepartmentID = x.DepartmentID,
                 visibility = x.Visibility,
-                ImageUrl = Constans.ServerFile + x.Image,
+                ImageUrl = baseUrl + x.Image,
                 Id = x.ID
             }).ToList();
         }
@@ -231,7 +240,7 @@ namespace AmyzFeed.Business
                 Name = x.Name,
                 Id = x.ID,
                 visibility = x.Visibility,
-                ImageUrl = Constans.ServerFile + x.Image
+                ImageUrl = baseUrl + x.Image
             }).ToList();
 
 
@@ -243,7 +252,7 @@ namespace AmyzFeed.Business
                         Id = s.ID,
                         DepartmentID = s.DepartmentID,
                         Name = s.Name,
-                        ImageUrl = Constans.ServerFile + s.Image,
+                        ImageUrl = baseUrl + s.Image,
                         visibility = s.Visibility
                     }).ToList();
             }
@@ -265,7 +274,7 @@ namespace AmyzFeed.Business
             {
                 Id = catg.ID,
                 Name = catg.Name,
-                ImageUrl = Constans.ServerFile + catg.Image,
+                ImageUrl = baseUrl + catg.Image,
                 DepartmentID = catg.DepartmentID,
                 visibility = catg.Visibility
             };

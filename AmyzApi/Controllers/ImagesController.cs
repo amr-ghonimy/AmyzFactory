@@ -64,7 +64,13 @@ namespace FeedApi.Controllers.User
             if (result.IsSuccess)
             {
                 ImageDomainModel imgDm = result.Data as ImageDomainModel;
-                imgDm.ImageUrl = Constans.apiServerPath + imgDm.ImageUrl;
+
+                var request = HttpContext.Current.Request;
+                var baseUrl = request.Url.Scheme + "://" + request.Url.Authority+"/";
+
+ 
+
+                imgDm.ImageUrl = baseUrl + imgDm.ImageUrl;
 
                 result.Data = imgDm;
 

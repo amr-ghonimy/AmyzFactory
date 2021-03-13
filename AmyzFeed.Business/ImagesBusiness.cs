@@ -8,17 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 
 namespace AmyzFeed.Business
 {
     public class ImagesBusiness:IImageBusiness
     {
         private ResultDomainModel resultModel;
-
+        private string baseUrl;
 
         public ImagesBusiness(ResultDomainModel _resultModel)
         {
             this.resultModel = _resultModel;
+            this.baseUrl = WebConfigurationManager.AppSettings["baseUrl"];
         }
 
 
@@ -53,6 +55,13 @@ namespace AmyzFeed.Business
             string[] allfiles = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories).Select(Path.GetFileName).ToArray();
             var listOfImages = new List<ImageDomainModel>();
             int idCounter = 1;
+
+           
+
+
+
+ 
+
             if (allfiles.Count() > 0)
             {
                 foreach (var item in allfiles)
@@ -61,7 +70,7 @@ namespace AmyzFeed.Business
                     {
                         Id = idCounter,
                         Title = item,
-                        ImageUrl = Constans.ServerFile + responsePath + item
+                        ImageUrl = baseUrl + responsePath + item
                     });
                     idCounter++;
                 }

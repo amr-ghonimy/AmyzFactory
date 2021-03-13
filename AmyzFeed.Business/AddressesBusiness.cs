@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Web;
+using System.Web.Configuration;
 
 namespace AmyzFeed.Business
 {
@@ -15,12 +17,17 @@ namespace AmyzFeed.Business
     {
 
         private ResultDomainModel resultModel;
+        private string baseUrl;
 
+
+
+    
 
         public AddressesBusiness(ResultDomainModel _resultModel)
         {
             this.resultModel = _resultModel;
-        }
+            this.baseUrl = WebConfigurationManager.AppSettings["baseUrl"];
+         }
 
         private ResultDomainModel initResultModel(bool isSuccess,string message,int modelID=0,object data=null)
         {
@@ -190,7 +197,7 @@ namespace AmyzFeed.Business
 
             foreach (var item in list)
             {
-                item.ImageUrl = Constans.ServerFile + item.ImageUrl;
+                item.ImageUrl = baseUrl + item.ImageUrl;
             }
 
             return list;
@@ -252,7 +259,7 @@ namespace AmyzFeed.Business
                     return initResultModel(false, "Article Not Exists!!");
                 }
 
-                item.ImageUrl = Constans.ServerFile + item.ImageUrl;
+                item.ImageUrl = baseUrl + item.ImageUrl;
 
                 return initResultModel(true, "Article is Exists!!", data:item);
 

@@ -25,7 +25,7 @@
                         @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
                      </th>
                     <th>
-                        <button id="btnAddPhone" onclick="addAddress('#FrmPhone', 'CreatePhone', 'HomePage', 'PhoneTblContainer', 'DeletePhone', 'btnAddPhone')" class="btn btn-warning btn-block" type="button">Add</button>
+                        <button id="btnAddPhone" onclick="addAddress('#FrmPhone','@Url.Action("CreatePhone","HomePage")', 'PhoneTblContainer','@Url.Action("DeletePhone","HomePage")', '#btnAddPhone')" class="btn btn-warning btn-block" type="button">Add</button>
                     </th>
 
 

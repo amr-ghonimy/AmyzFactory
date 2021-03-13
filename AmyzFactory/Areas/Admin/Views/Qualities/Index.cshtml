@@ -42,7 +42,7 @@
                                         <a href="#" onclick="clearPreview()"> Clear </a>
                                         <span id="infoDescription"></span>
                                     </div>
-                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#infoImageInput', 'UploadQualityImage', 'Qualities', 'TblInfoBody', '#infoDescription', '#imgInfoPreview', 'DeleteQualityImage')" data-dismiss="modal">Upload</button>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#infoImageInput','@Url.Action("UploadQualityImage","Qualities")', 'TblInfoBody', '#infoDescription', '#imgInfoPreview','@Url.Action("DeleteQualityImage","Qualities")')" data-dismiss="modal">Upload</button>
                                     <hr />
                                 </div>
                             </div>

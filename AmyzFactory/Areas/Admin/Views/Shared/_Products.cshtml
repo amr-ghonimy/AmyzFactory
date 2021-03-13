@@ -79,14 +79,17 @@
     var oTable;
 
 
-    var bindDataTable = function (tableID,Action,Controller) {
+    var bindDataTable = function (tableID) {
         debugger;
         if ($.fn.DataTable.isDataTable("#" + tableID)) {
              oTable.draw();
         }
         else {
 
-            var Url = '/Admin/' + Controller + '/' + Action;
+ 
+
+            var Url = "@Url.Action("AllProducts", "Products")";
+
             oTable = $("#" + tableID).DataTable({
 
                 "bServerSide": true,
@@ -112,8 +115,8 @@
                           "mData": "Id",
                           "render": function (Id, type, full, meta) {
                               return '<a class="btn btn-success" href="#" style="margin-right: 4px;"  onclick="editProduct(' + Id + ')"><i class="fa fa-pencil-alt"></i></a>' +
-                                  '<a class="btn btn-danger" href="#" style="margin-right: 4px;"  onclick="deleteProduct(\'' + Id + '\',\'' + Action + '\',\'' + Controller + '\',\'' + tableID + '\')"><i class="fa fa-trash-alt"></i></a>' +
-                                  '<a class="btn btn-info"  href="../Products/ProductDetails?id='+Id+'"><i class="fa fa-info"></i></a>'
+                                  '<a class="btn btn-danger" href="#" style="margin-right: 4px;"  onclick="deleteProduct(\'' +'@Url.Action("Delete", "Products")?id='+Id + '\',\'' + tableID + '\')"><i class="fa fa-trash-alt"></i></a>' +
+                                  '<a class="btn btn-info"  href="@Url.Action("ProductDetails", "Products")?id="'+Id+'"><i class="fa fa-info"></i></a>'
                           }
                       }
                 ]
@@ -134,7 +137,7 @@
 
     // add new Product
 
-    var addProduct = function (tblId, actionName, controllerName, categoryID, frmID, btnID) {
+    var addProduct = function (tblId, Url, categoryID, frmID, btnID) {
 
         // validation 
    
@@ -164,10 +167,9 @@
 
         // for image upload
 
-        var URL = "/" + controllerName + "/" + actionName;
-
+ 
         $.ajax({
-            url: URL,
+            url: Url,
             type: "Post",
             data: formData,
             dataType: 'json',
@@ -193,7 +195,7 @@
 
 
     var editProduct = function (id) {
-        var url = "/Admin/Products/EditProduct?id=" + id;
+        var url = "@Url.Action("EditProduct", "Products")?id=" + id;
 
         $("#modelBody").load(url, function () {
             $("#productModal").modal("show");
@@ -202,7 +204,7 @@
     }
 
     var deleteProduct = function (id,RefreshProductsAction,Controller,tblID) {
-        var URL = "/Admin/Products/Delete?id=" + id;
+        var URL = "@Url.Action("Delete", "Products")?id=" + id;
 
         $.ajax({
             url: URL,

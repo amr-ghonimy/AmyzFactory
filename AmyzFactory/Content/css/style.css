@@ -1333,7 +1333,8 @@ text-align:right;
 
 .footer-text{
 text-align: right;
-margin: 10px;
+margin: 4px;
+font-size: 18px;
 }
 
 .footer-top-box .list-time li{
@@ -1621,7 +1622,7 @@ margin: 10px;
 	 margin-bottom: 0px;
 }
  .about-box-main p{
-     padding-bottom: 20px;
+     padding-bottom: 10px;
 }
  .service-block-inner {
      padding: 15px 20px;

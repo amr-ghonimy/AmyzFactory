@@ -253,6 +253,7 @@
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\FeedsProgramController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />

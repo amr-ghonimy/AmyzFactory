@@ -43,7 +43,7 @@
                                         <a href="#" onclick="clearPreview()"> Clear </a>
                                         <span id="sliderDescription"></span>
                                     </div>
-                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#SliderInput', 'UploadSlider', 'HomePage', 'TblSlidersBody', '#sliderDescription', '#imgSliderPreview', 'DeleteSlider')">Upload</button>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#SliderInput', '@Url.Action("UploadSlider","HomePage")', 'TblSlidersBody', '#sliderDescription', '#imgSliderPreview','@Url.Action("DeleteSlider","HomePage")')">Upload</button>
                                     <hr />
                                 </div>
                             </div>
@@ -94,10 +94,10 @@
                                 <div id="imgInfoPreview" class="thumbnail" style="display:none">
                                     <img class="img-responsive" id="infotargetImg" width="120" height="80" />
                                     <div class="caption">
-                                        <a href="#" onclick="clearPreview()"> Clear </a>
+                                        <a href="#" onclick="clearPreview('#imageInput', '#infoDescription', '#imgInfoPreview')"> Clear </a>
                                         <span id="infoDescription"></span>
                                     </div>
-                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#infoImageInput', 'UploadInfoImage', 'HomePage', 'TblInfoBody', '#infoDescription', '#imgInfoPreview', 'DeleteInfoImage')" data-dismiss="modal">Upload</button>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#infoImageInput','@Url.Action("UploadInfoImage","HomePage")', 'TblInfoBody', '#infoDescription', '#imgInfoPreview','@Url.Action("DeleteInfoImage","HomePage")')" data-dismiss="modal">Upload</button>
                                     <hr />
                                 </div>
                             </div>
@@ -150,10 +150,10 @@
                                 <div id="responPreview" class="thumbnail" style="display:none">
                                     <img class="img-responsive" id="respontargetImg" width="120" height="80" />
                                     <div class="caption">
-                                        <a href="#" onclick="clearPreview()"> Clear </a>
+                                        <a href="#" onclick="clearPreview('#responImageInput', '#responDescription', '#responPreview')"> Clear </a>
                                         <span id="responDescription"></span>
                                     </div>
-                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#responImageInput', 'UploadResponsiblityImage', 'HomePage', 'TblResponBody', '#responDescription', '#responPreview', 'DeleteResponsiblityImage')" data-dismiss="modal">Upload</button>
+                                    <button type="button" class="btn btn-warning" onclick="startUploadImage('#responImageInput','@Url.Action("UploadResponsiblityImage","HomePage")', 'TblResponBody', '#responDescription', '#responPreview','@Url.Action("DeleteResponsiblityImage","HomePage")')" data-dismiss="modal">Upload</button>
                                     <hr />
                                 </div>
                             </div>
@@ -234,24 +234,36 @@
     var idCounter = 0;
 
     $(document).ready(function () {
-        getImages("GetSliders", "HomePage", "TblSlidersBody", "DeleteSlider");
-        getImages("GetInfoImage", "HomePage", "TblInfoBody", "DeleteInfoImage");
-        getImages("GetResponsibilityImage", "HomePage", "TblResponBody", "DeleteResponsiblityImage");
-    })
 
-    
+        var sliders = "@Url.Action("GetSliders", "HomePage")";
+        var delSliders = "@Url.Action("DeleteSlider", "HomePage")";
+        getImages(sliders, "TblSlidersBody", delSliders);
+
+
+        var info = "@Url.Action("GetInfoImage", "HomePage")";
+        var delInfo= "@Url.Action("DeleteInfoImage", "HomePage")";
+        getImages(info, "TblInfoBody", delInfo);
+
+        var repon = "@Url.Action("GetResponsibilityImage", "HomePage")";
+        var delRepon = "@Url.Action("DeleteResponsiblityImage", "HomePage")";
+        getImages(repon, "TblResponBody", delRepon);
+
+  
+     })
+
+
 
     // Ed from Images Functions
 
 
     $(document).ready(function () {
-        getAddresses("GetPhones", "HomePage", "PhoneTblContainer", "/DeletePhone")
-        getAddresses("GetEmails", "HomePage", "EmailTblContainer", "/DeleteEmail")
+        getAddresses("@Url.Action("GetPhones", "HomePage")", "PhoneTblContainer","@Url.Action("DeletePhone", "HomePage")")
+        getAddresses("@Url.Action("GetEmails", "HomePage")", "EmailTblContainer","@Url.Action("DeleteEmail", "HomePage")")
     })
 
     $(document).ready(function () {
         $.ajax({
-            url: "/HomePage/GetSiteInfo",
+            url: "@Url.Action("GetSiteInfo", "HomePage")",
             type: "Get",
             dataType: "json",
             success: function (data) {
@@ -266,7 +278,7 @@
 
     $(document).ready(function () {
         $.ajax({
-            url: "/HomePage/GetResponsibilityText",
+            url: "@Url.Action("GetResponsibilityText", "HomePage")",
             type: "Get",
             dataType: "json",
             success: function (data) {
@@ -279,41 +291,39 @@
     })
 
 
-   
-    var drawAddress = function (address, DeleteActionName, Controller, TblContainer) {
 
-        var DeletedParems = "/" + Controller + "/" + DeleteActionName + "?id=" + address.Id;
+    var drawAddress = function (address, DeleteUrl, TblContainer) {
+
 
         var trID = TblContainer + address.Id;
 
- 
+
         var html = '';
         html += '<tr id="' + trID + '">'
         html += '<td><h7 style="font-weight: bold; color:#4e73df;">' + address.Title + '</h7></td>'
         html += '<td style="vertical-align:middle; color:#1cc88a;">' + address.Value + '</td>'
-        html += '<td><button class="btn btn-danger btn-block" type="button"  onClick= "deleteAddress(\'' + DeletedParems + '\',\'' + trID + '\')">Delete</button></td>'
+        html += '<td><button class="btn btn-danger btn-block" type="button"  onClick= "deleteAddress(\'' + DeleteUrl + '\',\'' + trID + '\')">Delete</button></td>'
         html += '</tr>'
 
         $('#' + TblContainer).append(html);
     }
 
-    var getAddresses = function (Action,Controller, TblContainer, DeleteActionName) {
-        var URL = "/" + Controller + "/" + Action;
-        $.ajax({
+    var getAddresses = function (URL, TblContainer, DeleteUrl) {
+         $.ajax({
             url: URL,
             type: "Get",
             dataType: "json",
             success: function (data) {
                 $(TblContainer).empty();
                 $.each(data, function (i, address) {
-                    drawAddress(address,DeleteActionName,Controller,TblContainer)
+                    drawAddress(address, DeleteUrl, TblContainer)
                 })
 
             }
         });
     }
 
-    var addAddress = function (FrmID,ActionName,ControllerName,TbContainer,DeleteActionName,btnID) {
+    var addAddress = function (FrmID,URL,TbContainer,DeleteUrl,btnID) {
 
         // first disable button
         debugger;
@@ -326,10 +336,9 @@
 
         var frmData = $(FrmID).serialize();
 
-        
-       
-        var URL = '/' + ControllerName + '/' + ActionName;
-        $.ajax({
+
+
+         $.ajax({
             url: URL,
             type: "Post",
             data: frmData,
@@ -340,7 +349,7 @@
 
                 if (data.Result.IsSuccess) {
                     successDialog(data.Result.Message);
-                    drawAddress(data, DeleteActionName, ControllerName, TbContainer)
+                    drawAddress(data, DeleteUrl, TbContainer)
                     $(FrmID).trigger("reset");
 
 //                    $("input").val("");
@@ -367,7 +376,7 @@
         });
     }
 
-    
+
 
     var updateResponTexts = function (btnID) {
 
@@ -376,7 +385,7 @@
           var formData = $("#frmRespon").serialize();
 
         $.ajax({
-            url: "/HomePage/CreateUpdateResponsibility",
+            url: "@Url.Action("CreateUpdateResponsibility", "HomePage")",
             type: "Post",
             data: formData,
             dataType: "json",
@@ -395,9 +404,9 @@
           disableBtn(btnID);
 
           var formData = $("#frmInfo").serialize();
-          
+
           $.ajax({
-              url: "/HomePage/CreateUpdateInfo",
+              url: "@Url.Action("CreateUpdateInfo", "HomePage")",
               type: "Post",
               data: formData,
               dataType: "json",

@@ -8,11 +8,8 @@ namespace AmyzFeed.AmyzApi.Helpers
 {
    public class Constans
     {
-
-        public static string apiServerPath = @"http://localhost:57756/";
-
-
-      
+ 
+ 
         // files
 
 

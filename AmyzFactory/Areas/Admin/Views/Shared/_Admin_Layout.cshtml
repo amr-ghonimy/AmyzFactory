@@ -13,15 +13,17 @@
     <title>SB Admin 2- Dashboard</title>
     <!-- Custom fonts for this template-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="~/Areas/Admin/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
  
-        <link rel="stylesheet" href="../Areas/Admin/Content/css/style.css">
-    <link rel="stylesheet" href="../Areas/Admin/Content/css/sb-admin-2.css">
 
 
-    <link rel="stylesheet" href= "../Content/dataTable/css/jquery.dataTables.css">
+    <link href="~/Content/css/style-admin.css" rel="stylesheet" />
+    <link href="~/Content/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="~/Content/dataTable/css/jquery.dataTables.css" rel="stylesheet" />
+    
+
  
  
 </head>
@@ -178,23 +180,22 @@
                 </nav>
                 <!-- End of Topbar -->
                
-                <script src= "../Areas/Admin/Content/js/jquery-2.1.1.js"></script>
-                <script src="../Areas/Admin/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-                <script src="../Areas/Admin/Content/js/sb-admin-2.min.js"></script>
-                <script src= "../Scripts/jquery.unobtrusive-ajax.js"></script>
+                <script src="~/Content/js/jquery-2.1.1.js"></script>
+                <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="~/Content/js/sb-admin-2.min.js"></script>
+                <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+                <script src="~/Content/dataTable/jquery.dataTables.js"></script>
 
-
-                <script src="../Content/dataTable/jquery.dataTables.js"></script>
- 
-  
+    
 
                 @RenderBody()
 
-                <script src="../Areas/Admin/Content/js/dialogs.js"></script>
-                <script src="../Areas/Admin/Content/js/images.js"></script>
-                <script src="../Scripts/jquery.validate.min.js"></script>
- 
-              
+                <script src=""></script>
+                <script src="~/Content/js/dialogs.js"></script>
+                <script src="~/Content/js/images.js"></script>
+                <script src="~/Scripts/jquery.validate.min.js"></script>
+
+
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white" style="margin-top: 30%;">

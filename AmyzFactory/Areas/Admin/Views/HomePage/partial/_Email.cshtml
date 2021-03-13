@@ -22,7 +22,7 @@
                         @Html.ValidationMessageFor(m => m.Value, null, new { @class = "text-danger" })
                     </th>
                     <th>
-                        <button id="btnAddEmail" onclick="addAddress('#FrmEmail', 'CreateEmail', 'HomePage', 'EmailTblContainer', 'DeleteEmail', '#btnAddEmail')" class="btn btn-warning btn-block" type="button">Add</button>
+                        <button id="btnAddEmail" onclick="addAddress('#FrmEmail','@Url.Action("CreateEmail","HomePage")' ,'EmailTblContainer','@Url.Action("DeleteEmail","HomePage")', '#btnAddEmail')" class="btn btn-warning btn-block" type="button">Add</button>
                     </th>
 
                 </tr>

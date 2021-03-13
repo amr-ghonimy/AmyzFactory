@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using System.Web.Configuration;
 
 namespace AmyzFeed.Business
 {
@@ -19,14 +20,17 @@ namespace AmyzFeed.Business
         private readonly IUnitOfWork unitOfWork;
         private readonly ProductRepository productRepository;
         private ResultDomainModel resultModel;
-        
+        private string baseUrl;
 
+
+       
         public ProductsBusiness(IUnitOfWork _unitOfWork, ResultDomainModel _resultModel)
         {
             this.unitOfWork = _unitOfWork;
             this.resultModel = _resultModel;
             this.productRepository = new ProductRepository(this.unitOfWork);
-        }
+             this.baseUrl = WebConfigurationManager.AppSettings["baseUrl"];
+         }
 
 
         private ResultDomainModel initResultModel(bool isSuccess, string message, object data = null)
@@ -176,7 +180,7 @@ namespace AmyzFeed.Business
                 Definition = x.Definition,
                 Description = x.Description,
                 CategoryID = x.CategoryID,
-                ImageUrl = Constans.ServerFile + x.Image,
+                ImageUrl = baseUrl + x.Image,
                 isVisible = x.Visibility,
                 Price = float.Parse(x.Price?.ToString()),
                 Quantity = x.Quantity.Value
@@ -257,7 +261,7 @@ namespace AmyzFeed.Business
                 CategoryID = product.CategoryID,
                 Definition = product.Definition,
                 Description = product.Description,
-                ImageUrl = Constans.ServerFile + product.Image,
+                ImageUrl = baseUrl + product.Image,
                 isVisible = product.Visibility,
                 Price = Double.Parse( product.Price?.ToString()),
                 Quantity=product.Quantity.Value
@@ -281,7 +285,7 @@ namespace AmyzFeed.Business
                 Definition = x.Definition,
                 Description = x.Description,
                 CategoryID = x.CategoryID,
-                ImageUrl = Constans.ServerFile + x.Image,
+                ImageUrl = baseUrl + x.Image,
                 isVisible = x.Visibility,
                 Price = float.Parse(x.Price?.ToString()),
                 Quantity = x.Quantity.Value
@@ -357,7 +361,7 @@ namespace AmyzFeed.Business
                     CategoryName=x.Category.Name,
                     Definition = x.Definition,
                     Description = x.Description,
-                    ImageUrl = Constans.ServerFile + x.Image,
+                    ImageUrl = baseUrl + x.Image,
                     isVisible = x.Visibility,
                     Price = float.Parse(x.Price?.ToString()),
                     Quantity = x.Quantity.Value
@@ -374,7 +378,7 @@ namespace AmyzFeed.Business
                                     {
                                         Id = x.ID,
                                         Name = x.Name,
-                                        ImageURL =Constans.ServerFile+ x.Image,
+                                        ImageURL = baseUrl + x.Image,
                                         CategoryName=x.Category?.Name,
                                         CategoryID = x.CategoryID.Value,
                                         Price = x.Price.Value
@@ -395,7 +399,7 @@ namespace AmyzFeed.Business
                                CategoryID=x.CategoryID,
                                Definition = x.Definition,
                                Description = x.Description,
-                               ImageUrl = Constans.ServerFile + x.Image,
+                               ImageUrl = baseUrl + x.Image,
                                isVisible = x.Visibility,
                                Price = float.Parse(x.Price?.ToString()),
                                Quantity = x.Quantity.Value
@@ -414,7 +418,7 @@ namespace AmyzFeed.Business
                              Definition = x.Definition,
                              Description = x.Description,
                              CategoryID = x.CategoryID,
-                             ImageUrl = Constans.ServerFile + x.Image,
+                             ImageUrl = baseUrl + x.Image,
                              isVisible = x.Visibility,
                              Price = float.Parse(x.Price?.ToString()),
                              Quantity = x.Quantity.Value

@@ -171,7 +171,7 @@
         $.ajax(
           {
               type: "POST", //HTTP POST Method
-              url: "/Articles/CreateArticle", // Controller/View 
+              url:'@Url.Action("CreateArticle", "Articles")', // Controller/View 
               data: formData,
               dataType: 'json',
               contentType: false,
@@ -195,7 +195,7 @@
 
         $('#accordion').empty();
 
-        var URL = '/Articles/GetArticles';
+        var URL = '@Url.Action("GetArticles", "Articles")';
         $.ajax({
             url: URL,
             type: "Get",
@@ -225,7 +225,7 @@
         $.ajax(
           {
               type: "POST", //HTTP POST Method
-              url: "/Articles/UpdateArticle", // Controller/View 
+              url: '@Url.Action("UpdateArticle", "Articles")', // Controller/View 
               data: { //Passing data
                   Id: id,
                   Title: $('#title' + id).val(),
@@ -244,7 +244,7 @@
 
     var deleteArticle = function (id, rowId) {
 
-        var URL = "/Admin/Articles/Delete?id=" + id;
+        var URL = "@Url.Action("Delete", "Articles")?id=" + id;
 
         $.ajax({
             url: URL,

@@ -76,41 +76,40 @@
 
  <script>
 
- 
-     var getCategories = function (ActionName, ControllerName, TblBodyID, EditActionName, DeleteActionName,VisibilityActionName) {
+     $(document).ready(function () {
 
-         var URL = "/" + ControllerName + "/" + ActionName;
+         // GetDeparmtnets
+         getDepartments( "#TblMainCategoriesBody");
+
+     })
+
+     var getDepartments= function (TblBodyID) {
+
+
+         var URL = "@Url.Action("MainDepartments", "Categories")";
+
+
+
          $.ajax({
              url: URL,
              type: "Get",
              dataType: "json",
              success: function (data) {
                  $.each(data, function (i, category) {
-                
-                     
 
-                     
-                     var editURL = "/Admin/" + ControllerName + "/" + EditActionName + "?id=" + category.Id;
-                     var DeleteURL = "/Admin/" + ControllerName + "/" + DeleteActionName + "?id=" + category.Id;
-                     var visibilityDepartmentURL = "/Admin/" + ControllerName + "/" + VisibilityActionName;
-                     if (ActionName === "MainDepartments") {
+
+
+
 
                          var dropDownListItemID = 'item' + category.Id;
                          // first update drop down list
                          updateDropDownList(category, dropDownListItemID);
                          // end updated drop down list
 
-                         drawNewDepartment(category,visibilityDepartmentURL, DeleteURL, dropDownListItemID)
-                       
+                         drawNewDepartment(category, dropDownListItemID)
 
-                     } else {
-                         
-                         $(TblBodyID).append(drawTechnical(category));
 
-                     }
 
-                 
-                     
                  })
              }
          });
@@ -120,14 +119,12 @@
 
 
 
-     var drawNewDepartment = function (category, visibilityDepartmentURL ,deleteDepartmentURL,DropDownItemID) {
+     var drawNewDepartment = function (category, DropDownItemID) {
 
          var subCategoryCollapseID = 'subCollapse' + category.Id;
          var containerID = 'container' + category.Id;
          var visibilityBtnID = 'depBtn' + category.Id;
 
-         // this to pass parameters to the action 
-         var visibilityUrl = visibilityDepartmentURL + '?id=' + category.Id;
 
 
          var html = '<div class="card" id="' + containerID + '">';
@@ -137,11 +134,11 @@
          html += '<i class="fa fa-sort-down"></i>' + category.Name + '</button></h5><h5 class="col"></h5><h5 class="col"></h5>'
          html += '<h5 class="col">'
          if (category.visibility) {
-             html += '<button style="margin-right: 4px;" type="button" id="' + visibilityBtnID + '" onClick="changeVisibility(\'' + visibilityUrl + '\',\'' + visibilityBtnID + '\')" class="btn btn-warning">Hide</button>'
+             html += '<button style="margin-right: 4px;" type="button" id="' + visibilityBtnID + '" onClick="changeDeptVisibility(\'' + visibilityBtnID + '\',\'' + category.Id + '\')" class="btn btn-warning">Hide</button>'
          } else {
-             html += '<button style="margin-right: 4px;" type="button" id="' + visibilityBtnID + '" onClick="changeVisibility(\'' + visibilityUrl + '\',\'' + visibilityBtnID + '\')" class="btn btn-primary">Show</button>'
+             html += '<button style="margin-right: 4px;" type="button" id="' + visibilityBtnID + '" onClick="changeDeptVisibility(\'' + visibilityBtnID + '\',\'' + category.Id + '\')" class="btn btn-primary">Show</button>'
          }
-         html += '<button type="button" onClick="deleteDepartment(\'' + deleteDepartmentURL + '\',\'' + containerID + '\',\'' + DropDownItemID + '\')" class="btn btn-danger"> Delete </button>'
+         html += '<button type="button" onClick="deleteDepartment(\'' + category.Id + '\',\'' + containerID + '\',\'' + DropDownItemID + '\')" class="btn btn-danger"> Delete </button>'
          html += '</h5></div></div>'
 
          // body (Sub Categories)
@@ -158,7 +155,7 @@
              })
          }
 
-       
+
 
          html += '</tbody></table></div></div></div>'
          $('#accordion').append(html);
@@ -176,27 +173,21 @@
          html += '<tr id="' + trID + '">'
          html += '<td style="color:#1cc88a;">' + subCategory.Name + '</td>'
          if (subCategory.visibility) {
-             html += '<td><button style="margin-right: 4px;" type="button"  id="' + visibilityBtnID + '" onClick="changeVisibility(\'' + visibilityUrl + '\',\'' + visibilityBtnID + '\')" class="btn btn-warning">Hide</button>'
+             html += '<td><button style="margin-right: 4px;" type="button"  id="' + visibilityBtnID + '" onClick="changeCatgVisibility(\'' + visibilityBtnID + '\',\'' + subCategory.Id + '\')" class="btn btn-warning">Hide</button>'
          } else {
-             html += '<td><button style="margin-right: 4px;" type="button"  id="' + visibilityBtnID + '" onClick="changeVisibility(\'' + visibilityUrl + '\',\'' + visibilityBtnID + '\')" class="btn btn-primary">Show</button>'
+             html += '<td><button style="margin-right: 4px;" type="button"  id="' + visibilityBtnID + '" onClick="changeCatgVisibility(\'' + visibilityBtnID + '\',\'' + subCategory.Id + '\')" class="btn btn-primary">Show</button>'
          }
-         html += '<button id="' + editBtnId+'" style="margin-right: 4px;" type="button" class="btn btn-info " onclick="editCategory(\'' + 'EditCategory' + '\',\'' + subCategory.Id + '\',\'' +'#'+editBtnId+ '\')">Edit</button>'
-         html += '<button type="button" class="btn btn-danger " onclick="deleteSubCategory(\'' + trID + '\',\'' + "DeleteCategory" + '\',\'' + subCategory.Id + '\')"  >Delete</button></td>'
+         html += '<button id="' + editBtnId+'" style="margin-right: 4px;" type="button" class="btn btn-info " onclick="editCategory(\''  + subCategory.Id + '\',\'' +'#'+editBtnId+ '\')">Edit</button>'
+         html += '<button type="button" class="btn btn-danger " onclick="deleteSubCategory(\'' + trID + '\',\'' + subCategory.Id + '\')"  >Delete</button></td>'
          html += '</tr>'
 
          return html
      }
 
-    
 
-    $(document).ready(function () {
 
-        // GetDeparmtnets
-        getCategories("MainDepartments", "Categories", "#TblMainCategoriesBody", "EditDepartment", "DeleteDepartment", "EditDepartmentVisibility");
-      
-    })
 
-    
+
 
     var addDepartment = function (FormID, btnID) {
 
@@ -216,7 +207,7 @@
 
         formData.append("ImageFile", file[0]);
 
-        var URL = "/Categories/CreateDepartment";
+        var URL = '@Url.Action("CreateDepartment", "Categories")';
 
 
         $.ajax({
@@ -238,15 +229,12 @@
 
                     successDialog(data.Result.Message);
 
-                    var editURL = "/Categories/EditDepartment?id=" + data.Id;
-                    var DeleteURL = "/Categories/DeleteDepartment?id=" + data.Id;
-                    var visibilityDepartmentURL = "/Categories/EditDepartmentVisibility";
-                    var dropDownListItemID = 'item' + data.Id;
+                       var dropDownListItemID = 'item' + data.Id;
 
-  
+
 
                     updateDropDownList(data, dropDownListItemID)
-                    drawNewDepartment(data, visibilityDepartmentURL, DeleteURL, dropDownListItemID);
+                    drawNewDepartment(data,  dropDownListItemID);
                 } else {
                     failedDialog(data.Result.Message);
                 }
@@ -258,14 +246,14 @@
     }
 
 
-  
 
 
- 
+
+
     var addCategory = function (FormID, btnID) {
 
-        // validation 
-        // access data from form 
+        // validation
+        // access data from form
         debugger;
 
         if (!$(FormID).valid()) {
@@ -284,7 +272,7 @@
         formData.append("DepartmentID", $('#MainCategoriesDropdown').val());
         formData.append("ImageFile", file[0]);
 
-        var URL = "/Categories/CreateCategory";
+        var URL ="@Url.Action("CreateCategory", "Categories")";
 
 
         $.ajax({
@@ -297,29 +285,27 @@
             success: function (data) {
 
                 enableBtn(btnID, "Add");
-              
+
                 clearPreview('#catgImageInput', '#catgDescription', '#imgCatgPreview');
 
                 if (data.Result.IsSuccess) {
                     $('input').val("");
                     successDialog(data.Result.Message);
 
-                    var editURL = "/Categories/EditCategory?id=" + data.Id;
-                    var DeleteURL = "/Categories/DeleteCategory?id=" + data.Id;
-
+  
                     $('#tbody' + data.DepartmentID).append(drawSubCategory(data, ''))
 
                 } else {
                     failedDialog(data.Result.Message);
                 }
-               
- 
+
+
             }
         });
 
 
     }
- 
+
 
 
 
@@ -333,12 +319,24 @@
 
 
 
-     
-    var editCategory = function (ActionName,CategoryId,btnID) {
+
+    var editCategory = function (CategoryId,btnID) {
 
         disableBtn(btnID);
 
-        var url = '/Categories/' + ActionName + '?id=' + CategoryId;
+        var url = "@Url.Action("EditCategory", "Categories")?id=" + CategoryId;
+
+        $("#modelBody").load(url, function () {
+
+            enableBtn(btnID, "Edit");
+            $("#myModal").modal("show");
+        })
+    }
+    var editDepartment= function ( CategoryId, btnID) {
+
+        disableBtn(btnID);
+
+        var url = "@Url.Action("EditDepartment", "Categories")?id=" + CategoryId;
 
         $("#modelBody").load(url, function () {
 
@@ -347,19 +345,21 @@
         })
     }
 
-    var deleteDepartment = function (URL,ContainerID,DropDownItemID) {
 
+    var deleteDepartment = function (id,ContainerID,DropDownItemID) {
+
+        var URL = "@Url.Action("DeleteDepartment", "Categories")?id="+id;
         $.ajax({
             url: URL,
             type: "Get",
             dataType: "json",
             success: function (data) {
-               
+
                 if (data.IsSuccess) {
                     successDialog(data.Message);
                     $('#' + ContainerID).remove();
                     $('#' + DropDownItemID).remove();
-                     
+
                 } else {
                     failedDialog(data.Message);
                 }
@@ -372,7 +372,7 @@
 
     var deleteSubCategory = function (rowID,ActionName, categoryID) {
 
-        var URL = "/Admin/Categories/" + ActionName + "?id=" + categoryID;
+        var URL = "@Url.Action("DeleteCategory", "Categories")?id=" + categoryID;
 
          $.ajax({
             url: URL,
@@ -393,8 +393,11 @@
 
     }
 
-    var changeVisibility = function (URL, BtnID) {
- 
+    var changeDeptVisibility = function ( BtnID ,id) {
+
+       var URL= "@Url.Action("EditDepartmentVisibility", "Categories")?id=" + id;
+
+
         $.ajax({
             url: URL,
             type: "Post",
@@ -414,6 +417,28 @@
         });
     }
 
+     var changeCatgVisibility = function (BtnID, id) {
+
+         var URL= "@Url.Action("EditCategoryVisibility", "Categories")?id=" + id;
+
+        $.ajax({
+            url: URL,
+            type: "Post",
+            dataType: "json",
+            success: function (visibility) {
+
+                if (visibility) {
+                    $('#' + BtnID).removeClass('"btn btn-primary').addClass('btn btn-warning');
+                    $('#' + BtnID).html("Hide");
+                } else {
+                    $('#' + BtnID).removeClass('"btn btn-warning').addClass('btn btn-primary');
+                    $('#' + BtnID).html("Show");
+                }
+
+            }
+
+        });
+    }
 
     function enableBtn(btnId, message) {
         $(btnId).html(message);
