@@ -109,7 +109,7 @@
  }
 
 .content-description{
- margin:40px;
+ margin:20px;
 }
 
 .center {
@@ -639,6 +639,8 @@ margin:15px;
  nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
      left: auto;
 }
+
+ 
 .custom-select-box .dropdown-item{
 	padding: 5px 10px;
 }
@@ -883,7 +885,7 @@ font-size: 15px;
 }
 
 .box-add-products{
-	padding: 70px 0px;
+	padding: 20px 0px;
 	background-color: #f4f4f4;
 }
 
@@ -2886,7 +2888,7 @@ margin-top:10px;
     padding: 30px 18px;
   }
   #cards_landscape_wrap-2 .card-flyer{
-    background: #FFFFFF;
+    background: #ffffff;
     margin-top: 50px;
     -webkit-transition: all 0.2s ease-in;
     -moz-transition: all 0.2s ease-in;
@@ -2910,7 +2912,7 @@ margin-top:10px;
     padding-bottom: 0px; 
     font-size: 14px;
     letter-spacing: 1px;
-    color: #000000;
+    color: #ffffff;
   }
   #cards_landscape_wrap-2 .card-flyer .text-box h6{
     margin-top: 0px;
@@ -2922,3 +2924,15 @@ margin-top:10px;
     letter-spacing: 1px;
     color: #00acc1;
   }
+
+
+
+
+
+
+
+
+
+
+
+

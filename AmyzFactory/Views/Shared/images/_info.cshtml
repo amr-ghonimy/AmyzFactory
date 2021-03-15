@@ -5,13 +5,13 @@
      string subTitle = Model.SubTitle;
      string description = Model.Description;
 
-     if (title.Length >60)
+     if (title.Length >100)
      {
-         title = title.Substring(0, 60) + ".......";
+         title = title.Substring(0, 100) + ".......";
      }
-     if (subTitle.Length > 80)
+     if (subTitle.Length > 120)
      {
-         subTitle = subTitle.Substring(0, 80) + ".......";
+         subTitle = subTitle.Substring(0, 120) + ".......";
      }
      if (description.Length > 300)
      {
@@ -36,6 +36,9 @@
                 <p class="footer-title">
                 @description
                 </p>
+                <div class="center">
+                    <a id="moreInfo" class="btn btn-success more-btn" href="@Url.Action("AboutUS","HomePreview")">المزيد</a>
+                </div>
              </div>
         </div>
 

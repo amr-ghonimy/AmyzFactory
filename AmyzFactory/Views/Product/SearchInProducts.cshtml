@@ -19,7 +19,7 @@
      
     @if (Model != null && Model.Count() > 0)
     {
-        <div class="row">
+        <div class="row"  style="margin:20px;">
 
 
 
@@ -28,8 +28,6 @@
             <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
                 <div class="products-single fix">
                     <div class="box-img-hover">
-
-                        <strong class="category-item-title center">@product.Name</strong>
 
                         <div class="type-lb">
 
@@ -43,9 +41,11 @@
                             </ul>
                             <a class="cart" href="#">اضف الى العربة</a>
                         </div>
-
+                      
                     </div>
-
+                    <div class="why-text">
+                        <h4 class="product-catg-name">@product.Name</h4>
+                    </div>
                 </div>
             </div>
             }

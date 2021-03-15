@@ -16,7 +16,7 @@
                                     <img src="@item.ImageUrl" alt="" />
                                 </div>
                                 <div class="text-container" >
-                                    <a class="department-name" href="@Url.Action("ProductDetails","Product",new { @id=item.Id})">@item.Name</a>
+                                    <a class="department-name" href="@Url.Action("ShowProducts","Product",new { @categoryId = item.Id ,@categoryName=item.Name})">@item.Name</a>
 
                                 </div>
                             </div>
