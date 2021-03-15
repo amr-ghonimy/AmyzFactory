@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string title = ViewBag.CategoryName;
 }
+<script src="~/Content/js/add_to_cart.js"></script>
 
 <div class="products-box">
     <div class="container">
@@ -39,7 +40,7 @@
                                 <li><a  href="@Url.Action("ProductDetails","Product",new { @id=product.Id})" data-toggle="tooltip" data-placement="right" title="التفاصيل"><i class="fas fa-eye"></i></a></li>
                                 <li><a href="#" data-toggle="tooltip" data-placement="right" title="اضف الى المفضلة"><i class="far fa-heart"></i></a></li>
                             </ul>
-                            <a class="cart" href="#">اضف الى العربة</a>
+                            <a class="cart" onclick="addToCart(@product.Id)" href="javascript:void(0)">اضف الى العربة</a>
                         </div>
                       
                     </div>
@@ -55,7 +56,10 @@
     }
     else
     {
-
+        <div id="emptyProducts" style="width:100%;height:100%">
+            <img style="margin-left:auto;margin-right:auto;display:block;" src="~/Content/img/empty_box.jpg" class="center" />
+            <b> <h1 style="text-align:center;color:red">لا يوجد منتجات</h1></b>
+        </div>
     }
 
 

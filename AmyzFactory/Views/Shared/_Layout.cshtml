@@ -260,8 +260,8 @@
 
     function drawSlidCartContent(product) {
         var html=' <li>';
-        html += '<a href="../Product/ProductDetails?id=' + product.Id + '" class="photo"><img src="' + product.ImageURL + '" class="cart-thumb" alt="" /></a>';
-        html += '<h6><a href="../Product/ProductDetails?id='+product.Id+'">' + product.Name + ' </a></h6>';
+        html += '<a href="@Url.Action("ProductDetails", "Product")?id=' + product.Id + '" class="photo"><img src="' + product.ImageURL + '" class="cart-thumb" alt="" /></a>';
+        html += '<h6><a href="@Url.Action("ProductDetails", "Product")?id=' + product.Id + '">' + product.Name + ' </a></h6>';
         html += '<p>'+product.Quantity+'x - <span class="price">' + product.Price + '</span></p>';
         html += '</li>';
 
@@ -280,14 +280,15 @@
     }
 
     function drawEmptyCart() {
-        var html = '<img src="../Content/img/empty_box.jpg" class="cart-thumb" alt="" />';
+        var html = '<div class="container">'+
+            '<h1 style="text-align:center;">سلة المشتريات فارغة'+'</h1>'+'</div>';
 
         $('#cartSlidContainer').append(html);
     }
 
     function showCartSlide() {
         $.ajax({
-            url: "/HomePreview/GetProductsCartSession",
+            url: "@Url.Action("GetProductsCartSession", "HomePreview")",
             type: "Get",
             dataType: "json",
             success: function (products) {
@@ -295,7 +296,7 @@
 
                 $('#cartSlidContainer').empty();
                 debugger;
-                if (products != null) {
+                if (products != null&& products.length>0) {
 
                     var total = 0.0;
 
@@ -325,7 +326,7 @@
             var word = $('#searchText').val();
 
             if (word != "") {
-                window.location.href = '../Product/SearchInProducts?word=' + word;
+                window.location.href = '@Url.Action("SearchInProducts", "Product")?word=' + word;
             }
 
         });
@@ -333,16 +334,7 @@
 
 
 
-        $.ajax({
-            url: "/AboutUS/ResponsibiltyTexts",
-            type: "Get",
-            dataType: "json",
-            success: function (data) {
-                $('#headerTitleRes').attr("value", data.Title);
-                $('#p1Res').val(data.SubTitle);
-                $('#p2Res').val(data.Description);
-            }
-        });
+    
 
 
     })

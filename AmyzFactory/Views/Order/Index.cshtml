@@ -11,7 +11,7 @@
  
 
    <!-- Start Cart  -->
-<div class="cart-box-main">
+<div class="cart-box-main" id="sectionContainer">
     <div class="container">
         <div>
             <p class="page-define">سلة المشتريــات</p>
@@ -73,7 +73,7 @@
                                         </td>
 
                                         <td class="remove-pr">
-                                            <a href="#" onclick="deleteRow(@item.Id)">
+                                            <a href="javascript:void(0)" onclick="deleteRow(@item.Id)">
                                                 <i class="fas fa-times"></i>
                                             </a>
                                         </td>
@@ -90,17 +90,24 @@
         </div>
 
        
-        <div class="row my-5">
+        <div class="row my-5" >
             <div class="col-lg-8 col-sm-12"></div>
             <div class="col-lg-4 col-sm-12">
                 @{
                     Html.RenderAction("_GetOrderProducts", "Order");
                 }
             </div>
-            <div class="col-12 d-flex shopping-box"><a href="#" onclick="continueOrder()" class="ml-auto btn hvr-hover">متابعه الطلب</a> </div>
+            <div class="col-12 d-flex shopping-box"><a href="javascript:void(0)" onclick="continueOrder()" class="ml-auto btn hvr-hover">متابعه الطلب</a> </div>
         </div>
 
     </div>
+</div>
+
+
+<div id="emptyContainer" style="width:100%;height:100%">
+    <img style="margin-left:auto;margin-right:auto;display:block;" src="~/Content/img/empty_box.jpg" class="center" />
+    <b> <h1 style="text-align:center;color:red">سلة المشتريات فارغة</h1></b>
+
 </div>
 <!-- End Cart -->
 
