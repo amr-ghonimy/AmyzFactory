@@ -5,7 +5,7 @@
 }
 
 
-
+@model AmyzFactory.Models.FeedsProgramViewModel
 
 <section class="head-page-add-pro">
     <article class="container">
@@ -23,11 +23,96 @@
     <article id="pro-add">
         <div class="col-xs-12">
             <form id="feedFrm">
-               
+                <div class="form-group">
+                    <label for="proName" class="col-sm-2 control-label"><strong>Product Type</strong></label>
+                    <div class="col-sm-5">
+                        @Html.TextBoxFor(m => m.ProductType, new { @class = "form-control", @placeholder = "اكتب هنا نوع العلف", @id = "name" })
+                        @Html.ValidationMessageFor(m => m.ProductType, "", new { @class = "text-danger" })
+
+                    </div>
+                </div><!-- /.Form-Group -->
+
+                <div class="form-group">
+                    <label for="proName" class="col-sm-2 control-label"><strong>Protien Percentage (%)</strong> </label>
+                    <div class="col-sm-2">
+                        @Html.TextBoxFor(m => m.ProtienPercentage, new { @class = "form-control", @id = "definition", @placeholder = "نسبة البروتين"})
+                        @Html.ValidationMessageFor(m => m.ProtienPercentage, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- /.Form-Group -->
+
+                <div class="form-group">
+                    <label for="proName" class="col-sm-2 control-label"><strong>Quantity (grams)</strong> </label>
+                    <div class="col-sm-2">
+                        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @id = "description", @placeholder = "الكمية بالجرام" })
+                        @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- /.Form-Group -->
+
+
+                <div class="form-group">
+                    <label for="proName" class="col-sm-2 control-label"><strong>Days from</strong> </label>
+                    <div class="col-sm-2">
+                        @Html.TextBoxFor(m => m.DayFrom, new { @class = "form-control", @placeholder = "من اليوم", @id = "quantity" })
+                        @Html.ValidationMessageFor(m => m.DayFrom, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- /.Form-Group -->
+
+                <div class="form-group">
+                    <label for="proName" class="col-sm-2 control-label"><strong>Days To</strong> </label>
+                    <div class="col-sm-2">
+                        @Html.TextBoxFor(m => m.DayTo, new { @class = "form-control", @placeholder = "الى اليوم", @id = "price" })
+                        @Html.ValidationMessageFor(m => m.DayTo, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- /.Form-Group -->
+
+                <button type="button" id="btnAddFeed" name='submit' class="btn btn-success" onclick="createFeedProgram('btnAddFeed')">Upload</button>
+
            
             </form>
         </div><!-- /.Col -->
     </article><!-- /#Pro-Add -->
 </section><!-- /.Container -->
 
+<script>
+    function createFeedProgram(btnID) {
+        if (!$('#feedFrm').valid()) {
+            return false;
+        }
 
+        var formData = $('#feedFrm').serialize();
+
+        disableBtn(btnID);
+        var Url='@Url.Action("CreateFeedProgram", "FeedsProgram")'
+
+        $.ajax({
+            url: Url,
+            type: "Post",
+            data: formData,
+            dataType: 'json',
+            success: function (data) {
+
+                enableBtn(btnID, "Upload");
+
+                if (data.IsSuccess) {
+                    clearfields();
+                    successDialog(data.Message);
+                } else {
+                    failedDialog(data.Message);
+                }
+
+            }
+        });
+
+    }
+
+    function enableBtn(btnId, message) {
+        $(btnId).html(message);
+        $(btnId).prop('disabled', false);
+    }
+
+    function disableBtn(btnId) {
+        $(btnId).html("Please wait...");
+        $(btnId).prop('disabled', true);
+    }
+
+</script>

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using AmyzFactory.Models;
+using System.Net.Http;
 using System.Web.Mvc;
 
 namespace AmyzFactory.Areas.Admin.Controllers
@@ -12,6 +10,15 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public JsonResult CreateFeedProgram(FeedsProgramViewModel model)
+        {
+
+            HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("FeedsProgram/CreateFeed",model).Result;
+            ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

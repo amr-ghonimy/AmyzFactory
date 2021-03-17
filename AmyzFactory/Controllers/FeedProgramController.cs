@@ -20,6 +20,15 @@ namespace AmyzFactory.Controllers
             return View(feeds);
         }
 
+        [HttpPost]
+        public ActionResult Create()
+        {
+            HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("FeedsProgram/GetAllFeeds").Result;
+
+            List<FeedsProgramViewModel> feeds = response.Content.ReadAsAsync<List<FeedsProgramViewModel>>().Result;
+
+            return View(feeds);
+        }
 
     }
 }
