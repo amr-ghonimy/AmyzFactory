@@ -66,11 +66,7 @@ namespace FeedApi.Controllers.User
             }
 
 
-            if (string.IsNullOrEmpty(model.Addreess))
-            {
-                return Content(System.Net.HttpStatusCode.BadRequest, new ResultDomainModel(false, "enter address"));
-            }
-
+      
             ResultDomainModel resultDm = this.orderAdminBusiness.ConfirmOrder(model);
 
             if (resultDm.IsSuccess)

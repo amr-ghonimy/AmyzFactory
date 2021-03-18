@@ -3,6 +3,8 @@ using AmyzFactory.Models;
 using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -14,6 +16,7 @@ namespace AmyzFactory.Controllers
      public class AccountsController : Controller
     {
         private UserManager<ApplicationUser> userManager;
+        private ApplicationSignInManager _signInManager;
         public AccountsController()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -23,7 +26,20 @@ namespace AmyzFactory.Controllers
             this.userManager = new UserManager<ApplicationUser>(userStore);
         }
 
-         [UserAuthorize(Roles = "Users")]
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        [UserAuthorize(Roles = "Users")]
         public ActionResult MyAccount()
         {
             return View();
@@ -36,9 +52,9 @@ namespace AmyzFactory.Controllers
             return View();
         }
 
-        private async Task signIn(ApplicationUser appUser)
+        private void signIn(ApplicationUser appUser)
         {
-            var identity = await this.userManager.CreateIdentityAsync(appUser, DefaultAuthenticationTypes.ApplicationCookie);
+            var identity =  this.userManager.CreateIdentity(appUser, DefaultAuthenticationTypes.ApplicationCookie);
             var owinContext = Request.GetOwinContext();
 
             var authManager = owinContext.Authentication;
@@ -73,7 +89,8 @@ namespace AmyzFactory.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(UserViemModel model)
+
+        public ActionResult Login(UserViemModel model)
         {
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.PostAsJsonAsync("Accounts/Login", model).Result;
@@ -86,15 +103,29 @@ namespace AmyzFactory.Controllers
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 UserViemModel user = js.Deserialize<UserViemModel>(result.Data.ToString());
+                 // store user is logined in our website
 
-                // store user is logined in our website
-            //    await this.signIn(user);
+                ApplicationUser appUser = new ApplicationUser
+                {
+                    Id=user.Id,
+                    UserName=user.UserName,
+                    FirstName=user.FirstName,
+                    LastName=user.LastName,
+                    Email=user.Email,
+                    Address=user.Address,
+                    PhoneNumber=user.PhoneNumber
+                };
+
+
+                 
+                SignInManager.SignIn(appUser, isPersistent: false, rememberBrowser: false);
+                //  this.signIn(appUser);
 
                 UserViemModel userVm = new UserViemModel()
                 {
                     Id = user.Id,
-                    UserName = user.UserName
-                };
+                    UserName = user.UserName,
+                 };
 
                 this.applyToken(userVm);
 
@@ -149,7 +180,8 @@ namespace AmyzFactory.Controllers
                 ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
 
                 // store user is logined in our website
-                await this.signIn(user);
+
+                this.signIn(user);
 
 
                 UserViemModel userVm = new UserViemModel()

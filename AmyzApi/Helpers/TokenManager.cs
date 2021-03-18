@@ -8,7 +8,7 @@ namespace AmyzApi.Helpers
     public class TokenManager
     {
         public static string secret = "333322554DSSDFGFDGfcdsfjksdljflkdsjflkdjslfjdslfdsdfsfds";
-
+        public static readonly int DaysOfActiveToken = 30;
         public static string GenerateToken(string userName,string role)
         {
             byte[] key = Convert.FromBase64String(secret);
@@ -17,7 +17,7 @@ namespace AmyzApi.Helpers
             SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, userName), new Claim(ClaimTypes.Role, role) }),
-                Expires = DateTime.UtcNow.AddMinutes(30),
+                Expires = DateTime.UtcNow.AddDays(DaysOfActiveToken),
                 SigningCredentials=new SigningCredentials(securityKey,
                 SecurityAlgorithms.HmacSha256Signature)
             };

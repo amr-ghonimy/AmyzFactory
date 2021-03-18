@@ -1,10 +1,11 @@
 ﻿using AmyzApi.Helpers;
 using AmyzFactory.Models;
 using AmyzFeed.Business.interfaces;
+using System;
 using System.Net;
 using System.Web.Http;
 
-namespace FeedApi.Controllers
+namespace AmyzApi.Controllers
 {
     public class AccountsController : ApiController
     {
@@ -13,7 +14,6 @@ namespace FeedApi.Controllers
         public AccountsController(IAuthBusiness business)
         {
             this.business = business;
-
         }
 
 
@@ -44,6 +44,7 @@ namespace FeedApi.Controllers
                 UserDomainModel userDm = (UserDomainModel)result.Data;
 
                 userDm.Token = TokenManager.GenerateToken(userDm.UserName, userDm.Role);
+                userDm.ExpiresOn = DateTime.Now.AddDays(TokenManager.DaysOfActiveToken);
 
                 result.Data = userDm;
 
@@ -72,6 +73,7 @@ namespace FeedApi.Controllers
                     UserDomainModel userDm = (UserDomainModel)result.Data;
 
                     userDm.Token = TokenManager.GenerateToken(userDm.UserName, userDm.Role);
+                    userDm.ExpiresOn = DateTime.Now.AddDays(TokenManager.DaysOfActiveToken);
 
                     result.Data = userDm;
 

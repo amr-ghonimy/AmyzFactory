@@ -4,6 +4,7 @@ using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AmyzFeed.Business
 {
@@ -125,7 +126,7 @@ namespace AmyzFeed.Business
                 };
 
             }
-
+        
 
             var check = userManager.Create(user, model.Password);
 
@@ -143,6 +144,8 @@ namespace AmyzFeed.Business
                 UserDomainModel userDm = new UserDomainModel()
                 {
                     Id = userID,
+                    FirstName=user.FirstName,
+                    LastName=user.LastName,
                     Address = user.Address,
                     UserName = user.UserName,
                     Password = user.PasswordHash,
@@ -173,6 +176,8 @@ namespace AmyzFeed.Business
 
             return result;
         }
+
+       
 
 
     }
