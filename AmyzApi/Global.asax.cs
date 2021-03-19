@@ -26,7 +26,6 @@ namespace AmyzApi
                     if (check.Succeeded)
                     {
                         userManager.AddToRole(user.Id, "Admins");
-
                     }
                 }
 

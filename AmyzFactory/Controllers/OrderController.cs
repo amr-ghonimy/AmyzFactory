@@ -15,13 +15,11 @@ namespace AmyzFactory.Controllers
 {
     public class OrderController : Controller
     {
-
-      
-
+        
         // GET: Order
          public ActionResult Index()
         {
-            var itemsList = Session["cartItems"] as List<ProductViewModel>;
+            var itemsList = Session[SessionsModel.CartItems] as List<ProductViewModel>;
             return View(itemsList);
         }
 
@@ -51,7 +49,7 @@ namespace AmyzFactory.Controllers
                 };
             }
           
-            var cardItemsList = Session["cartItems"] as List<ProductViewModel>;
+            var cardItemsList = Session[SessionsModel.CartItems] as List<ProductViewModel>;
             ViewBag.Products = cardItemsList;
 
 
@@ -61,7 +59,7 @@ namespace AmyzFactory.Controllers
         [HttpGet]
         public PartialViewResult _GetOrderProducts()
         {
-            var cardItemsList = Session["cartItems"] as List<ProductViewModel>;
+            var cardItemsList = Session[SessionsModel.CartItems] as List<ProductViewModel>;
 
             return PartialView("~/Views/Order/OrderHeader.cshtml", cardItemsList);
         }
@@ -69,8 +67,8 @@ namespace AmyzFactory.Controllers
         public ActionResult ContinueOrder(IEnumerable<ProductViewModel> list)
         {
  
-            Session["cartItems"] = list;
-            Session["cartCounter"] = list.Count();
+            Session[SessionsModel.CartItems] = list;
+            Session[SessionsModel.CartCounter] = list.Count();
 
 
 
@@ -83,7 +81,7 @@ namespace AmyzFactory.Controllers
         public ActionResult ConfirmOrder(OrderViewModel orderHeaderModel)
         {
             List<OrderDetailsViewModel> orderDetails = new List<OrderDetailsViewModel>();
-            var list = Session["cartItems"] as List<ProductViewModel>;
+            var list = Session[SessionsModel.CartItems] as List<ProductViewModel>;
 
 
             var totalPrice = 0.0;
@@ -123,8 +121,8 @@ namespace AmyzFactory.Controllers
             if (resultVm.IsSuccess)
             {
                 // remove products from session
-                Session["cartCounter"] = 0;
-                Session["cartItems"] = null;
+                Session[SessionsModel.CartCounter] = 0;
+                Session[SessionsModel.CartItems] = null;
             }
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);
@@ -134,7 +132,7 @@ namespace AmyzFactory.Controllers
         private ResultViewModel confirmOrderFromApi(OrderViewModel order)
         {
             //   string tokenNumber = Session["TokenNumber"]?.ToString() + ":" + Session["UserName"];
-            string tokenNumber = Session["TokenNumber"]?.ToString();
+            string tokenNumber = Session[SessionsModel.Token]?.ToString();
 
             GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
             GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
@@ -145,7 +143,7 @@ namespace AmyzFactory.Controllers
         }
         public JsonResult Delete(int itemID)
         {
-            var cardItemsList = Session["cartItems"] as List<ProductViewModel>;
+            var cardItemsList = Session[SessionsModel.CartItems] as List<ProductViewModel>;
 
             var itemVm = cardItemsList.Single(model => model.Id == itemID);
 
@@ -156,8 +154,8 @@ namespace AmyzFactory.Controllers
             resultVm.IsSuccess = result;
             resultVm.Message = cardItemsList.Count.ToString(); //to pass cart items count to view
 
-            Session["cartCounter"] = cardItemsList.Count;
-            Session["cartItems"] = cardItemsList;
+            Session[SessionsModel.CartCounter] = cardItemsList.Count;
+            Session[SessionsModel.CartItems] = cardItemsList;
 
             return Json(resultVm, JsonRequestBehavior.AllowGet);
         }

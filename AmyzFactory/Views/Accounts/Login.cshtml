@@ -9,13 +9,13 @@
 <html>
 
 <head>
-     
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="icon" href="~/Content/img/favicon.png"> <!-- Logo Title-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  
-      <!-- Site Icons -->
+
+    <!-- Site Icons -->
     <link rel="shortcut icon" href="~/Content/img/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="~/Content/img/apple-touch-icon.png">
 
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="~/Content/css/stylelogin.css" type="text/css"> <!-- Css Style -->
 
 
-    
+
 
     <script src="~/Areas/Admin/Content/js/dialogs.js"></script>
 </head>
@@ -52,13 +52,13 @@
                 Html.RenderPartial("~/Views/Accounts/partial/_SignUp.cshtml");
             }
 
-        
+
 
         </div><!-- tab-content -->
 
     </div> <!-- /form -->
 
- 
+
 </body>
 </html>
 
@@ -119,7 +119,7 @@
         if (!$('#frmSignIn').valid()) {
             return false;
         }
-        
+
         disableBtn('#signInBtn');
         debugger;
 
@@ -177,7 +177,7 @@
                 if (data.IsSuccess) {
                     clearFields();
                     successDialog(data.Message);
-                    window.location.href = "/HomePreview/Index"  
+                    window.location.href = "/HomePreview/Index"
 
                 } else {
                     failedDialog(data.Message);
@@ -205,13 +205,13 @@
 </script>
 
 <style>
-    .error_txt{
-        font-size:12px;
-        color:lightsalmon;
+    .error_txt {
+        font-size: 12px;
+        color: lightsalmon;
     }
 
-    .lbll{
-        font-size:14px;
-        font-weight:bold;
+    .lbll {
+        font-size: 14px;
+        font-weight: bold;
     }
 </style>

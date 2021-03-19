@@ -2,9 +2,14 @@
 
 @if (Model == null)
 {
-    <li><a href="@Url.Action("MyAccount","Accounts")"><i class="fa fa-user s_color"></i> حسابى</a></li>
+    <li><a href="@Url.Action("MyAccount","Accounts")"><i class="fa fa-user s_color"></i>تسجيل الدخول</a></li>
 }
 else
 {
-    <li><a href="@Url.Action("MyAccount","Accounts")"><i class="fa fa-user s_color"></i> @Model.UserName - أهلا</a></li>
+    <li><a href="javascript:void(0)" onclick="openProfileNav()"><i class="fa fa-user s_color"></i> @Model.UserName</a></li>
 }
+
+
+
+
+ 

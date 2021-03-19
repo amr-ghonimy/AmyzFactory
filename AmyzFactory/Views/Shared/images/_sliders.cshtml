@@ -1,6 +1,15 @@
 ﻿
 @model IEnumerable<AmyzFactory.Models.ImagesViewModel>
 
+<style>
+    .carousel-inner img {
+        width: 100%;
+        height: 350px;
+    }
+</style>
+
+  
+ 
 
 
 
@@ -11,7 +20,7 @@
         @foreach (var item in Model)
         {
             <li class="text-center">
-                <img src="@item.ImageUrl" alt="">
+                <img src="@Url.Content(@item.ImageUrl)" alt="Responsive image">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">

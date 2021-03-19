@@ -4,8 +4,7 @@ using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System.Net.Http;
+ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -27,18 +26,7 @@ namespace AmyzFactory.Controllers
         }
 
 
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
+    
         [UserAuthorize(Roles = "Users")]
         public ActionResult MyAccount()
         {
@@ -118,8 +106,7 @@ namespace AmyzFactory.Controllers
 
 
                  
-                SignInManager.SignIn(appUser, isPersistent: false, rememberBrowser: false);
-                //  this.signIn(appUser);
+                  this.signIn(appUser);
 
                 UserViemModel userVm = new UserViemModel()
                 {
@@ -161,9 +148,9 @@ namespace AmyzFactory.Controllers
         {
             string token = user.Token;
 
-            Session["TokenNumber"] = token;
-            Session["UserName"] = user.UserName;
-            Session["UserId"] = user.Id;
+            Session[SessionsModel.Token] = token;
+            Session[SessionsModel.UserName] = user.UserName;
+            Session[SessionsModel.UserId] = user.Id;
         }
 
 
@@ -177,21 +164,25 @@ namespace AmyzFactory.Controllers
             if (result.IsSuccess)
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                ApplicationUser user = js.Deserialize<ApplicationUser>(result.Data.ToString());
+                UserViemModel userVm = js.Deserialize<UserViemModel>(result.Data.ToString());
 
+                ApplicationUser appUser = new ApplicationUser
+                {
+                    Id = userVm.Id,
+                    UserName = userVm.UserName,
+                    FirstName = userVm.FirstName,
+                    LastName = userVm.LastName,
+                    Email = userVm.Email,
+                    Address = userVm.Address,
+                    PhoneNumber = userVm.PhoneNumber
+                };
                 // store user is logined in our website
 
-                this.signIn(user);
-
-
-                UserViemModel userVm = new UserViemModel()
-                {
-                    Id = user.Id,
-                    UserName = user.UserName
-                };
+                this.signIn(appUser);
 
                 this.applyToken(userVm);
-             }
+
+            }
 
              
 
