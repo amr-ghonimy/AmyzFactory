@@ -16,7 +16,7 @@ namespace AmyzFactory.Controllers
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetQualities").Result;
             TextsViewModel qualityVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
-
+ 
             return View(qualityVm);
         }
     }

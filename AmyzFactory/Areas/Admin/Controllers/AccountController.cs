@@ -3,15 +3,12 @@ using AmyzFactory.Models;
 using AmyzFeed.Repository.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
-
+ 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
  
@@ -57,9 +54,9 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
             string token = user.Token;
             
-            Session["TokenNumber"] = token;
-            Session["UserName"] = user.Id;
-            Session["UserId"] = user.UserName;
+            Session[SessionsModel.Token] = token;
+            Session[SessionsModel.UserName] = user.UserName;
+            Session[SessionsModel.UserId] = user.Id;
         }
 
 
@@ -81,8 +78,17 @@ namespace AmyzFactory.Areas.Admin.Controllers
                 }
                 else
                 {
+
+                   
                   //  JavaScriptSerializer js = new JavaScriptSerializer();
                     UserViemModel userVm = JsonConvert.DeserializeObject<UserViemModel>(result.Data.ToString());
+
+                    if (userVm.Role != "Admins")
+                    {
+                        model.result = new ResultViewModel { IsSuccess = false, Message = "user name or password is invalid!!" };
+
+                        return View(model);
+                    }
 
                     ApplicationUser user = new ApplicationUser
                     {

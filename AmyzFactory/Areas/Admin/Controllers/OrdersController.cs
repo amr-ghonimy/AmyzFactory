@@ -14,7 +14,8 @@ using System.Web.Mvc;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
- 
+    [AdminAuthorize(Roles = "Admins")]
+
     public class OrdersController : Controller
     {
         // GET: Admin/Orders

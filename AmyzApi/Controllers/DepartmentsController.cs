@@ -1,4 +1,5 @@
-﻿using AmyzFactory.Models;
+﻿using AmyzApi.Helpers;
+using AmyzFactory.Models;
 using AmyzFeed.AmyzApi.Helpers;
 using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
@@ -6,6 +7,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 
@@ -24,6 +27,33 @@ namespace FeedApi.Controllers.User
             this.catBusiness = _catbusiness;
         }
 
+        private string GetRole()
+        {
+            string role = "";
+
+            HttpRequestMessage request = this.ActionContext.Request;
+            AuthenticationHeaderValue authorization = request.Headers.Authorization;
+
+            if (authorization == null)
+            {
+                role = "Users";
+                return role;
+            }
+
+            if (!string.IsNullOrEmpty(authorization.Parameter))
+            {
+                string token = authorization.Parameter;
+
+                role = TokenManager.GetRoleByToken(token);
+
+                if (role == null)
+                {
+                    role = "Users";
+                }
+            }
+
+            return role;
+        }
 
 
 
@@ -31,7 +61,7 @@ namespace FeedApi.Controllers.User
 
         public List<DepartmentDomainModel> GetDepartments()
         {
-            List<DepartmentDomainModel> list = this.catBusiness.getDepartments();
+            List<DepartmentDomainModel> list = this.catBusiness.getDepartments(GetRole());
 
  
             return list;
@@ -39,7 +69,7 @@ namespace FeedApi.Controllers.User
 
         public List<CategoryDomainModel> GetCategories()
         {
-            List<CategoryDomainModel> list = this.catBusiness.getCategories();
+            List<CategoryDomainModel> list = this.catBusiness.getCategories(GetRole());
 
  
             return list;

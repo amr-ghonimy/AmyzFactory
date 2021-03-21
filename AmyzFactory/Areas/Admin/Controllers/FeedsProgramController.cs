@@ -1,9 +1,12 @@
-﻿using AmyzFactory.Models;
+﻿using AmyzFactory.App_Start;
+using AmyzFactory.Models;
 using System.Net.Http;
 using System.Web.Mvc;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
+    [AdminAuthorize(Roles = "Admins")]
+
     public class FeedsProgramController : Controller
     {
         // GET: Admin/FeedsProgram

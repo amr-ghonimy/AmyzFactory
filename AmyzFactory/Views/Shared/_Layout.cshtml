@@ -12,7 +12,8 @@
     }
 
     string userName = User.Identity.Name;
-}
+
+ }
 
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
@@ -62,17 +63,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12">
-
-
                     <div class="our-link">
                         <ul>
-                            <li class="side-menu">
-                                <a href="javascript:void(0)" onclick="showCartSlide()">
-                                    <i class="fa fa-shopping-bag"></i>
-                                    <span id="counterText" class="badge">@cartCounter</span>
-                                    <p>العربة</p>
-                                </a>
-                            </li>
+                       
 
                             @{
                                 Html.RenderAction("GetCurrentUser", "Accounts");
@@ -98,46 +91,53 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="@Url.Action("Index","HomePreview")"><img src="~/Content/img/logo.png" width="48" height="50%" class="logo" alt="Responsive image"></a>
+                    <a class="navbar-brand" href="@Url.Action("Index","HomePreview")"><img src="~/Content/img/logo_nav.png" style="max-height:48px;max-width:48px;" class="logo" alt="Responsive image"></a>
                 </div>
                 <!-- End Header Navigation -->
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu" style="direction:rtl;">
 
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active">
+                        <li class="nav-item" id="home">
                             @Html.ActionLink("الرئيسية", "Index", "HomePreview", null, new { @class = "nav-link" })
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="products">
                             @Html.ActionLink("منتجاتنا", "ShowProductsWithCategories", "Product", null, new { @class = "nav-link" })
                         </li>
 
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="prices">
                             @Html.ActionLink("الأسعار", "ProductsPrices", "Product", null, new { @class = "nav-link" })
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="quality">
                             @Html.ActionLink("جودة المنتج", "Index", "Quantity", null, new { @class = "nav-link" })
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="about">
                             @Html.ActionLink("من نحن", "AboutUS", "HomePreview", null, new { @class = "nav-link" })
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" id="contact">
                             @Html.ActionLink("تواصل معنا", "Index", "Contact", null, new { @class = "nav-link" })
                         </li>
  
+                      
 
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" id="searchText" type="search" placeholder="ماذا تريد؟" aria-label="Search">
-                        <a href="javascript:void(0)" id="searching" class="prev" title="بحث"><i class="fas fa-search" aria-hidden="true"></i></a>
+                        <a  href="javascript:void(0)" id="searching" class="circle-shape" title="بحث"><i class="fas fa-search" aria-hidden="true"></i></a>
 
                      </form>
 
+                    <li class="side-menu" style="margin-right:50px;">
+                        <a href="javascript:void(0)" onclick="showCartSlide()">
+                            <span class="circle-shape" style="background:#ff0000" id='counterText'> @cartCounter </span>
+                            <i class="fas fa-shopping-cart" style="font-size:24px;"></i>
+                        </a>
+                    </li>
                 </div>
                 <!-- /.navbar-collapse -->
                 <!-- Start Atribute Navigation -->
@@ -175,8 +175,7 @@
 
 
 
-
-    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
         <script src="~/Scripts/jquery.validate.min.js"></script>
         <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
@@ -280,21 +279,21 @@
 
 
     function openProfileNav() {
-        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("mySidenav").style.width = "350px";
     }
 
     function closeProfileNav() {
         document.getElementById("mySidenav").style.width = "0";
     }
     function openCartNav() {
-        document.getElementById("cartSlide").style.width = "250px";
+        document.getElementById("cartSlide").style.width = "350px";
     }
 
     function closeCartNav() {
         document.getElementById("cartSlide").style.width = "0";
     }
 
-  
+
 
     function drawSlidCartContent(product) {
         var html=' <li>';
@@ -307,8 +306,10 @@
     }
 
     function drawSlidCartTotal(total) {
-        var html = '<li class="total">';
-        html += '<a href="@Url.Action("Index", "Order")" class="btn btn-default hvr-hover btn-cart">التفاصيل</a>';
+        var html = '<div class="container">' +
+            '<h1 style="text-align:center;">العربة' + '</h1>' + '</div>';
+        html += '<li class="total">';
+        html += '<a href="@Url.Action("Index", "Order")" class="btn btn-default hvr-hover btn-cart">إكمال الطلب</a>';
         html += '<span class="float-right"><strong>الاجمالى</strong>:' + '&nbsp' + total + " ج.م " + '</span>';
         html += '</li>';
 
@@ -325,15 +326,16 @@
     }
 
     function showCartSlide() {
+        debugger;
+
         $.ajax({
             url: "@Url.Action("GetProductsCartSession", "HomePreview")",
             type: "Get",
             dataType: "json",
             success: function (products) {
-                openCartNav();
-
-                $('#cartSlidContainer').empty();
                 debugger;
+                $('#cartSlidContainer').empty();
+
                 if (products != null&& products.length>0) {
 
                     var total = 0.0;
@@ -349,7 +351,13 @@
                     drawEmptyCart();
                 }
 
-               
+                openCartNav();
+
+
+            },
+            error: function (message) {
+                alert(message);
+
             }
         });
 

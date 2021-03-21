@@ -61,44 +61,15 @@
 
 </body>
 </html>
-
-@Scripts.Render("~/bundles/jquery_admin")
-@Scripts.Render("~/bundles/jqueryval")
-
-
+ <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 
 <script>
 
-    $('.form').find('input, textarea').on('keyup blur focus', function (e) {
-
-        var $this = $(this),
-            label = $this.prev('label');
-
-        if (e.type === 'keyup') {
-            if ($this.val() === '') {
-                label.removeClass('active highlight');
-            } else {
-                label.addClass('active highlight');
-            }
-        } else if (e.type === 'blur') {
-            if ($this.val() === '') {
-                label.removeClass('active highlight');
-            } else {
-                label.removeClass('highlight');
-            }
-        } else if (e.type === 'focus') {
-
-            if ($this.val() === '') {
-                label.removeClass('highlight');
-            }
-            else if ($this.val() !== '') {
-                label.addClass('highlight');
-            }
-        }
-
-    });
-
+  
     $('.tab a').on('click', function (e) {
 
         e.preventDefault();
@@ -177,7 +148,7 @@
                 if (data.IsSuccess) {
                     clearFields();
                     successDialog(data.Message);
-                    window.location.href = "/HomePreview/Index"
+                    window.location.href = "@Url.Action("Index", "HomePreview")";
 
                 } else {
                     failedDialog(data.Message);

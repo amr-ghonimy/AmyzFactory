@@ -114,8 +114,8 @@
                       {
                           "mData": "Id",
                           "render": function (Id, type, full, meta) {
-                              return '<a class="btn btn-success" href="#" style="margin-right: 4px;"  onclick="editProduct(' + Id + ')"><i class="fa fa-pencil-alt"></i></a>' +
-                                  '<a class="btn btn-danger" href="#" style="margin-right: 4px;"  onclick="deleteProduct(\'' +'@Url.Action("Delete", "Products")?id='+Id + '\',\'' + tableID + '\')"><i class="fa fa-trash-alt"></i></a>' +
+                              return '<a class="btn btn-success" href="javascript:void(0)" style="margin-right: 4px;"  onclick="editProduct(' + Id + ')"><i class="fa fa-pencil-alt"></i></a>' +
+                                  '<a class="btn btn-danger" href="javascript:void(0)" style="margin-right: 4px;"  onclick="deleteProduct(\'' + '@Url.Action("Delete", "Products")?id=' + Id + '\',\'' + tableID + '\')"><i class="fa fa-trash-alt"></i></a>' +
                                   '<a class="btn btn-info"  href="@Url.Action("ProductDetails", "Products")?id="'+Id+'"><i class="fa fa-info"></i></a>'
                           }
                       }
@@ -183,7 +183,7 @@
                     clearPreview('#productImageInput', '#productDescription', '#imgProductPreview');
                     clearfields();
                     successDialog(data.ResponseResult.Message);
-                    bindDataTable(tblId, actionName, controllerName);
+                    bindDataTable("tblProducts");
                 } else {
                     failedDialog(data.ResponseResult.Message);
                 }
@@ -203,9 +203,8 @@
 
     }
 
-    var deleteProduct = function (id,RefreshProductsAction,Controller,tblID) {
-        var URL = "@Url.Action("Delete", "Products")?id=" + id;
-
+    var deleteProduct = function (URL) {
+ 
         $.ajax({
             url: URL,
             type: "Get",
@@ -214,8 +213,8 @@
 
                 if (data.IsSuccess) {
                     successDialog(data.Message);
-                    bindDataTable(tblID, RefreshProductsAction, Controller);
-
+                    bindDataTable("tblProducts");
+ 
                 } else {
                     failedDialog(data.Message);
                 }

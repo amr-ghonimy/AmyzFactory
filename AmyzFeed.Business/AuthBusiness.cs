@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace AmyzFeed.Business
 {
@@ -177,8 +178,23 @@ namespace AmyzFeed.Business
             return result;
         }
 
-       
+        public ResultDomainModel UpdateUserAddressAndPhone(string id, string address, string phone)
+        {
+            try
+            {
+               ApplicationUser user= this.userManager.FindById(id);
+                user.Address = address;
+                user.PhoneNumber = phone;
 
+               userManager.Update(user);
 
+                return new ResultDomainModel(isSuccess: true, message: "تم تحديث بيانات العميل..");
+            }
+            catch (Exception e)
+            {
+                return new ResultDomainModel(isSuccess: false, message: e.Message);
+
+            }
+        }
     }
 }

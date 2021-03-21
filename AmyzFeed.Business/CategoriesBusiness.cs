@@ -1,5 +1,4 @@
 ﻿using AmyzFactory.Models;
-using AmyzFeed.Business.helpers;
 using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
 using AmyzFeed.Repository;
@@ -8,7 +7,6 @@ using AmyzFeed.Repository.Infrastructure.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Configuration;
 
 namespace AmyzFeed.Business
@@ -206,10 +204,10 @@ namespace AmyzFeed.Business
 
 
 
-        public List<CategoryDomainModel> getCategories()
+        public List<CategoryDomainModel> getCategories(string role)
         {
  
-            return catgRepository.GetAll(x => x.IsDeleted == false).Select(x => new CategoryDomainModel()
+            return catgRepository.GetAll().Select(x => new CategoryDomainModel()
             {
                 Name = x.Name,
                 DepartmentID = x.DepartmentID,
@@ -222,7 +220,7 @@ namespace AmyzFeed.Business
         public List<CategoryDomainModel> getCategoriesByDepID(int departmentID)
         {
 
-            return catgRepository.GetAll(x => x.DepartmentID == departmentID && x.IsDeleted == false).Select(x => new CategoryDomainModel()
+            return catgRepository.GetAll(x => x.DepartmentID == departmentID).Select(x => new CategoryDomainModel()
             {
                 Name = x.Name,
                 DepartmentID = x.DepartmentID,
@@ -232,10 +230,10 @@ namespace AmyzFeed.Business
             }).ToList();
         }
 
-        public List<DepartmentDomainModel> getDepartments()
+        public List<DepartmentDomainModel> getDepartments(string role)
         {
 
-            List<DepartmentDomainModel> list = deptRepository.GetAll(x => x.IsDeleted == false).Select(x => new DepartmentDomainModel()
+            List<DepartmentDomainModel> list = deptRepository.GetAll().Select(x => new DepartmentDomainModel()
             {
                 Name = x.Name,
                 Id = x.ID,
@@ -246,7 +244,7 @@ namespace AmyzFeed.Business
 
             foreach (var item in list)
             {
-                item.Categories = catgRepository.GetAll(x => x.DepartmentID == item.Id && x.IsDeleted == false)
+                item.Categories = catgRepository.GetAll(x => x.DepartmentID == item.Id)
                     .Select(s => new CategoryDomainModel()
                     {
                         Id = s.ID,
@@ -264,7 +262,7 @@ namespace AmyzFeed.Business
 
         public CategoryDomainModel getCategoryByID(int id)
         {
-            var catg = this.catgRepository.SingleOrDefault(x => x.ID == id && x.IsDeleted == false, "Department");
+            var catg = this.catgRepository.SingleOrDefault(x => x.ID == id, "Department");
             if (catg == null)
             {
                 return null;
@@ -326,7 +324,7 @@ namespace AmyzFeed.Business
 
         public ResultDomainModel isCategoyExists(string name)
         {
-            var ifCategoryExists = this.catgRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.IsDeleted == false);
+            var ifCategoryExists = this.catgRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower());
 
             if (ifCategoryExists == null)
             {
@@ -342,7 +340,7 @@ namespace AmyzFeed.Business
 
         public ResultDomainModel isDepartmentExists(string name)
         {
-            var ifCategoryExists = this.deptRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.IsDeleted == false);
+            var ifCategoryExists = this.deptRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() );
 
             if (ifCategoryExists == null)
             {

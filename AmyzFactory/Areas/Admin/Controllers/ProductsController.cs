@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using AmyzFactory.Models;
 using AmyzFactory.App_Start;
@@ -7,18 +6,21 @@ using System.Net.Http;
 using System.Web.Script.Serialization;
 using System.Web;
 using System.IO;
-using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
-    
 
-    public class ProductsController : Controller
+    [AdminAuthorize(Roles = "Admins")]
+
+    public class ProductsController : BaseController
     {
+
+ 
 
         private List<CategoryViewModel> getCategories()
         {
+            base.ChangeHeader();
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetCategories").Result;
 
             var list = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
@@ -30,13 +32,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
             string url = "Product/GetAllProducts?pageNo=" + pageNo + "&displayLength=" + displayLength;
 
-            string tokenNumber = Session["TokenNumber"]?.ToString();
-        //    string tokenNumber = Session["TokenNumber"]?.ToString() + ":" + Session["UserName"];
-
-            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
-            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                "Bearer", tokenNumber);
-
+            base.ChangeHeader();
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
 
             var list = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
@@ -46,7 +42,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         private List<ProductViewModel> searchInProducts(string word, int pageNo, int displayLength)
         {
             string url = "Product/SearchInProducts?word=" + word + "&pageNo=" + pageNo + "&displayLength=" + displayLength;
-
+            base.ChangeHeader();
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
 
             var list = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
@@ -57,6 +53,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Products()
         {
+      
 
             CategoryViewModel categoryModel = new CategoryViewModel
             {
@@ -64,6 +61,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             };
 
             ViewBag.CatModel = categoryModel;
+
 
             return View();
         }
@@ -74,6 +72,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
         public JsonResult AllProducts(DataTableParams param)
         {
             List<ProductViewModel> productsList = new List<ProductViewModel>();
+
 
             int pageNo = 1;
 
@@ -90,7 +89,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
             {
                 productsList = this.searchInProducts(param.sSearch, pageNo, param.iDisplayLength);
 
-
+                base.ChangeHeader();
                 HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetSearchedProductCount?searchWord="+ param.sSearch).Result;
                 totalCount = response.Content.ReadAsAsync<int>().Result;
 
@@ -98,8 +97,10 @@ namespace AmyzFactory.Areas.Admin.Controllers
             else
             {
                 productsList = this.getAllProducts(pageNo, param.iDisplayLength);
-              
 
+
+
+                base.ChangeHeader();
                 HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetAllProductsCount").Result;
                 totalCount = response.Content.ReadAsAsync<int>().Result;
             }

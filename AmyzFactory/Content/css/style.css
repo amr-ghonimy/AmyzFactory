@@ -187,20 +187,17 @@ margin:15px;
  	   border-radius: 50%;
  	 margin:8px;
       text-align: center;
-	  padding-left:10px;
- 	  padding-right:10px;
-padding-top:5px;
-padding-bottom:5px;
+ 
      background: #62A73C;
      color: #ffffff;
      
-     font-size: 16px;
+     font-size: 18px;
 }
 /*------------------------------------------------------------------ HEADER -------------------------------------------------------------------*/
  .main-top{
-     background: #000000;
+     background: #153602;
      direction: rtl;
-     padding: 10px 0px;
+     padding: 2.5px 0px;
 }
  .custom-select-box{
      float: left;
@@ -865,8 +862,7 @@ font-size: 15px;
  .shop-cat-box{
      margin-bottom: 30px;
      position: relative;
-     padding: 3px;
-     overflow: hidden;
+      overflow: hidden;
      border: 0px solid #000000;
 	 box-shadow: 9px 9px 30px 0px rgba(0, 0, 0, 0.3);
 	-webkit-transition: all 0.3s ease;
@@ -2947,8 +2943,45 @@ margin-top:10px;
 
 
 
+  .badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+  
+  .label-warning[href],
+  .badge-warning[href] {
+    background-color: #c67605;
+  }
+  #counterText {
+  
+      font-size: 14px;
 
 
+      vertical-align: top;
+       
+      margin-top: -10px;
+  }
+
+
+  .circle-shape{
+    background: #62A73C;
+    border-radius: 0.8em;
+    -moz-border-radius: 0.8em;
+    -webkit-border-radius: 0.8em;
+    color: #ffffff;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.6em;
+    margin-right: 5px;
+    text-align: center;
+    width: 1.6em; 
+  }
+ 
+
+ 
 
 
 

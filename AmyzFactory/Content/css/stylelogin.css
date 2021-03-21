@@ -1,16 +1,17 @@
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
+
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
+
 
 html {
   overflow-y: scroll;
 }
 
 body {
-  background: #c1bdba;
-  font-family: "Titillium Web", sans-serif;
+  background: #fff;
+   font-size: 14.5px;
+    font-family: 'El Messiri', sans-serif;
+     line-height: 1.80857;
+     direction: rtl;
 }
 
 a {
@@ -18,7 +19,7 @@ a {
   color: #1ab188;
   -webkit-transition: 0.5s ease;
   transition: 0.5s ease;
-}
+} 
 a:hover {
   color: #179b77;
 }
@@ -72,41 +73,11 @@ a:hover {
 h4 {
   text-align: center;
   color: #ffffff;
-  font-weight: 300;
+  font-weight: 700;
+font-size:22px;
   margin: 0 0 40px;
 }
 
-label {
-  position: absolute;
-  -webkit-transform: translateY(6px);
-          transform: translateY(6px);
-  right: 13px;
-  direction: rtl;
-  color: rgba(255, 255, 255, 0.5);
-  -webkit-transition: all 0.25s ease;
-  transition: all 0.25s ease;
-  -webkit-backface-visibility: hidden;
-  pointer-events: none;
-  font-size: 18px;
-}
-label .req {
-  margin: 2px;
-  color: #1ab188;
-}
-
-label.active {
-  -webkit-transform: translateY(50px);
-          transform: translateY(50px);
-  right: 2px;
-  font-size: 14px;
-}
-label.active .req {
-  opacity: 0;
-}
-
-label.highlight {
-  color: #ffffff;
-}
 
 input,
 textarea {
@@ -157,9 +128,9 @@ textarea {
   border: 0;
   outline: none;
   border-radius: 0;
-  padding: 15px 0;
-  font-size: 1.3rem;
-  font-weight: 600;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   background: #1ab188;
@@ -171,7 +142,12 @@ textarea {
 .button:hover, .button:focus {
   background: #179b77;
 }
-
+label{
+color:#fff;
+}
+.login-fields{
+  text-align: right;
+}
 .button-block {
   display: block;
   width: 100%;

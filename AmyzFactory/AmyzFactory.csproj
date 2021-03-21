@@ -238,6 +238,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\ArticlesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeedsProgramController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomePageController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
@@ -450,6 +451,7 @@
     <Folder Include="Areas\Admin\Content\js\" />
     <Folder Include="Areas\Admin\Content\scss\" />
     <Folder Include="Areas\Admin\Content\vendor\" />
+    <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Content\css\" />
     <Folder Include="Content\fonts\" />
     <Folder Include="Content\img\" />

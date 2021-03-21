@@ -33,6 +33,7 @@ namespace AmyzFactory.Controllers
 
         public ActionResult ShowProductsWithCategories()
         {
+ 
             // first get all categories
             HttpResponseMessage categoriesResponse = GlobalVariables.WebApiClient.GetAsync("Departments/GetDepartments").Result;
             List<CategoryViewModel> categoriesVm = categoriesResponse.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
@@ -64,6 +65,8 @@ namespace AmyzFactory.Controllers
 
         public ActionResult ProductsPrices()
         {
+            ViewBag.Current = "prices";
+
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Product/GetProductsPrices").Result;
             List<ProductViewModel> productsList = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;
 

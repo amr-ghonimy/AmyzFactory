@@ -1,18 +1,25 @@
-﻿ using AmyzFactory.Models;
+﻿using AmyzFactory.App_Start;
+using AmyzFactory.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
- using System.Web;
+using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
-     public class CategoriesController : Controller
+
+    [AdminAuthorize(Roles = "Admins")]
+
+    public class CategoriesController : BaseController
     {
       
+        
+
         public PartialViewResult _Categories()
         {
 

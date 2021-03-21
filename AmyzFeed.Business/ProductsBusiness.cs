@@ -194,13 +194,11 @@ namespace AmyzFeed.Business
             switch (role)
             {
                 case "Admins":
-                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false;
+                    whereCondition = x => x.IsDeleted == false;
                     break;
-                case "Users":
-                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false&&x.Visibility== true && x.Category.Visibility==true;
-                    break;
+                
                 default:
-                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false && x.Visibility == true && x.Category.Visibility == true;
+                    whereCondition = x => x.IsDeleted == false  && x.CategoryID > 0 && x.Visibility == true && x.Category.Visibility == true;
                     break;
             }
 
@@ -214,13 +212,11 @@ namespace AmyzFeed.Business
             switch (role)
             {
                 case "Admins":
-                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false&&x.CategoryID==id;
+                    whereCondition = x => x.IsDeleted == false && x.CategoryID==id;
                     break;
-                case "Users":
-                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false && x.CategoryID == id &&x.Visibility == true && x.Category.Visibility == true;
-                    break;
+           
                 default:
-                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false && x.Visibility == true && x.Category.Visibility == true;
+                    whereCondition = x => x.IsDeleted == false && x.CategoryID > 0 && x.CategoryID == id && x.Visibility == true && x.Category.Visibility == true;
                     break;
             }
 
@@ -234,14 +230,12 @@ namespace AmyzFeed.Business
             switch (role)
             {
                 case "Admins":
-                    whereCondition = p => p.IsDeleted == false && p.Category.IsDeleted == false && p.Name.Contains(word) || p.Category.Name.Contains(word);
+                    whereCondition = p => p.IsDeleted == false &&    p.Name.Contains(word) || p.Category.Name.Contains(word);
                    
                     break;
-                case "Users":
-                    whereCondition = p => p.IsDeleted == false && p.Category.IsDeleted == false &&p.Category.Visibility==true&&p.Visibility==true&& p.Name.Contains(word) || p.Category.Name.Contains(word);
-                    break;
+            
                 default:
-                    whereCondition = x => x.IsDeleted == false && x.Category.IsDeleted == false && x.Visibility == true && x.Category.Visibility == true;
+                    whereCondition = p => p.IsDeleted == false && p.CategoryID > 0 && p.Category.Visibility == true && p.Visibility == true && p.Name.Contains(word) || p.Category.Name.Contains(word);
                     break;
             }
 

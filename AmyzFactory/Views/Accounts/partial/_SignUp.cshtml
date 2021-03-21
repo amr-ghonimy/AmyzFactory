@@ -4,51 +4,53 @@
 <div id="signup">
     <h4>سجل بياناتك</h4>
 
-    <form id="frmSignUp">
+    <form id="frmSignUp" autocomplete="off">
        
             @Html.AntiForgeryToken()
 
-            <div class="top-row">
-                <div class="field-wrap">
-                    @Html.LabelFor(m => m.LastName, new { @class = "lbll" })
-                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @placeholder = "اسم العائلة" })
+            <div class="top-row" dir="rtl">
+                <div class="field-wrap login-fields">
+
+                    @Html.LabelFor(m => m.LastName, new { @class = "login-fields" })
+                    @Html.TextBoxFor(m => m.LastName, new { @autocomplete = "false", @name = "hidden", @class = "form-control form-control-user", @type = "text",  @placeholder = "اسم العائلة" })
                     @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "error_txt" })
                 </div>
 
-                <div class="field-wrap">
-                    @Html.LabelFor(m => m.FirstName, new { @class = "lbll" })
-                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control form-control-user", @type = "text", @autocomplete = "off", @placeholder = "الاسم الأول" })
+                <div class="field-wrap login-fields">
+                     
+                    @Html.LabelFor(m => m.FirstName, new { @class = "login-fields" })
+                     @Html.TextBoxFor(m => m.FirstName, new { @autocomplete = "false", @name = "hidden", @class = "form-control form-control-user", @type = "text", @placeholder = "الاسم الأول" })
                     @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "error_txt" })
                 </div>
 
             </div>
-            <div class="field-wrap">
+            <div class="field-wrap login-fields">
                 @Html.LabelFor(m => m.Email, new { @class = "lbll" })
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @autocomplete = "off", @value = "", @placeholder = "البريد الالكترونى" })
+                @Html.TextBoxFor(m => m.Email, new { @autocomplete = "false", @name = "hidden", @class = "form-control", @type = "email", @value = "", @placeholder = "البريد الالكترونى" })
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error_txt" })
             </div>
-            <div class="top-row">
-                <div class="field-wrap">
+            <div class="top-row" dir="rtl">
+                <div class="field-wrap login-fields">
                     @Html.LabelFor(m => m.ConfirmPassword, new { @class = "lbll" })
-                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control form-control-user", @type = "password", @autocomplete = "off", @placeholder = "تأكيد كلمة السر" })
+                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @autocomplete = "false", @name = "hidden", @class = "form-control form-control-user", @type = "password",  @placeholder = "تأكيد كلمة السر" })
                     @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "error_txt" })
                 </div>
 
-                <div class="field-wrap">
+                <div class="field-wrap login-fields">
                     @Html.LabelFor(m => m.Password, new { @class = "lbll" })
-                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control form-control-user", @type = "password", @autocomplete = "off", @placeholder = "كلمة السر" })
+                    @Html.TextBoxFor(m => m.Password, new { @autocomplete = "false", @name = "hidden", @class = "form-control form-control-user", @type = "password", @placeholder = "كلمة السر" })
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error_txt" })
                 </div>
 
             </div>
-            <div class="field-wrap">
+            <div class="field-wrap login-fields">
                 @Html.LabelFor(m => m.PhoneNumber, new { @class = "lbll" })
-                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @placeholder = "الهاتف" })
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @autocomplete = "false", @name = "hidden", @class = "form-control form-control-user", @type = "text", @placeholder = "الهاتف" })
                 @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "error_txt" })
             </div>
-            <div class="field-wrap">
+            <div class="field-wrap login-fields">
                 @Html.LabelFor(m => m.Address, new { @class = "lbll" })
-                @Html.TextBoxFor(m => m.Address, new { @class = "form-control form-control-user", @type = "text", autocomplete = "off", @placeholder = "العنوان بالتفصيل" })
+                @Html.TextBoxFor(m => m.Address, new { @autocomplete = "false", @name = "hidden", @class = "form-control form-control-user", @type = "text", @placeholder = "العنوان بالتفصيل" })
                 @Html.ValidationMessageFor(m => m.Address, "", new { @class = "error_txt" })
             </div>
 

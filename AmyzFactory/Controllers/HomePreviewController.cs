@@ -13,8 +13,12 @@ namespace AmyzFactory.Controllers
         public JsonResult GetProductsCartSession()
         {
             var cardItemsList = Session["cartItems"] as List<ProductViewModel>;
-
+            if (cardItemsList == null)
+            {
+                return Json(new List<ProductViewModel>(), JsonRequestBehavior.AllowGet);
+            }
             return Json(cardItemsList, JsonRequestBehavior.AllowGet);
+
         }
 
         public PartialViewResult _GetSliderimages()
@@ -27,7 +31,7 @@ namespace AmyzFactory.Controllers
            //     "Bearer", tokenNumber);
 
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Images/GetSliders").Result;
-              List<ImagesViewModel> imagesVmList = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
+            List<ImagesViewModel> imagesVmList = response.Content.ReadAsAsync<List<ImagesViewModel>>().Result;
         //    GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = null;
 
             return PartialView("~/Views/Shared/images/_sliders.cshtml", imagesVmList);
@@ -72,7 +76,7 @@ namespace AmyzFactory.Controllers
         // GET: Default
         public ActionResult Index()
         {
-            return View();
+              return View();
         }
 
 
@@ -127,6 +131,7 @@ namespace AmyzFactory.Controllers
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Information/GetFactoryInformation").Result;
             TextsViewModel modelVm = response.Content.ReadAsAsync<TextsViewModel>().Result;
 
+ 
 
             ViewBag.Emails = this.getEmails();
             ViewBag.Phones = this.getPhones();

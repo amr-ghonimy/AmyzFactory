@@ -6,6 +6,7 @@ using AmyzFeed.Business.interfaces;
 using AmyzFeed.Domain;
 
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
@@ -15,10 +16,12 @@ namespace FeedApi.Controllers.User
     public class OrderController : ApiController
     {
         private IOrdersBusiness orderAdminBusiness;
- 
-        public OrderController(IOrdersBusiness _orderAdminBusiness)
+        private IAuthBusiness authBusiness;
+
+        public OrderController(IOrdersBusiness _orderAdminBusiness, IAuthBusiness _authBusiness)
         {
             this.orderAdminBusiness = _orderAdminBusiness;
+            this.authBusiness = _authBusiness;
          }
 
 
@@ -62,10 +65,17 @@ namespace FeedApi.Controllers.User
 
             if (string.IsNullOrEmpty(model.Addreess))
             {
-                return Content(System.Net.HttpStatusCode.BadRequest, new ResultDomainModel(false, "enter address"));
+                return Content(HttpStatusCode.BadRequest, new ResultDomainModel(false, "enter address"));
             }
 
+            // first update user info 
+            ResultDomainModel updateUserResult = this.authBusiness.UpdateUserAddressAndPhone(
+                model.UserID, model.Addreess, model.Phone);
 
+            if (!updateUserResult.IsSuccess)
+            {
+                return Content(HttpStatusCode.BadRequest, updateUserResult);
+            }
       
             ResultDomainModel resultDm = this.orderAdminBusiness.ConfirmOrder(model);
 

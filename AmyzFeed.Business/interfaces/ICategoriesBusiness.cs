@@ -9,8 +9,8 @@ namespace AmyzFeed.Business.interfaces
 {
    public interface ICategoriesBusiness
     {
-        List<DepartmentDomainModel> getDepartments();
-        List<CategoryDomainModel> getCategories();
+        List<DepartmentDomainModel> getDepartments(string role);
+        List<CategoryDomainModel> getCategories(string role);
         CategoryDomainModel getCategoryByID(int id);
 
         List<CategoryDomainModel> getCategoriesByDepID(int departmentID);
