@@ -1634,9 +1634,10 @@ font-size: 18px;
 	 margin-bottom: 30px;
 }
 .noo-sh-title-top{
-     font-size: 28px;
+     font-size: 26px;
      text-transform: uppercase;
      font-style: normal;
+     margin-top: 10px;
      font-weight: 700;
 	 margin-bottom: 0px;
 }
