@@ -7,6 +7,7 @@ using AmyzFeed.Repository.Infrastructure.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Configuration;
 
 namespace AmyzFeed.Business
@@ -43,6 +44,9 @@ namespace AmyzFeed.Business
             resultModel.modelID = modelID;
             return resultModel;
         }
+
+
+
 
 
         public ResultDomainModel createCategory(CategoryDomainModel category)
@@ -201,21 +205,14 @@ namespace AmyzFeed.Business
         }
 
 
+      
 
 
+   
 
-        public List<CategoryDomainModel> getCategories(string role)
-        {
- 
-            return catgRepository.GetAll().Select(x => new CategoryDomainModel()
-            {
-                Name = x.Name,
-                DepartmentID = x.DepartmentID,
-                ImageUrl = baseUrl + x.Image,
-                Id = x.ID,
-                visibility = x.Visibility
-            }).ToList();
-        }
+
+       
+
 
         public List<CategoryDomainModel> getCategoriesByDepID(int departmentID)
         {
@@ -230,10 +227,43 @@ namespace AmyzFeed.Business
             }).ToList();
         }
 
-        public List<DepartmentDomainModel> getDepartments(string role)
+
+
+
+
+
+        // tested completed.....
+        public List<CategoryDomainModel> getCategories(string role)
         {
 
-            List<DepartmentDomainModel> list = deptRepository.GetAll().Select(x => new DepartmentDomainModel()
+            // string query
+            Expression<Func<Category, bool>> whereCondition = x => true;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true;
+
+ 
+
+
+            return catgRepository.GetAll(whereCondition).Select(x => new CategoryDomainModel()
+            {
+                Name = x.Name,
+                DepartmentID = x.DepartmentID,
+                ImageUrl = baseUrl + x.Image,
+                Id = x.ID,
+                visibility = x.Visibility
+            }).ToList();
+        }
+
+        public List<DepartmentDomainModel> getDepartments(string role)
+        {
+            Expression<Func<Department, bool>> whereCondition = x => true;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true;
+ 
+
+            List<DepartmentDomainModel> list = deptRepository.GetAll(whereCondition).Select(x => new DepartmentDomainModel()
             {
                 Name = x.Name,
                 Id = x.ID,
@@ -244,7 +274,14 @@ namespace AmyzFeed.Business
 
             foreach (var item in list)
             {
-                item.Categories = catgRepository.GetAll(x => x.DepartmentID == item.Id)
+
+                Expression<Func<Category, bool>> whereConditionSubCatgs =x=> x.DepartmentID == item.Id;
+
+                if (role != "Admins")
+                    whereConditionSubCatgs = x => x.Visibility == true && x.DepartmentID == item.Id;
+                                
+ 
+                item.Categories = catgRepository.GetAll(whereConditionSubCatgs)
                     .Select(s => new CategoryDomainModel()
                     {
                         Id = s.ID,
@@ -259,10 +296,15 @@ namespace AmyzFeed.Business
 
         }
 
-
-        public CategoryDomainModel getCategoryByID(int id)
+        public CategoryDomainModel getCategoryByID(int id, string role)
         {
-            var catg = this.catgRepository.SingleOrDefault(x => x.ID == id, "Department");
+            Expression<Func<Category, bool>> whereCondition = x => x.ID == id;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.ID == id;
+
+
+            var catg = this.catgRepository.SingleOrDefault(whereCondition, "Department");
             if (catg == null)
             {
                 return null;
@@ -278,6 +320,58 @@ namespace AmyzFeed.Business
             };
             return result;
         }
+
+        public ResultDomainModel isCategoyExists(string name, string role)
+        {
+            Expression<Func<Category, bool>> whereCondition = m => m.Name.Trim().ToLower() == name.Trim().ToLower();
+
+            if (role != "Admins")
+                whereCondition = m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.Visibility == true;
+
+
+
+            var ifCategoryExists = this.catgRepository.SingleOrDefault(whereCondition);
+
+            if (ifCategoryExists == null)
+            {
+                return new ResultDomainModel(false, "category not exists");
+            }
+            else
+            {
+                return new ResultDomainModel(true, "category is exists");
+
+            }
+
+        }
+
+        public ResultDomainModel isDepartmentExists(string name, string role)
+        {
+
+            Expression<Func<Department, bool>> whereCondition = m => m.Name.Trim().ToLower() == name.Trim().ToLower();
+
+            if (role != "Admins")
+                whereCondition = m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.Visibility == true;
+
+
+            var ifCategoryExists = this.deptRepository.SingleOrDefault(whereCondition);
+
+            if (ifCategoryExists == null)
+            {
+                return new ResultDomainModel(false, "department not exists");
+            }
+            else
+            {
+                return new ResultDomainModel(true, "department is exists");
+
+            }
+        }
+
+
+        // end tested
+
+
+
+
 
 
         public bool changeDepartmentVisibility(int id)
@@ -322,35 +416,6 @@ namespace AmyzFeed.Business
             }
         }
 
-        public ResultDomainModel isCategoyExists(string name)
-        {
-            var ifCategoryExists = this.catgRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower());
-
-            if (ifCategoryExists == null)
-            {
-                return new ResultDomainModel(false, "category not exists");
-            }
-            else
-            {
-                return new ResultDomainModel(true, "category is exists");
-
-            }
-
-        }
-
-        public ResultDomainModel isDepartmentExists(string name)
-        {
-            var ifCategoryExists = this.deptRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() );
-
-            if (ifCategoryExists == null)
-            {
-                return new ResultDomainModel(false, "department not exists");
-            }
-            else
-            {
-                return new ResultDomainModel(true, "department is exists");
-
-            }
-        }
+     
     }
 }

@@ -59,6 +59,8 @@ namespace FeedApi.Controllers.User
 
 
 
+
+        // Tested Completed
         public List<DepartmentDomainModel> GetDepartments()
         {
             List<DepartmentDomainModel> list = this.catBusiness.getDepartments(GetRole());
@@ -71,20 +73,13 @@ namespace FeedApi.Controllers.User
         {
             List<CategoryDomainModel> list = this.catBusiness.getCategories(GetRole());
 
- 
-            return list;
-        }
-
-        public IEnumerable<CategoryDomainModel> GetCategoriesByDeptID(int id)
-        {
-            List<CategoryDomainModel> list = this.catBusiness.getCategoriesByDepID(id);
 
             return list;
         }
 
         public IHttpActionResult GetCategoryByID(int id)
         {
-            CategoryDomainModel dm = this.catBusiness.getCategoryByID(id);
+            CategoryDomainModel dm = this.catBusiness.getCategoryByID(id, GetRole());
 
             if (dm == null)
             {
@@ -98,6 +93,24 @@ namespace FeedApi.Controllers.User
         }
 
 
+
+        // end Tested Completed
+
+
+
+
+
+
+
+
+        public IEnumerable<CategoryDomainModel> GetCategoriesByDeptID(int id)
+        {
+            List<CategoryDomainModel> list = this.catBusiness.getCategoriesByDepID(id);
+
+            return list;
+        }
+
+     
 
 
 
@@ -314,6 +327,7 @@ namespace FeedApi.Controllers.User
 
         }
 
+        [HttpGet]
         public IHttpActionResult ISDepartmentExists(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -321,7 +335,7 @@ namespace FeedApi.Controllers.User
                 return Content(HttpStatusCode.BadRequest, "you enter empty value");
             }
 
-            ResultDomainModel result = this.catBusiness.isDepartmentExists(name);
+            ResultDomainModel result = this.catBusiness.isDepartmentExists(name, GetRole());
 
             if (result.IsSuccess)
             {
@@ -332,6 +346,8 @@ namespace FeedApi.Controllers.User
                 return Content(HttpStatusCode.BadRequest, result);
             }
         }
+
+        [HttpGet]
         public IHttpActionResult ISCategoryExists(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -339,7 +355,7 @@ namespace FeedApi.Controllers.User
                 return Content(HttpStatusCode.BadRequest, "you enter empty value");
             }
 
-            ResultDomainModel result = this.catBusiness.isCategoyExists(name);
+            ResultDomainModel result = this.catBusiness.isCategoyExists(name,GetRole());
 
             if (result.IsSuccess)
             {
