@@ -11,12 +11,12 @@ namespace AmyzFeed.Business.interfaces
     {
         List<DepartmentDomainModel> getDepartments(string role);
         List<CategoryDomainModel> getCategories(string role);
-        CategoryDomainModel getCategoryByID(int id);
+        CategoryDomainModel getCategoryByID(int id, string role);
 
         List<CategoryDomainModel> getCategoriesByDepID(int departmentID);
       
-        ResultDomainModel isCategoyExists(string name);
-        ResultDomainModel isDepartmentExists(string name);
+        ResultDomainModel isCategoyExists(string name, string role);
+        ResultDomainModel isDepartmentExists(string name, string role);
  
 
         ResultDomainModel createCategory(CategoryDomainModel category);
