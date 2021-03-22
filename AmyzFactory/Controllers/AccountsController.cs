@@ -112,6 +112,7 @@ namespace AmyzFactory.Controllers
                 {
                     Id = user.Id,
                     UserName = user.UserName,
+                    Token=user.Token
                  };
 
                 this.applyToken(userVm);

@@ -94,7 +94,7 @@
         disableBtn('#signInBtn');
         debugger;
 
-        var URL = "/Accounts/Login";
+        var URL = "@Url.Action("Login", "Accounts")";
 
         var formData = $('#frmSignIn').serialize();
 
@@ -131,7 +131,7 @@
 
         disableBtn('#signUpBtn');
 
-        var URL = "/Accounts/Register";
+        var URL = "@Url.Action("Register", "Accounts")";
 
         var formData = $('#frmSignUp').serialize();
 
@@ -170,7 +170,7 @@
     }
 
     function disableBtn(btnId) {
-        $(btnId).html("wait..");
+        $(btnId).html("من فضلك انتظهر حتى اكتمال عملية التسجيل...");
         $(btnId).prop('disabled', true);
     }
 </script>

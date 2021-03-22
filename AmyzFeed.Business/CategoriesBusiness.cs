@@ -392,7 +392,7 @@ namespace AmyzFeed.Business
             }
             catch (Exception)
             {
-                return false;
+                return obj.Visibility;
             }
         }
 
@@ -412,7 +412,7 @@ namespace AmyzFeed.Business
             }
             catch (Exception)
             {
-                return false;
+                return obj.Visibility;
             }
         }
 

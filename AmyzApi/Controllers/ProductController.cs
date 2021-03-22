@@ -1,5 +1,4 @@
-﻿
-using AmyzApi.Helpers;
+﻿using AmyzApi.Helpers;
 using AmyzFactory.Models;
 using AmyzFeed.AmyzApi.Helpers;
 using AmyzFeed.Business.interfaces;
@@ -53,13 +52,18 @@ namespace FeedApi.Controllers.User
             return role;
         }
 
+
+
+        // Testing 
         public IEnumerable<ProductDomainModel> GetProductsByCategoryID(int id)
         {
+            
             List<ProductDomainModel> productsDm = this.productsBusiness.getProductsByCategoryID(id, GetRole());
- 
+
             return productsDm;
         }
 
+        // end testing
         public IEnumerable<ProductDomainModel> GetAllProducts(int pageNo, int displayLength)
         {
             List<ProductDomainModel> productsList = this.productsBusiness.getAllProducts(pageNo, displayLength, GetRole());
@@ -123,7 +127,7 @@ namespace FeedApi.Controllers.User
         {
             try
             {
-                ProductDomainModel pDm = this.productsBusiness.getProductByID(id);
+                ProductDomainModel pDm = this.productsBusiness.getProductByID(id,GetRole());
  
                 if (pDm == null)
                 {

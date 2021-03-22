@@ -18,9 +18,9 @@ namespace AmyzFeed.Business.interfaces
         List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength, string role);
         List<ProductDomainModel> SearchInAllProducts(string searchWord, string role);
 
-        ResultDomainModel isProductExists(string name);
+        ResultDomainModel isProductExists(string name,string role);
 
-        ProductDomainModel getProductByID(int id);
+        ProductDomainModel getProductByID(int id,string role);
  
         int getAllProductsCount(string role);
         int getSearchedProductCount(string searchWord, string role);

@@ -12,7 +12,7 @@ namespace AmyzFactory.Models
 
         [Display(Name = "الاســم")]
         [Required(ErrorMessage = "ادخل الاســم")]
-        public string FullName { get; set; }
+        public string UserName { get; set; }
 
         [Display(Name = "البريد الالكترونى")]
         [EmailAddress(ErrorMessage ="من فضلك ادخل بريد الكترونى صحيح")]

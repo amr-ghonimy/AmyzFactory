@@ -32,8 +32,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="~/Areas/Admin/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 
     <!-- Site Icons -->
@@ -43,14 +42,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
     <!-- Site CSS -->
+
     <link rel="stylesheet" href="~/Content/css/style.css">
-    <!-- Responsive CSS -->
     <link rel="stylesheet" href="~/Content/css/responsive.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="~/Content/css/custom.css">
-   
     <link rel="stylesheet" href="~/Content/css/style-slide-profile.css">
 
+ 
+
+    @Styles.Render("~/bundles/css_user")
 
 </head>
 
@@ -65,8 +65,6 @@
                 <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12">
                     <div class="our-link">
                         <ul>
-                       
-
                             @{
                                 Html.RenderAction("GetCurrentUser", "Accounts");
                             }
@@ -91,7 +89,7 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="@Url.Action("Index","HomePreview")"><img src="~/Content/img/logo_nav.png" style="max-height:48px;max-width:48px;" class="logo" alt="Responsive image"></a>
+                    <a class="navbar-brand" href="@Url.Action("Index","HomePreview")"><img src="~/Content/img/logo.svg" style="max-height:64px;max-width:64px;" class="logo" alt="Responsive image"></a>
                 </div>
                 <!-- End Header Navigation -->
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -131,7 +129,7 @@
                         <a  href="javascript:void(0)" id="searching" class="circle-shape" title="بحث"><i class="fas fa-search" aria-hidden="true"></i></a>
 
                      </form>
-
+                    
                     <li class="side-menu" style="margin-right:50px;">
                         <a href="javascript:void(0)" onclick="showCartSlide()">
                             <span class="circle-shape" style="background:#ff0000" id='counterText'> @cartCounter </span>
@@ -171,14 +169,16 @@
     <!-- End Main Top -->
 
 
- 
-
-
-
     <script src="~/Content/js/jquery-3.2.1.min.js"></script>
-        <script src="~/Scripts/jquery.validate.min.js"></script>
-        <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+
+    <script src="~/Content/js/dialogs.js"></script>
+    <script src="~/Content/js/images.js"></script>
 
         @RenderBody()
 
@@ -306,9 +306,8 @@
     }
 
     function drawSlidCartTotal(total) {
-        var html = '<div class="container">' +
-            '<h1 style="text-align:center;">العربة' + '</h1>' + '</div>';
-        html += '<li class="total">';
+   
+       var html = '<li class="total">';
         html += '<a href="@Url.Action("Index", "Order")" class="btn btn-default hvr-hover btn-cart">إكمال الطلب</a>';
         html += '<span class="float-right"><strong>الاجمالى</strong>:' + '&nbsp' + total + " ج.م " + '</span>';
         html += '</li>';

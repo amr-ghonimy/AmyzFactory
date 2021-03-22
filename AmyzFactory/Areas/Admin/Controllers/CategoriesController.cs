@@ -43,6 +43,12 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<CategoryViewModel> getDepartments()
         {
+            string tokenNumber = Session[SessionsModel.Token]?.ToString();
+
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer", tokenNumber);
+
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Departments/GetDepartments").Result;
             List<CategoryViewModel> departments = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
  
@@ -51,6 +57,12 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private List<CategoryViewModel> getCategories()
         {
+            string tokenNumber = Session[SessionsModel.Token]?.ToString();
+
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer", tokenNumber);
+
             HttpResponseMessage response =  GlobalVariables.WebApiClient.GetAsync("Departments/GetCategories").Result;
             List<CategoryViewModel> categories = response.Content.ReadAsAsync<List<CategoryViewModel>>().Result;
 
@@ -141,6 +153,12 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         private ResultViewModel checkIfModelExistsInDb(CategoryViewModel model,string apiPath)
         {
+            string tokenNumber = Session[SessionsModel.Token]?.ToString();
+
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer", tokenNumber);
+
             string url = apiPath + "?name=" + model.Name;
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
             ResultViewModel result = response.Content.ReadAsAsync<ResultViewModel>().Result;

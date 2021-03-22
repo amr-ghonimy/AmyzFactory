@@ -1,6 +1,6 @@
-var drawImageRaw = function (image, DeleteURL, Container) {
+var drawImageRaw = function (image, DeleteActionName, Container) {
 
-   // var DeletedParems = "/" + Controller + "/" + DeleteActionName + "?imageName=" + image.Title;
+    var DeletedParems = DeleteActionName + "?imageName=" + image.Title;
 
         var trID = Container + image.Id;
 
@@ -9,7 +9,7 @@ var drawImageRaw = function (image, DeleteURL, Container) {
         html += '<tr id="' + trID + '">'
         html += '<td style="color:#1cc88a;">' + image.Title + '</td>'
         html += '<td><a class="btn btn-info" style="margin-right: 4px;" href="' +  image.ImageUrl + '" target="_blank" >Preview</a>'
-        html += '<button class="btn btn-danger"  onClick= "deleteImage(\'' + DeleteURL + '\',\'' + trID + '\')">Delete</button></td>'
+        html += '<button class="btn btn-danger"  onClick= "deleteImage(\'' + DeletedParems + '\',\'' + trID + '\')">Delete</button></td>'
         html += '</tr>'
 
          $('#' + Container).append(html);
@@ -18,7 +18,7 @@ var drawImageRaw = function (image, DeleteURL, Container) {
 
  
 
-var getImages = function (URL, Container, DeleteURL) {
+var getImages = function (URL,  Container, DeleteActionName) {
 
 
  
@@ -30,7 +30,7 @@ var getImages = function (URL, Container, DeleteURL) {
 
 
                 $.each(data, function (i, slide) {
-                    drawImageRaw(slide, DeleteURL, Container)
+                    drawImageRaw(slide, DeleteActionName, Container)
                 })
 
             }
@@ -98,9 +98,9 @@ var clearPreview = function (inputFileID, descriptionID, imgPreviewID) {
 
 }
 
-var startUploadImage = function (inputFileID, URL, TblBodyID, descriptionID, imgPreviewID, DeleteUrl) {
+var startUploadImage = function (inputFileID, URL, TblBodyID, descriptionID, imgPreviewID, DeleteActionName) {
 
- 
+
     var file = $(inputFileID).get(0).files;
     var data = new FormData;
     data.append("ImageFile", file[0]);
@@ -119,7 +119,7 @@ var startUploadImage = function (inputFileID, URL, TblBodyID, descriptionID, img
                 // update table
                 successDialog(response.Result.Message);
 
-                drawImageRaw(response, DeleteUrl, TblBodyID)
+                drawImageRaw(response, DeleteActionName, TblBodyID)
 
 
             } else {

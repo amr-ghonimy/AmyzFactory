@@ -133,11 +133,6 @@
          html += '<button class="btn btn-link" data-toggle="collapse" data-target="#' + subCategoryCollapseID + '" aria-expanded="true" aria-controls="' + subCategoryCollapseID + '">'
          html += '<i class="fa fa-sort-down"></i>' + category.Name + '</button></h5><h5 class="col"></h5><h5 class="col"></h5>'
          html += '<h5 class="col">'
-         if (category.visibility) {
-             html += '<button style="margin-right: 4px;" type="button" id="' + visibilityBtnID + '" onClick="changeDeptVisibility(\'' + visibilityBtnID + '\',\'' + category.Id + '\')" class="btn btn-warning">Hide</button>'
-         } else {
-             html += '<button style="margin-right: 4px;" type="button" id="' + visibilityBtnID + '" onClick="changeDeptVisibility(\'' + visibilityBtnID + '\',\'' + category.Id + '\')" class="btn btn-primary">Show</button>'
-         }
          html += '<button type="button" onClick="deleteDepartment(\'' + category.Id + '\',\'' + containerID + '\',\'' + DropDownItemID + '\')" class="btn btn-danger"> Delete </button>'
          html += '</h5></div></div>'
 
@@ -172,7 +167,7 @@
 
          html += '<tr id="' + trID + '">'
          html += '<td style="color:#1cc88a;">' + subCategory.Name + '</td>'
-         if (subCategory.visibility) {
+         if (subCategory.Visibility) {
              html += '<td><button style="margin-right: 4px;" type="button"  id="' + visibilityBtnID + '" onClick="changeCatgVisibility(\'' + visibilityBtnID + '\',\'' + subCategory.Id + '\')" class="btn btn-warning">Hide</button>'
          } else {
              html += '<td><button style="margin-right: 4px;" type="button"  id="' + visibilityBtnID + '" onClick="changeCatgVisibility(\'' + visibilityBtnID + '\',\'' + subCategory.Id + '\')" class="btn btn-primary">Show</button>'
@@ -370,7 +365,7 @@
 
     }
 
-    var deleteSubCategory = function (rowID,ActionName, categoryID) {
+    var deleteSubCategory = function (rowID, categoryID) {
 
         var URL = "@Url.Action("DeleteCategory", "Categories")?id=" + categoryID;
 
@@ -393,29 +388,8 @@
 
     }
 
-    var changeDeptVisibility = function ( BtnID ,id) {
-
-       var URL= "@Url.Action("EditDepartmentVisibility", "Categories")?id=" + id;
 
 
-        $.ajax({
-            url: URL,
-            type: "Post",
-            dataType: "json",
-            success: function (visibility) {
-
-                if (visibility) {
-                    $('#' + BtnID).removeClass('"btn btn-primary').addClass('btn btn-warning');
-                    $('#' + BtnID).html("Hide");
-                } else {
-                    $('#' + BtnID).removeClass('"btn btn-warning').addClass('btn btn-primary');
-                    $('#' + BtnID).html("Show");
-                }
-
-            }
-
-        });
-    }
 
      var changeCatgVisibility = function (BtnID, id) {
 

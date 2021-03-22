@@ -1,17 +1,23 @@
 [
   {
-    "Id": 0,
     "Title": "الدعم الفنى",
-    "Value": "01024595552"
+    "SubTitle": null,
+    "Description": null,
+    "ImageUrl": null,
+    "Id": 0
   },
   {
-    "Id": 1,
     "Title": "السيكرتارية",
-    "Value": "01024595552"
+    "SubTitle": null,
+    "Description": null,
+    "ImageUrl": null,
+    "Id": 1
   },
   {
-    "Id": 2,
     "Title": "الاستفسارات",
-    "Value": "01024595552"
+    "SubTitle": null,
+    "Description": null,
+    "ImageUrl": null,
+    "Id": 2
   }
 ]

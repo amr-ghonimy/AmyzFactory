@@ -7,13 +7,19 @@ namespace AmyzFactory
     {
          public static void RegisterBundles(BundleCollection bundles)
         {
-           
+
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+                      "~/Scripts/jquery.validate*"));
+
+
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
  
             bundles.Add(new ScriptBundle("~/bundles/my_scripts").Include(
-                       "~/Areas/Admin/Content/dialogs.js",
-                       "~/Areas/Admin/Content/images.js"));
+                       "~/Content/dialogs.js",
+                       "~/Content/images.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -32,21 +38,30 @@ namespace AmyzFactory
               "~/Scripts/jquery.unobtrusive-ajax.js"));
 
 
-            bundles.Add(new StyleBundle("~/bundles/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/style.css",
-                      "~/Content/stylelogin.css",
-                      "~/Content/site.css"));
+
+
+
+
+            bundles.Add(new StyleBundle("~/bundles/css_user").Include(
+                  "~/Content/css/style.css",
+                  "~/Content/css/responsive.css",
+                  "~/Content/css/custom.css",
+                  "~/Content/css/style-slide-profile.css"));
+
+
  
-                     bundles.Add(new StyleBundle("~/bundles/css_admin").Include(
-                      "~/Areas/Admin/Content/css/style.css",
-                     "~/Areas/Admin/Content/css/sb-admin-2.css"
+
+
+                  bundles.Add(new StyleBundle("~/bundles/css_admin").Include(
+                      "~/Content/css/sb-admin-2.css",
+                     "~/Content/dataTable/css/jquery.dataTables.css"
                      ));
-            
 
 
+ 
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery_admin").Include(
+
+                     bundles.Add(new ScriptBundle("~/bundles/jquery_admin").Include(
                        "~/Areas/Admin/Content/js/jquery-2.1.1.js",
                        "~/Areas/Admin/Content/vendor/bootstrap/js/bootstrap.bundle.min.js",
                        "~/Areas/Admin/Content/js/sb-admin-2.min.js",

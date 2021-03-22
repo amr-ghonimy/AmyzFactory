@@ -109,6 +109,7 @@ namespace AmyzFactory.Controllers
                 ShippingCost = 30,
                 ItemsCount= orderDetails.Count,
                 Addreess=orderHeaderModel.Addreess,
+                Phone=orderHeaderModel.Phone,
                 Notes=orderHeaderModel.Notes,
                 OrderTotalPrice= totalPrice,
                 OrderNumber = string.Format("{0:ddmmyyyHHmmsss}",DateTime.Now)
@@ -131,7 +132,7 @@ namespace AmyzFactory.Controllers
 
         private ResultViewModel confirmOrderFromApi(OrderViewModel order)
         {
-            //   string tokenNumber = Session["TokenNumber"]?.ToString() + ":" + Session["UserName"];
+
             string tokenNumber = Session[SessionsModel.Token]?.ToString();
 
             GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();

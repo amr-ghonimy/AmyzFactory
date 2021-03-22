@@ -155,7 +155,6 @@ namespace AmyzFeed.Business
                 oldProduct.Quantity = newProduct.Quantity;
                 oldProduct.CategoryID= newProduct.CategoryID;
                 oldProduct.Price = float.Parse(newProduct.Price.ToString());
-                oldProduct.Image = newProduct.ImageUrl;
 
                 this.productRepository.Update(oldProduct);
                 return initResultModel(true, "Product updated successfully");
@@ -168,7 +167,14 @@ namespace AmyzFeed.Business
 
         public List<ProductDomainModel> getAllProducts(int pageNo, int displayLength, string role)
         {
-            return productRepository.GetAll(generateQuery(role), "Category")
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false && x.CategoryID > 0;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.IsDeleted == false && x.CategoryID > 0;
+
+
+            return productRepository.GetAll(whereCondition, "Category")
                   .OrderBy(x => x.CreationDate)
                     .Skip((pageNo - 1) * displayLength)
                     .Take(displayLength)
@@ -188,64 +194,18 @@ namespace AmyzFeed.Business
         }
 
 
-        private Expression<Func<Product, bool>> generateQuery(string role)
+     
+        public ProductDomainModel getProductByID(int id,string role)
         {
-            Expression<Func<Product, bool>> whereCondition = null;
-            switch (role)
-            {
-                case "Admins":
-                    whereCondition = x => x.IsDeleted == false;
-                    break;
-                
-                default:
-                    whereCondition = x => x.IsDeleted == false  && x.CategoryID > 0 && x.Visibility == true && x.Category.Visibility == true;
-                    break;
-            }
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false && x.ID == id && x.CategoryID > 0;
 
-            return whereCondition;
-        }
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.IsDeleted == false&&x.ID==id && x.CategoryID > 0;
 
 
-        private Expression<Func<Product, bool>> generateQueryByCategoryID(string role,int id)
-        {
-            Expression<Func<Product, bool>> whereCondition = null;
-            switch (role)
-            {
-                case "Admins":
-                    whereCondition = x => x.IsDeleted == false && x.CategoryID==id;
-                    break;
-           
-                default:
-                    whereCondition = x => x.IsDeleted == false && x.CategoryID > 0 && x.CategoryID == id && x.Visibility == true && x.Category.Visibility == true;
-                    break;
-            }
 
-            return whereCondition;
-        }
-
-        private Expression<Func<Product, bool>> generateSearchQuery(string role,string word)
-        {
-
-            Expression<Func<Product, bool>> whereCondition = null;
-            switch (role)
-            {
-                case "Admins":
-                    whereCondition = p => p.IsDeleted == false &&    p.Name.Contains(word) || p.Category.Name.Contains(word);
-                   
-                    break;
-            
-                default:
-                    whereCondition = p => p.IsDeleted == false && p.CategoryID > 0 && p.Category.Visibility == true && p.Visibility == true && p.Name.Contains(word) || p.Category.Name.Contains(word);
-                    break;
-            }
-
-            return whereCondition;
-        }
-
-        public ProductDomainModel getProductByID(int id)
-        {
-
-           Product product= this.productRepository.SingleOrDefault(x => x.ID == id, "Category");
+            Product product = this.productRepository.SingleOrDefault(whereCondition, "Category");
 
             ProductDomainModel prdDm = new ProductDomainModel()
             {
@@ -266,8 +226,18 @@ namespace AmyzFeed.Business
 
         public List<ProductDomainModel> SearchInAllProducts(string searchWord, int pageNo, int displayLength, string role)
         {
- 
-            return productRepository.GetAll(generateSearchQuery(role,searchWord))
+
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false
+            && x.Name.Trim().Contains(searchWord.Trim()) && x.CategoryID > 0;
+
+            if (role != "Admins")
+                whereCondition = x => x.IsDeleted == false && x.Visibility == true
+          && x.Name.Trim().Contains(searchWord.Trim()) && x.CategoryID > 0;
+
+
+
+            return productRepository.GetAll(whereCondition)
                 .OrderBy(x => x.ID)
                     .Skip((pageNo - 1) * displayLength)
                     .Take(displayLength)
@@ -288,12 +258,26 @@ namespace AmyzFeed.Business
 
         public int getAllProductsCount(string role)
         {
-           return productRepository.GetAll(generateQuery(role)).Count();
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false  && x.CategoryID > 0;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.IsDeleted == false && x.CategoryID > 0;
+
+
+            return productRepository.GetAll(whereCondition).Count();
         }
 
         public int getSearchedProductCount(string searchWord, string role)
         {
-            return productRepository.GetAll(generateSearchQuery(role, searchWord)).Count();
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false && x.CategoryID > 0
+            &&x.Name.Trim().Contains(searchWord.Trim());
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.IsDeleted == false && x.CategoryID > 0
+            && x.Name.Trim().Contains(searchWord.Trim()); 
+
+
+            return productRepository.GetAll(whereCondition).Count();
         }
 
       
@@ -302,7 +286,15 @@ namespace AmyzFeed.Business
 
         public List<ProductDomainModel> getAllPrices(int pageNo, int displayLength, string role)
         {
-            return this.productRepository.GetAll(generateQuery(role))
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.CategoryID >0 && x.IsDeleted == false;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.CategoryID > 0 && x.IsDeleted == false;
+
+
+
+            return this.productRepository.GetAll(whereCondition)
                  .OrderBy(x => x.ID)
                             .Skip((pageNo - 1) * displayLength)
                             .Take(displayLength)
@@ -346,7 +338,16 @@ namespace AmyzFeed.Business
 
         public List<ProductDomainModel> getProductsByCategoryID(int id, string role)
         {
-            List<ProductDomainModel> products = this.productRepository.GetAll(generateQueryByCategoryID(role,id),"Category")
+
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.CategoryID == id && x.IsDeleted == false;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.IsDeleted == false && x.CategoryID == id;
+
+
+
+            List<ProductDomainModel> products = this.productRepository.GetAll(whereCondition,"Category")
                 .Select(x => new ProductDomainModel()
                 {
                     Id = x.ID,
@@ -367,7 +368,15 @@ namespace AmyzFeed.Business
 
         public List<PriceDomainModel> getProductsPrices(string role)
         {
-            return this.productRepository.GetAll(generateQuery(role), "Category")
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false && x.CategoryID > 0;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.IsDeleted == false && x.CategoryID > 0;
+
+
+
+            return this.productRepository.GetAll(whereCondition, "Category")
                                     .Select(x => new PriceDomainModel
                                     {
                                         Id = x.ID,
@@ -384,7 +393,14 @@ namespace AmyzFeed.Business
         public List<ProductDomainModel> getAllProducts(string role)
         {
 
-            return this.productRepository.GetAll(generateQuery(role), "Category")
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false && x.CategoryID > 0;
+
+            if (role != "Admins")
+                whereCondition = x => x.Visibility == true && x.IsDeleted == false && x.CategoryID > 0;
+
+
+            return this.productRepository.GetAll(whereCondition,"Category")
                            .Select(x => new ProductDomainModel
                            {
                                Id = x.ID,
@@ -402,7 +418,16 @@ namespace AmyzFeed.Business
 
         public List<ProductDomainModel> SearchInAllProducts(string searchWord, string role)
         {
-            return productRepository.GetAll(generateSearchQuery(role,searchWord))
+    
+
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false && x.CategoryID > 0&&x.Name.Trim().Contains(searchWord.Trim());
+
+            if (role != "Admins")
+                whereCondition = x => x.IsDeleted == false &&x.Visibility==true&& x.CategoryID > 0 && x.Name.Trim().Contains(searchWord.Trim());
+
+
+            return productRepository.GetAll(whereCondition,"Category")
                          .OrderBy(x => x.ID)
                          .Select(x => new ProductDomainModel()
                          {
@@ -419,9 +444,18 @@ namespace AmyzFeed.Business
                          }).ToList();
         }
 
-        public ResultDomainModel isProductExists(string name)
+        public ResultDomainModel isProductExists(string name,string role)
         {
-            var ifCategoryExists = this.productRepository.SingleOrDefault(m => m.Name.Trim().ToLower() == name.Trim().ToLower() && m.IsDeleted == false&&m.Category.IsDeleted==false,"Category");
+
+            // string query
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false && x.CategoryID > 0 && x.Name.Trim().ToLower() == name.Trim().ToLower();
+
+            if (role != "Admins")
+                whereCondition = x => x.IsDeleted == false &&x.Visibility==true&& x.CategoryID > 0 && x.Name.Trim().ToLower() == name.Trim().ToLower();
+
+
+
+            var ifCategoryExists = this.productRepository.SingleOrDefault(whereCondition);
 
             if (ifCategoryExists == null)
             {

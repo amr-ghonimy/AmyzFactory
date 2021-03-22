@@ -33,7 +33,7 @@ namespace AmyzApi.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Login([FromBody]UserDomainModel model)
+        public IHttpActionResult Login(UserDomainModel model)
         {
  
 

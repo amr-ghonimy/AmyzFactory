@@ -9,7 +9,7 @@
             @foreach (var item in Model)
             {
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
+                    <a href="@Url.Action("ShowProducts","Product",new { @categoryId = item.Id ,@categoryName=item.Name})">
                         <div class="card-flyer">
                             <div class="text-box">
                                 <div class="image-box">
