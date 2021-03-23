@@ -7,6 +7,7 @@ using System.Web.Script.Serialization;
 using System.Web;
 using System.IO;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace AmyzFactory.Areas.Admin.Controllers
 {
@@ -32,7 +33,11 @@ namespace AmyzFactory.Areas.Admin.Controllers
         {
             string url = "Product/GetAllProducts?pageNo=" + pageNo + "&displayLength=" + displayLength;
 
-            base.ChangeHeader();
+            string tokenNumber = Session[SessionsModel.Token]?.ToString();
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+               "Bearer", tokenNumber);
+
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(url).Result;
 
             var list = response.Content.ReadAsAsync<List<ProductViewModel>>().Result;

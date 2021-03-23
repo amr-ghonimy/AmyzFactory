@@ -116,7 +116,7 @@ namespace AmyzFeed.Business
                 this.catgRepository.Delete(x => x.ID == categoryID);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

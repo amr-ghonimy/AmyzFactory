@@ -114,10 +114,14 @@ namespace AmyzFeed.Business
         {
             try
             {
-                Product obj = this.productRepository.SingleOrDefault(x => x.ID == productID);
+                /* Product obj = this.productRepository.SingleOrDefault(x => x.ID == productID);
 
-                obj.IsDeleted = true;
+                 obj.IsDeleted = true;
                 this.productRepository.Update(obj);
+                    */
+
+               this.productRepository.Delete(x => x.ID == productID);
+
                 return initResultModel(true,"Product Deleted Successfully!");
             }
             catch (Exception)
@@ -168,7 +172,7 @@ namespace AmyzFeed.Business
         public List<ProductDomainModel> getAllProducts(int pageNo, int displayLength, string role)
         {
             // string query
-            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == false && x.CategoryID > 0;
+            Expression<Func<Product, bool>> whereCondition = x => x.IsDeleted == true;
 
             if (role != "Admins")
                 whereCondition = x => x.Visibility == true && x.IsDeleted == false && x.CategoryID > 0;

@@ -25,6 +25,10 @@ namespace FeedApi.Controllers.User
         {
             this.imgBusiness = _imgBusiness;
             this.catBusiness = _catbusiness;
+
+            this.catBusiness.changeDepartmentVisibility(5);
+            this.catBusiness.changeDepartmentVisibility(6);
+
         }
 
         private string GetRole()

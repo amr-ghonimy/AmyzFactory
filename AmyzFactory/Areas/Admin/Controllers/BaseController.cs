@@ -16,10 +16,7 @@ namespace AmyzFactory.Areas.Admin.Controllers
 
         protected void ChangeHeader()
         {
-            string tokenNumber = Session[SessionsModel.Token]?.ToString();
-            GlobalVariables.WebApiClient.DefaultRequestHeaders.Clear();
-            GlobalVariables.WebApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-               "Bearer", tokenNumber);
+         
         }
     }
 }
